@@ -575,5 +575,5 @@ class EmotionApiService extends EmotionApiServiceV2 {
   ///
   /// Parameters:
   /// - [apiClient]: Optional API client for dependency injection
-  EmotionApiService({ApiClient? apiClient}) : super(apiClient: apiClient);
+  EmotionApiService({super.apiClient});
 }

@@ -151,7 +151,6 @@ mixin ScreenStateMixin<T extends StatefulWidget> on State<T> {
   }) {
     return ScreenStateManager(
       state: _currentState,
-      child: child,
       loadingMessage: _loadingMessage,
       errorMessage: _errorMessage,
       emptyMessage: _emptyMessage,
@@ -159,6 +158,7 @@ mixin ScreenStateMixin<T extends StatefulWidget> on State<T> {
       onRefresh: onRefresh,
       showProgress: showProgress,
       progress: progress,
+      child: child,
     );
   }
 }
