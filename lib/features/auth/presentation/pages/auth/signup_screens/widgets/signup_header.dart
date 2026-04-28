@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
+import 'package:emosense_mobile/features/auth/presentation/widgets/auth.dart';
 
 /// Signup screen header widget
 class SignupHeader extends StatelessWidget {

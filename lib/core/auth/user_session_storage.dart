@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/entities/user_entity.dart';
+import '../../features/auth/domain/entities/user_entity.dart';
 
 /// Persists [UserEntity] for cold start (login/signup already update [UserBloc]).
 class UserSessionStorage {

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:emosense_mobile/domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/domain/entities/user_entity.dart';
 import 'package:emosense_mobile/features/auth/presentation/bloc/user_bloc.dart';
 import 'package:emosense_mobile/features/employee/presentation/pages/employee_navigation_screen/employee_navigation_screen.dart';
 import 'package:emosense_mobile/features/admin/presentation/pages/admin_navigation_screen.dart';
-import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/features/auth/presentation/widgets/auth.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
 import 'widgets/login.dart';
 
 class LoginScreen extends StatefulWidget {

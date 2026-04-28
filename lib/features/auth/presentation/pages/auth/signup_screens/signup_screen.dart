@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/routing/app_router.dart';
-import 'package:emosense_mobile/domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/domain/entities/user_entity.dart';
 import 'package:emosense_mobile/features/auth/presentation/bloc/user_bloc.dart';
-import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
+import 'package:emosense_mobile/features/auth/presentation/widgets/auth.dart';
 import 'widgets/signup.dart';
 
 class SignUpScreen extends StatefulWidget {

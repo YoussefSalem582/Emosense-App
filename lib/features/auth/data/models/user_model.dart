@@ -1,4 +1,4 @@
-import '../../domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/domain/entities/user_entity.dart';
 
 class UserModel {
   final String id;

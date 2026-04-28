@@ -1,4 +1,4 @@
-enum UserRole { admin, employee }
+import 'package:emosense_mobile/features/auth/domain/entities/user_entity.dart';
 
 extension UserRoleExtension on UserRole {
   String get displayName {
