@@ -1,6 +1,7 @@
 // Flutter API Configuration for Localhost Backend
 // lib/core/config/api_config.dart
 
+import 'dart:developer' show log;
 import 'dart:io';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
@@ -72,7 +73,7 @@ class EmotionApiService {
 
       return response.statusCode == 200;
     } catch (e) {
-      print('Health check failed: $e');
+      log('Health check failed: $e', name: 'ApiConfig');
       return false;
     }
   }

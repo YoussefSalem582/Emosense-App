@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer' show log;
 import 'package:http/http.dart' as http;
 import '../models/emotion_result.dart';
 import '../models/system_metrics.dart';
@@ -19,8 +20,6 @@ class EmotionApiService {
   static const String _healthEndpoint = '/health';
   static const String _predictTextEndpoint = '/predict/text';
   static const String _predictVideoEndpoint = '/predict/video';
-  static const String _predictAudioEndpoint = '/predict/audio';
-  static const String _predictYoutubeEndpoint = '/predict/youtube';
 
   // HTTP client with timeout
   final http.Client _client;
@@ -42,7 +41,7 @@ class EmotionApiService {
 
       return response.statusCode == 200;
     } catch (e) {
-      print('Connection check failed: $e');
+      log('Connection check failed: $e', name: 'EmotionApiService');
       return false;
     }
   }
@@ -103,7 +102,6 @@ class EmotionApiService {
       'disgust',
       'neutral',
     ];
-    final sentiments = ['positive', 'negative', 'neutral'];
 
     // Simple keyword-based emotion detection
     String emotion = 'neutral';
