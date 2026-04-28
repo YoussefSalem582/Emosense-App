@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/features/employee/profile/presentation/bloc/employee_profile_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
 
@@ -18,16 +16,14 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
 
+  bool _notificationsEnabled = true;
+  bool _emailAlerts = false;
+  String _selectedLanguage = 'English';
+
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      context.read<EmployeeProfileBloc>().add(
-        const EmployeeProfileLoadRequested(),
-      );
-    });
   }
 
   void _initializeAnimations() {
@@ -51,129 +47,78 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final customSpacing = theme.extension<CustomSpacing>()!;
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           AnimatedBackgroundWidget(animation: _backgroundAnimation),
-          BlocBuilder<EmployeeProfileBloc, EmployeeProfileState>(
-            builder: (context, state) {
-              if (state is EmployeeProfileInitial ||
-                  state is EmployeeProfileLoading) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (state is EmployeeProfileError) {
-                return Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(customSpacing.lg),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.error_outline,
-                          size: 48,
-                          color: AppColors.error,
-                        ),
-                        SizedBox(height: customSpacing.md),
-                        Text(state.message, textAlign: TextAlign.center),
-                        SizedBox(height: customSpacing.md),
-                        ElevatedButton(
-                          onPressed:
-                              () => context.read<EmployeeProfileBloc>().add(
-                                const EmployeeProfileLoadRequested(),
-                              ),
-                          child: const Text('Retry'),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }
-              if (state is! EmployeeProfileSuccess) {
-                return const SizedBox.shrink();
-              }
-              final d = state.data;
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    ProfileHeaderWidget(
-                      name: d.name,
-                      position: d.position,
-                      status: d.status,
-                      onEditPressed: () => _showEditProfileDialog(),
-                    ),
-                    const SizedBox(height: 20),
-                    ProfilePersonalInfoWidget(
-                      name: d.name,
-                      email: d.email,
-                      phone: d.phone,
-                      department: d.department,
-                      employeeId: d.employeeId,
-                    ),
-                    const SizedBox(height: 20),
-                    ProfileWorkInfoWidget(
-                      startDate: d.startDate,
-                      location: d.location,
-                      manager: d.manager,
-                      team: d.team,
-                    ),
-                    const SizedBox(height: 20),
-                    ProfileSettingsWidget(
-                      notificationsEnabled: d.notificationsEnabled,
-                      emailAlerts: d.emailAlerts,
-                      selectedLanguage: d.selectedLanguage,
-                      onNotificationsChanged:
-                          (value) => context.read<EmployeeProfileBloc>().add(
-                            EmployeeProfileNotificationsChanged(value),
-                          ),
-                      onEmailAlertsChanged:
-                          (value) => context.read<EmployeeProfileBloc>().add(
-                            EmployeeProfileEmailAlertsChanged(value),
-                          ),
-                      onLanguageChanged: (value) {
-                        if (value != null) {
-                          context.read<EmployeeProfileBloc>().add(
-                            EmployeeProfileLanguageChanged(value),
-                          );
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.cloud_outlined,
-                          color: AppColors.primary,
-                        ),
-                        title: const Text('App & connection status'),
-                        subtitle: const Text(
-                          'Backend connectivity and diagnostics',
-                        ),
-                        trailing: const Icon(Icons.chevron_right),
-                        onTap: () => AppRouter.toAppStatus(context),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    ProfileQuickActionsWidget(
-                      onEditProfile: () => _showEditProfileDialog(),
-                      onChangePassword: () => _showChangePasswordDialog(),
-                      onTimeOffRequest: () => _showTimeOffRequest(),
-                      onHelpSupport: () => _showHelpSupport(),
-                      onSignOut: () => _showSignOutDialog(),
-                    ),
-                    const SizedBox(height: 20),
-                  ],
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                ProfileHeaderWidget(
+                  name: 'Youssef Hassan',
+                  position: 'Customer Service Representative',
+                  status: 'Active',
+                  onEditPressed: () => _showEditProfileDialog(),
                 ),
-              );
-            },
+                const SizedBox(height: 20),
+                ProfilePersonalInfoWidget(
+                  name: 'Youssef Hassan',
+                  email: 'youssef.hassan@company.com',
+                  phone: '+20 1026855881',
+                  department: 'Customer Support',
+                  employeeId: '211000582',
+                ),
+                const SizedBox(height: 20),
+                ProfileWorkInfoWidget(
+                  startDate: 'January 15, 2025',
+                  location: 'Giza',
+                  manager: 'Dr Walaa',
+                  team: 'Customer Experience',
+                ),
+                const SizedBox(height: 20),
+                ProfileSettingsWidget(
+                  notificationsEnabled: _notificationsEnabled,
+                  emailAlerts: _emailAlerts,
+                  selectedLanguage: _selectedLanguage,
+                  onNotificationsChanged:
+                      (value) => setState(() => _notificationsEnabled = value),
+                  onEmailAlertsChanged:
+                      (value) => setState(() => _emailAlerts = value),
+                  onLanguageChanged:
+                      (value) => setState(() => _selectedLanguage = value!),
+                ),
+                const SizedBox(height: 20),
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.cloud_outlined,
+                      color: AppColors.primary,
+                    ),
+                    title: const Text('App & connection status'),
+                    subtitle: const Text(
+                      'Backend connectivity and diagnostics',
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => AppRouter.toAppStatus(context),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                ProfileQuickActionsWidget(
+                  onEditProfile: () => _showEditProfileDialog(),
+                  onChangePassword: () => _showChangePasswordDialog(),
+                  onTimeOffRequest: () => _showTimeOffRequest(),
+                  onHelpSupport: () => _showHelpSupport(),
+                  onSignOut: () => _showSignOutDialog(),
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
           ),
         ],
       ),

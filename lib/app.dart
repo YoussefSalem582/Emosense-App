@@ -11,12 +11,9 @@ import 'features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import 'features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import 'features/auth/presentation/bloc/user_bloc.dart';
 import 'features/emotion/presentation/bloc/emotion_bloc.dart';
-import 'features/employee/analysis_tools/presentation/bloc/employee_analysis_tools_bloc.dart';
-import 'features/employee/dashboard/presentation/bloc/employee_dashboard_bloc.dart';
-import 'features/employee/navigation/presentation/bloc/employee_navigation_bloc.dart';
-import 'features/employee/performance/presentation/bloc/employee_performance_bloc.dart';
-import 'features/employee/profile/presentation/bloc/employee_profile_bloc.dart';
 import 'features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
+import 'features/employee/dashboard/presentation/bloc/employee_dashboard_bloc.dart';
+import 'features/employee/performance/presentation/bloc/employee_performance_bloc.dart';
 import 'core/network/connection_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/backend_connection_widget.dart';
 
@@ -40,9 +37,6 @@ class EmosenseApp extends StatelessWidget {
         ),
         BlocProvider<EmotionBloc>(create: (_) => di.sl<EmotionBloc>()),
         BlocProvider<UserBloc>(create: (_) => di.sl<UserBloc>()),
-        BlocProvider<EmployeeNavigationBloc>(
-          create: (_) => di.sl<EmployeeNavigationBloc>(),
-        ),
         BlocProvider<EmployeeDashboardBloc>(
           create: (_) => di.sl<EmployeeDashboardBloc>(),
         ),
@@ -51,12 +45,6 @@ class EmosenseApp extends StatelessWidget {
         ),
         BlocProvider<EmployeePerformanceBloc>(
           create: (_) => di.sl<EmployeePerformanceBloc>(),
-        ),
-        BlocProvider<EmployeeProfileBloc>(
-          create: (_) => di.sl<EmployeeProfileBloc>(),
-        ),
-        BlocProvider<EmployeeAnalysisToolsBloc>(
-          create: (_) => di.sl<EmployeeAnalysisToolsBloc>(),
         ),
         BlocProvider<AdminDashboardBloc>(
           create: (_) => di.sl<AdminDashboardBloc>(),
