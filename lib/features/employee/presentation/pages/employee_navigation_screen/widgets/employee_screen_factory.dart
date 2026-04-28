@@ -6,7 +6,7 @@ import '../../employee_dashboard_screen/employee_dashboard_screen.dart';
 import '../../employee_profile_screen/employee_profile_screen.dart';
 import 'package:emosense_mobile/features/employee/presentation/employee_performance_screen.dart';
 import 'package:emosense_mobile/features/tickets/shared/presentation/bloc/tickets_bloc.dart';
-import 'package:emosense_mobile/features/tickets/presentation/pages/employee/employee_tickets_page.dart';
+import 'package:emosense_mobile/features/tickets/employee/presentation/pages/employee_tickets_page.dart';
 import 'package:emosense_mobile/features/analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
 import '../../employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
 import 'package:emosense_mobile/features/emotion/presentation/pages/analytics/customer_analytics_screen.dart';

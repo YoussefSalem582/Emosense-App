@@ -5,7 +5,7 @@ import 'package:emosense_mobile/core/core.dart';
 
 import '../../../shared/presentation/bloc/tickets_bloc.dart';
 import '../../../shared/presentation/widgets/dialogs/create_ticket_dialog.dart';
-import 'widgets/review_video_filter_chips_widget.dart';
+import '../widgets/review_video_filter_chips_widget.dart';
 
 class EmployeeTicketsScreen extends StatefulWidget {
   const EmployeeTicketsScreen({super.key});
