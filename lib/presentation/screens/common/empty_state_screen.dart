@@ -40,7 +40,8 @@ class EmptyStateScreen extends StatelessWidget {
 
   factory EmptyStateScreen.noResults({
     String title = 'No Results Found',
-    String message = 'No results match your search criteria. Try adjusting your filters.',
+    String message =
+        'No results match your search criteria. Try adjusting your filters.',
     String? actionLabel = 'Clear Filters',
     VoidCallback? onAction,
   }) {
@@ -85,7 +86,8 @@ class EmptyStateScreen extends StatelessWidget {
 
   factory EmptyStateScreen.comingSoon({
     String title = 'Coming Soon',
-    String message = 'This feature is under development. Stay tuned for updates!',
+    String message =
+        'This feature is under development. Stay tuned for updates!',
   }) {
     return EmptyStateScreen(
       title: title,
@@ -96,7 +98,8 @@ class EmptyStateScreen extends StatelessWidget {
 
   factory EmptyStateScreen.maintenance({
     String title = 'Under Maintenance',
-    String message = 'This feature is temporarily unavailable due to maintenance.',
+    String message =
+        'This feature is temporarily unavailable due to maintenance.',
     String? actionLabel = 'Check Status',
     VoidCallback? onAction,
   }) {
@@ -113,16 +116,20 @@ class EmptyStateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: showBackButton
-          ? AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            )
-          : null,
+      appBar:
+          showBackButton
+              ? AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.textPrimary,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              )
+              : null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -139,10 +146,7 @@ class EmptyStateScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.surfaceContainer,
-                    border: Border.all(
-                      color: AppColors.border,
-                      width: 2,
-                    ),
+                    border: Border.all(color: AppColors.border, width: 2),
                   ),
                   child: Icon(
                     icon ?? Icons.inbox_outlined,

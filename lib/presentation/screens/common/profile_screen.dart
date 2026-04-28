@@ -32,7 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-  
+
   bool _isEditing = false;
   bool _hasChanges = false;
 
@@ -43,23 +43,18 @@ class _ProfileScreenState extends State<ProfileScreen>
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
-    
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
+
     _animationController.forward();
   }
 
@@ -83,29 +78,30 @@ class _ProfileScreenState extends State<ProfileScreen>
   void _showSaveDialog() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Save Changes'),
-        content: const Text('Do you want to save your changes?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              setState(() {
-                _isEditing = false;
-                _hasChanges = false;
-              });
-            },
-            child: const Text('Discard'),
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Save Changes'),
+            content: const Text('Do you want to save your changes?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    _isEditing = false;
+                    _hasChanges = false;
+                  });
+                },
+                child: const Text('Discard'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _saveChanges();
+                },
+                child: const Text('Save'),
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-              _saveChanges();
-            },
-            child: const Text('Save'),
-          ),
-        ],
-      ),
     );
   }
 
@@ -127,12 +123,13 @@ class _ProfileScreenState extends State<ProfileScreen>
         title: Text(widget.title),
         backgroundColor: AppColors.surface,
         elevation: 0,
-        leading: widget.showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: widget.onBack ?? () => Navigator.pop(context),
-              )
-            : null,
+        leading:
+            widget.showBackButton
+                ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: widget.onBack ?? () => Navigator.pop(context),
+                )
+                : null,
         actions: [
           if (widget.isEditable) ...[
             IconButton(
@@ -159,12 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   Widget _buildContent() {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          _buildProfileHeader(),
-          _buildProfileSections(),
-        ],
-      ),
+      child: Column(children: [_buildProfileHeader(), _buildProfileSections()]),
     );
   }
 
@@ -173,9 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          bottom: BorderSide(color: AppColors.border, width: 0.5),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.border, width: 0.5)),
       ),
       child: Column(
         children: [
@@ -190,19 +180,20 @@ class _ProfileScreenState extends State<ProfileScreen>
                   color: AppColors.surfaceContainer,
                   border: Border.all(color: AppColors.border, width: 2),
                 ),
-                child: widget.profileData.avatarUrl != null
-                    ? ClipOval(
-                        child: Image.network(
-                          widget.profileData.avatarUrl!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return _buildDefaultAvatar();
-                          },
-                        ),
-                      )
-                    : _buildDefaultAvatar(),
+                child:
+                    widget.profileData.avatarUrl != null
+                        ? ClipOval(
+                          child: Image.network(
+                            widget.profileData.avatarUrl!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return _buildDefaultAvatar();
+                            },
+                          ),
+                        )
+                        : _buildDefaultAvatar(),
               ),
-              
+
               if (_isEditing) ...[
                 Positioned(
                   bottom: 0,
@@ -224,9 +215,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               ],
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Name
           Text(
             widget.profileData.name,
@@ -236,9 +227,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               color: AppColors.textPrimary,
             ),
           ),
-          
+
           const SizedBox(height: 4),
-          
+
           // Email or subtitle
           if (widget.profileData.email != null) ...[
             Text(
@@ -249,9 +240,9 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
             ),
           ],
-          
+
           const SizedBox(height: 8),
-          
+
           // Status or role
           if (widget.profileData.role != null) ...[
             Container(
@@ -276,11 +267,7 @@ class _ProfileScreenState extends State<ProfileScreen>
   }
 
   Widget _buildDefaultAvatar() {
-    return const Icon(
-      Icons.person,
-      size: 50,
-      color: AppColors.textSecondary,
-    );
+    return const Icon(Icons.person, size: 50, color: AppColors.textSecondary);
   }
 
   Widget _buildProfileSections() {
@@ -301,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (index > 0) const SizedBox(height: 24),
-        
+
         // Section header
         if (section.title != null) ...[
           Padding(
@@ -316,7 +303,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
           ),
         ],
-        
+
         // Section items
         Container(
           decoration: BoxDecoration(
@@ -331,13 +318,14 @@ class _ProfileScreenState extends State<ProfileScreen>
             ],
           ),
           child: Column(
-            children: section.items.asMap().entries.map((entry) {
-              final itemIndex = entry.key;
-              final item = entry.value;
-              final isLast = itemIndex == section.items.length - 1;
-              
-              return _buildProfileItem(item, isLast);
-            }).toList(),
+            children:
+                section.items.asMap().entries.map((entry) {
+                  final itemIndex = entry.key;
+                  final item = entry.value;
+                  final isLast = itemIndex == section.items.length - 1;
+
+                  return _buildProfileItem(item, isLast);
+                }).toList(),
           ),
         ),
       ],
@@ -347,29 +335,32 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget _buildProfileItem(ProfileItem item, bool isLast) {
     return Container(
       decoration: BoxDecoration(
-        border: !isLast
-            ? const Border(
-                bottom: BorderSide(color: AppColors.border, width: 0.5),
-              )
-            : null,
+        border:
+            !isLast
+                ? const Border(
+                  bottom: BorderSide(color: AppColors.border, width: 0.5),
+                )
+                : null,
       ),
       child: ListTile(
-        leading: item.icon != null
-            ? Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: (item.iconColor ?? AppColors.primary)
-                      .withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  item.icon,
-                  color: item.iconColor ?? AppColors.primary,
-                  size: 20,
-                ),
-              )
-            : null,
+        leading:
+            item.icon != null
+                ? Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: (item.iconColor ?? AppColors.primary).withValues(
+                      alpha: 0.1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    item.icon,
+                    color: item.iconColor ?? AppColors.primary,
+                    size: 20,
+                  ),
+                )
+                : null,
         title: Text(
           item.title,
           style: const TextStyle(
@@ -378,34 +369,34 @@ class _ProfileScreenState extends State<ProfileScreen>
             color: AppColors.textPrimary,
           ),
         ),
-        subtitle: item.value != null
-            ? Text(
-                item.value!,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                ),
-              )
-            : null,
-        trailing: _isEditing && item.isEditable
-            ? const Icon(
-                Icons.chevron_right,
-                color: AppColors.textTertiary,
-              )
-            : null,
-        onTap: (_isEditing && item.isEditable) || item.onTap != null
-            ? () {
-                HapticFeedback.selectionClick();
-                if (item.onTap != null) {
-                  item.onTap!();
-                } else if (_isEditing) {
-                  // Handle edit action
-                  setState(() {
-                    _hasChanges = true;
-                  });
+        subtitle:
+            item.value != null
+                ? Text(
+                  item.value!,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textSecondary,
+                  ),
+                )
+                : null,
+        trailing:
+            _isEditing && item.isEditable
+                ? const Icon(Icons.chevron_right, color: AppColors.textTertiary)
+                : null,
+        onTap:
+            (_isEditing && item.isEditable) || item.onTap != null
+                ? () {
+                  HapticFeedback.selectionClick();
+                  if (item.onTap != null) {
+                    item.onTap!();
+                  } else if (_isEditing) {
+                    // Handle edit action
+                    setState(() {
+                      _hasChanges = true;
+                    });
+                  }
                 }
-              }
-            : null,
+                : null,
       ),
     );
   }
@@ -434,10 +425,7 @@ class ProfileSection {
   final String? title;
   final List<ProfileItem> items;
 
-  const ProfileSection({
-    this.title,
-    required this.items,
-  });
+  const ProfileSection({this.title, required this.items});
 }
 
 class ProfileItem {

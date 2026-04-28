@@ -18,9 +18,10 @@ class ConnectionStatusCard extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            gradient: isConnected
-                ? AppColors.successGradient
-                : AppColors.errorGradient,
+            gradient:
+                isConnected
+                    ? AppColors.successGradient
+                    : AppColors.errorGradient,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
@@ -41,9 +42,7 @@ class ConnectionStatusCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  isConnected
-                      ? AppStrings.connected
-                      : AppStrings.disconnected,
+                  isConnected ? AppStrings.connected : AppStrings.disconnected,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -52,21 +51,27 @@ class ConnectionStatusCard extends StatelessWidget {
                 ),
               ),
               TextButton.icon(
-                onPressed: isChecking
-                    ? null
-                    : () => context.read<ConnectionBloc>().add(
+                onPressed:
+                    isChecking
+                        ? null
+                        : () => context.read<ConnectionBloc>().add(
                           const ConnectionTestRequested(),
                         ),
-                icon: isChecking
-                    ? const SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
+                icon:
+                    isChecking
+                        ? const SizedBox(
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                        : const Icon(
+                          Icons.refresh,
                           color: Colors.white,
-                          strokeWidth: 2,
+                          size: 18,
                         ),
-                      )
-                    : const Icon(Icons.refresh, color: Colors.white, size: 18),
                 label: Text(
                   AppStrings.refresh,
                   style: const TextStyle(color: Colors.white),

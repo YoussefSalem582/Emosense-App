@@ -7,7 +7,11 @@ class SearchScreen extends StatefulWidget {
   final String title;
   final String hintText;
   final List<SearchFilter>? filters;
-  final Future<List<dynamic>> Function(String query, Map<String, dynamic> filters)? onSearch;
+  final Future<List<dynamic>> Function(
+    String query,
+    Map<String, dynamic> filters,
+  )?
+  onSearch;
   final Widget Function(BuildContext, dynamic)? itemBuilder;
   final Widget? emptyWidget;
   final Widget? loadingWidget;
@@ -36,7 +40,7 @@ class _SearchScreenState extends State<SearchScreen>
   late TextEditingController _searchController;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
-  
+
   List<dynamic> _results = [];
   bool _isLoading = false;
   bool _hasSearched = false;
@@ -50,15 +54,11 @@ class _SearchScreenState extends State<SearchScreen>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     _animationController.forward();
   }
 
@@ -71,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   Future<void> _performSearch() async {
     if (widget.onSearch == null) return;
-    
+
     final query = _searchController.text.trim();
     if (query.isEmpty) {
       setState(() {
@@ -102,7 +102,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   void _showFilters() {
     if (widget.filters == null) return;
-    
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -119,12 +119,13 @@ class _SearchScreenState extends State<SearchScreen>
         title: Text(widget.title),
         backgroundColor: AppColors.surface,
         elevation: 0,
-        leading: widget.showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: widget.onBack ?? () => Navigator.pop(context),
-              )
-            : null,
+        leading:
+            widget.showBackButton
+                ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: widget.onBack ?? () => Navigator.pop(context),
+                )
+                : null,
         actions: [
           if (widget.filters != null) ...[
             IconButton(
@@ -158,10 +159,7 @@ class _SearchScreenState extends State<SearchScreen>
           return FadeTransition(
             opacity: _fadeAnimation,
             child: Column(
-              children: [
-                _buildSearchBar(),
-                Expanded(child: _buildContent()),
-              ],
+              children: [_buildSearchBar(), Expanded(child: _buildContent())],
             ),
           );
         },
@@ -174,24 +172,26 @@ class _SearchScreenState extends State<SearchScreen>
       padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          bottom: BorderSide(color: AppColors.border, width: 0.5),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.border, width: 0.5)),
       ),
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
           hintText: widget.hintText,
           prefixIcon: const Icon(Icons.search, color: AppColors.textSecondary),
-          suffixIcon: _searchController.text.isNotEmpty
-              ? IconButton(
-                  icon: const Icon(Icons.clear, color: AppColors.textSecondary),
-                  onPressed: () {
-                    _searchController.clear();
-                    _performSearch();
-                  },
-                )
-              : null,
+          suffixIcon:
+              _searchController.text.isNotEmpty
+                  ? IconButton(
+                    icon: const Icon(
+                      Icons.clear,
+                      color: AppColors.textSecondary,
+                    ),
+                    onPressed: () {
+                      _searchController.clear();
+                      _performSearch();
+                    },
+                  )
+                  : null,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: AppColors.border),
@@ -247,18 +247,11 @@ class _SearchScreenState extends State<SearchScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.search,
-            size: 64,
-            color: AppColors.textTertiary,
-          ),
+          Icon(Icons.search, size: 64, color: AppColors.textTertiary),
           SizedBox(height: 16),
           Text(
             'Start typing to search',
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -270,11 +263,7 @@ class _SearchScreenState extends State<SearchScreen>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.search_off,
-            size: 64,
-            color: AppColors.textTertiary,
-          ),
+          Icon(Icons.search_off, size: 64, color: AppColors.textTertiary),
           SizedBox(height: 16),
           Text(
             'No results found',
@@ -287,10 +276,7 @@ class _SearchScreenState extends State<SearchScreen>
           SizedBox(height: 8),
           Text(
             'Try adjusting your search terms',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
-            ),
+            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -343,7 +329,7 @@ class _SearchScreenState extends State<SearchScreen>
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          
+
           // Header
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -370,9 +356,9 @@ class _SearchScreenState extends State<SearchScreen>
               ],
             ),
           ),
-          
+
           const Divider(),
-          
+
           // Filters content
           Expanded(
             child: ListView.builder(
@@ -384,14 +370,12 @@ class _SearchScreenState extends State<SearchScreen>
               },
             ),
           ),
-          
+
           // Apply button
           Container(
             padding: const EdgeInsets.all(16),
             decoration: const BoxDecoration(
-              border: Border(
-                top: BorderSide(color: AppColors.border),
-              ),
+              border: Border(top: BorderSide(color: AppColors.border)),
             ),
             child: SizedBox(
               width: double.infinity,
@@ -452,9 +436,4 @@ class SearchFilter {
   });
 }
 
-enum SearchFilterType {
-  dropdown,
-  checkbox,
-  toggle,
-  range,
-}
+enum SearchFilterType { dropdown, checkbox, toggle, range }

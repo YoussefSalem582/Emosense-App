@@ -32,9 +32,10 @@ class TextInputWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final customSpacing = theme.extension<CustomSpacing>()!;
     final currentLength = textController.text.length;
-    final wordCount = textController.text.trim().isEmpty
-        ? 0
-        : textController.text.trim().split(RegExp(r'\s+')).length;
+    final wordCount =
+        textController.text.trim().isEmpty
+            ? 0
+            : textController.text.trim().split(RegExp(r'\s+')).length;
     final hasText = textController.text.trim().isNotEmpty;
 
     return Container(
@@ -164,18 +165,19 @@ class TextInputWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               onChanged: (value) => onAnalysisTypeChanged(value!),
-              items: analysisTypes.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Row(
-                    children: [
-                      _getAnalysisTypeIcon(type),
-                      SizedBox(width: spacing.sm),
-                      Text(type),
-                    ],
-                  ),
-                );
-              }).toList(),
+              items:
+                  analysisTypes.map((type) {
+                    return DropdownMenuItem(
+                      value: type,
+                      child: Row(
+                        children: [
+                          _getAnalysisTypeIcon(type),
+                          SizedBox(width: spacing.sm),
+                          Text(type),
+                        ],
+                      ),
+                    );
+                  }).toList(),
             ),
           ),
         ),
@@ -235,11 +237,12 @@ class TextInputWidget extends StatelessWidget {
             color: AppColors.background,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: isOverLimit
-                  ? AppColors.error
-                  : textController.text.isNotEmpty
-                  ? AppColors.success.withValues(alpha: 0.5)
-                  : AppColors.primary.withValues(alpha: 0.2),
+              color:
+                  isOverLimit
+                      ? AppColors.error
+                      : textController.text.isNotEmpty
+                      ? AppColors.success.withValues(alpha: 0.5)
+                      : AppColors.primary.withValues(alpha: 0.2),
               width: 1.5,
             ),
             boxShadow: [
@@ -289,21 +292,22 @@ class TextInputWidget extends StatelessWidget {
                     children: [
                       Icon(
                         isOverLimit ? Icons.warning : Icons.info_outline,
-                        color: isOverLimit
-                            ? AppColors.error
-                            : AppColors.textSecondary,
+                        color:
+                            isOverLimit
+                                ? AppColors.error
+                                : AppColors.textSecondary,
                         size: 16,
                       ),
                       SizedBox(width: spacing.xs),
                       Text(
                         '$currentLength / $characterLimit characters',
                         style: theme.textTheme.bodySmall?.copyWith(
-                          color: isOverLimit
-                              ? AppColors.error
-                              : AppColors.textSecondary,
-                          fontWeight: isOverLimit
-                              ? FontWeight.w600
-                              : FontWeight.normal,
+                          color:
+                              isOverLimit
+                                  ? AppColors.error
+                                  : AppColors.textSecondary,
+                          fontWeight:
+                              isOverLimit ? FontWeight.w600 : FontWeight.normal,
                         ),
                       ),
                       const Spacer(),
@@ -380,24 +384,26 @@ class TextInputWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         height: 56,
         decoration: BoxDecoration(
-          gradient: isEnabled
-              ? LinearGradient(
-                  colors: [color, color.withValues(alpha: 0.8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
+          gradient:
+              isEnabled
+                  ? LinearGradient(
+                    colors: [color, color.withValues(alpha: 0.8)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                  : null,
           color: !isEnabled ? color.withValues(alpha: 0.3) : null,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: isEnabled
-              ? [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
-                  ),
-                ]
-              : null,
+          boxShadow:
+              isEnabled
+                  ? [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                  : null,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

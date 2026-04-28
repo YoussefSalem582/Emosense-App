@@ -37,7 +37,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
-  
+
   int _currentStep = 0;
   bool _isLastStep = false;
 
@@ -49,23 +49,18 @@ class _OnboardingWizardState extends State<OnboardingWizard>
       duration: const Duration(milliseconds: 300),
       vsync: this,
     );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
-    
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
+
     _animationController.forward();
     _updateLastStep();
   }
@@ -122,7 +117,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
           children: [
             // Header with progress and skip button
             _buildHeader(),
-            
+
             // Main content
             Expanded(
               child: PageView.builder(
@@ -151,7 +146,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
                 },
               ),
             ),
-            
+
             // Bottom navigation
             _buildBottomNavigation(),
           ],
@@ -179,7 +174,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
             ),
             const SizedBox(width: 16),
           ],
-          
+
           // Skip button
           if (widget.onSkip != null || !_isLastStep) ...[
             TextButton(
@@ -231,23 +226,20 @@ class _OnboardingWizardState extends State<OnboardingWizard>
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: (step.primaryColor ?? AppColors.primary)
-                        .withValues(alpha: 0.3),
+                    color: (step.primaryColor ?? AppColors.primary).withValues(
+                      alpha: 0.3,
+                    ),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
                 ],
               ),
-              child: Icon(
-                step.icon,
-                size: 60,
-                color: Colors.white,
-              ),
+              child: Icon(step.icon, size: 60, color: Colors.white),
             ),
           ],
-          
+
           const SizedBox(height: 40),
-          
+
           // Title
           Text(
             step.title,
@@ -258,9 +250,9 @@ class _OnboardingWizardState extends State<OnboardingWizard>
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Description
           Text(
             step.description,
@@ -271,7 +263,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
             ),
             textAlign: TextAlign.center,
           ),
-          
+
           // Additional content
           if (step.content != null) ...[
             const SizedBox(height: 24),
@@ -287,9 +279,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        border: Border(
-          top: BorderSide(color: AppColors.border, width: 1),
-        ),
+        border: Border(top: BorderSide(color: AppColors.border, width: 1)),
       ),
       child: Row(
         children: [
@@ -307,7 +297,7 @@ class _OnboardingWizardState extends State<OnboardingWizard>
             ),
             const SizedBox(width: 16),
           ],
-          
+
           // Next/Complete button
           Expanded(
             flex: _currentStep > 0 ? 1 : 2,

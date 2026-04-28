@@ -28,7 +28,8 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
           ),
           _buildDemoCard(
             title: 'Error Screen',
-            description: 'Comprehensive error handling with retry functionality',
+            description:
+                'Comprehensive error handling with retry functionality',
             onTap: () => _showErrorScreen(),
           ),
           _buildDemoCard(
@@ -79,10 +80,7 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
         ),
         subtitle: Text(
           description,
-          style: const TextStyle(
-            fontSize: 14,
-            color: AppColors.textSecondary,
-          ),
+          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,
@@ -94,11 +92,12 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoadingScreen(
-          message: 'Loading demo data...',
-          showProgress: true,
-          progress: 0.7,
-        ),
+        builder:
+            (context) => const LoadingScreen(
+              message: 'Loading demo data...',
+              showProgress: true,
+              progress: 0.7,
+            ),
       ),
     );
 
@@ -113,9 +112,9 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ErrorScreen.network(
-          onAction: () => Navigator.pop(context),
-        ),
+        builder:
+            (context) =>
+                ErrorScreen.network(onAction: () => Navigator.pop(context)),
       ),
     );
   }
@@ -124,9 +123,9 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EmptyStateScreen.noData(
-          onAction: () => Navigator.pop(context),
-        ),
+        builder:
+            (context) =>
+                EmptyStateScreen.noData(onAction: () => Navigator.pop(context)),
       ),
     );
   }
@@ -135,33 +134,37 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => OnboardingWizard(
-          steps: [
-            const OnboardingStep(
-              title: 'Welcome to EmoSense',
-              description: 'Discover the power of emotional intelligence with our advanced AI platform.',
-              icon: Icons.psychology,
-              primaryColor: AppColors.primary,
-              secondaryColor: AppColors.accent,
+        builder:
+            (context) => OnboardingWizard(
+              steps: [
+                const OnboardingStep(
+                  title: 'Welcome to EmoSense',
+                  description:
+                      'Discover the power of emotional intelligence with our advanced AI platform.',
+                  icon: Icons.psychology,
+                  primaryColor: AppColors.primary,
+                  secondaryColor: AppColors.accent,
+                ),
+                const OnboardingStep(
+                  title: 'Analyze Emotions',
+                  description:
+                      'Get deep insights into emotions from text, voice, and video content.',
+                  icon: Icons.analytics,
+                  primaryColor: AppColors.accent,
+                  secondaryColor: AppColors.secondary,
+                ),
+                const OnboardingStep(
+                  title: 'Make Better Decisions',
+                  description:
+                      'Use emotional insights to improve customer experiences and business outcomes.',
+                  icon: Icons.trending_up,
+                  primaryColor: AppColors.success,
+                  secondaryColor: AppColors.primary,
+                ),
+              ],
+              onComplete: () => Navigator.pop(context),
+              onSkip: () => Navigator.pop(context),
             ),
-            const OnboardingStep(
-              title: 'Analyze Emotions',
-              description: 'Get deep insights into emotions from text, voice, and video content.',
-              icon: Icons.analytics,
-              primaryColor: AppColors.accent,
-              secondaryColor: AppColors.secondary,
-            ),
-            const OnboardingStep(
-              title: 'Make Better Decisions',
-              description: 'Use emotional insights to improve customer experiences and business outcomes.',
-              icon: Icons.trending_up,
-              primaryColor: AppColors.success,
-              secondaryColor: AppColors.primary,
-            ),
-          ],
-          onComplete: () => Navigator.pop(context),
-          onSkip: () => Navigator.pop(context),
-        ),
       ),
     );
   }
@@ -170,62 +173,63 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SettingsScreen(
-          sections: [
-            SettingsSection(
-              title: 'Account',
-              items: [
-                SettingsItem.navigation(
-                  title: 'Profile',
-                  subtitle: 'Manage your profile information',
-                  icon: Icons.person,
-                  onTap: () {},
+        builder:
+            (context) => SettingsScreen(
+              sections: [
+                SettingsSection(
+                  title: 'Account',
+                  items: [
+                    SettingsItem.navigation(
+                      title: 'Profile',
+                      subtitle: 'Manage your profile information',
+                      icon: Icons.person,
+                      onTap: () {},
+                    ),
+                    SettingsItem.navigation(
+                      title: 'Security',
+                      subtitle: 'Password and authentication',
+                      icon: Icons.security,
+                      onTap: () {},
+                    ),
+                  ],
                 ),
-                SettingsItem.navigation(
-                  title: 'Security',
-                  subtitle: 'Password and authentication',
-                  icon: Icons.security,
-                  onTap: () {},
+                SettingsSection(
+                  title: 'Preferences',
+                  items: [
+                    SettingsItem.toggle(
+                      title: 'Push Notifications',
+                      subtitle: 'Receive notifications on your device',
+                      icon: Icons.notifications,
+                      value: true,
+                      onChanged: (value) {},
+                    ),
+                    SettingsItem.toggle(
+                      title: 'Dark Mode',
+                      subtitle: 'Use dark theme',
+                      icon: Icons.dark_mode,
+                      value: false,
+                      onChanged: (value) {},
+                    ),
+                  ],
+                ),
+                SettingsSection(
+                  title: 'About',
+                  items: [
+                    SettingsItem.info(
+                      title: 'Version',
+                      icon: Icons.info,
+                      trailingText: '1.0.0',
+                    ),
+                    SettingsItem.action(
+                      title: 'Contact Support',
+                      icon: Icons.support,
+                      trailingIcon: Icons.open_in_new,
+                      onTap: () {},
+                    ),
+                  ],
                 ),
               ],
             ),
-            SettingsSection(
-              title: 'Preferences',
-              items: [
-                SettingsItem.toggle(
-                  title: 'Push Notifications',
-                  subtitle: 'Receive notifications on your device',
-                  icon: Icons.notifications,
-                  value: true,
-                  onChanged: (value) {},
-                ),
-                SettingsItem.toggle(
-                  title: 'Dark Mode',
-                  subtitle: 'Use dark theme',
-                  icon: Icons.dark_mode,
-                  value: false,
-                  onChanged: (value) {},
-                ),
-              ],
-            ),
-            SettingsSection(
-              title: 'About',
-              items: [
-                SettingsItem.info(
-                  title: 'Version',
-                  icon: Icons.info,
-                  trailingText: '1.0.0',
-                ),
-                SettingsItem.action(
-                  title: 'Contact Support',
-                  icon: Icons.support,
-                  trailingIcon: Icons.open_in_new,
-                  onTap: () {},
-                ),
-              ],
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -234,25 +238,29 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SearchScreen(
-          hintText: 'Search for emotions, analytics...',
-          onSearch: (query, filters) async {
-            // Simulate search
-            await Future.delayed(const Duration(seconds: 1));
-            return List.generate(5, (index) => 'Result ${index + 1} for "$query"');
-          },
-          itemBuilder: (context, item) {
-            return Card(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: ListTile(
-                title: Text(item.toString()),
-                subtitle: Text('Description for $item'),
-                leading: const Icon(Icons.search),
-                onTap: () {},
-              ),
-            );
-          },
-        ),
+        builder:
+            (context) => SearchScreen(
+              hintText: 'Search for emotions, analytics...',
+              onSearch: (query, filters) async {
+                // Simulate search
+                await Future.delayed(const Duration(seconds: 1));
+                return List.generate(
+                  5,
+                  (index) => 'Result ${index + 1} for "$query"',
+                );
+              },
+              itemBuilder: (context, item) {
+                return Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    title: Text(item.toString()),
+                    subtitle: Text('Description for $item'),
+                    leading: const Icon(Icons.search),
+                    onTap: () {},
+                  ),
+                );
+              },
+            ),
       ),
     );
   }
@@ -261,63 +269,64 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProfileScreen(
-          profileData: const ProfileData(
-            name: 'John Doe',
-            email: 'john.doe@example.com',
-            role: 'Admin',
-            avatarUrl: null,
-          ),
-          sections: [
-            ProfileSection(
-              title: 'Personal Information',
-              items: [
-                ProfileItem(
-                  title: 'Email',
-                  value: 'john.doe@example.com',
-                  icon: Icons.email,
-                  isEditable: true,
+        builder:
+            (context) => ProfileScreen(
+              profileData: const ProfileData(
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                role: 'Admin',
+                avatarUrl: null,
+              ),
+              sections: [
+                ProfileSection(
+                  title: 'Personal Information',
+                  items: [
+                    ProfileItem(
+                      title: 'Email',
+                      value: 'john.doe@example.com',
+                      icon: Icons.email,
+                      isEditable: true,
+                    ),
+                    ProfileItem(
+                      title: 'Phone',
+                      value: '+1 (555) 123-4567',
+                      icon: Icons.phone,
+                      isEditable: true,
+                    ),
+                    ProfileItem(
+                      title: 'Location',
+                      value: 'New York, NY',
+                      icon: Icons.location_on,
+                      isEditable: true,
+                    ),
+                  ],
                 ),
-                ProfileItem(
-                  title: 'Phone',
-                  value: '+1 (555) 123-4567',
-                  icon: Icons.phone,
-                  isEditable: true,
-                ),
-                ProfileItem(
-                  title: 'Location',
-                  value: 'New York, NY',
-                  icon: Icons.location_on,
-                  isEditable: true,
+                ProfileSection(
+                  title: 'Preferences',
+                  items: [
+                    ProfileItem(
+                      title: 'Language',
+                      value: 'English',
+                      icon: Icons.language,
+                      isEditable: true,
+                    ),
+                    ProfileItem(
+                      title: 'Timezone',
+                      value: 'EST (UTC-5)',
+                      icon: Icons.schedule,
+                      isEditable: true,
+                    ),
+                  ],
                 ),
               ],
+              isEditable: true,
+              onSave: () {
+                // Handle save
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Profile updated successfully')),
+                );
+              },
             ),
-            ProfileSection(
-              title: 'Preferences',
-              items: [
-                ProfileItem(
-                  title: 'Language',
-                  value: 'English',
-                  icon: Icons.language,
-                  isEditable: true,
-                ),
-                ProfileItem(
-                  title: 'Timezone',
-                  value: 'EST (UTC-5)',
-                  icon: Icons.schedule,
-                  isEditable: true,
-                ),
-              ],
-            ),
-          ],
-          isEditable: true,
-          onSave: () {
-            // Handle save
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile updated successfully')),
-            );
-          },
-        ),
       ),
     );
   }

@@ -108,11 +108,12 @@ class GoalsAndTargets extends StatelessWidget {
         Text(
           current,
           style: TextStyle(
-            color: progress >= 0.9
-                ? AppColors.success
-                : progress >= 0.7
-                ? AppColors.warning
-                : AppColors.error,
+            color:
+                progress >= 0.9
+                    ? AppColors.success
+                    : progress >= 0.7
+                    ? AppColors.warning
+                    : AppColors.error,
             fontSize: 11,
             fontWeight: FontWeight.w500,
           ),

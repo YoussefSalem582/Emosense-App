@@ -115,16 +115,17 @@ class PerformanceTrendsChart extends StatelessWidget {
         child: DropdownButton<int>(
           value: selectedMetricIndex,
           style: const TextStyle(color: Colors.black, fontSize: 12),
-          items: metrics
-              .asMap()
-              .entries
-              .map(
-                (entry) => DropdownMenuItem(
-                  value: entry.key,
-                  child: Text(entry.value),
-                ),
-              )
-              .toList(),
+          items:
+              metrics
+                  .asMap()
+                  .entries
+                  .map(
+                    (entry) => DropdownMenuItem(
+                      value: entry.key,
+                      child: Text(entry.value),
+                    ),
+                  )
+                  .toList(),
           onChanged: (value) {
             if (value != null) {
               onMetricChanged(value);
@@ -273,11 +274,12 @@ class _TrendLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = AppColors.primary.withValues(alpha: 0.8)
-      ..strokeWidth = 3
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+    final paint =
+        Paint()
+          ..color = AppColors.primary.withValues(alpha: 0.8)
+          ..strokeWidth = 3
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
 
     final path = Path();
 

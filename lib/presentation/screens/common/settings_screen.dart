@@ -34,23 +34,18 @@ class _SettingsScreenState extends State<SettingsScreen>
       duration: const Duration(milliseconds: 400),
       vsync: this,
     );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeInOut,
-    ));
-    
+
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+
     _slideAnimation = Tween<Offset>(
       begin: const Offset(0, 0.1),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.easeOutCubic,
-    ));
-    
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutCubic),
+    );
+
     _animationController.forward();
   }
 
@@ -68,12 +63,13 @@ class _SettingsScreenState extends State<SettingsScreen>
         title: Text(widget.title),
         backgroundColor: AppColors.surface,
         elevation: 0,
-        leading: widget.showBackButton
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: widget.onBack ?? () => Navigator.pop(context),
-              )
-            : null,
+        leading:
+            widget.showBackButton
+                ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: widget.onBack ?? () => Navigator.pop(context),
+                )
+                : null,
       ),
       body: AnimatedBuilder(
         animation: _fadeAnimation,
@@ -106,7 +102,7 @@ class _SettingsScreenState extends State<SettingsScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (index > 0) const SizedBox(height: 32),
-        
+
         // Section header
         if (section.title != null) ...[
           Padding(
@@ -121,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen>
             ),
           ),
         ],
-        
+
         // Section items
         Container(
           decoration: BoxDecoration(
@@ -136,13 +132,14 @@ class _SettingsScreenState extends State<SettingsScreen>
             ],
           ),
           child: Column(
-            children: section.items.asMap().entries.map((entry) {
-              final itemIndex = entry.key;
-              final item = entry.value;
-              final isLast = itemIndex == section.items.length - 1;
-              
-              return _buildSettingsItem(item, isLast);
-            }).toList(),
+            children:
+                section.items.asMap().entries.map((entry) {
+                  final itemIndex = entry.key;
+                  final item = entry.value;
+                  final isLast = itemIndex == section.items.length - 1;
+
+                  return _buildSettingsItem(item, isLast);
+                }).toList(),
           ),
         ),
       ],
@@ -152,29 +149,32 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget _buildSettingsItem(SettingsItem item, bool isLast) {
     return Container(
       decoration: BoxDecoration(
-        border: !isLast
-            ? const Border(
-                bottom: BorderSide(color: AppColors.border, width: 0.5),
-              )
-            : null,
+        border:
+            !isLast
+                ? const Border(
+                  bottom: BorderSide(color: AppColors.border, width: 0.5),
+                )
+                : null,
       ),
       child: ListTile(
-        leading: item.icon != null
-            ? Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: (item.iconColor ?? AppColors.primary)
-                      .withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(
-                  item.icon,
-                  color: item.iconColor ?? AppColors.primary,
-                  size: 20,
-                ),
-              )
-            : null,
+        leading:
+            item.icon != null
+                ? Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: (item.iconColor ?? AppColors.primary).withValues(
+                      alpha: 0.1,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Icon(
+                    item.icon,
+                    color: item.iconColor ?? AppColors.primary,
+                    size: 20,
+                  ),
+                )
+                : null,
         title: Text(
           item.title,
           style: const TextStyle(
@@ -183,22 +183,24 @@ class _SettingsScreenState extends State<SettingsScreen>
             color: AppColors.textPrimary,
           ),
         ),
-        subtitle: item.subtitle != null
-            ? Text(
-                item.subtitle!,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                ),
-              )
-            : null,
+        subtitle:
+            item.subtitle != null
+                ? Text(
+                  item.subtitle!,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textSecondary,
+                  ),
+                )
+                : null,
         trailing: _buildTrailing(item),
-        onTap: item.onTap != null
-            ? () {
-                HapticFeedback.selectionClick();
-                item.onTap!();
-              }
-            : null,
+        onTap:
+            item.onTap != null
+                ? () {
+                  HapticFeedback.selectionClick();
+                  item.onTap!();
+                }
+                : null,
       ),
     );
   }
@@ -206,40 +208,38 @@ class _SettingsScreenState extends State<SettingsScreen>
   Widget? _buildTrailing(SettingsItem item) {
     switch (item.type) {
       case SettingsItemType.navigation:
-        return const Icon(
-          Icons.chevron_right,
-          color: AppColors.textTertiary,
-        );
-        
+        return const Icon(Icons.chevron_right, color: AppColors.textTertiary);
+
       case SettingsItemType.toggle:
         return Switch(
           value: item.value ?? false,
-          onChanged: item.onChanged != null
-              ? (value) {
-                  HapticFeedback.selectionClick();
-                  item.onChanged!(value);
-                }
-              : null,
+          onChanged:
+              item.onChanged != null
+                  ? (value) {
+                    HapticFeedback.selectionClick();
+                    item.onChanged!(value);
+                  }
+                  : null,
           activeThumbColor: AppColors.primary,
         );
-        
+
       case SettingsItemType.info:
         return item.trailingText != null
             ? Text(
-                item.trailingText!,
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textSecondary,
-                ),
-              )
+              item.trailingText!,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textSecondary,
+              ),
+            )
             : null;
-            
+
       case SettingsItemType.action:
         return item.trailingIcon != null
             ? Icon(
-                item.trailingIcon,
-                color: item.iconColor ?? AppColors.textTertiary,
-              )
+              item.trailingIcon,
+              color: item.iconColor ?? AppColors.textTertiary,
+            )
             : null;
     }
   }
@@ -250,10 +250,7 @@ class SettingsSection {
   final String? title;
   final List<SettingsItem> items;
 
-  const SettingsSection({
-    this.title,
-    required this.items,
-  });
+  const SettingsSection({this.title, required this.items});
 }
 
 class SettingsItem {
@@ -355,9 +352,4 @@ class SettingsItem {
   }
 }
 
-enum SettingsItemType {
-  navigation,
-  toggle,
-  info,
-  action,
-}
+enum SettingsItemType { navigation, toggle, info, action }

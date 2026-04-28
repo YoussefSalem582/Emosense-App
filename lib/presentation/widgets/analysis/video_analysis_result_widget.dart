@@ -270,60 +270,61 @@ class _VideoAnalysisResultWidgetState extends State<VideoAnalysisResultWidget>
     ];
 
     return Column(
-      children: categories.map((category) {
-        final score = (category['score'] as double) * 100;
-        final color = category['color'] as Color;
+      children:
+          categories.map((category) {
+            final score = (category['score'] as double) * 100;
+            final color = category['color'] as Color;
 
-        return Padding(
-          padding: EdgeInsets.only(bottom: spacing.sm),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text(
-                  category['name'] as String,
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
+            return Padding(
+              padding: EdgeInsets.only(bottom: spacing.sm),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      category['name'] as String,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    FractionallySizedBox(
-                      widthFactor: score / 100,
-                      child: Container(
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(4),
+                  Expanded(
+                    flex: 3,
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 8,
+                          decoration: BoxDecoration(
+                            color: color.withValues(alpha: 0.2),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
-                      ),
+                        FractionallySizedBox(
+                          widthFactor: score / 100,
+                          child: Container(
+                            height: 8,
+                            decoration: BoxDecoration(
+                              color: color,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                  SizedBox(width: spacing.sm),
+                  Text(
+                    '${score.toInt()}%',
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: color,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(width: spacing.sm),
-              Text(
-                '${score.toInt()}%',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        );
-      }).toList(),
+            );
+          }).toList(),
     );
   }
 

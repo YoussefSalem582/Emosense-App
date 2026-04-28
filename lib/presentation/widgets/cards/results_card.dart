@@ -146,47 +146,47 @@ class ResultsCard extends StatelessWidget {
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
-                    children: _buildActionRecommendations(result)
-                        .map(
-                          (action) => Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color: (action['color'] as Color).withValues(
-                                alpha: 0.1,
-                              ),
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: (action['color'] as Color).withValues(
-                                  alpha: 0.3,
+                    children:
+                        _buildActionRecommendations(result)
+                            .map(
+                              (action) => Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
                                 ),
-                                width: 1,
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  action['icon'] as IconData,
-                                  color: action['color'] as Color,
-                                  size: 16,
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  action['text'] as String,
-                                  style: TextStyle(
-                                    color: action['color'] as Color,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                decoration: BoxDecoration(
+                                  color: (action['color'] as Color).withValues(
+                                    alpha: 0.1,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: (action['color'] as Color)
+                                        .withValues(alpha: 0.3),
+                                    width: 1,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        )
-                        .toList(),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      action['icon'] as IconData,
+                                      color: action['color'] as Color,
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Text(
+                                      action['text'] as String,
+                                      style: TextStyle(
+                                        color: action['color'] as Color,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                            .toList(),
                   ),
                 ],
               ),

@@ -38,13 +38,12 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
       parent: _animationController,
       curve: Curves.easeOut,
     );
-    _slideAnimation =
-        Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
-          CurvedAnimation(
-            parent: _animationController,
-            curve: Curves.easeOutBack,
-          ),
-        );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOutBack),
+    );
 
     if (widget.result != null || widget.isLoading) {
       _animationController.forward();
@@ -272,13 +271,14 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
         Wrap(
           spacing: spacing.xs,
           runSpacing: spacing.xs,
-          children: emotions.map<Widget>((emotion) {
-            return Chip(
-              label: Text(emotion.toString()),
-              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              labelStyle: TextStyle(color: AppColors.primary),
-            );
-          }).toList(),
+          children:
+              emotions.map<Widget>((emotion) {
+                return Chip(
+                  label: Text(emotion.toString()),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                  labelStyle: TextStyle(color: AppColors.primary),
+                );
+              }).toList(),
         ),
         SizedBox(height: spacing.md),
       ],
@@ -304,13 +304,14 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
         Wrap(
           spacing: spacing.xs,
           runSpacing: spacing.xs,
-          children: keywords.map<Widget>((keyword) {
-            return Chip(
-              label: Text(keyword.toString()),
-              backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-              labelStyle: TextStyle(color: AppColors.secondary),
-            );
-          }).toList(),
+          children:
+              keywords.map<Widget>((keyword) {
+                return Chip(
+                  label: Text(keyword.toString()),
+                  backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
+                  labelStyle: TextStyle(color: AppColors.secondary),
+                );
+              }).toList(),
         ),
         SizedBox(height: spacing.md),
       ],

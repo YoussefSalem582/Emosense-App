@@ -27,7 +27,8 @@ class ErrorScreen extends StatelessWidget {
   // Factory constructors for common error types
   factory ErrorScreen.network({
     String title = 'Connection Error',
-    String message = 'Unable to connect to the server. Please check your internet connection and try again.',
+    String message =
+        'Unable to connect to the server. Please check your internet connection and try again.',
     String? actionLabel = 'Retry',
     VoidCallback? onAction,
     String? secondaryActionLabel = 'Settings',
@@ -108,16 +109,20 @@ class ErrorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: showBackButton
-          ? AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            )
-          : null,
+      appBar:
+          showBackButton
+              ? AppBar(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                leading: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    color: AppColors.textPrimary,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              )
+              : null,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -192,7 +197,8 @@ class ErrorScreen extends StatelessWidget {
                   ],
 
                   // Secondary action button
-                  if (secondaryActionLabel != null && onSecondaryAction != null) ...[
+                  if (secondaryActionLabel != null &&
+                      onSecondaryAction != null) ...[
                     const SizedBox(height: 12),
                     SizedBox(
                       width: double.infinity,

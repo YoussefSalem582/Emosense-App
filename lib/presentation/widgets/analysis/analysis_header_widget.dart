@@ -80,17 +80,18 @@ class AnalysisHeaderWidget extends StatelessWidget {
           if (stats.isNotEmpty) ...[
             SizedBox(height: customSpacing.lg),
             Row(
-              children: stats
-                  .map(
-                    (stat) => Expanded(
-                      child: _StatCard(
-                        value: stat.value,
-                        label: stat.label,
-                        icon: stat.icon,
-                      ),
-                    ),
-                  )
-                  .toList(),
+              children:
+                  stats
+                      .map(
+                        (stat) => Expanded(
+                          child: _StatCard(
+                            value: stat.value,
+                            label: stat.label,
+                            icon: stat.icon,
+                          ),
+                        ),
+                      )
+                      .toList(),
             ),
           ],
         ],

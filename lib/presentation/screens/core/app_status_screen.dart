@@ -12,18 +12,13 @@ class AppStatusScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('App status'),
-      ),
+      appBar: AppBar(title: const Text('App status')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           const ConnectionStatusCard(),
           const SizedBox(height: 24),
-          Text(
-            'Details',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          Text('Details', style: Theme.of(context).textTheme.titleMedium),
           const SizedBox(height: 8),
           BlocBuilder<ConnectionBloc, BackendConnectionState>(
             builder: (context, state) {
@@ -33,9 +28,7 @@ class AppStatusScreen extends StatelessWidget {
                   children: [
                     _kv('Environment', state.config.name),
                     if (details != null && details.isNotEmpty)
-                      ...details.entries.map(
-                        (e) => _kv(e.key, '${e.value}'),
-                      ),
+                      ...details.entries.map((e) => _kv(e.key, '${e.value}')),
                   ],
                 );
               }
@@ -45,9 +38,7 @@ class AppStatusScreen extends StatelessWidget {
               if (state is ConnectionError) {
                 return Text(
                   state.message,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
                 );
               }
               if (state is ConnectionDisconnected) {
@@ -77,10 +68,7 @@ class AppStatusScreen extends StatelessWidget {
         children: [
           SizedBox(
             width: 120,
-            child: Text(
-              k,
-              style: const TextStyle(fontWeight: FontWeight.w600),
-            ),
+            child: Text(k, style: const TextStyle(fontWeight: FontWeight.w600)),
           ),
           Expanded(child: Text(v)),
         ],

@@ -9,9 +9,7 @@ class TestBackendScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test backend'),
-      ),
+      appBar: AppBar(title: const Text('Test backend')),
       body: const SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),

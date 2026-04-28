@@ -55,13 +55,13 @@ class SystemMetricsCard extends StatelessWidget {
                     onPressed: onToggleAutoRefresh,
                     icon: Icon(
                       isAutoRefresh ? Icons.pause : Icons.play_arrow,
-                      color: isAutoRefresh
-                          ? AppColors.error
-                          : AppColors.success,
+                      color:
+                          isAutoRefresh ? AppColors.error : AppColors.success,
                     ),
-                    tooltip: isAutoRefresh
-                        ? 'Pause auto-refresh'
-                        : 'Start auto-refresh',
+                    tooltip:
+                        isAutoRefresh
+                            ? 'Pause auto-refresh'
+                            : 'Start auto-refresh',
                   ),
                 if (onRefresh != null)
                   IconButton(

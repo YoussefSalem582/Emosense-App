@@ -18,24 +18,25 @@ class SocialLoginWidget extends StatelessWidget {
         return Opacity(
           opacity: animation.value,
           child: Row(
-            children: buttons
-                .map(
-                  (button) => Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: button != buttons.last ? 16 : 0,
+            children:
+                buttons
+                    .map(
+                      (button) => Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: button != buttons.last ? 16 : 0,
+                          ),
+                          child: SocialButton(
+                            text: button.text,
+                            icon: button.icon,
+                            textColor: button.textColor,
+                            backgroundColor: button.backgroundColor,
+                            onPressed: button.onPressed,
+                          ),
+                        ),
                       ),
-                      child: SocialButton(
-                        text: button.text,
-                        icon: button.icon,
-                        textColor: button.textColor,
-                        backgroundColor: button.backgroundColor,
-                        onPressed: button.onPressed,
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
           ),
         );
       },

@@ -154,18 +154,19 @@ class VideoInputWidget extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               onChanged: (value) => onAnalysisTypeChanged(value!),
-              items: analysisTypes.map((type) {
-                return DropdownMenuItem(
-                  value: type,
-                  child: Row(
-                    children: [
-                      _getAnalysisTypeIcon(type),
-                      SizedBox(width: spacing.sm),
-                      Text(type),
-                    ],
-                  ),
-                );
-              }).toList(),
+              items:
+                  analysisTypes.map((type) {
+                    return DropdownMenuItem(
+                      value: type,
+                      child: Row(
+                        children: [
+                          _getAnalysisTypeIcon(type),
+                          SizedBox(width: spacing.sm),
+                          Text(type),
+                        ],
+                      ),
+                    );
+                  }).toList(),
             ),
           ),
         ),
@@ -198,11 +199,12 @@ class VideoInputWidget extends StatelessWidget {
             color: AppColors.background,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: urlFocusNode.hasFocus
-                  ? AppColors.primary
-                  : isValidUrl
-                  ? AppColors.success
-                  : AppColors.primary.withValues(alpha: 0.2),
+              color:
+                  urlFocusNode.hasFocus
+                      ? AppColors.primary
+                      : isValidUrl
+                      ? AppColors.success
+                      : AppColors.primary.withValues(alpha: 0.2),
               width: urlFocusNode.hasFocus ? 2 : 1.5,
             ),
             boxShadow: [
@@ -305,9 +307,10 @@ class VideoInputWidget extends StatelessWidget {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.all(spacing.md),
                     prefixIcon: Icon(Icons.link, color: AppColors.primary),
-                    suffixIcon: isValidUrl
-                        ? Icon(Icons.check_circle, color: AppColors.success)
-                        : null,
+                    suffixIcon:
+                        isValidUrl
+                            ? Icon(Icons.check_circle, color: AppColors.success)
+                            : null,
                   ),
                   style: TextStyle(color: AppColors.textPrimary),
                 ),
@@ -365,24 +368,26 @@ class VideoInputWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         height: 56,
         decoration: BoxDecoration(
-          gradient: isEnabled
-              ? LinearGradient(
-                  colors: [color, color.withValues(alpha: 0.8)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                )
-              : null,
+          gradient:
+              isEnabled
+                  ? LinearGradient(
+                    colors: [color, color.withValues(alpha: 0.8)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                  : null,
           color: !isEnabled ? color.withValues(alpha: 0.3) : null,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: isEnabled
-              ? [
-                  BoxShadow(
-                    color: color.withValues(alpha: 0.3),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
-                  ),
-                ]
-              : null,
+          boxShadow:
+              isEnabled
+                  ? [
+                    BoxShadow(
+                      color: color.withValues(alpha: 0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                  : null,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

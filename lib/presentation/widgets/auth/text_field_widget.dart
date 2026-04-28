@@ -47,39 +47,45 @@ class AuthTextFieldWidget extends StatelessWidget {
         hintText: hintText,
         prefixIcon: Icon(
           prefixIcon,
-          color: useWhiteBackground
-              ? Colors.grey.shade600
-              : Colors.white.withValues(alpha: 0.8),
+          color:
+              useWhiteBackground
+                  ? Colors.grey.shade600
+                  : Colors.white.withValues(alpha: 0.8),
         ),
-        suffixIcon: isPasswordField
-            ? IconButton(
-                icon: Icon(
-                  isPasswordVisible ? Icons.visibility_off : Icons.visibility,
-                  color: useWhiteBackground
-                      ? Colors.grey.shade600
-                      : Colors.white.withValues(alpha: 0.8),
-                ),
-                onPressed: onPasswordToggle,
-              )
-            : null,
+        suffixIcon:
+            isPasswordField
+                ? IconButton(
+                  icon: Icon(
+                    isPasswordVisible ? Icons.visibility_off : Icons.visibility,
+                    color:
+                        useWhiteBackground
+                            ? Colors.grey.shade600
+                            : Colors.white.withValues(alpha: 0.8),
+                  ),
+                  onPressed: onPasswordToggle,
+                )
+                : null,
         labelStyle: TextStyle(
-          color: useWhiteBackground
-              ? Colors.grey.shade700
-              : Colors.white.withValues(alpha: 0.8),
+          color:
+              useWhiteBackground
+                  ? Colors.grey.shade700
+                  : Colors.white.withValues(alpha: 0.8),
           fontSize: 14,
         ),
         hintStyle: TextStyle(
-          color: useWhiteBackground
-              ? Colors.grey.shade500
-              : Colors.white.withValues(alpha: 0.6),
+          color:
+              useWhiteBackground
+                  ? Colors.grey.shade500
+                  : Colors.white.withValues(alpha: 0.6),
           fontSize: 14,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: useWhiteBackground
-                ? Colors.grey.shade300
-                : Colors.white.withValues(alpha: 0.3),
+            color:
+                useWhiteBackground
+                    ? Colors.grey.shade300
+                    : Colors.white.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -93,9 +99,10 @@ class AuthTextFieldWidget extends StatelessWidget {
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: useWhiteBackground
-                ? Colors.red.shade400
-                : Colors.red.withValues(alpha: 0.8),
+            color:
+                useWhiteBackground
+                    ? Colors.red.shade400
+                    : Colors.red.withValues(alpha: 0.8),
             width: 1,
           ),
         ),
@@ -106,20 +113,23 @@ class AuthTextFieldWidget extends StatelessWidget {
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: useWhiteBackground
-                ? Colors.grey.shade200
-                : Colors.white.withValues(alpha: 0.2),
+            color:
+                useWhiteBackground
+                    ? Colors.grey.shade200
+                    : Colors.white.withValues(alpha: 0.2),
             width: 1,
           ),
         ),
         filled: true,
-        fillColor: useWhiteBackground
-            ? Colors.grey.shade50
-            : Colors.white.withValues(alpha: 0.1),
+        fillColor:
+            useWhiteBackground
+                ? Colors.grey.shade50
+                : Colors.white.withValues(alpha: 0.1),
         errorStyle: TextStyle(
-          color: useWhiteBackground
-              ? Colors.red.shade600
-              : Colors.red.withValues(alpha: 0.9),
+          color:
+              useWhiteBackground
+                  ? Colors.red.shade600
+                  : Colors.red.withValues(alpha: 0.9),
           fontSize: 12,
         ),
       ),

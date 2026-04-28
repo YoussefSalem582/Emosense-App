@@ -63,7 +63,9 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
     super.didChangeDependencies();
     if (!_analyticsFetchRequested) {
       _analyticsFetchRequested = true;
-      context.read<EmployeeAnalyticsBloc>().add(const EmployeeAnalyticsFetched());
+      context.read<EmployeeAnalyticsBloc>().add(
+        const EmployeeAnalyticsFetched(),
+      );
     }
   }
 
@@ -90,7 +92,8 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
               children: [
                 Text('Error: ${state.message}'),
                 ElevatedButton(
-                  onPressed: () => context.read<EmployeeAnalyticsBloc>().add(
+                  onPressed:
+                      () => context.read<EmployeeAnalyticsBloc>().add(
                         const EmployeeAnalyticsFetched(),
                       ),
                   child: const Text('Retry'),
@@ -101,68 +104,68 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
         }
 
         return SingleChildScrollView(
-            padding: EdgeInsets.all(widget.customSpacing.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header with time range selector
-                AnalyticsHeader(customSpacing: widget.customSpacing),
-                SizedBox(height: widget.customSpacing.lg),
+          padding: EdgeInsets.all(widget.customSpacing.md),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header with time range selector
+              AnalyticsHeader(customSpacing: widget.customSpacing),
+              SizedBox(height: widget.customSpacing.lg),
 
-                // Key metrics cards with improved layout (3x2 grid)
-                AnimatedBuilder(
-                  animation: _cardAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _cardAnimation.value,
-                      child: MetricsGrid(
-                        customSpacing: widget.customSpacing,
-                        animation: _cardAnimation,
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: widget.customSpacing.lg),
+              // Key metrics cards with improved layout (3x2 grid)
+              AnimatedBuilder(
+                animation: _cardAnimation,
+                builder: (context, child) {
+                  return Transform.scale(
+                    scale: _cardAnimation.value,
+                    child: MetricsGrid(
+                      customSpacing: widget.customSpacing,
+                      animation: _cardAnimation,
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: widget.customSpacing.lg),
 
-                // Performance trends with interactive chart
-                AnimatedBuilder(
-                  animation: _chartAnimation,
-                  builder: (context, child) {
-                    return Opacity(
-                      opacity: _chartAnimation.value,
-                      child: PerformanceTrendsChart(
-                        theme: widget.theme,
-                        customSpacing: widget.customSpacing,
-                        chartAnimation: _chartAnimation,
-                        selectedMetricIndex: _selectedMetricIndex,
-                        onMetricChanged: (index) {
-                          setState(() {
-                            _selectedMetricIndex = index;
-                          });
-                        },
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: widget.customSpacing.lg),
+              // Performance trends with interactive chart
+              AnimatedBuilder(
+                animation: _chartAnimation,
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: _chartAnimation.value,
+                    child: PerformanceTrendsChart(
+                      theme: widget.theme,
+                      customSpacing: widget.customSpacing,
+                      chartAnimation: _chartAnimation,
+                      selectedMetricIndex: _selectedMetricIndex,
+                      onMetricChanged: (index) {
+                        setState(() {
+                          _selectedMetricIndex = index;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: widget.customSpacing.lg),
 
-                // Detailed analytics
-                DetailedAnalytics(
-                  theme: widget.theme,
-                  customSpacing: widget.customSpacing,
-                  cardAnimation: _cardAnimation,
-                ),
-                SizedBox(height: widget.customSpacing.lg),
+              // Detailed analytics
+              DetailedAnalytics(
+                theme: widget.theme,
+                customSpacing: widget.customSpacing,
+                cardAnimation: _cardAnimation,
+              ),
+              SizedBox(height: widget.customSpacing.lg),
 
-                // Goals and targets
-                GoalsAndTargets(
-                  theme: widget.theme,
-                  customSpacing: widget.customSpacing,
-                  cardAnimation: _cardAnimation,
-                ),
-              ],
-            ),
-          );
+              // Goals and targets
+              GoalsAndTargets(
+                theme: widget.theme,
+                customSpacing: widget.customSpacing,
+                cardAnimation: _cardAnimation,
+              ),
+            ],
+          ),
+        );
       },
     );
   }

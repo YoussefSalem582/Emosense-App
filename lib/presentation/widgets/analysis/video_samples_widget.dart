@@ -151,14 +151,16 @@ class VideoSamplesWidget extends StatelessWidget {
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: video.thumbnailUrl != null
-                    ? Image.network(
-                        video.thumbnailUrl!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            _buildDefaultThumbnail(video, spacing),
-                      )
-                    : _buildDefaultThumbnail(video, spacing),
+                child:
+                    video.thumbnailUrl != null
+                        ? Image.network(
+                          video.thumbnailUrl!,
+                          fit: BoxFit.cover,
+                          errorBuilder:
+                              (context, error, stackTrace) =>
+                                  _buildDefaultThumbnail(video, spacing),
+                        )
+                        : _buildDefaultThumbnail(video, spacing),
               ),
 
               // Overlay
@@ -309,10 +311,11 @@ class VideoSamplesWidget extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (context) => _AllSamplesBottomSheet(
-        sampleVideos: sampleVideos,
-        onSampleSelected: onSampleSelected,
-      ),
+      builder:
+          (context) => _AllSamplesBottomSheet(
+            sampleVideos: sampleVideos,
+            onSampleSelected: onSampleSelected,
+          ),
     );
   }
 }

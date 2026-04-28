@@ -149,9 +149,10 @@ class AnalyticsCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ...analytics!.emotionCounts.entries.map((entry) {
-            final percentage = analytics!.totalAnalyses > 0
-                ? (entry.value / analytics!.totalAnalyses) * 100
-                : 0.0;
+            final percentage =
+                analytics!.totalAnalyses > 0
+                    ? (entry.value / analytics!.totalAnalyses) * 100
+                    : 0.0;
             return _buildProgressItem(
               entry.key,
               entry.value,
@@ -195,9 +196,10 @@ class AnalyticsCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           ...analytics!.sentimentCounts.entries.map((entry) {
-            final percentage = analytics!.totalAnalyses > 0
-                ? (entry.value / analytics!.totalAnalyses) * 100
-                : 0.0;
+            final percentage =
+                analytics!.totalAnalyses > 0
+                    ? (entry.value / analytics!.totalAnalyses) * 100
+                    : 0.0;
             return _buildProgressItem(
               entry.key,
               entry.value,
@@ -472,4 +474,3 @@ class AnalyticsCard extends StatelessWidget {
     }
   }
 }
-

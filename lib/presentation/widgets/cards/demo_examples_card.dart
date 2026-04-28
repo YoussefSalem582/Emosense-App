@@ -171,9 +171,10 @@ class DemoExamplesCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: onAnalyzeExample != null
-              ? () => onAnalyzeExample!(example.text)
-              : null,
+          onTap:
+              onAnalyzeExample != null
+                  ? () => onAnalyzeExample!(example.text)
+                  : null,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -272,9 +273,10 @@ class DemoExamplesCard extends StatelessWidget {
                         Text(
                           example.confidenceFormatted,
                           style: TextStyle(
-                            color: example.isHighConfidence
-                                ? AppColors.success
-                                : AppColors.textSecondary,
+                            color:
+                                example.isHighConfidence
+                                    ? AppColors.success
+                                    : AppColors.textSecondary,
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                           ),

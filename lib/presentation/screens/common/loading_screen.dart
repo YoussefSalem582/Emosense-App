@@ -34,32 +34,24 @@ class _LoadingScreenState extends State<LoadingScreen>
   @override
   void initState() {
     super.initState();
-    
+
     _rotationController = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    
+
     _pulseController = AnimationController(
       duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
 
-    _rotationAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _rotationController,
-      curve: Curves.linear,
-    ));
+    _rotationAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _rotationController, curve: Curves.linear),
+    );
 
-    _pulseAnimation = Tween<double>(
-      begin: 0.8,
-      end: 1.1,
-    ).animate(CurvedAnimation(
-      parent: _pulseController,
-      curve: Curves.easeInOut,
-    ));
+    _pulseAnimation = Tween<double>(begin: 0.8, end: 1.1).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
 
     _rotationController.repeat();
     _pulseController.repeat(reverse: true);
@@ -94,10 +86,7 @@ class _LoadingScreenState extends State<LoadingScreen>
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: const LinearGradient(
-                          colors: [
-                            AppColors.primary,
-                            AppColors.accent,
-                          ],
+                          colors: [AppColors.primary, AppColors.accent],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -171,10 +160,7 @@ class _LoadingScreenState extends State<LoadingScreen>
             onPressed: widget.onCancel,
             child: const Text(
               'Cancel',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
             ),
           ),
         ],
@@ -187,18 +173,14 @@ class _LoadingScreenState extends State<LoadingScreen>
     if (widget.isFullScreen) {
       return Scaffold(
         backgroundColor: widget.backgroundColor ?? AppColors.background,
-        body: SafeArea(
-          child: Center(
-            child: _buildLoadingContent(),
-          ),
-        ),
+        body: SafeArea(child: Center(child: _buildLoadingContent())),
       );
     } else {
       return Container(
-        color: widget.backgroundColor ?? AppColors.background.withValues(alpha: 0.9),
-        child: Center(
-          child: _buildLoadingContent(),
-        ),
+        color:
+            widget.backgroundColor ??
+            AppColors.background.withValues(alpha: 0.9),
+        child: Center(child: _buildLoadingContent()),
       );
     }
   }

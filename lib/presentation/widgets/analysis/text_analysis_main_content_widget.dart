@@ -223,11 +223,11 @@ class _TextAnalysisMainContentWidgetState
     }
 
     context.read<TextAnalysisBloc>().add(
-          TextAnalysisAnalyzeRequested(
-            text: _textController.text.trim(),
-            analysisType: _selectedAnalysisType,
-          ),
-        );
+      TextAnalysisAnalyzeRequested(
+        text: _textController.text.trim(),
+        analysisType: _selectedAnalysisType,
+      ),
+    );
   }
 
   /// Clear the analysis

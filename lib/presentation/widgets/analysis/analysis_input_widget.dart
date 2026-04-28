@@ -70,31 +70,32 @@ class AnalysisInputWidget extends StatelessWidget {
                 ),
                 elevation: 2,
               ),
-              child: isAnalyzing
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              Colors.white,
+              child:
+                  isAnalyzing
+                      ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 16,
+                            height: 16,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
                             ),
                           ),
+                          SizedBox(width: customSpacing.sm),
+                          const Text('Analyzing...'),
+                        ],
+                      )
+                      : Text(
+                        analyzeButtonText ?? 'Start Analysis',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
-                        SizedBox(width: customSpacing.sm),
-                        const Text('Analyzing...'),
-                      ],
-                    )
-                  : Text(
-                      analyzeButtonText ?? 'Start Analysis',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
                       ),
-                    ),
             ),
           ),
         ],
@@ -117,22 +118,23 @@ class AnalysisInputWidget extends StatelessWidget {
         Wrap(
           spacing: spacing.xs,
           runSpacing: spacing.xs,
-          children: quickActions!.map((action) {
-            return ActionChip(
-              label: Text(
-                action,
-                style: TextStyle(color: AppColors.primary, fontSize: 12),
-              ),
-              backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-              onPressed: () => onQuickAction?.call(action),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-                side: BorderSide(
-                  color: AppColors.primary.withValues(alpha: 0.3),
-                ),
-              ),
-            );
-          }).toList(),
+          children:
+              quickActions!.map((action) {
+                return ActionChip(
+                  label: Text(
+                    action,
+                    style: TextStyle(color: AppColors.primary, fontSize: 12),
+                  ),
+                  backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                  onPressed: () => onQuickAction?.call(action),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    side: BorderSide(
+                      color: AppColors.primary.withValues(alpha: 0.3),
+                    ),
+                  ),
+                );
+              }).toList(),
         ),
       ],
     );

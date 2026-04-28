@@ -48,18 +48,19 @@ class RoleSelectionWidget extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Row(
-            children: roles
-                .map(
-                  (role) => Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                        right: role != roles.last ? 12 : 0,
+            children:
+                roles
+                    .map(
+                      (role) => Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: role != roles.last ? 12 : 0,
+                          ),
+                          child: _buildRoleOption(role),
+                        ),
                       ),
-                      child: _buildRoleOption(role),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
           ),
         ],
       ),
@@ -78,42 +79,45 @@ class RoleSelectionWidget extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         height: 140,
         decoration: BoxDecoration(
-          gradient: isSelected
-              ? LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    role.color.withValues(alpha: 0.9),
-                    role.color.withValues(alpha: 0.7),
-                  ],
-                )
-              : LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Colors.grey.shade50, Colors.grey.shade100],
-                ),
+          gradient:
+              isSelected
+                  ? LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      role.color.withValues(alpha: 0.9),
+                      role.color.withValues(alpha: 0.7),
+                    ],
+                  )
+                  : LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [Colors.grey.shade50, Colors.grey.shade100],
+                  ),
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected
-                ? role.color.withValues(alpha: 0.8)
-                : Colors.grey.shade300,
+            color:
+                isSelected
+                    ? role.color.withValues(alpha: 0.8)
+                    : Colors.grey.shade300,
             width: isSelected ? 2 : 1,
           ),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: role.color.withValues(alpha: 0.4),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
-                  ),
-                ]
-              : [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+          boxShadow:
+              isSelected
+                  ? [
+                    BoxShadow(
+                      color: role.color.withValues(alpha: 0.4),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
+                    ),
+                  ]
+                  : [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
         ),
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -124,9 +128,10 @@ class RoleSelectionWidget extends StatelessWidget {
                 duration: const Duration(milliseconds: 200),
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.white.withValues(alpha: 0.3)
-                      : role.color.withValues(alpha: 0.1),
+                  color:
+                      isSelected
+                          ? Colors.white.withValues(alpha: 0.3)
+                          : role.color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(
@@ -149,9 +154,10 @@ class RoleSelectionWidget extends StatelessWidget {
                 role.description,
                 style: TextStyle(
                   fontSize: 10,
-                  color: isSelected
-                      ? Colors.white.withValues(alpha: 0.9)
-                      : Colors.grey.shade600,
+                  color:
+                      isSelected
+                          ? Colors.white.withValues(alpha: 0.9)
+                          : Colors.grey.shade600,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

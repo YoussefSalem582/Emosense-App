@@ -126,33 +126,39 @@ class AdminBottomNavBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
         margin: const EdgeInsets.symmetric(horizontal: 1),
         decoration: BoxDecoration(
-          gradient: isSelected
-              ? LinearGradient(
-                  colors: [
-                    Colors.white.withValues(alpha: 0.4),
-                    const Color(0xFFFF6B6B).withValues(alpha: 0.2),
-                    Colors.white.withValues(alpha: 0.3),
-                  ],
-                )
-              : null,
+          gradient:
+              isSelected
+                  ? LinearGradient(
+                    colors: [
+                      Colors.white.withValues(alpha: 0.4),
+                      const Color(0xFFFF6B6B).withValues(alpha: 0.2),
+                      Colors.white.withValues(alpha: 0.3),
+                    ],
+                  )
+                  : null,
           borderRadius: BorderRadius.circular(16),
-          border: isSelected
-              ? Border.all(color: Colors.white.withValues(alpha: 0.5), width: 1)
-              : null,
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: const Color(0xFFFF6B6B).withValues(alpha: 0.3),
-                    blurRadius: 10,
-                    offset: const Offset(0, 2),
-                  ),
-                  BoxShadow(
-                    color: const Color(0xFFFF8E53).withValues(alpha: 0.2),
-                    blurRadius: 6,
-                    offset: const Offset(0, 1),
-                  ),
-                ]
-              : null,
+          border:
+              isSelected
+                  ? Border.all(
+                    color: Colors.white.withValues(alpha: 0.5),
+                    width: 1,
+                  )
+                  : null,
+          boxShadow:
+              isSelected
+                  ? [
+                    BoxShadow(
+                      color: const Color(0xFFFF6B6B).withValues(alpha: 0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                    BoxShadow(
+                      color: const Color(0xFFFF8E53).withValues(alpha: 0.2),
+                      blurRadius: 6,
+                      offset: const Offset(0, 1),
+                    ),
+                  ]
+                  : null,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,

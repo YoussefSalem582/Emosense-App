@@ -70,20 +70,22 @@ class ModernLoadingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+    final paint =
+        Paint()
+          ..color = color
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke
+          ..strokeCap = StrokeCap.round;
 
     final center = Offset(size.width / 2, size.height / 2);
     final radius = (size.width - strokeWidth) / 2;
 
     // Background circle
-    final backgroundPaint = Paint()
-      ..color = color.withValues(alpha: 0.2)
-      ..strokeWidth = strokeWidth
-      ..style = PaintingStyle.stroke;
+    final backgroundPaint =
+        Paint()
+          ..color = color.withValues(alpha: 0.2)
+          ..strokeWidth = strokeWidth
+          ..style = PaintingStyle.stroke;
 
     canvas.drawCircle(center, radius, backgroundPaint);
 
@@ -137,12 +139,12 @@ class _PulsingDotsState extends State<PulsingDots>
       (index) => AnimationController(duration: widget.duration, vsync: this),
     );
 
-    _animations = _controllers.map((controller) {
-      return Tween<double>(
-        begin: 0.3,
-        end: 1.0,
-      ).animate(CurvedAnimation(parent: controller, curve: Curves.easeInOut));
-    }).toList();
+    _animations =
+        _controllers.map((controller) {
+          return Tween<double>(begin: 0.3, end: 1.0).animate(
+            CurvedAnimation(parent: controller, curve: Curves.easeInOut),
+          );
+        }).toList();
 
     _startAnimations();
   }
