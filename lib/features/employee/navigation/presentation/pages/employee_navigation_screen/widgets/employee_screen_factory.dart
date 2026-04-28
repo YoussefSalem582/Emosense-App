@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import 'package:emosense_mobile/features/employee/presentation/pages/employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
 import 'package:emosense_mobile/features/employee/dashboard/presentation/pages/employee_dashboard_screen/employee_dashboard_screen.dart';
-import 'package:emosense_mobile/features/employee/presentation/pages/employee_profile_screen/employee_profile_screen.dart';
+import 'package:emosense_mobile/features/employee/profile/presentation/pages/employee_profile_screen/employee_profile_screen.dart';
 import 'package:emosense_mobile/features/employee/presentation/employee_performance_screen.dart';
 import 'package:emosense_mobile/features/tickets/presentation/bloc/tickets_bloc.dart';
 import 'package:emosense_mobile/features/tickets/presentation/pages/employee/employee_tickets_page.dart';
