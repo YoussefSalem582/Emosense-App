@@ -4,7 +4,7 @@ import 'package:emosense_mobile/features/auth/shared/data/datasources/auth_remot
 import 'package:emosense_mobile/features/auth/shared/domain/entities/auth_response_entity.dart';
 import 'package:emosense_mobile/features/auth/shared/domain/entities/user_entity.dart';
 
-/// Simulates latency and builds users like the legacy login/signup screens did.
+/// In-memory auth for development: delay + synthetic [UserEntity] / token.
 ///
 /// Swap for a REST-backed impl when `/auth/*` endpoints are available.
 class AuthRemoteDataSourceMock implements AuthRemoteDataSource {

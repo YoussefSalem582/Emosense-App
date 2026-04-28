@@ -95,7 +95,7 @@ class AuthErrorCleared extends AuthEvent {
   const AuthErrorCleared();
 }
 
-/// Replaces former [UserBloc] preference updates while authenticated.
+/// Persists updated [UserPreferences] for the signed-in user.
 class AuthPreferencesUpdated extends AuthEvent {
   const AuthPreferencesUpdated({required this.preferences});
 
