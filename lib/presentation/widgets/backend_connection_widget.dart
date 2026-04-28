@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../data/services/video_analysis_api_service.dart';
 
 class BackendConnectionWidget extends StatelessWidget {
   final Widget child;

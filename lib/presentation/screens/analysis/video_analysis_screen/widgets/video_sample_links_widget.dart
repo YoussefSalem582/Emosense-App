@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
-import '../../../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 /// Widget that provides sample video URLs for testing
 class VideoSampleLinksWidget extends StatelessWidget {
@@ -192,7 +192,9 @@ class VideoSampleLinksWidget extends StatelessWidget {
     urlController.clear();
 
     // Trigger demo analysis directly
-    context.read<VideoAnalysisCubit>().loadDemoData('demo_video');
+    context.read<VideoAnalysisBloc>().add(
+          const VideoAnalysisDemoRequested('demo_video'),
+        );
 
     // Show info message
     ScaffoldMessenger.of(context).showSnackBar(

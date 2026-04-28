@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 class VideoAnalysisForm extends StatefulWidget {
   const VideoAnalysisForm({super.key});
@@ -114,10 +114,12 @@ class _VideoAnalysisFormState extends State<VideoAnalysisForm> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState?.validate() ?? false) {
-                    context.read<VideoAnalysisCubit>().analyzeVideo(
-                      videoUrl: _urlController.text,
-                      frameInterval: _frameInterval,
-                      maxFrames: _maxFrames,
+                    context.read<VideoAnalysisBloc>().add(
+                      VideoAnalysisFromUrlSubmitted(
+                        videoUrl: _urlController.text,
+                        frameInterval: _frameInterval,
+                        maxFrames: _maxFrames,
+                      ),
                     );
                   }
                 },

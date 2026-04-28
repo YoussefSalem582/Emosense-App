@@ -1,4 +1,4 @@
-part of 'video_analysis_cubit.dart';
+part of 'video_analysis_bloc.dart';
 
 abstract class VideoAnalysisState extends Equatable {
   const VideoAnalysisState();

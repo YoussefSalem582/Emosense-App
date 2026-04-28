@@ -5,7 +5,7 @@ import '../models/emotion_result.dart';
 import '../models/system_metrics.dart';
 import '../models/analytics_summary.dart';
 import '../models/demo_result.dart';
-import '../models/video_analysis_response.dart';
+import '../../features/analysis/domain/entities/video_analysis_response.dart';
 import '../models/video_analysis_request.dart';
 
 class EmotionApiService {

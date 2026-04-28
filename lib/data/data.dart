@@ -14,7 +14,6 @@ export 'models/system_metrics.dart';
 export 'models/user_model.dart';
 export 'models/user_role.dart';
 export 'models/video_analysis_request.dart';
-export 'models/video_analysis_response.dart';
 export 'repositories/analysis_repository_impl.dart';
 export 'repositories/user_repository_impl.dart';
 export 'services/emotion_api_service.dart';

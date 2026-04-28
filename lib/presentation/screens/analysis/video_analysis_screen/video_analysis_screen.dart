@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/core.dart';
-import '../../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 import '../../../widgets/common/animated_background_widget.dart';
 import '../../../widgets/common/animated_loading_indicator.dart';
 import '../../../widgets/app_bars/analysis_app_bar.dart';
@@ -159,7 +159,7 @@ class _EmployeeVideoAnalysisScreenState
 
           // Main Content with proper state management
           SafeArea(
-            child: BlocListener<VideoAnalysisCubit, VideoAnalysisState>(
+            child: BlocListener<VideoAnalysisBloc, VideoAnalysisState>(
               listener: _handleAnalysisStateChanges,
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
@@ -314,7 +314,7 @@ class _EmployeeVideoAnalysisScreenState
 
   /// Build analysis results with enhanced snapshots
   Widget _buildAnalysisResults() {
-    return BlocBuilder<VideoAnalysisCubit, VideoAnalysisState>(
+    return BlocBuilder<VideoAnalysisBloc, VideoAnalysisState>(
       builder: (context, state) {
         print('Current VideoAnalysisState: $state');
 
@@ -479,7 +479,7 @@ class _EmployeeVideoAnalysisScreenState
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: () {
-              context.read<VideoAnalysisCubit>().reset();
+              context.read<VideoAnalysisBloc>().add(const VideoAnalysisReset());
               _resultsController.reset();
               _snapshotController.reset();
             },
@@ -504,15 +504,19 @@ class _EmployeeVideoAnalysisScreenState
       if (_selectedVideoFile != null) {
         // Analyze uploaded video file
         print('Analyzing video file: ${_selectedVideoFile!.path}');
-        context.read<VideoAnalysisCubit>().analyzeVideoFile(
-          videoFile: _selectedVideoFile!,
+        context.read<VideoAnalysisBloc>().add(
+          VideoAnalysisFromFileSubmitted(
+            videoFile: _selectedVideoFile!,
+          ),
         );
       } else {
         // Analyze video from URL
         final url = _urlController.text.trim();
         if (url.isNotEmpty) {
           print('Analyzing video URL: $url');
-          context.read<VideoAnalysisCubit>().analyzeVideo(videoUrl: url);
+          context.read<VideoAnalysisBloc>().add(
+                VideoAnalysisFromUrlSubmitted(videoUrl: url),
+              );
         } else {
           // Show enhanced error feedback
           _showInputError('Please provide a video URL or select a video file');

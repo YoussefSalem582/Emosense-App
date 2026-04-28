@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/core.dart';
-import '../../../../../data/models/video_analysis_response.dart';
-import '../../../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/domain/entities/video_analysis_response.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 /// Enhanced Video Analysis Results with Improved Snapshot Display
 ///
@@ -19,7 +19,7 @@ class VideoAnalysisResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<VideoAnalysisCubit, VideoAnalysisState>(
+    return BlocConsumer<VideoAnalysisBloc, VideoAnalysisState>(
       listener: (context, state) {
         if (state is VideoAnalysisSuccess || state is VideoAnalysisDemo) {
           resultsController.forward();

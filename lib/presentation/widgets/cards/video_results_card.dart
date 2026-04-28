@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../data/data.dart';
+import 'package:emosense_mobile/features/analysis/domain/entities/video_analysis_response.dart';
 
 class VideoResultsCard extends StatelessWidget {
   final VideoAnalysisResponse result;

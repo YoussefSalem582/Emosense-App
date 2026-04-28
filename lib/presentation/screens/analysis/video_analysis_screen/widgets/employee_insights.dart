@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/core.dart';
-import '../../../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 /// Employee insights and action items widget
 class EmployeeInsights extends StatelessWidget {
@@ -9,7 +9,7 @@ class EmployeeInsights extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VideoAnalysisCubit, VideoAnalysisState>(
+    return BlocBuilder<VideoAnalysisBloc, VideoAnalysisState>(
       builder: (context, state) {
         if (state is! VideoAnalysisSuccess && state is! VideoAnalysisDemo) {
           return const SizedBox.shrink();

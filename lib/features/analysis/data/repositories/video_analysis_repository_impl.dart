@@ -1,13 +1,15 @@
 import 'dart:io';
-import '../models/video_analysis_response.dart';
+
+import '../../domain/entities/video_analysis_response.dart';
+import '../../domain/repositories/video_analysis_repository.dart';
 import '../services/video_analysis_api_service.dart';
 
-class VideoAnalysisRepository {
+class VideoAnalysisRepositoryImpl implements VideoAnalysisRepository {
   final VideoAnalysisApiService _apiService;
 
-  VideoAnalysisRepository(this._apiService);
+  VideoAnalysisRepositoryImpl(this._apiService);
 
-  /// Analyze video from URL
+  @override
   Future<VideoAnalysisResponse> analyzeVideo({
     required String videoUrl,
     int frameInterval = 30,
@@ -24,7 +26,7 @@ class VideoAnalysisRepository {
     }
   }
 
-  /// Analyze video from uploaded file
+  @override
   Future<VideoAnalysisResponse> analyzeVideoFile({
     required File videoFile,
     int frameInterval = 30,
@@ -41,13 +43,10 @@ class VideoAnalysisRepository {
     }
   }
 
-  /// Check if the backend is available
-  Future<bool> checkConnection() async {
-    return await _apiService.checkConnection();
-  }
+  @override
+  Future<bool> checkConnection() => _apiService.checkConnection();
 
-  /// Get connection details
-  Future<Map<String, dynamic>> getConnectionDetails() async {
-    return await _apiService.getConnectionDetails();
-  }
+  @override
+  Future<Map<String, dynamic>> getConnectionDetails() =>
+      _apiService.getConnectionDetails();
 }

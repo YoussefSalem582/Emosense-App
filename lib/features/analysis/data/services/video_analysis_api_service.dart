@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import '../models/video_analysis_response.dart';
+
+import '../../domain/entities/video_analysis_response.dart';
 
 class VideoAnalysisApiService {
   static const String _baseUrl = 'http://localhost:8000';
@@ -13,7 +14,6 @@ class VideoAnalysisApiService {
   VideoAnalysisApiService({http.Client? client})
     : _client = client ?? http.Client();
 
-  /// Analyze video from URL
   Future<VideoAnalysisResponse> analyzeVideo({
     required String videoUrl,
     int frameInterval = 30,
@@ -41,14 +41,12 @@ class VideoAnalysisApiService {
         throw Exception('Server responded with status ${response.statusCode}');
       }
     } catch (e) {
-      // Remove mock data fallback - force backend connection
       throw Exception(
         'Backend connection failed: ${e.toString()}. Please ensure backend is running on http://localhost:8000',
       );
     }
   }
 
-  /// Analyze video from uploaded file
   Future<VideoAnalysisResponse> analyzeVideoFile({
     required File videoFile,
     int frameInterval = 30,
@@ -60,17 +58,15 @@ class VideoAnalysisApiService {
         Uri.parse('$_baseUrl$_videoAnalysisEndpoint'),
       );
 
-      // Add video file
       request.files.add(
         await http.MultipartFile.fromPath('video', videoFile.path),
       );
 
-      // Add parameters
       request.fields['frame_interval'] = frameInterval.toString();
       request.fields['max_frames'] = maxFrames.toString();
 
       final streamedResponse = await request.send().timeout(
-        const Duration(minutes: 5), // Longer timeout for file upload
+        const Duration(minutes: 5),
       );
 
       final response = await http.Response.fromStream(streamedResponse);
@@ -82,14 +78,12 @@ class VideoAnalysisApiService {
         throw Exception('Server responded with status ${response.statusCode}');
       }
     } catch (e) {
-      // Remove mock data fallback - force backend connection
       throw Exception(
         'Backend connection failed: ${e.toString()}. Please ensure backend is running on http://localhost:8000',
       );
     }
   }
 
-  /// Check backend connection
   Future<bool> checkConnection() async {
     try {
       final response = await _client
@@ -102,7 +96,6 @@ class VideoAnalysisApiService {
     }
   }
 
-  /// Get connection details
   Future<Map<String, dynamic>> getConnectionDetails() async {
     try {
       final response = await _client
@@ -137,13 +130,10 @@ class VideoAnalysisApiService {
     }
   }
 
-  /// Parse the video analysis response from backend
   VideoAnalysisResponse _parseVideoAnalysisResponse(Map<String, dynamic> data) {
-    // Parse the backend response format
     final summary = data['summary'] as Map<String, dynamic>;
     final analysisResults = data['analysis_results'] as List;
 
-    // Extract frame image from first analysis result if available
     String frameImageBase64 = _generateSummaryImage();
     if (analysisResults.isNotEmpty) {
       final firstFrame = analysisResults.first as Map<String, dynamic>;
@@ -156,7 +146,6 @@ class VideoAnalysisApiService {
       }
     }
 
-    // Create summary snapshot from the first frame and summary data
     final summarySnapshot = SummarySnapshot(
       emotion: summary['dominant_emotion'] ?? 'neutral',
       sentiment: summary['overall_sentiment'] ?? 'neutral',
@@ -178,7 +167,6 @@ class VideoAnalysisApiService {
     );
   }
 
-  /// Generate summary text based on analysis results
   String _generateSummaryText(
     Map<String, dynamic> summary,
     List analysisResults,
@@ -197,13 +185,10 @@ class VideoAnalysisApiService {
             : 'balanced'} emotional tone throughout the content.';
   }
 
-  /// Generate a placeholder image for summary
   String _generateSummaryImage() {
-    // Return a 1x1 transparent pixel as placeholder
     return 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==';
   }
 
-  /// Dispose of resources
   void dispose() {
     _client.close();
   }

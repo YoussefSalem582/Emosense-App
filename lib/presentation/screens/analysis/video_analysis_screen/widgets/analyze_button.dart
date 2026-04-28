@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/core.dart';
-import '../../../../cubit/video_analysis/video_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 import '../../../../widgets/common/animated_loading_indicator.dart';
 
 /// Analyze button widget with dynamic states and animations
@@ -21,7 +21,7 @@ class AnalyzeButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: animation,
-      child: BlocBuilder<VideoAnalysisCubit, VideoAnalysisState>(
+      child: BlocBuilder<VideoAnalysisBloc, VideoAnalysisState>(
         builder: (context, state) {
           final isLoading = state is VideoAnalysisLoading;
 

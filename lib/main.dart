@@ -8,7 +8,7 @@ import 'core/di/dependency_injection.dart' as di;
 import 'core/config/app_config.dart';
 
 // Presentation - Cubits
-import 'presentation/cubit/video_analysis/video_analysis_cubit.dart';
+import 'features/analysis/presentation/bloc/video_analysis_bloc.dart';
 import 'presentation/cubit/emotion/emotion_cubit.dart';
 import 'presentation/cubit/user/user_cubit.dart';
 import 'presentation/cubit/text_analysis/text_analysis_cubit.dart';
@@ -42,8 +42,8 @@ class EmosenseApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         // Analysis Cubits
-        BlocProvider<VideoAnalysisCubit>(
-          create: (_) => di.sl<VideoAnalysisCubit>(),
+        BlocProvider<VideoAnalysisBloc>(
+          create: (_) => di.sl<VideoAnalysisBloc>(),
         ),
         BlocProvider<TextAnalysisCubit>(
           create: (_) => di.sl<TextAnalysisCubit>(),

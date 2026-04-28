@@ -3,7 +3,6 @@
 
 export 'text_analysis/text_analysis_cubit.dart';
 export 'voice_analysis/voice_analysis_cubit.dart';
-export 'video_analysis/video_analysis_cubit.dart';
 
 // Employee Cubits
 export 'employee_analytics/employee_analytics_cubit.dart';
