@@ -19,7 +19,8 @@ import '../../features/tickets/shared/domain/usecases/create_ticket_usecase.dart
 import '../../features/tickets/shared/domain/usecases/get_ticket_statistics_usecase.dart';
 import '../../features/tickets/shared/domain/usecases/load_tickets_usecase.dart';
 import '../../features/tickets/shared/domain/usecases/update_ticket_status_usecase.dart';
-import '../../features/tickets/shared/presentation/bloc/tickets_bloc.dart';
+import '../../features/tickets/admin/presentation/bloc/admin_tickets_bloc.dart';
+import '../../features/tickets/employee/presentation/bloc/employee_tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
@@ -81,13 +82,20 @@ void _initTickets() {
     () => GetTicketStatisticsUseCase(sl()),
   );
 
-  sl.registerFactory<TicketsBloc>(
-    () => TicketsBloc(
+  sl.registerFactory<AdminTicketsBloc>(
+    () => AdminTicketsBloc(
       loadTicketsUseCase: sl(),
       createTicketUseCase: sl(),
       updateTicketStatusUseCase: sl(),
       assignTicketUseCase: sl(),
       getTicketStatisticsUseCase: sl(),
+    ),
+  );
+
+  sl.registerFactory<EmployeeTicketsBloc>(
+    () => EmployeeTicketsBloc(
+      loadTicketsUseCase: sl(),
+      createTicketUseCase: sl(),
     ),
   );
 }

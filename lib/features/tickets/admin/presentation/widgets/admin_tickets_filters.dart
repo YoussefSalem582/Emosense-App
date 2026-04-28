@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 
-import '../../../shared/presentation/bloc/tickets_bloc.dart';
+import '../bloc/admin_tickets_bloc.dart';
 
 class AdminTicketsFilters extends StatelessWidget {
   final TextEditingController searchController;
-  final TicketsBloc bloc;
+  final AdminTicketsBloc bloc;
 
   const AdminTicketsFilters({
     super.key,
@@ -37,7 +37,7 @@ class AdminTicketsFilters extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {
-                bloc.add(TicketsSearchQueryChanged(value, isAdminView: true));
+                bloc.add(AdminTicketsSearchQueryChanged(value));
               },
             ),
           ),

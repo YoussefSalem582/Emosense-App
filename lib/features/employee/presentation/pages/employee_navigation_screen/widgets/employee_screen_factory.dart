@@ -5,7 +5,7 @@ import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import '../../employee_dashboard_screen/employee_dashboard_screen.dart';
 import '../../employee_profile_screen/employee_profile_screen.dart';
 import 'package:emosense_mobile/features/employee/presentation/employee_performance_screen.dart';
-import 'package:emosense_mobile/features/tickets/shared/presentation/bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/features/tickets/employee/presentation/bloc/employee_tickets_bloc.dart';
 import 'package:emosense_mobile/features/tickets/employee/presentation/pages/employee_tickets_page.dart';
 import 'package:emosense_mobile/features/analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
 import '../../employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
@@ -69,7 +69,7 @@ class EmployeeScreenFactory {
         return const EmployeeProfileScreen();
       case 4: // Tickets
         return BlocProvider(
-          create: (_) => di.sl<TicketsBloc>(),
+          create: (_) => di.sl<EmployeeTicketsBloc>(),
           child: const EmployeeTicketsScreen(),
         );
       case 5: // Analysis Tools

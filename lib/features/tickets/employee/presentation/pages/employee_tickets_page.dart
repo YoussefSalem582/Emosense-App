@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 
-import '../../../shared/presentation/bloc/tickets_bloc.dart';
+import '../bloc/employee_tickets_bloc.dart';
 import '../../../shared/presentation/widgets/dialogs/create_ticket_dialog.dart';
 import '../widgets/review_video_filter_chips_widget.dart';
 
@@ -23,13 +23,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
   bool _showVideoDetailsDialog = false;
   String? _selectedVideoId;
 
-  /// True after submitting [TicketsCreateRequested] until we handle result in [BlocConsumer].
+  /// True after submitting [EmployeeTicketsCreateRequested] until we handle result in [BlocConsumer].
   bool _expectingTicketCreate = false;
 
   @override
   void initState() {
     super.initState();
-    context.read<TicketsBloc>().add(const TicketsLoadEmployeeRequested());
+    context.read<EmployeeTicketsBloc>().add(const EmployeeTicketsLoadRequested());
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -58,7 +58,9 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           (dialogContext) => CreateTicketDialog(
             onSubmit: (data) {
               setState(() => _expectingTicketCreate = true);
-              context.read<TicketsBloc>().add(TicketsCreateRequested(data));
+              context.read<EmployeeTicketsBloc>().add(
+                EmployeeTicketsCreateRequested(data),
+              );
             },
           ),
     );
@@ -68,22 +70,23 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
   Widget build(BuildContext context) {
     final customSpacing = Theme.of(context).extension<CustomSpacing>()!;
 
-    return BlocConsumer<TicketsBloc, TicketsState>(
+    return BlocConsumer<EmployeeTicketsBloc, EmployeeTicketsState>(
       listenWhen: (prev, curr) {
         if (!_expectingTicketCreate) return false;
-        return (prev is TicketsLoading && curr is TicketsSuccess) ||
-            (prev is TicketsLoading && curr is TicketsError);
+        return (prev is EmployeeTicketsLoading &&
+                curr is EmployeeTicketsSuccess) ||
+            (prev is EmployeeTicketsLoading && curr is EmployeeTicketsError);
       },
       listener: (context, state) {
         setState(() => _expectingTicketCreate = false);
-        if (state is TicketsSuccess) {
+        if (state is EmployeeTicketsSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Ticket created successfully'),
               backgroundColor: Colors.green,
             ),
           );
-        } else if (state is TicketsError) {
+        } else if (state is EmployeeTicketsError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
@@ -91,8 +94,8 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
       },
       builder: (context, state) {
         final tickets =
-            state is TicketsSuccess && state.employeeData != null
-                ? state.employeeData!.assignedTickets
+            state is EmployeeTicketsSuccess
+                ? state.data.assignedTickets
                 : <Map<String, dynamic>>[];
 
         return Scaffold(
@@ -122,13 +125,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     );
   }
 
-  Widget _buildTicketsBody(TicketsState state, CustomSpacing customSpacing) {
-    if (state is TicketsLoading || state is TicketsInitial) {
+  Widget _buildTicketsBody(EmployeeTicketsState state, CustomSpacing customSpacing) {
+    if (state is EmployeeTicketsLoading || state is EmployeeTicketsInitial) {
       return const Center(
         child: CircularProgressIndicator(color: Colors.white),
       );
     }
-    if (state is TicketsError) {
+    if (state is EmployeeTicketsError) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -143,8 +146,8 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               SizedBox(height: customSpacing.md),
               FilledButton(
                 onPressed:
-                    () => context.read<TicketsBloc>().add(
-                      const TicketsLoadEmployeeRequested(),
+                    () => context.read<EmployeeTicketsBloc>().add(
+                      const EmployeeTicketsLoadRequested(),
                     ),
                 child: const Text('Retry'),
               ),
@@ -153,8 +156,8 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
         ),
       );
     }
-    if (state is TicketsSuccess && state.employeeData != null) {
-      final list = state.employeeData!.assignedTickets;
+    if (state is EmployeeTicketsSuccess) {
+      final list = state.data.assignedTickets;
       return Column(
         children: [
           SizedBox(height: customSpacing.md),

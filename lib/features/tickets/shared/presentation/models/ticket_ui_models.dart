@@ -1,46 +1,6 @@
-part of 'tickets_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-abstract class TicketsState extends Equatable {
-  const TicketsState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class TicketsInitial extends TicketsState {
-  const TicketsInitial();
-}
-
-class TicketsLoading extends TicketsState {
-  const TicketsLoading();
-}
-
-class TicketsSuccess extends TicketsState {
-  final bool isAdminView;
-  final AdminTicketsData? adminData;
-  final EmployeeTicketsData? employeeData;
-
-  const TicketsSuccess.admin(this.adminData)
-    : isAdminView = true,
-      employeeData = null;
-
-  const TicketsSuccess.employee(this.employeeData)
-    : isAdminView = false,
-      adminData = null;
-
-  @override
-  List<Object?> get props => [isAdminView, adminData, employeeData];
-}
-
-class TicketsError extends TicketsState {
-  final String message;
-
-  const TicketsError(this.message);
-
-  @override
-  List<Object?> get props => [message];
-}
-
+/// Aggregated ticket list view data for admin UIs (maps from domain).
 class AdminTicketsData extends Equatable {
   final List<Map<String, dynamic>> allTickets;
   final List<Map<String, dynamic>> filteredTickets;
@@ -87,6 +47,7 @@ class AdminTicketsData extends Equatable {
   ];
 }
 
+/// Aggregated ticket list view data for employee UIs (maps from domain).
 class EmployeeTicketsData extends Equatable {
   final List<Map<String, dynamic>> assignedTickets;
   final List<Map<String, dynamic>> recentTickets;

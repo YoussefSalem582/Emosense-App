@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 
-import '../../../shared/presentation/bloc/tickets_bloc.dart';
+import '../bloc/admin_tickets_bloc.dart';
+import '../../../shared/presentation/models/ticket_ui_models.dart';
 import '../../../shared/presentation/widgets/dialogs/create_ticket_dialog.dart';
 import '../widgets/widgets.dart';
 
@@ -36,9 +37,7 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
 
     _searchController = TextEditingController();
 
-    context.read<TicketsBloc>().add(
-      const TicketsLoadAllRequested(isAdminView: true),
-    );
+    context.read<AdminTicketsBloc>().add(const AdminTicketsLoadRequested());
   }
 
   @override
@@ -58,13 +57,13 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
         children: [
           AnimatedBackgroundWidget(animation: _backgroundAnimation),
           SafeArea(
-            child: BlocBuilder<TicketsBloc, TicketsState>(
+            child: BlocBuilder<AdminTicketsBloc, AdminTicketsState>(
               builder: (context, state) {
-                if (state is TicketsLoading) {
+                if (state is AdminTicketsLoading) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
-                if (state is TicketsError) {
+                if (state is AdminTicketsError) {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -90,8 +89,8 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
                         SizedBox(height: customSpacing.lg),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<TicketsBloc>().add(
-                              const TicketsLoadAllRequested(isAdminView: true),
+                            context.read<AdminTicketsBloc>().add(
+                              const AdminTicketsLoadRequested(),
                             );
                           },
                           child: const Text('Retry'),
@@ -101,12 +100,10 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
                   );
                 }
 
-                if (state is TicketsSuccess &&
-                    state.isAdminView &&
-                    state.adminData != null) {
+                if (state is AdminTicketsSuccess) {
                   return _buildTicketsContent(
                     context,
-                    state.adminData!,
+                    state.data,
                     customSpacing,
                   );
                 }
@@ -125,7 +122,7 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
     AdminTicketsData data,
     CustomSpacing spacing,
   ) {
-    final bloc = context.read<TicketsBloc>();
+    final bloc = context.read<AdminTicketsBloc>();
 
     return CustomScrollView(
       slivers: [
@@ -138,7 +135,7 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
                 builder:
                     (dialogContext) => CreateTicketDialog(
                       onSubmit: (ticketData) {
-                        bloc.add(TicketsCreateRequested(ticketData));
+                        bloc.add(AdminTicketsCreateRequested(ticketData));
                       },
                     ),
               );

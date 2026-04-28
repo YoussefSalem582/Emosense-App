@@ -5,11 +5,11 @@ import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart'
 import 'package:emosense_mobile/shared/widgets/dialogs/ticket_details_dialog.dart';
 
 import '../../../shared/domain/entities/ticket.dart';
-import '../../../shared/presentation/bloc/tickets_bloc.dart';
+import '../bloc/admin_tickets_bloc.dart';
 
 class AdminTicketCard extends StatelessWidget {
   final Map<String, dynamic> ticket;
-  final TicketsBloc bloc;
+  final AdminTicketsBloc bloc;
 
   const AdminTicketCard({super.key, required this.ticket, required this.bloc});
 
@@ -334,7 +334,7 @@ class AdminTicketCard extends StatelessWidget {
 void _showAssignDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsBloc bloc,
+  AdminTicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -351,7 +351,7 @@ void _showAssignDialog(
                 title: const Text('John Smith'),
                 subtitle: const Text('Senior Support'),
                 onTap: () {
-                  bloc.add(TicketsAssignRequested(ticketId, 'John Smith'));
+                  bloc.add(AdminTicketsAssignRequested(ticketId, 'John Smith'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -359,7 +359,7 @@ void _showAssignDialog(
                 title: const Text('Sarah Johnson'),
                 subtitle: const Text('Technical Lead'),
                 onTap: () {
-                  bloc.add(TicketsAssignRequested(ticketId, 'Sarah Johnson'));
+                  bloc.add(AdminTicketsAssignRequested(ticketId, 'Sarah Johnson'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -367,7 +367,7 @@ void _showAssignDialog(
                 title: const Text('Lisa Wong'),
                 subtitle: const Text('Customer Success'),
                 onTap: () {
-                  bloc.add(TicketsAssignRequested(ticketId, 'Lisa Wong'));
+                  bloc.add(AdminTicketsAssignRequested(ticketId, 'Lisa Wong'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -386,7 +386,7 @@ void _showAssignDialog(
 void _showStatusDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsBloc bloc,
+  AdminTicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -403,7 +403,7 @@ void _showStatusDialog(
                 title: const Text('Open'),
                 onTap: () {
                   bloc.add(
-                    TicketsStatusUpdateRequested(ticketId, TicketStatus.open),
+                    AdminTicketsStatusUpdateRequested(ticketId, TicketStatus.open),
                   );
                   Navigator.of(context).pop();
                 },
@@ -412,7 +412,7 @@ void _showStatusDialog(
                 title: const Text('In Progress'),
                 onTap: () {
                   bloc.add(
-                    TicketsStatusUpdateRequested(
+                    AdminTicketsStatusUpdateRequested(
                       ticketId,
                       TicketStatus.inProgress,
                     ),
@@ -424,7 +424,7 @@ void _showStatusDialog(
                 title: const Text('Resolved'),
                 onTap: () {
                   bloc.add(
-                    TicketsStatusUpdateRequested(
+                    AdminTicketsStatusUpdateRequested(
                       ticketId,
                       TicketStatus.resolved,
                     ),
@@ -447,7 +447,7 @@ void _showStatusDialog(
 void _showPriorityDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsBloc bloc,
+  AdminTicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -464,7 +464,7 @@ void _showPriorityDialog(
                 title: const Text('Low'),
                 onTap: () {
                   bloc.add(
-                    TicketsPriorityUpdateRequested(
+                    AdminTicketsPriorityUpdateRequested(
                       ticketId,
                       TicketPriority.low,
                     ),
@@ -476,7 +476,7 @@ void _showPriorityDialog(
                 title: const Text('Medium'),
                 onTap: () {
                   bloc.add(
-                    TicketsPriorityUpdateRequested(
+                    AdminTicketsPriorityUpdateRequested(
                       ticketId,
                       TicketPriority.medium,
                     ),
@@ -488,7 +488,7 @@ void _showPriorityDialog(
                 title: const Text('High'),
                 onTap: () {
                   bloc.add(
-                    TicketsPriorityUpdateRequested(
+                    AdminTicketsPriorityUpdateRequested(
                       ticketId,
                       TicketPriority.high,
                     ),
@@ -500,7 +500,7 @@ void _showPriorityDialog(
                 title: const Text('Critical'),
                 onTap: () {
                   bloc.add(
-                    TicketsPriorityUpdateRequested(
+                    AdminTicketsPriorityUpdateRequested(
                       ticketId,
                       TicketPriority.critical,
                     ),
