@@ -13,11 +13,11 @@ class AnalyzeTextUseCase implements UseCase<AnalysisResult, AnalyzeTextParams> {
   Future<Either<Failure, AnalysisResult>> call(AnalyzeTextParams params) async {
     try {
       if (params.content.trim().isEmpty) {
-        return Left(ValidationFailure('Content cannot be empty'));
+        return eitherLeft(ValidationFailure('Content cannot be empty'));
       }
 
       if (params.content.length > 5000) {
-        return Left(
+        return eitherLeft(
           ValidationFailure('Content is too long (max 5000 characters)'),
         );
       }
@@ -25,9 +25,9 @@ class AnalyzeTextUseCase implements UseCase<AnalysisResult, AnalyzeTextParams> {
       final result = await repository.analyzeText(params.content);
       await repository.saveAnalysis(result);
 
-      return Right(result);
+      return eitherRight(result);
     } catch (e) {
-      return Left(ServerFailure('Failed to analyze text: ${e.toString()}'));
+      return eitherLeft(ServerFailure('Failed to analyze text: ${e.toString()}'));
     }
   }
 }

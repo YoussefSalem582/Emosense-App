@@ -15,15 +15,15 @@ extension EitherExtension<L, R> on Either<L, R> {
 }
 
 /// Helper functions to create Either instances
-Either<L, R> Left<L, R>(L value) => (left: value, right: null);
-Either<L, R> Right<L, R>(R value) => (left: null, right: value);
+Either<L, R> eitherLeft<L, R>(L value) => (left: value, right: null);
+Either<L, R> eitherRight<L, R>(R value) => (left: null, right: value);
 
 /// Base interface for all use cases
-abstract class UseCase<Type, Params> {
-  Future<Either<Failure, Type>> call(Params params);
+abstract class UseCase<T, Params> {
+  Future<Either<Failure, T>> call(Params params);
 }
 
 /// Use case without parameters
-abstract class NoParamsUseCase<Type> {
-  Future<Either<Failure, Type>> call();
+abstract class NoParamsUseCase<T> {
+  Future<Either<Failure, T>> call();
 }

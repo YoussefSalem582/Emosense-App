@@ -16,19 +16,19 @@ class AnalyzeSocialUseCase
   ) async {
     try {
       if (params.url.trim().isEmpty) {
-        return Left(ValidationFailure('URL cannot be empty'));
+        return eitherLeft(ValidationFailure('URL cannot be empty'));
       }
 
       if (!_isValidUrl(params.url)) {
-        return Left(ValidationFailure('Invalid URL format'));
+        return eitherLeft(ValidationFailure('Invalid URL format'));
       }
 
       final result = await repository.analyzeSocial(params.url);
       await repository.saveAnalysis(result);
 
-      return Right(result);
+      return eitherRight(result);
     } catch (e) {
-      return Left(
+      return eitherLeft(
         ServerFailure('Failed to analyze social media: ${e.toString()}'),
       );
     }

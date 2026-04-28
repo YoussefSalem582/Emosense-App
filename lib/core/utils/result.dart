@@ -116,6 +116,7 @@ sealed class Result<T> extends Equatable {
 
 /// Success result
 final class Success<T> extends Result<T> {
+  @override
   final T data;
 
   const Success(this.data);
@@ -126,6 +127,7 @@ final class Success<T> extends Result<T> {
 
 /// Error result
 final class Error<T> extends Result<T> {
+  @override
   final AppError error;
 
   const Error(this.error);

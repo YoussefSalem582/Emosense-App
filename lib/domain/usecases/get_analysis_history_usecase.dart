@@ -20,9 +20,9 @@ class GetAnalysisHistoryUseCase
         limit: params.limit,
       );
 
-      return Right(results);
+      return eitherRight(results);
     } catch (e) {
-      return Left(
+      return eitherLeft(
         ServerFailure('Failed to get analysis history: ${e.toString()}'),
       );
     }

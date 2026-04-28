@@ -16,15 +16,15 @@ class AnalyzeVoiceUseCase
   ) async {
     try {
       if (params.audioPath.isEmpty) {
-        return Left(ValidationFailure('Audio path cannot be empty'));
+        return eitherLeft(ValidationFailure('Audio path cannot be empty'));
       }
 
       final result = await repository.analyzeVoice(params.audioPath);
       await repository.saveAnalysis(result);
 
-      return Right(result);
+      return eitherRight(result);
     } catch (e) {
-      return Left(ServerFailure('Failed to analyze voice: ${e.toString()}'));
+      return eitherLeft(ServerFailure('Failed to analyze voice: ${e.toString()}'));
     }
   }
 }

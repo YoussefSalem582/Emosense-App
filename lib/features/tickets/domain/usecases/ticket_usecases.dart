@@ -27,9 +27,9 @@ class LoadTicketsUseCase implements UseCase<List<Ticket>, LoadTicketsParams> {
         params.pageSize,
       );
 
-      return Right(paginatedTickets);
+      return eitherRight(paginatedTickets);
     } catch (e) {
-      return Left(TicketFailure(e.toString()));
+      return eitherLeft(TicketFailure(e.toString()));
     }
   }
 
@@ -88,7 +88,7 @@ class CreateTicketUseCase implements UseCase<Ticket, CreateTicketParams> {
       // Validate ticket data
       final validationResult = _validateTicket(params.ticket);
       if (validationResult != null) {
-        return Left(ValidationFailure(validationResult));
+        return eitherLeft(ValidationFailure(validationResult));
       }
 
       // Create ticket with generated ID and timestamps
@@ -99,9 +99,9 @@ class CreateTicketUseCase implements UseCase<Ticket, CreateTicketParams> {
       );
 
       final createdTicket = await repository.createTicket(ticket);
-      return Right(createdTicket);
+      return eitherRight(createdTicket);
     } catch (e) {
-      return Left(TicketFailure(e.toString()));
+      return eitherLeft(TicketFailure(e.toString()));
     }
   }
 
@@ -143,7 +143,7 @@ class UpdateTicketStatusUseCase
       // Get current ticket
       final currentTicket = await repository.getTicketById(params.ticketId);
       if (currentTicket == null) {
-        return Left(NotFoundFailure('Ticket not found'));
+        return eitherLeft(NotFoundFailure('Ticket not found'));
       }
 
       // Validate status transition
@@ -152,7 +152,7 @@ class UpdateTicketStatusUseCase
         params.newStatus,
       );
       if (validationResult != null) {
-        return Left(ValidationFailure(validationResult));
+        return eitherLeft(ValidationFailure(validationResult));
       }
 
       // Update ticket
@@ -161,9 +161,9 @@ class UpdateTicketStatusUseCase
         params.newStatus,
       );
 
-      return Right(updatedTicket);
+      return eitherRight(updatedTicket);
     } catch (e) {
-      return Left(TicketFailure(e.toString()));
+      return eitherLeft(TicketFailure(e.toString()));
     }
   }
 
@@ -202,9 +202,9 @@ class AssignTicketUseCase implements UseCase<Ticket, AssignTicketParams> {
         params.ticketId,
         params.assigneeId,
       );
-      return Right(updatedTicket);
+      return eitherRight(updatedTicket);
     } catch (e) {
-      return Left(TicketFailure(e.toString()));
+      return eitherLeft(TicketFailure(e.toString()));
     }
   }
 }
@@ -227,9 +227,9 @@ class GetTicketStatisticsUseCase
   Future<Either<Failure, TicketStatistics>> call(NoParams params) async {
     try {
       final statistics = await repository.getTicketStatistics();
-      return Right(statistics);
+      return eitherRight(statistics);
     } catch (e) {
-      return Left(ServerFailure(e.toString()));
+      return eitherLeft(ServerFailure(e.toString()));
     }
   }
 }
