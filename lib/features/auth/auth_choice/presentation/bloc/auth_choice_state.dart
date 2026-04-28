@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-enum AuthChoiceDestination { login, signup, onboarding }
+import 'package:emosense_mobile/features/auth/auth_choice/domain/entities/auth_choice_destination.dart';
 
 class AuthChoiceState extends Equatable {
   const AuthChoiceState({this.pending});

@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:emosense_mobile/features/auth/auth_choice/domain/entities/auth_choice_destination.dart';
+
 import 'auth_choice_event.dart';
 import 'auth_choice_state.dart';
 

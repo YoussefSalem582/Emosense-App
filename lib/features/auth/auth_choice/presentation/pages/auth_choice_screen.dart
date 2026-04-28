@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/auth/auth_choice/domain/entities/auth_choice_destination.dart';
 import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_bloc.dart';
 import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_event.dart';
 import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_state.dart';
