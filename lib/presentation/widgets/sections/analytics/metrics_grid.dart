@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
 
 import '../../../../core/core.dart';
-import '../../../screens/employee/employee_dashboard_screen/widgets/employee_analytics_card.dart';
+import 'package:emosense_mobile/features/employee/presentation/pages/employee_dashboard_screen/widgets/employee_analytics_card.dart';
 
 class MetricsGrid extends StatelessWidget {
   final CustomSpacing customSpacing;

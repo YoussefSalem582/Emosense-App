@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
 
 import '../../../../core/core.dart';
-import '../../../screens/employee/common/widgets/widgets.dart';
+import 'package:emosense_mobile/features/employee/presentation/pages/common/widgets/widgets.dart';
 
 class AnalyticsHeader extends StatelessWidget {
   final CustomSpacing customSpacing;
@@ -58,8 +58,8 @@ class AnalyticsHeader extends StatelessWidget {
                   onChanged: (value) {
                     if (value != null) {
                       context.read<EmployeeAnalyticsBloc>().add(
-                            EmployeeAnalyticsFetched(timeRange: value),
-                          );
+                        EmployeeAnalyticsFetched(timeRange: value),
+                      );
                     }
                   },
                 ),
