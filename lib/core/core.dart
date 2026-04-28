@@ -2,6 +2,8 @@
 // This file provides a single entry point for importing all core components
 
 // Core layer exports
+export 'auth/auth_session_navigator.dart';
+export 'auth/user_session_storage.dart';
 export 'config/app_config.dart';
 export 'constants/app_colors.dart';
 export 'constants/app_strings.dart';
