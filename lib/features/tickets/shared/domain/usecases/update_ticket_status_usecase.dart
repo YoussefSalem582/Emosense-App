@@ -1,5 +1,5 @@
-import '../../../../core/errors/failures.dart';
-import '../../../../core/usecases/usecase.dart';
+import '../../../../../core/errors/failures.dart';
+import '../../../../../core/usecases/usecase.dart';
 import '../entities/ticket.dart';
 import '../repositories/ticket_repository.dart';
 import 'ticket_failures.dart';

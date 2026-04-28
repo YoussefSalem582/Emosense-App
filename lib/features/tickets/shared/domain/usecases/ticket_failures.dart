@@ -1,4 +1,4 @@
-import '../../../../core/errors/failures.dart';
+import '../../../../../core/errors/failures.dart';
 
 /// Domain-level ticket failure.
 class TicketFailure extends Failure {
