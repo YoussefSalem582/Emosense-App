@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/bloc_exports.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
 import 'package:emosense_mobile/shared/widgets/app_bars/analysis_app_bar.dart';
@@ -47,9 +47,6 @@ class _EmployeeVideoAnalysisScreenState
   late Animation<double> _cardAnimation;
   late Animation<double> _backgroundAnimation;
   late Animation<double> _snapshotAnimation;
-
-  // State tracking
-  bool _isAnalyzing = false;
 
   @override
   void initState() {
@@ -203,15 +200,11 @@ class _EmployeeVideoAnalysisScreenState
     );
   }
 
-  /// Handle video analysis state changes
+  /// Handle video analysis state changes for animations and feedback.
   void _handleAnalysisStateChanges(
     BuildContext context,
     VideoAnalysisState state,
   ) {
-    setState(() {
-      _isAnalyzing = state is VideoAnalysisLoading;
-    });
-
     if (state is VideoAnalysisLoading) {
       // Start snapshot animation when analysis begins
       _snapshotController.forward();
@@ -298,13 +291,18 @@ class _EmployeeVideoAnalysisScreenState
           opacity: _cardAnimation.value.clamp(0.0, 1.0),
           child: Transform.translate(
             offset: Offset(0, 20 * (1 - _cardAnimation.value)),
-            child: AnalyzeButton(
-              animation: _cardAnimation,
-              canAnalyze:
-                  (_urlController.text.isNotEmpty ||
-                      _selectedVideoFile != null) &&
-                  !_isAnalyzing,
-              onPressed: _analyzeVideo,
+            child: BlocSelector<VideoAnalysisBloc, VideoAnalysisState, bool>(
+              selector: (state) => state is VideoAnalysisLoading,
+              builder: (context, isLoading) {
+                return AnalyzeButton(
+                  animation: _cardAnimation,
+                  canAnalyze:
+                      (_urlController.text.isNotEmpty ||
+                          _selectedVideoFile != null) &&
+                      !isLoading,
+                  onPressed: _analyzeVideo,
+                );
+              },
             ),
           ),
         );

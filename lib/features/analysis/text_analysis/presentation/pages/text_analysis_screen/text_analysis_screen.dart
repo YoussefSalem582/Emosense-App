@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:emosense_mobile/features/analysis/text_analysis/presentation/bloc/bloc_exports.dart';
+import 'package:emosense_mobile/features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
 import 'package:emosense_mobile/shared/widgets/app_bars/analysis_app_bar.dart';
@@ -55,7 +55,6 @@ class _UnifiedTextAnalysisScreenState extends State<UnifiedTextAnalysisScreen>
       vsync: this,
     )..repeat(reverse: true);
 
-    // Only keep background animation, remove fade and slide animations for content
     _backgroundAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );

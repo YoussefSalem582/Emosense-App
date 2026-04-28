@@ -7,9 +7,9 @@ import '../../features/analysis/video_analysis/data/datasources/video_analysis_r
 import '../../features/analysis/video_analysis/data/repositories/video_analysis_repository_impl.dart';
 import '../../features/analysis/video_analysis/data/services/video_analysis_api_service.dart';
 import '../../features/analysis/video_analysis/domain/repositories/video_analysis_repository.dart';
-import '../../features/analysis/text_analysis/presentation/bloc/bloc_exports.dart';
-import '../../features/analysis/video_analysis/presentation/bloc/bloc_exports.dart';
-import '../../features/analysis/voice_analysis/presentation/bloc/bloc_exports.dart';
+import '../../features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
+import '../../features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
+import '../../features/analysis/voice_analysis/presentation/bloc/voice_analysis_bloc.dart';
 import '../../features/tickets/data/datasources/mock_ticket_local_data_source.dart';
 import '../../features/tickets/data/datasources/ticket_local_data_source.dart';
 import '../../features/tickets/data/repositories/ticket_repository_impl.dart';
