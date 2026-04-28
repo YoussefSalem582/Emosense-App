@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/features/auth/presentation/services/onboarding_preferences.dart';
+import 'package:emosense_mobile/features/auth/onboarding/presentation/services/onboarding_preferences.dart';
 
 /// Developer utility widget for testing onboarding flow
 /// This widget provides easy access to reset onboarding status for testing purposes
