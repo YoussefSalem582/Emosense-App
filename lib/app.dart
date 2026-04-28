@@ -6,7 +6,7 @@ import 'core/core.dart' show UserSessionStorage;
 import 'core/di/dependency_injection.dart' as di;
 import 'core/routing/app_router.dart';
 import 'features/analysis/presentation/bloc/text_analysis_bloc.dart';
-import 'features/analysis/presentation/bloc/video_analysis_bloc.dart';
+import 'features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
 import 'features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import 'features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import 'features/auth/presentation/bloc/user_bloc.dart';

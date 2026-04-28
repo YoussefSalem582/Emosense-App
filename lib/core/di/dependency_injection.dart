@@ -3,12 +3,12 @@ import 'package:http/http.dart' as http;
 
 // Services
 import '../services/emotion_api_service.dart';
-import '../../features/analysis/data/datasources/video_analysis_remote_data_source.dart';
-import '../../features/analysis/data/repositories/video_analysis_repository_impl.dart';
-import '../../features/analysis/data/services/video_analysis_api_service.dart';
-import '../../features/analysis/domain/repositories/video_analysis_repository.dart';
+import '../../features/analysis/video_analysis/data/datasources/video_analysis_remote_data_source.dart';
+import '../../features/analysis/video_analysis/data/repositories/video_analysis_repository_impl.dart';
+import '../../features/analysis/video_analysis/data/services/video_analysis_api_service.dart';
+import '../../features/analysis/video_analysis/domain/repositories/video_analysis_repository.dart';
 import '../../features/analysis/presentation/bloc/text_analysis_bloc.dart';
-import '../../features/analysis/presentation/bloc/video_analysis_bloc.dart';
+import '../../features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
 import '../../features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import '../../features/tickets/data/datasources/mock_ticket_local_data_source.dart';
 import '../../features/tickets/data/datasources/ticket_local_data_source.dart';

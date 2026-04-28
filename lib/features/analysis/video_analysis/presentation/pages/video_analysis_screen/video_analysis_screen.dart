@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
 import 'package:emosense_mobile/shared/widgets/app_bars/analysis_app_bar.dart';
