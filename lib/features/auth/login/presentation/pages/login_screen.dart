@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import 'package:emosense_mobile/features/admin/presentation/pages/admin_navigation_screen.dart';
+import 'package:emosense_mobile/features/auth/login/presentation/bloc/login_bloc.dart';
+import 'package:emosense_mobile/features/auth/login/presentation/bloc/login_event.dart';
+import 'package:emosense_mobile/features/auth/login/presentation/bloc/login_state.dart';
 import 'package:emosense_mobile/features/auth/shared/domain/entities/user_entity.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_bloc.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_event.dart';
@@ -12,23 +16,32 @@ import 'package:emosense_mobile/features/employee/presentation/pages/employee_na
 
 import 'package:emosense_mobile/features/auth/login/presentation/widgets/login.dart';
 
-class LoginScreen extends StatefulWidget {
+/// Login route: scopes [LoginBloc] under animations + [BlocConsumer] for [AuthBloc].
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => di.sl<LoginBloc>(),
+      child: const _LoginScreenBody(),
+    );
+  }
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _LoginScreenBody extends StatefulWidget {
+  const _LoginScreenBody();
+
+  @override
+  State<_LoginScreenBody> createState() => _LoginScreenBodyState();
+}
+
+class _LoginScreenBodyState extends State<_LoginScreenBody>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _scrollController = ScrollController();
-
-  bool _isPasswordVisible = false;
-  bool _rememberMe = false;
-  String _selectedRole = 'Employee'; // Default role
 
   late AnimationController _logoController;
   late AnimationController _formController;
@@ -161,40 +174,46 @@ class _LoginScreenState extends State<LoginScreen>
                 padding: EdgeInsets.symmetric(
                   horizontal: isSmallScreen ? 16.0 : 24.0,
                 ),
-                child: Column(
-                  children: [
-                    LoginHeader(
-                      logoAnimation: _logoAnimation,
-                      formAnimation: _formAnimation,
-                    ),
-                    LoginForm(
-                      formAnimation: _formAnimation,
-                      formKey: _formKey,
-                      emailController: _emailController,
-                      passwordController: _passwordController,
-                      selectedRole: _selectedRole,
-                      onRoleChanged:
-                          (role) => setState(() => _selectedRole = role),
-                      isPasswordVisible: _isPasswordVisible,
-                      onPasswordVisibilityToggle: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    LoginFooter(
-                      formAnimation: _formAnimation,
-                      selectedRole: _selectedRole,
-                      onLogin: _handleLogin,
-                      isLoading: loading,
-                      rememberMe: _rememberMe,
-                      onRememberMeChanged:
-                          (value) => setState(() => _rememberMe = value),
-                      onForgotPassword: _showForgotPasswordDialog,
-                      onSocialLogin: _handleSocialLogin,
-                      onNavigateToSignUp: _navigateToSignUp,
-                    ),
-                  ],
+                child: BlocBuilder<LoginBloc, LoginFormUiState>(
+                  builder: (context, login) {
+                    return Column(
+                      children: [
+                        LoginHeader(
+                          logoAnimation: _logoAnimation,
+                          formAnimation: _formAnimation,
+                        ),
+                        LoginForm(
+                          formAnimation: _formAnimation,
+                          formKey: _formKey,
+                          emailController: _emailController,
+                          passwordController: _passwordController,
+                          selectedRole: login.selectedRoleLabel,
+                          onRoleChanged:
+                              (role) => context.read<LoginBloc>().add(
+                                LoginRoleLabelChanged(role),
+                              ),
+                          isPasswordVisible: login.passwordVisible,
+                          onPasswordVisibilityToggle: () => context.read<LoginBloc>().add(
+                            const LoginPasswordVisibilityToggled(),
+                          ),
+                        ),
+                        LoginFooter(
+                          formAnimation: _formAnimation,
+                          selectedRole: login.selectedRoleLabel,
+                          onLogin: _handleLogin,
+                          isLoading: loading,
+                          rememberMe: login.rememberMe,
+                          onRememberMeChanged:
+                              (value) => context.read<LoginBloc>().add(
+                                LoginRememberMeChanged(value),
+                              ),
+                          onForgotPassword: _showForgotPasswordDialog,
+                          onSocialLogin: _handleSocialLogin,
+                          onNavigateToSignUp: _navigateToSignUp,
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -211,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     HapticFeedback.lightImpact();
 
-    final role = _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
+    final roleLabel = context.read<LoginBloc>().state.selectedRoleLabel;
+    final role = roleLabel == 'Admin' ? UserRole.admin : UserRole.employee;
     context.read<AuthBloc>().add(
       AuthLoginRequested(
         email: _emailController.text.trim(),
