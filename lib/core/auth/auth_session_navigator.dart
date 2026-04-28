@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/presentation/bloc/user_bloc.dart';
+import '../../features/auth/shared/presentation/bloc/auth_bloc.dart';
+import '../../features/auth/shared/presentation/bloc/auth_event.dart';
 import '../network/connection_bloc.dart';
 import '../routing/app_router.dart';
 
@@ -10,7 +11,7 @@ class AuthSessionNavigator {
   AuthSessionNavigator._();
 
   static void signOutAndGoToSplash(BuildContext context) {
-    context.read<UserBloc>().add(const UserClear());
+    context.read<AuthBloc>().add(const AuthLogoutRequested());
     context.read<ConnectionBloc>().add(const ConnectionDisconnectRequested());
     AppRouter.toSplash(context);
   }

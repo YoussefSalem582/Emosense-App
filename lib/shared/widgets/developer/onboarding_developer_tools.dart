@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/features/auth/presentation/services/onboarding_preferences.dart';
+
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/auth/onboarding/domain/repositories/onboarding_repository.dart';
 
 /// Developer utility widget for testing onboarding flow
 /// This widget provides easy access to reset onboarding status for testing purposes
@@ -12,6 +14,8 @@ class OnboardingDeveloperTools extends StatefulWidget {
 }
 
 class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
+  late final OnboardingRepository _repository = di.sl<OnboardingRepository>();
+
   bool _isOnboardingCompleted = false;
   int _onboardingVersion = 0;
   bool _isLoading = false;
@@ -25,8 +29,8 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
   Future<void> _loadOnboardingStatus() async {
     setState(() => _isLoading = true);
 
-    final isCompleted = await OnboardingPreferences.isOnboardingCompleted();
-    final version = await OnboardingPreferences.getCompletedOnboardingVersion();
+    final isCompleted = await _repository.isOnboardingCompleted();
+    final version = await _repository.getCompletedOnboardingVersion();
 
     setState(() {
       _isOnboardingCompleted = isCompleted;
@@ -38,7 +42,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
   Future<void> _resetOnboarding() async {
     setState(() => _isLoading = true);
 
-    final success = await OnboardingPreferences.resetOnboarding();
+    final success = await _repository.resetProgress();
 
     if (success) {
       _showSnackBar('Onboarding status reset successfully');
@@ -52,7 +56,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
   Future<void> _setOnboardingCompleted() async {
     setState(() => _isLoading = true);
 
-    final success = await OnboardingPreferences.setOnboardingCompleted();
+    final success = await _repository.markCompleted();
 
     if (success) {
       _showSnackBar('Onboarding marked as completed');
@@ -143,7 +147,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'Version: $_onboardingVersion / ${OnboardingPreferences.currentOnboardingVersion}',
+                      'Version: $_onboardingVersion / ${_repository.currentOnboardingVersion}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],

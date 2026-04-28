@@ -9,7 +9,8 @@ import 'features/analysis/presentation/bloc/text_analysis_bloc.dart';
 import 'features/analysis/presentation/bloc/video_analysis_bloc.dart';
 import 'features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import 'features/admin/presentation/bloc/admin_dashboard_bloc.dart';
-import 'features/auth/presentation/bloc/user_bloc.dart';
+import 'features/auth/shared/presentation/bloc/auth_bloc.dart';
+import 'features/auth/shared/presentation/bloc/auth_state.dart';
 import 'features/emotion/presentation/bloc/emotion_bloc.dart';
 import 'features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import 'features/employee/presentation/bloc/employee_dashboard_bloc.dart';
@@ -36,7 +37,7 @@ class EmosenseApp extends StatelessWidget {
           create: (_) => di.sl<VoiceAnalysisBloc>(),
         ),
         BlocProvider<EmotionBloc>(create: (_) => di.sl<EmotionBloc>()),
-        BlocProvider<UserBloc>(create: (_) => di.sl<UserBloc>()),
+        BlocProvider<AuthBloc>(create: (_) => di.sl<AuthBloc>()),
         BlocProvider<EmployeeDashboardBloc>(
           create: (_) => di.sl<EmployeeDashboardBloc>(),
         ),
@@ -85,7 +86,7 @@ class _ConnectionBootstrapState extends State<_ConnectionBootstrap> {
   Widget build(BuildContext context) => widget.child;
 }
 
-/// Restores [UserBloc] from disk after first frame; persists on auth changes.
+/// Persists authenticated user on bloc changes ([AuthBloc]); clears on logout.
 class _UserSessionLifecycle extends StatefulWidget {
   const _UserSessionLifecycle({required this.child});
 
@@ -96,31 +97,16 @@ class _UserSessionLifecycle extends StatefulWidget {
 }
 
 class _UserSessionLifecycleState extends State<_UserSessionLifecycle> {
-  var _restoreStarted = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _restoreSession());
-  }
-
-  Future<void> _restoreSession() async {
-    if (_restoreStarted) return;
-    _restoreStarted = true;
-    final user = await UserSessionStorage.read();
-    if (!mounted || user == null) return;
-    context.read<UserBloc>().add(UserSet(user));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UserBloc, UserState>(
+    return BlocListener<AuthBloc, AuthState>(
       listenWhen:
-          (prev, curr) => curr is UserAuthenticated || curr is UserLoggedOut,
+          (prev, curr) =>
+              curr is AuthAuthenticated || curr is AuthUnauthenticated,
       listener: (context, state) async {
-        if (state is UserAuthenticated) {
+        if (state is AuthAuthenticated) {
           await UserSessionStorage.save(state.user);
-        } else if (state is UserLoggedOut) {
+        } else if (state is AuthUnauthenticated) {
           await UserSessionStorage.clear();
         }
       },
