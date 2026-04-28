@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/usecases/no_params.dart';
 import '../../../../../core/usecases/usecase.dart';
+import '../../../login/domain/repositories/credential_login_gateway.dart';
+import '../../../signup/domain/repositories/registration_gateway.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/usecases/delete_account_usecase.dart';
 import '../../domain/usecases/forgot_password_usecase.dart';
@@ -17,15 +19,15 @@ import 'auth_state.dart';
 /// Global authentication orchestrator (adapted from reference `AuthBloc`, Emosense types).
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({
-    required LoginUseCase loginUseCase,
-    required RegisterUseCase registerUseCase,
+    required CredentialLoginGateway credentialLoginGateway,
+    required RegistrationGateway registrationGateway,
     required LogoutUseCase logoutUseCase,
     required DeleteAccountUseCase deleteAccountUseCase,
     required ForgotPasswordUseCase forgotPasswordUseCase,
     required GetCachedUserUseCase getCachedUserUseCase,
     required GoogleSignInUseCase googleSignInUseCase,
-  })  : _loginUseCase = loginUseCase,
-        _registerUseCase = registerUseCase,
+  })  : _credentialLoginGateway = credentialLoginGateway,
+        _registrationGateway = registrationGateway,
         _logoutUseCase = logoutUseCase,
         _deleteAccountUseCase = deleteAccountUseCase,
         _forgotPasswordUseCase = forgotPasswordUseCase,
@@ -44,8 +46,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthSessionExpired>(_onSessionExpired);
   }
 
-  final LoginUseCase _loginUseCase;
-  final RegisterUseCase _registerUseCase;
+  final CredentialLoginGateway _credentialLoginGateway;
+  final RegistrationGateway _registrationGateway;
   final LogoutUseCase _logoutUseCase;
   final DeleteAccountUseCase _deleteAccountUseCase;
   final ForgotPasswordUseCase _forgotPasswordUseCase;
@@ -75,7 +77,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
-    final result = await _loginUseCase(
+    final result = await _credentialLoginGateway.login(
       LoginParams(
         email: event.email,
         password: event.password,
@@ -93,7 +95,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
-    final result = await _registerUseCase(
+    final result = await _registrationGateway.register(
       RegisterParams(
         email: event.email,
         password: event.password,
