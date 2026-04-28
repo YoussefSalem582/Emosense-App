@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 
-import 'bloc/employee_performance_bloc.dart';
+import 'package:emosense_mobile/features/employee/performance/presentation/bloc/employee_performance_bloc.dart';
 
 /// Employee performance tab: loads [EmployeePerformanceBloc] data and shows summary metrics.
 class EmployeePerformanceScreen extends StatefulWidget {
