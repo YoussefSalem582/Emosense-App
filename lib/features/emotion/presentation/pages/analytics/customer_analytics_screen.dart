@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 
-import 'package:emosense_mobile/presentation/widgets/widgets.dart';
+import 'package:emosense_mobile/shared/widgets/widgets.dart';
 
 class CustomerAnalyticsScreen extends StatefulWidget {
   const CustomerAnalyticsScreen({super.key});

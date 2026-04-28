@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/data.dart';
-
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/services/models/demo_result.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class DemoExamplesCard extends StatelessWidget {
   final DemoResult? demoResult;

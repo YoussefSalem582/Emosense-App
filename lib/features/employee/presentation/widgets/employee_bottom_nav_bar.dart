@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class EmployeeBottomNavBar extends StatelessWidget {
   final int selectedIndex;

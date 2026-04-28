@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../presentation/screens/screens.dart';
+import '../../shared/presentation/screens.dart';
 
 /// Centralized routing configuration
 class AppRouter {

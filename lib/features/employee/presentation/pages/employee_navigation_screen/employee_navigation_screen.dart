@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/presentation/widgets/navigation/employee_bottom_nav_bar.dart';
+import 'package:emosense_mobile/features/employee/presentation/widgets/employee_bottom_nav_bar.dart';
 import 'widgets/employee_app_bar.dart';
 import 'widgets/employee_screen_factory.dart';
 import 'widgets/employee_dialogs.dart';

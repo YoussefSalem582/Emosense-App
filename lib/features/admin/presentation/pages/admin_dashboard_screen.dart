@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/data.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/services/models/system_metrics.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class SystemMetricsCard extends StatelessWidget {
   final SystemMetrics? metrics;

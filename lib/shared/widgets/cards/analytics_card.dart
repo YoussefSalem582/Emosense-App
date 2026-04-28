@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../data/data.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/services/models/analytics_summary.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class AnalyticsCard extends StatelessWidget {
   final AnalyticsSummary? analytics;

@@ -1,7 +1,5 @@
-// Main Widgets Export File
-// This file provides a single entry point for importing all widgets
+// Cross-feature widgets under lib/shared/widgets.
 
-// Widget category exports
 export 'cards/cards.dart';
 export 'buttons/buttons.dart';
 export 'forms/forms.dart';
@@ -11,8 +9,9 @@ export 'common/surface_section_card.dart';
 export 'common/section_title_row.dart';
 export 'common/profile_section_card.dart';
 export 'common/flat_toolbar_surface.dart';
+export 'common/animated_background_widget.dart';
 export 'app_bars/app_bar.dart';
-export 'auth/auth.dart';
 export 'dialogs/dialogs.dart';
 export 'sections/sections.dart';
-export 'navigation/navigation.dart';
+export 'backend_connection_widget.dart';
+export 'backend_connection_test.dart';

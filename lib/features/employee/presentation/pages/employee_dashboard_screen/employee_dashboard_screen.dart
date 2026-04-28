@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/employee/presentation/bloc/employee_dashboard_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
-import 'package:emosense_mobile/presentation/screens/screens.dart';
+import 'package:emosense_mobile/shared/presentation/screens.dart';
 
 class EmployeeDashboardScreen extends StatefulWidget {
   const EmployeeDashboardScreen({super.key});

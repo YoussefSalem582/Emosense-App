@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/presentation/widgets/widgets.dart';
+import 'package:emosense_mobile/shared/widgets/widgets.dart';
 
 class EmployeePriorityBanner extends StatelessWidget {
   final String title;

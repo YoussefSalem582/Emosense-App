@@ -10,7 +10,7 @@ import 'package:emosense_mobile/features/tickets/presentation/pages/employee/emp
 import 'package:emosense_mobile/features/analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
 import '../../employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
 import 'package:emosense_mobile/features/emotion/presentation/pages/analytics/customer_analytics_screen.dart';
-import 'package:emosense_mobile/presentation/screens/common/placeholder_screen.dart';
+import 'package:emosense_mobile/shared/presentation/pages/placeholder_screen.dart';
 
 /// Factory class for managing employee screens with lazy loading and caching
 class EmployeeScreenFactory {

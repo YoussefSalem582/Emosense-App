@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/presentation/widgets/cards/connection_status_card.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/shared/widgets/cards/connection_status_card.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 
 class AdminSystemConfigScreen extends StatefulWidget {
   const AdminSystemConfigScreen({super.key});
