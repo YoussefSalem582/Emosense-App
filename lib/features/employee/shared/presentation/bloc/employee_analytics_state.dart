@@ -32,34 +32,3 @@ class EmployeeAnalyticsError extends EmployeeAnalyticsState {
   @override
   List<Object?> get props => [message];
 }
-
-class EmployeeAnalyticsData extends Equatable {
-  final String timeRange;
-  final List<Map<String, dynamic>> metrics;
-  final Map<String, dynamic> performanceData;
-  final List<Map<String, dynamic>> ticketTypes;
-  final Map<String, dynamic> priorityDistribution;
-  final List<Map<String, dynamic>> resolutionSpeed;
-  final List<Map<String, dynamic>> goals;
-
-  const EmployeeAnalyticsData({
-    required this.timeRange,
-    required this.metrics,
-    required this.performanceData,
-    required this.ticketTypes,
-    required this.priorityDistribution,
-    required this.resolutionSpeed,
-    required this.goals,
-  });
-
-  @override
-  List<Object?> get props => [
-    timeRange,
-    metrics,
-    performanceData,
-    ticketTypes,
-    priorityDistribution,
-    resolutionSpeed,
-    goals,
-  ];
-}

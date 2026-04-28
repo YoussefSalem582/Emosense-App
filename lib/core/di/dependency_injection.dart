@@ -21,9 +21,33 @@ import '../../features/tickets/domain/usecases/load_tickets_usecase.dart';
 import '../../features/tickets/domain/usecases/update_ticket_status_usecase.dart';
 import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
-import '../../features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
+import '../../features/employee/analysis_tools/data/datasources/employee_analysis_tools_local_data_source.dart';
+import '../../features/employee/analysis_tools/data/datasources/employee_analysis_tools_local_data_source_impl.dart';
+import '../../features/employee/analysis_tools/data/repositories/employee_analysis_tools_repository_impl.dart';
+import '../../features/employee/analysis_tools/domain/repositories/employee_analysis_tools_repository.dart';
+import '../../features/employee/dashboard/data/datasources/employee_dashboard_local_data_source.dart';
+import '../../features/employee/dashboard/data/datasources/employee_dashboard_local_data_source_impl.dart';
+import '../../features/employee/dashboard/data/repositories/employee_dashboard_repository_impl.dart';
+import '../../features/employee/dashboard/domain/repositories/employee_dashboard_repository.dart';
 import '../../features/employee/dashboard/presentation/bloc/employee_dashboard_bloc.dart';
+import '../../features/employee/navigation/data/datasources/employee_navigation_local_data_source.dart';
+import '../../features/employee/navigation/data/datasources/employee_navigation_local_data_source_impl.dart';
+import '../../features/employee/navigation/data/repositories/employee_navigation_repository_impl.dart';
+import '../../features/employee/navigation/domain/repositories/employee_navigation_repository.dart';
+import '../../features/employee/performance/data/datasources/employee_performance_local_data_source.dart';
+import '../../features/employee/performance/data/datasources/employee_performance_local_data_source_impl.dart';
+import '../../features/employee/performance/data/repositories/employee_performance_repository_impl.dart';
+import '../../features/employee/performance/domain/repositories/employee_performance_repository.dart';
 import '../../features/employee/performance/presentation/bloc/employee_performance_bloc.dart';
+import '../../features/employee/profile/data/datasources/employee_profile_local_data_source.dart';
+import '../../features/employee/profile/data/datasources/employee_profile_local_data_source_impl.dart';
+import '../../features/employee/profile/data/repositories/employee_profile_repository_impl.dart';
+import '../../features/employee/profile/domain/repositories/employee_profile_repository.dart';
+import '../../features/employee/shared/data/datasources/employee_analytics_local_data_source.dart';
+import '../../features/employee/shared/data/datasources/employee_analytics_local_data_source_impl.dart';
+import '../../features/employee/shared/data/repositories/employee_analytics_repository_impl.dart';
+import '../../features/employee/shared/domain/repositories/employee_analytics_repository.dart';
+import '../../features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/auth/presentation/bloc/user_bloc.dart';
 import '../../features/emotion/presentation/bloc/emotion_bloc.dart';
 import '../network/connection_bloc.dart';
@@ -97,9 +121,56 @@ void _initAuthSlice() {
 }
 
 void _initEmployee() {
-  sl.registerFactory<EmployeeDashboardBloc>(() => EmployeeDashboardBloc());
-  sl.registerFactory<EmployeeAnalyticsBloc>(() => EmployeeAnalyticsBloc());
-  sl.registerFactory<EmployeePerformanceBloc>(() => EmployeePerformanceBloc());
+  sl.registerLazySingleton<EmployeeDashboardLocalDataSource>(
+    () => EmployeeDashboardLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeeDashboardRepository>(
+    () => EmployeeDashboardRepositoryImpl(sl()),
+  );
+  sl.registerFactory<EmployeeDashboardBloc>(
+    () => EmployeeDashboardBloc(repository: sl()),
+  );
+
+  sl.registerLazySingleton<EmployeeAnalyticsLocalDataSource>(
+    () => EmployeeAnalyticsLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeeAnalyticsRepository>(
+    () => EmployeeAnalyticsRepositoryImpl(sl()),
+  );
+  sl.registerFactory<EmployeeAnalyticsBloc>(
+    () => EmployeeAnalyticsBloc(repository: sl()),
+  );
+
+  sl.registerLazySingleton<EmployeePerformanceLocalDataSource>(
+    () => EmployeePerformanceLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeePerformanceRepository>(
+    () => EmployeePerformanceRepositoryImpl(sl()),
+  );
+  sl.registerFactory<EmployeePerformanceBloc>(
+    () => EmployeePerformanceBloc(repository: sl()),
+  );
+
+  sl.registerLazySingleton<EmployeeNavigationLocalDataSource>(
+    () => EmployeeNavigationLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeeNavigationRepository>(
+    () => EmployeeNavigationRepositoryImpl(sl()),
+  );
+
+  sl.registerLazySingleton<EmployeeProfileLocalDataSource>(
+    () => EmployeeProfileLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeeProfileRepository>(
+    () => EmployeeProfileRepositoryImpl(sl()),
+  );
+
+  sl.registerLazySingleton<EmployeeAnalysisToolsLocalDataSource>(
+    () => EmployeeAnalysisToolsLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<EmployeeAnalysisToolsRepository>(
+    () => EmployeeAnalysisToolsRepositoryImpl(sl()),
+  );
 }
 
 void _initAdmin() {

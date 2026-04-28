@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/employee/navigation/domain/repositories/employee_navigation_repository.dart';
 import 'package:emosense_mobile/features/employee/shared/presentation/widgets/employee_bottom_nav_bar.dart';
 import 'widgets/employee_app_bar.dart';
 import 'widgets/employee_screen_factory.dart';
@@ -36,6 +38,22 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
     super.initState();
     _initializeAnimations();
     _preloadEssentialScreens();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _restorePersistedTab());
+  }
+
+  Future<void> _restorePersistedTab() async {
+    final nav = di.sl<EmployeeNavigationRepository>();
+    final last = await nav.readLastSelectedTab();
+    if (!mounted) return;
+    if (last != null && last >= 0 && last <= 8) {
+      setState(() => _selectedIndex = last);
+    }
+  }
+
+  void _commitTab(int index) {
+    if (index == _selectedIndex) return;
+    setState(() => _selectedIndex = index);
+    di.sl<EmployeeNavigationRepository>().persistSelectedTab(index);
   }
 
   void _initializeAnimations() {
@@ -126,18 +144,11 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
   }
 
   void _handleBottomNavTap(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-
-      // Add haptic feedback
-      HapticFeedback.lightImpact();
-
-      // Reset animations when switching screens
-      _pulseController.reset();
-      _pulseController.forward();
-    }
+    if (index == _selectedIndex) return;
+    _commitTab(index);
+    HapticFeedback.lightImpact();
+    _pulseController.reset();
+    _pulseController.forward();
   }
 
   void _handleAnalysisToolSelection(int toolIndex) {
@@ -153,31 +164,30 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
         AppRouter.toVideoAnalysis(context);
         break;
       default:
-        // For other tools, navigate within the app
-        setState(() => _selectedIndex = toolIndex + 6);
+        _commitTab(toolIndex + 6);
     }
   }
 
   void _handleProfileAction() {
-    setState(() => _selectedIndex = 3);
+    _commitTab(3);
   }
 
   void _handleProfileMenuSelection(String value) {
     switch (value) {
       case 'profile':
-        setState(() => _selectedIndex = 3);
+        _commitTab(3);
         break;
       case 'help':
         EmployeeDialogs.showHelp(context);
         break;
       case 'settings':
-        setState(() => _selectedIndex = 3);
+        _commitTab(3);
         break;
       case 'logout':
         _handleLogout();
         break;
       case 'home':
-        setState(() => _selectedIndex = 0);
+        _commitTab(0);
         break;
     }
   }

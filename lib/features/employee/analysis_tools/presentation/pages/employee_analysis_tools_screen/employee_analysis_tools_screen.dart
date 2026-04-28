@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
 
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/employee/analysis_tools/domain/entities/employee_analysis_tools_overview.dart';
+import 'package:emosense_mobile/features/employee/analysis_tools/domain/repositories/employee_analysis_tools_repository.dart';
+
 class EmployeeAnalysisToolsScreen extends StatefulWidget {
   final Function(int)? onAnalysisToolSelected;
 
@@ -16,6 +20,9 @@ class _EmployeeAnalysisToolsScreenState
     with SingleTickerProviderStateMixin {
   late AnimationController _backgroundController;
 
+  EmployeeAnalysisToolsOverview? _overview;
+  bool _loadingOverview = true;
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +31,27 @@ class _EmployeeAnalysisToolsScreenState
       vsync: this,
     );
     _backgroundController.repeat();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadOverview());
+  }
+
+  Future<void> _loadOverview() async {
+    setState(() => _loadingOverview = true);
+    try {
+      final o = await di.sl<EmployeeAnalysisToolsRepository>().fetchOverview();
+      if (mounted) {
+        setState(() {
+          _overview = o;
+          _loadingOverview = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _overview = null;
+          _loadingOverview = false;
+        });
+      }
+    }
   }
 
   @override
@@ -60,68 +88,101 @@ class _EmployeeAnalysisToolsScreenState
           SafeArea(
             child: Column(
               children: [
-                // Content
                 Expanded(
-                  child: SingleChildScrollView(
-                    padding: EdgeInsets.all(customSpacing.md),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: customSpacing.md),
+                  child:
+                      _loadingOverview
+                          ? const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                          : _overview == null
+                          ? Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(customSpacing.lg),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.error_outline,
+                                    color: Colors.white.withValues(alpha: 0.9),
+                                    size: 48,
+                                  ),
+                                  SizedBox(height: customSpacing.md),
+                                  const Text(
+                                    'Could not load analysis tools',
+                                    style: TextStyle(color: Colors.white),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: customSpacing.md),
+                                  ElevatedButton(
+                                    onPressed: _loadOverview,
+                                    child: const Text('Retry'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                          : SingleChildScrollView(
+                            padding: EdgeInsets.all(customSpacing.md),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: customSpacing.md),
 
-                        // Header Card
-                        _buildHeaderCard(customSpacing),
+                                // Header Card
+                                _buildHeaderCard(customSpacing, _overview!),
 
-                        SizedBox(height: customSpacing.xl),
+                                SizedBox(height: customSpacing.xl),
 
-                        // Section Title
-                        const Text(
-                          'Analysis Tools',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                                // Section Title
+                                const Text(
+                                  'Analysis Tools',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ),
+
+                                SizedBox(height: customSpacing.md),
+
+                                // Analysis Tools Cards
+                                _buildAnalysisToolCard(
+                                  'Text Analysis',
+                                  'Messages, emails & feedback',
+                                  Icons.text_fields,
+                                  const Color(0xFF06B6D4),
+                                  customSpacing,
+                                  0,
+                                ),
+
+                                SizedBox(height: customSpacing.md),
+
+                                _buildAnalysisToolCard(
+                                  'Voice Analysis',
+                                  'Calls, recordings & audio',
+                                  Icons.mic,
+                                  const Color(0xFF10B981),
+                                  customSpacing,
+                                  1,
+                                ),
+
+                                SizedBox(height: customSpacing.md),
+
+                                _buildAnalysisToolCard(
+                                  'Video Analysis',
+                                  'Customer videos & interviews',
+                                  Icons.videocam,
+                                  const Color(0xFF6366F1),
+                                  customSpacing,
+                                  2,
+                                ),
+
+                                SizedBox(height: customSpacing.xl),
+                              ],
+                            ),
                           ),
-                        ),
-
-                        SizedBox(height: customSpacing.md),
-
-                        // Analysis Tools Cards
-                        _buildAnalysisToolCard(
-                          'Text Analysis',
-                          'Messages, emails & feedback',
-                          Icons.text_fields,
-                          const Color(0xFF06B6D4),
-                          customSpacing,
-                          0,
-                        ),
-
-                        SizedBox(height: customSpacing.md),
-
-                        _buildAnalysisToolCard(
-                          'Voice Analysis',
-                          'Calls, recordings & audio',
-                          Icons.mic,
-                          const Color(0xFF10B981),
-                          customSpacing,
-                          1,
-                        ),
-
-                        SizedBox(height: customSpacing.md),
-
-                        _buildAnalysisToolCard(
-                          'Video Analysis',
-                          'Customer videos & interviews',
-                          Icons.videocam,
-                          const Color(0xFF6366F1),
-                          customSpacing,
-                          2,
-                        ),
-
-                        SizedBox(height: customSpacing.xl),
-                      ],
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -131,7 +192,10 @@ class _EmployeeAnalysisToolsScreenState
     );
   }
 
-  Widget _buildHeaderCard(CustomSpacing spacing) {
+  Widget _buildHeaderCard(
+    CustomSpacing spacing,
+    EmployeeAnalysisToolsOverview overview,
+  ) {
     return Container(
       padding: EdgeInsets.all(spacing.lg),
       decoration: BoxDecoration(
@@ -174,9 +238,9 @@ class _EmployeeAnalysisToolsScreenState
                   ),
                 ),
                 SizedBox(height: spacing.xs),
-                const Text(
-                  'AI-powered customer insights and analytics',
-                  style: TextStyle(
+                Text(
+                  overview.subtitle,
+                  style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white70,
                     height: 1.4,
@@ -195,8 +259,8 @@ class _EmployeeAnalysisToolsScreenState
                       ),
                     ),
                     SizedBox(width: spacing.xs),
-                    const Text(
-                      '3 tools available',
+                    Text(
+                      '${overview.toolCount} tools available',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.green,

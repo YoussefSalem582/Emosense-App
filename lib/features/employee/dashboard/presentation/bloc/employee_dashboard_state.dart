@@ -32,31 +32,3 @@ class EmployeeDashboardError extends EmployeeDashboardState {
   @override
   List<Object?> get props => [message];
 }
-
-class EmployeeDashboardData extends Equatable {
-  final int ticketsResolved;
-  final int activeTickets;
-  final double customerSatisfaction;
-  final int efficiencyScore;
-  final List<Map<String, dynamic>> recentTickets;
-  final List<Map<String, dynamic>> quickStats;
-
-  const EmployeeDashboardData({
-    required this.ticketsResolved,
-    required this.activeTickets,
-    required this.customerSatisfaction,
-    required this.efficiencyScore,
-    required this.recentTickets,
-    required this.quickStats,
-  });
-
-  @override
-  List<Object?> get props => [
-    ticketsResolved,
-    activeTickets,
-    customerSatisfaction,
-    efficiencyScore,
-    recentTickets,
-    quickStats,
-  ];
-}

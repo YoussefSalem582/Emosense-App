@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/employee/profile/domain/entities/employee_profile.dart';
+import 'package:emosense_mobile/features/employee/profile/domain/repositories/employee_profile_repository.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
 
@@ -16,14 +19,37 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
   late AnimationController _backgroundController;
   late Animation<double> _backgroundAnimation;
 
-  bool _notificationsEnabled = true;
-  bool _emailAlerts = false;
-  String _selectedLanguage = 'English';
+  EmployeeProfile? _profile;
+  bool _loading = true;
 
   @override
   void initState() {
     super.initState();
     _initializeAnimations();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadProfile());
+  }
+
+  Future<void> _loadProfile() async {
+    setState(() {
+      _loading = true;
+      _profile = null;
+    });
+    try {
+      final p = await di.sl<EmployeeProfileRepository>().fetchProfile();
+      if (mounted) {
+        setState(() {
+          _profile = p;
+          _loading = false;
+        });
+      }
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _profile = null;
+          _loading = false;
+        });
+      }
+    }
   }
 
   void _initializeAnimations() {
@@ -47,79 +73,116 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final customSpacing = theme.extension<CustomSpacing>()!;
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(
         children: [
           AnimatedBackgroundWidget(animation: _backgroundAnimation),
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                ProfileHeaderWidget(
-                  name: 'Youssef Hassan',
-                  position: 'Customer Service Representative',
-                  status: 'Active',
-                  onEditPressed: () => _showEditProfileDialog(),
-                ),
-                const SizedBox(height: 20),
-                ProfilePersonalInfoWidget(
-                  name: 'Youssef Hassan',
-                  email: 'youssef.hassan@company.com',
-                  phone: '+20 1026855881',
-                  department: 'Customer Support',
-                  employeeId: '211000582',
-                ),
-                const SizedBox(height: 20),
-                ProfileWorkInfoWidget(
-                  startDate: 'January 15, 2025',
-                  location: 'Giza',
-                  manager: 'Dr Walaa',
-                  team: 'Customer Experience',
-                ),
-                const SizedBox(height: 20),
-                ProfileSettingsWidget(
-                  notificationsEnabled: _notificationsEnabled,
-                  emailAlerts: _emailAlerts,
-                  selectedLanguage: _selectedLanguage,
-                  onNotificationsChanged:
-                      (value) => setState(() => _notificationsEnabled = value),
-                  onEmailAlertsChanged:
-                      (value) => setState(() => _emailAlerts = value),
-                  onLanguageChanged:
-                      (value) => setState(() => _selectedLanguage = value!),
-                ),
-                const SizedBox(height: 20),
-                Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.cloud_outlined,
-                      color: AppColors.primary,
+          if (_loading)
+            const Center(child: CircularProgressIndicator())
+          else if (_profile == null)
+            Center(
+              child: Padding(
+                padding: EdgeInsets.all(customSpacing.lg),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                    SizedBox(height: customSpacing.md),
+                    const Text('Could not load profile'),
+                    SizedBox(height: customSpacing.md),
+                    ElevatedButton(
+                      onPressed: _loadProfile,
+                      child: const Text('Retry'),
                     ),
-                    title: const Text('App & connection status'),
-                    subtitle: const Text(
-                      'Backend connectivity and diagnostics',
-                    ),
-                    trailing: const Icon(Icons.chevron_right),
-                    onTap: () => AppRouter.toAppStatus(context),
-                  ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                ProfileQuickActionsWidget(
-                  onEditProfile: () => _showEditProfileDialog(),
-                  onChangePassword: () => _showChangePasswordDialog(),
-                  onTimeOffRequest: () => _showTimeOffRequest(),
-                  onHelpSupport: () => _showHelpSupport(),
-                  onSignOut: () => _showSignOutDialog(),
-                ),
-                const SizedBox(height: 20),
-              ],
+              ),
+            )
+          else
+            _buildContent(_profile!),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContent(EmployeeProfile p) {
+    final repo = di.sl<EmployeeProfileRepository>();
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          ProfileHeaderWidget(
+            name: p.name,
+            position: p.position,
+            status: p.status,
+            onEditPressed: () => _showEditProfileDialog(),
+          ),
+          const SizedBox(height: 20),
+          ProfilePersonalInfoWidget(
+            name: p.name,
+            email: p.email,
+            phone: p.phone,
+            department: p.department,
+            employeeId: p.employeeId,
+          ),
+          const SizedBox(height: 20),
+          ProfileWorkInfoWidget(
+            startDate: p.startDate,
+            location: p.location,
+            manager: p.manager,
+            team: p.team,
+          ),
+          const SizedBox(height: 20),
+          ProfileSettingsWidget(
+            notificationsEnabled: p.notificationsEnabled,
+            emailAlerts: p.emailAlerts,
+            selectedLanguage: p.selectedLanguage,
+            onNotificationsChanged: (value) async {
+              final updated = await repo.updatePreferences(
+                notificationsEnabled: value,
+              );
+              if (mounted) setState(() => _profile = updated);
+            },
+            onEmailAlertsChanged: (value) async {
+              final updated = await repo.updatePreferences(emailAlerts: value);
+              if (mounted) setState(() => _profile = updated);
+            },
+            onLanguageChanged: (value) async {
+              if (value != null) {
+                final updated = await repo.updatePreferences(
+                  selectedLanguage: value,
+                );
+                if (mounted) setState(() => _profile = updated);
+              }
+            },
+          ),
+          const SizedBox(height: 20),
+          Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              leading: Icon(Icons.cloud_outlined, color: AppColors.primary),
+              title: const Text('App & connection status'),
+              subtitle: const Text('Backend connectivity and diagnostics'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => AppRouter.toAppStatus(context),
             ),
           ),
+          const SizedBox(height: 20),
+          ProfileQuickActionsWidget(
+            onEditProfile: () => _showEditProfileDialog(),
+            onChangePassword: () => _showChangePasswordDialog(),
+            onTimeOffRequest: () => _showTimeOffRequest(),
+            onHelpSupport: () => _showHelpSupport(),
+            onSignOut: () => _showSignOutDialog(),
+          ),
+          const SizedBox(height: 20),
         ],
       ),
     );
