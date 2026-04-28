@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/core.dart';
+import '../../../../../core/core.dart';
 
 /// Service class to handle all text analysis actions
 ///

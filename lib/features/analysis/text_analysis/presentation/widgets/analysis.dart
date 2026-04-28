@@ -1,11 +1,11 @@
 // Analysis Widgets Export File
 // This file provides a single entry point for importing all analysis-related widgets
 
-export 'analysis_header_widget.dart';
-export 'analysis_result_widget.dart';
-export 'analysis_input_widget.dart';
-export 'analysis_history_widget.dart';
-export 'analysis_quick_actions_widget.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/widgets/analysis_header_widget.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/widgets/analysis_result_widget.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/widgets/analysis_input_widget.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/widgets/analysis_history_widget.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/widgets/analysis_quick_actions_widget.dart';
 export 'package:emosense_mobile/features/analysis/video_analysis/presentation/widgets/video_samples_widget.dart';
 export 'package:emosense_mobile/features/analysis/video_analysis/presentation/widgets/video_analysis_result_widget.dart';
 export 'text_input_widget.dart';

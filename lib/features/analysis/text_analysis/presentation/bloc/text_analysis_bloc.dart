@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/services/emotion_api_service.dart';
+import '../../../../../core/services/emotion_api_service.dart';
 
 part 'text_analysis_event.dart';
 part 'text_analysis_state.dart';

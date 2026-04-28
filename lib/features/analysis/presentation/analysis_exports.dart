@@ -1,4 +1,4 @@
-/// Video / text / voice analysis (`features/analysis/presentation/pages`).
+/// Video / text / voice analysis barrels.
 library;
 
-export 'pages/analysis_screens.dart';
+export '../shared/presentation/pages/analysis_screens.dart';
