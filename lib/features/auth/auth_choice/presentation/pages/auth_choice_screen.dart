@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:emosense_mobile/core/routing/app_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_bloc.dart';
+import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_event.dart';
+import 'package:emosense_mobile/features/auth/auth_choice/presentation/bloc/auth_choice_state.dart';
 import 'package:emosense_mobile/features/auth/auth_choice/presentation/widgets/auth_choice.dart';
 
 /// Authentication choice screen where users can choose between Login and Sign Up
@@ -12,14 +18,46 @@ import 'package:emosense_mobile/features/auth/auth_choice/presentation/widgets/a
 /// - Consistent branding with app theme
 /// - Haptic feedback for interactions
 /// - Modular widget structure
-class AuthChoiceScreen extends StatefulWidget {
+class AuthChoiceScreen extends StatelessWidget {
   const AuthChoiceScreen({super.key});
 
   @override
-  State<AuthChoiceScreen> createState() => _AuthChoiceScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => di.sl<AuthChoiceBloc>(),
+      child: BlocListener<AuthChoiceBloc, AuthChoiceState>(
+        listenWhen: (_, current) => current.pending != null,
+        listener: (context, state) {
+          final dest = state.pending!;
+          context.read<AuthChoiceBloc>().add(
+            const AuthChoiceNavigationConsumed(),
+          );
+          switch (dest) {
+            case AuthChoiceDestination.login:
+              Navigator.pushNamed(context, AppRouter.login);
+              break;
+            case AuthChoiceDestination.signup:
+              Navigator.pushNamed(context, AppRouter.signup);
+              break;
+            case AuthChoiceDestination.onboarding:
+              AppRouter.toOnboarding(context);
+              break;
+          }
+        },
+        child: const _AuthChoiceView(),
+      ),
+    );
+  }
 }
 
-class _AuthChoiceScreenState extends State<AuthChoiceScreen>
+class _AuthChoiceView extends StatefulWidget {
+  const _AuthChoiceView();
+
+  @override
+  State<_AuthChoiceView> createState() => _AuthChoiceViewState();
+}
+
+class _AuthChoiceViewState extends State<_AuthChoiceView>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late AnimationController _cardController;
@@ -78,7 +116,6 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen>
       CurvedAnimation(parent: _backgroundController, curve: Curves.linear),
     );
 
-    // Start background animation loop
     _backgroundController.repeat();
   }
 
@@ -92,19 +129,19 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen>
     });
   }
 
-  void _navigateToLogin() {
+  void _dispatchLogin() {
     HapticFeedback.lightImpact();
-    Navigator.pushNamed(context, AppRouter.login);
+    context.read<AuthChoiceBloc>().add(const AuthChoiceLoginTapped());
   }
 
-  void _navigateToSignUp() {
+  void _dispatchSignUp() {
     HapticFeedback.lightImpact();
-    Navigator.pushNamed(context, AppRouter.signup);
+    context.read<AuthChoiceBloc>().add(const AuthChoiceSignUpTapped());
   }
 
-  void _navigateBack() {
+  void _dispatchBack() {
     HapticFeedback.lightImpact();
-    AppRouter.toOnboarding(context);
+    context.read<AuthChoiceBloc>().add(const AuthChoiceBackTapped());
   }
 
   @override
@@ -123,9 +160,9 @@ class _AuthChoiceScreenState extends State<AuthChoiceScreen>
         slideAnimation: _slideAnimation,
         cardScaleAnimation: _cardScaleAnimation,
         backgroundAnimation: _backgroundAnimation,
-        onLoginPressed: _navigateToLogin,
-        onSignUpPressed: _navigateToSignUp,
-        onBackPressed: _navigateBack,
+        onLoginPressed: _dispatchLogin,
+        onSignUpPressed: _dispatchSignUp,
+        onBackPressed: _dispatchBack,
       ),
     );
   }
