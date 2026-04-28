@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
+
 import '../../../../core/core.dart';
 import '../../../screens/employee/employee_dashboard_screen/widgets/employee_analytics_card.dart';
-import '../../../cubit/employee_analytics/employee_analytics_cubit.dart';
 
 class MetricsGrid extends StatelessWidget {
   final CustomSpacing customSpacing;
@@ -16,7 +17,7 @@ class MetricsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmployeeAnalyticsCubit, EmployeeAnalyticsState>(
+    return BlocBuilder<EmployeeAnalyticsBloc, EmployeeAnalyticsState>(
       builder: (context, state) {
         if (state is EmployeeAnalyticsSuccess) {
           return GridView.count(

@@ -1,8 +1,8 @@
+import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/dependency_injection.dart' as di;
-import '../../../cubit/voice_analysis/voice_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import '../../../widgets/common/animated_background_widget.dart';
 import '../../../widgets/app_bars/analysis_app_bar.dart';
 import 'widgets/widgets.dart';
@@ -79,44 +79,41 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<VoiceAnalysisCubit>(),
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: const AnalysisAppBar(
-          title: 'Voice Analysis Hub',
-          subtitle: 'Audio Emotion Analysis',
-          hasUnreadNotifications: true,
-          notificationCount: 1,
-        ),
-        body: SafeArea(
-          child: Stack(
-            children: [
-              // Animated Background
-              Positioned.fill(
-                child: AnimatedBackgroundWidget(
-                  animation: _backgroundAnimation,
-                ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: const AnalysisAppBar(
+        title: 'Voice Analysis Hub',
+        subtitle: 'Audio Emotion Analysis',
+        hasUnreadNotifications: true,
+        notificationCount: 1,
+      ),
+      body: SafeArea(
+        child: Stack(
+          children: [
+            // Animated Background
+            Positioned.fill(
+              child: AnimatedBackgroundWidget(
+                animation: _backgroundAnimation,
               ),
-              // Content
-              BlocBuilder<VoiceAnalysisCubit, VoiceAnalysisState>(
-                builder: (context, state) {
-                  return AnimatedBuilder(
-                    animation: _fadeAnimation,
-                    builder: (context, child) {
-                      return Opacity(
-                        opacity: _fadeAnimation.value.clamp(0.0, 1.0),
-                        child: SlideTransition(
-                          position: _slideAnimation,
-                          child: _buildBody(context, state),
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
+            ),
+            // Content
+            BlocBuilder<VoiceAnalysisBloc, VoiceAnalysisState>(
+              builder: (context, state) {
+                return AnimatedBuilder(
+                  animation: _fadeAnimation,
+                  builder: (context, child) {
+                    return Opacity(
+                      opacity: _fadeAnimation.value.clamp(0.0, 1.0),
+                      child: SlideTransition(
+                        position: _slideAnimation,
+                        child: _buildBody(context, state),
+                      ),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -156,7 +153,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
               const SizedBox(height: 20),
 
               // Action Buttons
-              BlocBuilder<VoiceAnalysisCubit, VoiceAnalysisState>(
+              BlocBuilder<VoiceAnalysisBloc, VoiceAnalysisState>(
                 builder: (context, state) {
                   final isAnalyzing = state is VoiceAnalysisLoading;
                   return Column(
@@ -169,7 +166,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
                       ),
                       const SizedBox(height: 12),
                       // Quick Demo Button for Testing
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: OutlinedButton(
                           onPressed: isAnalyzing ? null : _loadQuickDemo,
@@ -203,7 +200,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
               const SizedBox(height: 20),
 
               // Results Display
-              BlocBuilder<VoiceAnalysisCubit, VoiceAnalysisState>(
+              BlocBuilder<VoiceAnalysisBloc, VoiceAnalysisState>(
                 builder: (context, state) {
                   final isLoading = state is VoiceAnalysisLoading;
                   final analysisResults = _getAnalysisResults(state);
@@ -313,7 +310,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
   }
 
   void _loadSampleFile(String sampleTitle) {
-    print('📁 Loading sample: $sampleTitle');
+    log('📁 Loading sample: $sampleTitle', name: 'VoiceAnalysis');
 
     // Load sample file and immediately trigger analysis
     ScaffoldMessenger.of(context).showSnackBar(
@@ -331,20 +328,21 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
       _loadedSampleTitle = sampleTitle;
     });
 
-    print(
+    log(
       '✅ Sample loaded: $_loadedSampleTitle, hasContent: $_hasSampleLoaded',
+      name: 'VoiceAnalysis',
     );
 
     // Immediately trigger analysis for the sample
     String analysisType = _getAnalysisTypeForSample(sampleTitle);
-    print('🎯 Auto-analyzing sample with type: $analysisType');
+    log('🎯 Auto-analyzing sample with type: $analysisType', name: 'VoiceAnalysis');
 
     // Trigger analysis immediately
-    context.read<VoiceAnalysisCubit>().loadDemoData(analysisType);
+    context.read<VoiceAnalysisBloc>().add(VoiceAnalysisDemoRequested(analysisType));
   }
 
   void _loadQuickDemo() {
-    print('🚀 Loading quick demo analysis');
+    log('🚀 Loading quick demo analysis', name: 'VoiceAnalysis');
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -355,9 +353,9 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
     );
 
     // Load demo data directly without sample selection
-    context.read<VoiceAnalysisCubit>().loadDemoData(
-      'Customer Support Analysis',
-    );
+    context.read<VoiceAnalysisBloc>().add(
+          const VoiceAnalysisDemoRequested('Customer Support Analysis'),
+        );
   }
 
   void _startAnalysis() {
@@ -374,7 +372,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
     HapticFeedback.lightImpact();
 
     // Check if we have a sample that's already analyzed
-    final currentState = context.read<VoiceAnalysisCubit>().state;
+    final currentState = context.read<VoiceAnalysisBloc>().state;
     if (_hasSampleLoaded &&
         _loadedSampleTitle.isNotEmpty &&
         currentState is VoiceAnalysisDemo) {
@@ -394,11 +392,11 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
       analysisType = _getAnalysisTypeForSample(_loadedSampleTitle);
 
       // Debug: Show what we're about to analyze
-      print('🎯 Re-analyzing sample: $_loadedSampleTitle');
-      print('📊 Analysis type: $analysisType');
+      log('🎯 Re-analyzing sample: $_loadedSampleTitle', name: 'VoiceAnalysis');
+      log('📊 Analysis type: $analysisType', name: 'VoiceAnalysis');
 
       // For samples, use loadDemoData to get sample-specific results
-      context.read<VoiceAnalysisCubit>().loadDemoData(analysisType);
+      context.read<VoiceAnalysisBloc>().add(VoiceAnalysisDemoRequested(analysisType));
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -412,14 +410,16 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
       String filePath = _getFilePathForAnalysis();
       analysisType = _getAnalysisType();
 
-      print('🎯 Starting regular analysis: $analysisType');
-      print('📁 File path: $filePath');
+      log('🎯 Starting regular analysis: $analysisType', name: 'VoiceAnalysis');
+      log('📁 File path: $filePath', name: 'VoiceAnalysis');
 
       // Trigger analysis through the cubit
-      context.read<VoiceAnalysisCubit>().analyzeAudio(
-        filePath: filePath,
-        analysisType: analysisType,
-      );
+      context.read<VoiceAnalysisBloc>().add(
+            VoiceAnalysisAnalyzeRequested(
+              filePath: filePath,
+              analysisType: analysisType,
+            ),
+          );
     }
   }
 
@@ -432,7 +432,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
     });
 
     // Clear the analysis state in the cubit
-    context.read<VoiceAnalysisCubit>().clearAnalysis();
+    context.read<VoiceAnalysisBloc>().add(const VoiceAnalysisReset());
 
     HapticFeedback.selectionClick();
 
@@ -496,11 +496,11 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
   }
 
   Map<String, dynamic>? _getAnalysisResults(VoiceAnalysisState state) {
-    print('🔍 Current analysis state: ${state.runtimeType}');
+    log('🔍 Current analysis state: ${state.runtimeType}', name: 'VoiceAnalysis');
 
     if (state is VoiceAnalysisSuccess) {
       final result = state.result;
-      print('✅ Success result: ${result.analysisType}');
+      log('✅ Success result: ${result.analysisType}', name: 'VoiceAnalysis');
       return {
         'overall_score': result.confidence,
         'dominant_emotion': _extractDominantEmotion(result.emotions),
@@ -516,8 +516,8 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
       };
     } else if (state is VoiceAnalysisDemo) {
       final result = state.demoResult;
-      print('🎭 Demo result: ${result.analysisType}');
-      print('📊 Emotions: ${result.emotions}');
+      log('🎭 Demo result: ${result.analysisType}', name: 'VoiceAnalysis');
+      log('📊 Emotions: ${result.emotions}', name: 'VoiceAnalysis');
       return {
         'overall_score': result.confidence,
         'dominant_emotion': _extractDominantEmotion(result.emotions),
@@ -532,7 +532,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
         'timestamp': result.timestamp.toString(),
       };
     } else if (state is VoiceAnalysisError) {
-      print('❌ Error state: ${state.message}');
+      log('❌ Error state: ${state.message}', name: 'VoiceAnalysis');
       // Show error in UI
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -543,9 +543,9 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
         );
       });
     } else if (state is VoiceAnalysisLoading) {
-      print('⏳ Loading state detected');
+      log('⏳ Loading state detected', name: 'VoiceAnalysis');
     } else {
-      print('🔄 Initial state');
+      log('🔄 Initial state', name: 'VoiceAnalysis');
     }
     return null;
   }

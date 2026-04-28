@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../widgets/auth/auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/routing/app_router.dart';
+import '../../../../domain/entities/user_entity.dart';
+import '../../../../features/auth/presentation/bloc/user_bloc.dart';
+import '../../../widgets/auth/auth.dart';
 import 'widgets/signup.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -212,6 +216,9 @@ class _SignUpScreenState extends State<SignUpScreen>
           ),
         );
 
+        final user = _newUserEntity();
+        context.read<UserBloc>().add(UserSet(user));
+
         // Navigate to appropriate dashboard based on role
         if (_selectedRole == 'Admin') {
           AppRouter.toAdminDashboard(context);
@@ -240,5 +247,27 @@ class _SignUpScreenState extends State<SignUpScreen>
 
   void _navigateToLogin() {
     Navigator.pop(context);
+  }
+
+  UserEntity _newUserEntity() {
+    final email = _emailController.text.trim();
+    final first = _firstNameController.text.trim();
+    final last = _lastNameController.text.trim();
+    final name = '$first $last'.trim();
+    final employeeId = _employeeIdController.text.trim();
+    final role =
+        _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
+    final id = employeeId.isNotEmpty ? employeeId : email;
+
+    return UserEntity(
+      id: id.isNotEmpty ? id : 'new-user',
+      name: name.isNotEmpty
+          ? name
+          : (email.contains('@') ? email.split('@').first : 'User'),
+      email: email,
+      role: role,
+      createdAt: DateTime.now(),
+      preferences: const UserPreferences(),
+    );
   }
 }

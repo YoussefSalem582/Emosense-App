@@ -198,7 +198,7 @@ class TextTemplatesWidget extends StatelessWidget {
                     () => onCategoryChanged?.call(category),
                   ),
                 );
-              }).toList(),
+              }),
             ],
           ),
         ),
@@ -548,7 +548,7 @@ class _AllTemplatesBottomSheetState extends State<_AllTemplatesBottomSheet> {
                         padding: EdgeInsets.only(right: customSpacing.sm),
                         child: _buildCategoryChip(category, isSelected),
                       );
-                    }).toList(),
+                    }),
                   ],
                 ),
               ),

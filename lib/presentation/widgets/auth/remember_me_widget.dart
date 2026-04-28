@@ -35,7 +35,12 @@ class RememberMeWidget extends StatelessWidget {
                     Checkbox(
                       value: value,
                       onChanged: (newValue) => onChanged(newValue ?? false),
-                      activeColor: const Color(0xFF667EEA),
+                      fillColor: WidgetStateProperty.resolveWith((states) {
+                        if (states.contains(WidgetState.selected)) {
+                          return const Color(0xFF667EEA);
+                        }
+                        return null;
+                      }),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4),
                       ),

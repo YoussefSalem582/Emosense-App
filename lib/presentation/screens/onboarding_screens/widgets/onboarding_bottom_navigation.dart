@@ -16,7 +16,7 @@ class OnboardingBottomNavigation extends StatefulWidget {
   final String previousText;
 
   const OnboardingBottomNavigation({
-    Key? key,
+    super.key,
     required this.currentPage,
     required this.totalPages,
     this.onSkip,
@@ -29,7 +29,7 @@ class OnboardingBottomNavigation extends StatefulWidget {
     this.skipText = 'Skip',
     this.getStartedText = 'Get Started',
     this.previousText = 'Previous',
-  }) : super(key: key);
+  });
 
   @override
   State<OnboardingBottomNavigation> createState() =>
@@ -238,14 +238,14 @@ class OnboardingFloatingNavigation extends StatelessWidget {
   final Color iconColor;
 
   const OnboardingFloatingNavigation({
-    Key? key,
+    super.key,
     required this.currentPage,
     required this.totalPages,
     this.onNext,
     this.onGetStarted,
     this.backgroundColor = Colors.blue,
     this.iconColor = Colors.white,
-  }) : super(key: key);
+  });
 
   bool get isLastPage => currentPage == totalPages - 1;
 

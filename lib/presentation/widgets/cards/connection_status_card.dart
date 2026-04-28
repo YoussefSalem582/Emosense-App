@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/emotion/emotion_cubit.dart';
-import '../../../core/core.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/network/connection_bloc.dart';
+
+/// Shows backend connection status from [ConnectionBloc].
 class ConnectionStatusCard extends StatelessWidget {
   const ConnectionStatusCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmotionCubit, EmotionState>(
+    return BlocBuilder<ConnectionBloc, BackendConnectionState>(
       builder: (context, state) {
-        final isConnected = _isConnected(state);
-        final isChecking = _isConnectionChecking(state);
+        final isConnected = state is ConnectionConnected;
+        final isChecking = state is ConnectionConnecting;
 
         return Container(
           padding: const EdgeInsets.all(16),
@@ -39,7 +41,9 @@ class ConnectionStatusCard extends StatelessWidget {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  isConnected ? AppStrings.connected : AppStrings.disconnected,
+                  isConnected
+                      ? AppStrings.connected
+                      : AppStrings.disconnected,
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,
@@ -50,7 +54,9 @@ class ConnectionStatusCard extends StatelessWidget {
               TextButton.icon(
                 onPressed: isChecking
                     ? null
-                    : () => context.read<EmotionCubit>().checkConnection(),
+                    : () => context.read<ConnectionBloc>().add(
+                          const ConnectionTestRequested(),
+                        ),
                 icon: isChecking
                     ? const SizedBox(
                         width: 18,
@@ -77,16 +83,5 @@ class ConnectionStatusCard extends StatelessWidget {
         );
       },
     );
-  }
-
-  bool _isConnected(EmotionState state) {
-    if (state is EmotionConnectionResult) {
-      return state.isConnected;
-    }
-    return false;
-  }
-
-  bool _isConnectionChecking(EmotionState state) {
-    return state is EmotionConnectionChecking;
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/core.dart';
 import '../../../core/constants/text_templates.dart' as core_templates;
-import '../../cubit/text_analysis/text_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/text_analysis_bloc.dart';
 import '../../services/text_analysis_actions_handler.dart';
 import 'analysis.dart';
 
@@ -222,16 +222,18 @@ class _TextAnalysisMainContentWidgetState
       return;
     }
 
-    context.read<TextAnalysisCubit>().analyzeText(
-      text: _textController.text.trim(),
-      analysisType: _selectedAnalysisType,
-    );
+    context.read<TextAnalysisBloc>().add(
+          TextAnalysisAnalyzeRequested(
+            text: _textController.text.trim(),
+            analysisType: _selectedAnalysisType,
+          ),
+        );
   }
 
   /// Clear the analysis
   void _clearAnalysis() {
     _textController.clear();
-    context.read<TextAnalysisCubit>().clearAnalysis();
+    context.read<TextAnalysisBloc>().add(const TextAnalysisReset());
   }
 
   /// Use a template
@@ -247,6 +249,6 @@ class _TextAnalysisMainContentWidgetState
       _selectedAnalysisType = item.type;
     });
     // Load this item's result in the cubit
-    context.read<TextAnalysisCubit>().loadDemoData(item.type);
+    context.read<TextAnalysisBloc>().add(TextAnalysisDemoRequested(item.type));
   }
 }

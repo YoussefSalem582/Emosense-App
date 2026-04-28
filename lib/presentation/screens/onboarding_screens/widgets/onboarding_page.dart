@@ -10,14 +10,14 @@ class OnboardingPage extends StatefulWidget {
   final bool isVisible;
 
   const OnboardingPage({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.icon,
     this.primaryColor = Colors.blue,
     this.secondaryColor = Colors.purple,
     this.isVisible = true,
-  }) : super(key: key);
+  });
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();

@@ -284,7 +284,7 @@ class VideoResultsCard extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ],
     );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
+
 import '../../../../core/core.dart';
 import '../../../screens/employee/common/widgets/widgets.dart';
-import '../../../cubit/employee_analytics/employee_analytics_cubit.dart';
 
 class AnalyticsHeader extends StatelessWidget {
   final CustomSpacing customSpacing;
@@ -14,7 +15,7 @@ class AnalyticsHeader extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: EmployeeSectionHeader(title: 'Interaction Analytics')),
-        BlocBuilder<EmployeeAnalyticsCubit, EmployeeAnalyticsState>(
+        BlocBuilder<EmployeeAnalyticsBloc, EmployeeAnalyticsState>(
           builder: (context, state) {
             final selectedTimeRange =
                 state is EmployeeAnalyticsSuccess
@@ -56,9 +57,9 @@ class AnalyticsHeader extends StatelessWidget {
                           .toList(),
                   onChanged: (value) {
                     if (value != null) {
-                      context.read<EmployeeAnalyticsCubit>().changeTimeRange(
-                        value,
-                      );
+                      context.read<EmployeeAnalyticsBloc>().add(
+                            EmployeeAnalyticsFetched(timeRange: value),
+                          );
                     }
                   },
                 ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
-import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 /// Widget that provides sample video URLs for testing
 class VideoSampleLinksWidget extends StatelessWidget {
@@ -61,7 +59,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 20,
                     offset: const Offset(0, 4),
                   ),
@@ -75,7 +73,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.1),
+                          color: AppColors.primary.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Icon(
@@ -124,7 +122,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary.withOpacity(0.1)),
+              border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
@@ -133,7 +131,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
@@ -170,7 +168,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Icon(
@@ -185,29 +183,6 @@ class VideoSampleLinksWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  void _triggerDemoAnalysis(BuildContext context) {
-    // Clear any existing URL
-    urlController.clear();
-
-    // Trigger demo analysis directly
-    context.read<VideoAnalysisBloc>().add(
-          const VideoAnalysisDemoRequested('demo_video'),
-        );
-
-    // Show info message
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('Running demo analysis with sample data'),
-        backgroundColor: AppColors.primary,
-        duration: const Duration(seconds: 2),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      ),
-    );
-
-    HapticFeedback.mediumImpact();
   }
 
   void _selectSample(BuildContext context, String url) {

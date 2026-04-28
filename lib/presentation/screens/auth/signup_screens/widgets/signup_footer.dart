@@ -66,7 +66,12 @@ class SignupFooter extends StatelessWidget {
         Checkbox(
           value: agreeToTerms,
           onChanged: (value) => onAgreeToTermsChanged(value ?? false),
-          activeColor: const Color(0xFF667EEA),
+          fillColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.selected)) {
+              return const Color(0xFF667EEA);
+            }
+            return null;
+          }),
         ),
         Expanded(
           child: RichText(

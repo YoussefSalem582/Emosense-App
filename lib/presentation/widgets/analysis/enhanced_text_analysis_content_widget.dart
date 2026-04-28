@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/text_analysis_bloc.dart';
+
 import '../../../core/core.dart';
-import '../../cubit/text_analysis/text_analysis_cubit.dart';
 import '../common/animated_background_widget.dart';
 import 'text_analysis_constants.dart';
 import 'text_analysis_main_content_widget.dart';
@@ -67,7 +68,7 @@ class _EnhancedTextAnalysisContentWidgetState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TextAnalysisCubit, TextAnalysisState>(
+    return BlocConsumer<TextAnalysisBloc, TextAnalysisState>(
       listener: _handleStateChanges,
       builder: (context, state) {
         return Stack(

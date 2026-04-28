@@ -1,3 +1,4 @@
+import 'dart:developer' show log;
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +50,6 @@ class _EmployeeVideoAnalysisScreenState
 
   // State tracking
   bool _isAnalyzing = false;
-  String? _currentAnalysisId;
 
   @override
   void initState() {
@@ -316,7 +316,7 @@ class _EmployeeVideoAnalysisScreenState
   Widget _buildAnalysisResults() {
     return BlocBuilder<VideoAnalysisBloc, VideoAnalysisState>(
       builder: (context, state) {
-        print('Current VideoAnalysisState: $state');
+        log('Current VideoAnalysisState: $state', name: 'VideoAnalysis');
 
         if (state is VideoAnalysisLoading) {
           return _buildLoadingState();
@@ -352,9 +352,9 @@ class _EmployeeVideoAnalysisScreenState
                       height: 120,
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
-                        backgroundColor: Colors.white.withOpacity(0.1),
+                        backgroundColor: Colors.white.withValues(alpha: 0.1),
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Color(0xFF667EEA).withOpacity(0.8),
+                          Color(0xFF667EEA).withValues(alpha: 0.8),
                         ),
                       ),
                     ),
@@ -404,10 +404,10 @@ class _EmployeeVideoAnalysisScreenState
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withOpacity(0.2),
+                    color: const Color(0xFF10B981).withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(25),
                     border: Border.all(
-                      color: const Color(0xFF10B981).withOpacity(0.3),
+                      color: const Color(0xFF10B981).withValues(alpha: 0.3),
                     ),
                   ),
                   child: Row(
@@ -443,16 +443,16 @@ class _EmployeeVideoAnalysisScreenState
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.red.withOpacity(0.1),
+        color: Colors.red.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.red.withOpacity(0.3)),
+        border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
       ),
       child: Column(
         children: [
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.red.withOpacity(0.1),
+              color: Colors.red.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: const Icon(Icons.error_outline, color: Colors.red, size: 48),
@@ -498,12 +498,9 @@ class _EmployeeVideoAnalysisScreenState
   /// Analyze video with enhanced feedback and validation
   void _analyzeVideo() {
     try {
-      // Generate unique analysis ID
-      _currentAnalysisId = DateTime.now().millisecondsSinceEpoch.toString();
-
       if (_selectedVideoFile != null) {
         // Analyze uploaded video file
-        print('Analyzing video file: ${_selectedVideoFile!.path}');
+        log('Analyzing video file: ${_selectedVideoFile!.path}', name: 'VideoAnalysis');
         context.read<VideoAnalysisBloc>().add(
           VideoAnalysisFromFileSubmitted(
             videoFile: _selectedVideoFile!,
@@ -513,7 +510,7 @@ class _EmployeeVideoAnalysisScreenState
         // Analyze video from URL
         final url = _urlController.text.trim();
         if (url.isNotEmpty) {
-          print('Analyzing video URL: $url');
+          log('Analyzing video URL: $url', name: 'VideoAnalysis');
           context.read<VideoAnalysisBloc>().add(
                 VideoAnalysisFromUrlSubmitted(videoUrl: url),
               );
@@ -530,7 +527,7 @@ class _EmployeeVideoAnalysisScreenState
       // Clear focus from input
       _urlFocusNode.unfocus();
     } catch (e) {
-      print('Error starting video analysis: $e');
+      log('Error starting video analysis: $e', name: 'VideoAnalysis');
       _showAnalysisError('Failed to start analysis: $e');
     }
   }

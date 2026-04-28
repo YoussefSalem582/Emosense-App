@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ReviewVideoDetailsDialogWidget extends StatelessWidget {
   final Map<String, dynamic> video;
@@ -174,7 +175,11 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: OutlinedButton.icon(
-                      onPressed: () => _launchVideoUrl(video['videoUrl']),
+                      onPressed:
+                          () => _openReviewVideoUrl(
+                            context,
+                            video['videoUrl']?.toString(),
+                          ),
                       icon: const Icon(Icons.play_arrow),
                       label: const Text('Watch Video'),
                       style: OutlinedButton.styleFrom(
@@ -217,10 +222,32 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
         return Colors.grey;
     }
   }
+}
 
-  Future<void> _launchVideoUrl(String url) async {
-    // TODO: Implement video URL launching
-    // This will open the YouTube video in the default browser
-    debugPrint('Opening video URL: $url');
+Future<void> _openReviewVideoUrl(BuildContext context, String? rawUrl) async {
+  final url = rawUrl?.trim();
+  if (url == null || url.isEmpty) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No video URL')),
+      );
+    }
+    return;
+  }
+  final uri = Uri.tryParse(url);
+  if (uri == null ||
+      !(uri.hasScheme && (uri.scheme == 'http' || uri.scheme == 'https'))) {
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid video URL')),
+      );
+    }
+    return;
+  }
+  final ok = await launchUrl(uri, mode: LaunchMode.externalApplication);
+  if (!ok && context.mounted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Could not open link')),
+    );
   }
 }

@@ -25,7 +25,7 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -41,7 +41,7 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withOpacity(0.1),
+                    color: const Color(0xFF10B981).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -66,7 +66,7 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withOpacity(0.1),
+                    color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
@@ -124,19 +124,19 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            sentimentColor.withOpacity(0.1),
-            sentimentColor.withOpacity(0.05),
+            sentimentColor.withValues(alpha: 0.1),
+            sentimentColor.withValues(alpha: 0.05),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: sentimentColor.withOpacity(0.3)),
+        border: Border.all(color: sentimentColor.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: sentimentColor.withOpacity(0.2),
+              color: sentimentColor.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(sentimentIcon, color: sentimentColor, size: 32),
@@ -264,7 +264,7 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
           const SizedBox(height: 6),
           LinearProgressIndicator(
             value: value,
-            backgroundColor: color.withOpacity(0.2),
+            backgroundColor: color.withValues(alpha: 0.2),
             valueColor: AlwaysStoppedAnimation<Color>(color),
             minHeight: 6,
           ),
@@ -277,9 +277,9 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFF3B82F6).withOpacity(0.1),
+        color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.3)),
+        border: Border.all(color: const Color(0xFF3B82F6).withValues(alpha: 0.3)),
       ),
       child: Text(
         topic,

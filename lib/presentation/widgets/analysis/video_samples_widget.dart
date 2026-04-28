@@ -283,25 +283,23 @@ class VideoSamplesWidget extends StatelessWidget {
   }
 
   Widget _buildDefaultThumbnail(VideoSample video, CustomSpacing spacing) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            video.category.icon,
-            color: Colors.white.withValues(alpha: 0.8),
-            size: 32,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          video.category.icon,
+          color: Colors.white.withValues(alpha: 0.8),
+          size: 32,
+        ),
+        SizedBox(height: spacing.sm),
+        Text(
+          video.category.name,
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.9),
+            fontWeight: FontWeight.w600,
           ),
-          SizedBox(height: spacing.sm),
-          Text(
-            video.category.name,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.9),
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

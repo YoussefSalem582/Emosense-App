@@ -433,7 +433,7 @@ class _VideoAnalysisResultWidgetState extends State<VideoAnalysisResultWidget>
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );

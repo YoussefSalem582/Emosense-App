@@ -14,7 +14,7 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -30,7 +30,7 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withOpacity(0.1),
+                    color: const Color(0xFF10B981).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
@@ -60,7 +60,7 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                 color: const Color(0xFFF8FAFC),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: const Color(0xFF10B981).withOpacity(0.3),
+                  color: const Color(0xFF10B981).withValues(alpha: 0.3),
                   style: BorderStyle.solid,
                 ),
               ),
@@ -69,7 +69,7 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                   Icon(
                     Icons.cloud_upload_outlined,
                     size: 48,
-                    color: const Color(0xFF10B981).withOpacity(0.7),
+                    color: const Color(0xFF10B981).withValues(alpha: 0.7),
                   ),
                   const SizedBox(height: 16),
                   const Text(

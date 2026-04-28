@@ -1,3 +1,4 @@
+import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/core.dart';
@@ -72,10 +73,10 @@ class VideoAnalysisResults extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border.withOpacity(0.3)),
+                border: Border.all(color: AppColors.border.withValues(alpha: 0.3)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -104,7 +105,7 @@ class VideoAnalysisResults extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFF667EEA).withOpacity(0.1),
+            color: const Color(0xFF667EEA).withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: const Icon(
@@ -132,8 +133,8 @@ class VideoAnalysisResults extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF667EEA).withOpacity(0.08),
-            const Color(0xFF764BA2).withOpacity(0.08),
+            const Color(0xFF667EEA).withValues(alpha: 0.08),
+            const Color(0xFF764BA2).withValues(alpha: 0.08),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
@@ -206,7 +207,7 @@ class VideoAnalysisResults extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
-                color: emotionColor.withOpacity(0.1),
+                color: emotionColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Icon(Icons.person_rounded, color: emotionColor, size: 16),
@@ -229,12 +230,12 @@ class VideoAnalysisResults extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                emotionColor.withOpacity(0.05),
-                sentimentColor.withOpacity(0.05),
+                emotionColor.withValues(alpha: 0.05),
+                sentimentColor.withValues(alpha: 0.05),
               ],
             ),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: emotionColor.withOpacity(0.2)),
+            border: Border.all(color: emotionColor.withValues(alpha: 0.2)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -271,7 +272,7 @@ class VideoAnalysisResults extends StatelessWidget {
                     Container(
                       width: 1,
                       height: 30,
-                      color: AppColors.border.withOpacity(0.5),
+                      color: AppColors.border.withValues(alpha: 0.5),
                     ),
                     Expanded(
                       child: Padding(
@@ -311,12 +312,12 @@ class VideoAnalysisResults extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: emotionColor.withOpacity(0.3),
+                      color: emotionColor.withValues(alpha: 0.3),
                       width: 2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: emotionColor.withOpacity(0.1),
+                        color: emotionColor.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -334,10 +335,11 @@ class VideoAnalysisResults extends StatelessWidget {
                             width: double.infinity,
                             fit: BoxFit.cover,
                             errorBuilder: (context, error, stackTrace) {
-                              print(
+                              log(
                                 'Error loading asset image: ${snapshot.assetImagePath}',
+                                name: 'VideoAnalysisResults',
                               );
-                              print('Error details: $error');
+                              log('Error details: $error', name: 'VideoAnalysisResults');
                               return _buildImageErrorPlaceholder();
                             },
                           ),
@@ -353,7 +355,7 @@ class VideoAnalysisResults extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
@@ -388,7 +390,7 @@ class VideoAnalysisResults extends StatelessWidget {
                               vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: emotionColor.withOpacity(0.9),
+                              color: emotionColor.withValues(alpha: 0.9),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: Colors.white, width: 1),
                             ),
@@ -424,7 +426,7 @@ class VideoAnalysisResults extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
@@ -460,15 +462,15 @@ class VideoAnalysisResults extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Colors.grey.withOpacity(0.1),
-                        Colors.grey.withOpacity(0.05),
+                        Colors.grey.withValues(alpha: 0.1),
+                        Colors.grey.withValues(alpha: 0.05),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: AppColors.border.withOpacity(0.3),
+                      color: AppColors.border.withValues(alpha: 0.3),
                       style: BorderStyle.solid,
                     ),
                   ),
@@ -479,20 +481,20 @@ class VideoAnalysisResults extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(0.1),
+                            color: Colors.grey.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.video_camera_back_outlined,
                             size: 40,
-                            color: Colors.grey.withOpacity(0.7),
+                            color: Colors.grey.withValues(alpha: 0.7),
                           ),
                         ),
                         const SizedBox(height: 12),
                         Text(
                           'No Video Frame Captured',
                           style: TextStyle(
-                            color: Colors.grey.withOpacity(0.8),
+                            color: Colors.grey.withValues(alpha: 0.8),
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
                           ),
@@ -501,7 +503,7 @@ class VideoAnalysisResults extends StatelessWidget {
                         Text(
                           'Snapshot processing may be unavailable',
                           style: TextStyle(
-                            color: Colors.grey.withOpacity(0.6),
+                            color: Colors.grey.withValues(alpha: 0.6),
                             fontSize: 14,
                           ),
                         ),
@@ -518,7 +520,7 @@ class VideoAnalysisResults extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.border.withOpacity(0.3)),
+                  border: Border.all(color: AppColors.border.withValues(alpha: 0.3)),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -528,7 +530,7 @@ class VideoAnalysisResults extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF667EEA).withOpacity(0.1),
+                            color: const Color(0xFF667EEA).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Icon(
@@ -640,7 +642,7 @@ class VideoAnalysisResults extends StatelessWidget {
   Widget _buildImageErrorPlaceholder() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey.withOpacity(0.1),
+        color: Colors.grey.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: const Center(

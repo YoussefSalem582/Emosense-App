@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/emotion/emotion_cubit.dart';
+import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 import '../../../core/core.dart';
 
 class AnalyzeButton extends StatelessWidget {
@@ -10,7 +10,7 @@ class AnalyzeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EmotionCubit, EmotionState>(
+    return BlocBuilder<EmotionBloc, EmotionState>(
       builder: (context, state) {
         return Container(
           height: 60,

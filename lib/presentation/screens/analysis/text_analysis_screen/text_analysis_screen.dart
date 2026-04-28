@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/dependency_injection.dart' as di;
-import '../../../cubit/text_analysis/text_analysis_cubit.dart';
+import 'package:emosense_mobile/features/analysis/presentation/bloc/text_analysis_bloc.dart';
 import '../../../widgets/common/animated_background_widget.dart';
 import '../../../widgets/common/animated_loading_indicator.dart';
 import '../../../widgets/app_bars/analysis_app_bar.dart';
@@ -78,28 +77,25 @@ class _UnifiedTextAnalysisScreenState extends State<UnifiedTextAnalysisScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => di.sl<TextAnalysisCubit>(),
-      child: Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: const AnalysisAppBar(
-          title: 'Text Analysis Hub',
-          subtitle: 'Emotion & Sentiment Analysis',
-          hasUnreadNotifications: true,
-          notificationCount: 2,
-        ),
-        body: Stack(
-          children: [
-            // Animated Background
-            AnimatedBackgroundWidget(animation: _backgroundAnimation),
-            // Content
-            BlocBuilder<TextAnalysisCubit, TextAnalysisState>(
-              builder: (context, state) {
-                return _buildBody(context, state);
-              },
-            ),
-          ],
-        ),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: const AnalysisAppBar(
+        title: 'Text Analysis Hub',
+        subtitle: 'Emotion & Sentiment Analysis',
+        hasUnreadNotifications: true,
+        notificationCount: 2,
+      ),
+      body: Stack(
+        children: [
+          // Animated Background
+          AnimatedBackgroundWidget(animation: _backgroundAnimation),
+          // Content
+          BlocBuilder<TextAnalysisBloc, TextAnalysisState>(
+            builder: (context, state) {
+              return _buildBody(context, state);
+            },
+          ),
+        ],
       ),
     );
   }
@@ -216,10 +212,12 @@ class _UnifiedTextAnalysisScreenState extends State<UnifiedTextAnalysisScreen>
     final text = _textController.text.trim();
     if (text.isEmpty) return;
 
-    context.read<TextAnalysisCubit>().analyzeText(
-      text: text,
-      analysisType: _selectedAnalysisType,
-    );
+    context.read<TextAnalysisBloc>().add(
+          TextAnalysisAnalyzeRequested(
+            text: text,
+            analysisType: _selectedAnalysisType,
+          ),
+        );
   }
 
   Map<String, dynamic>? _getAnalysisResultsMap(TextAnalysisState state) {

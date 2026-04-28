@@ -8,12 +8,12 @@ class OnboardingPageIndicator extends StatefulWidget {
   final Color inactiveColor;
 
   const OnboardingPageIndicator({
-    Key? key,
+    super.key,
     required this.currentPage,
     required this.totalPages,
     this.activeColor = Colors.blue,
     this.inactiveColor = Colors.grey,
-  }) : super(key: key);
+  });
 
   @override
   State<OnboardingPageIndicator> createState() =>
@@ -138,13 +138,13 @@ class OnboardingDotIndicator extends StatelessWidget {
   final double dotSize;
 
   const OnboardingDotIndicator({
-    Key? key,
+    super.key,
     required this.currentPage,
     required this.totalPages,
     this.activeColor = Colors.blue,
     this.inactiveColor = Colors.grey,
     this.dotSize = 8.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,12 +161,12 @@ class OnboardingDotIndicator extends StatelessWidget {
           height: dotSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? activeColor : inactiveColor.withOpacity(0.4),
+            color: isActive ? activeColor : inactiveColor.withValues(alpha: 0.4),
             boxShadow:
                 isActive
                     ? [
                       BoxShadow(
-                        color: activeColor.withOpacity(0.4),
+                        color: activeColor.withValues(alpha: 0.4),
                         blurRadius: 8,
                         offset: const Offset(0, 2),
                       ),

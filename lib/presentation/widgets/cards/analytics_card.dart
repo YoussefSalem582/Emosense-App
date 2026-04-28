@@ -158,7 +158,7 @@ class AnalyticsCard extends StatelessWidget {
               percentage,
               EmotionUtils.getEmotionColor(entry.key),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -204,7 +204,7 @@ class AnalyticsCard extends StatelessWidget {
               percentage,
               _getSentimentColor(entry.key),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -350,7 +350,7 @@ class AnalyticsCard extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
