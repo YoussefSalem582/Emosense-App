@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/auth/role_selection/domain/entities/role_selection_destination.dart';
 import 'package:emosense_mobile/features/auth/role_selection/presentation/bloc/role_selection_bloc.dart';
 import 'package:emosense_mobile/features/auth/role_selection/presentation/bloc/role_selection_event.dart';
 import 'package:emosense_mobile/features/auth/role_selection/presentation/bloc/role_selection_state.dart';

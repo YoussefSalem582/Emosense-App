@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
-
-enum RoleSelectionDestination { authChoice, splash }
+import 'package:emosense_mobile/features/auth/role_selection/domain/entities/role_selection_destination.dart';
 
 class RoleSelectionState extends Equatable {
   const RoleSelectionState({this.pending});

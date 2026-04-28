@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:emosense_mobile/features/auth/role_selection/domain/entities/role_selection_destination.dart';
+
 import 'role_selection_event.dart';
 import 'role_selection_state.dart';
 
