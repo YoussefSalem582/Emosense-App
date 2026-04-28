@@ -60,10 +60,7 @@ class VoiceAnalysisBloc extends Bloc<VoiceAnalysisEvent, VoiceAnalysisState> {
     }
   }
 
-  void _onReset(
-    VoiceAnalysisReset event,
-    Emitter<VoiceAnalysisState> emit,
-  ) {
+  void _onReset(VoiceAnalysisReset event, Emitter<VoiceAnalysisState> emit) {
     emit(const VoiceAnalysisInitial());
   }
 

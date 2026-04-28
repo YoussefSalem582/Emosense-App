@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import '../../domain/entities/video_analysis_response.dart';
+import '../datasources/video_analysis_remote_data_source.dart';
 
-class VideoAnalysisApiService {
+class VideoAnalysisApiService implements VideoAnalysisRemoteDataSource {
   static const String _baseUrl = 'http://localhost:8000';
   static const String _videoAnalysisEndpoint = '/predict/video';
   static const String _healthEndpoint = '/health';
@@ -14,6 +15,7 @@ class VideoAnalysisApiService {
   VideoAnalysisApiService({http.Client? client})
     : _client = client ?? http.Client();
 
+  @override
   Future<VideoAnalysisResponse> analyzeVideo({
     required String videoUrl,
     int frameInterval = 30,
@@ -47,6 +49,7 @@ class VideoAnalysisApiService {
     }
   }
 
+  @override
   Future<VideoAnalysisResponse> analyzeVideoFile({
     required File videoFile,
     int frameInterval = 30,
@@ -84,6 +87,7 @@ class VideoAnalysisApiService {
     }
   }
 
+  @override
   Future<bool> checkConnection() async {
     try {
       final response = await _client
@@ -96,6 +100,7 @@ class VideoAnalysisApiService {
     }
   }
 
+  @override
   Future<Map<String, dynamic>> getConnectionDetails() async {
     try {
       final response = await _client

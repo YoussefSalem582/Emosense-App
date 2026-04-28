@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Video URL input widget with animations and validation
 class VideoUrlInput extends StatelessWidget {

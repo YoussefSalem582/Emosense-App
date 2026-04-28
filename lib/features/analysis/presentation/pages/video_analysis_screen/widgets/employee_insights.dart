@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
 /// Employee insights and action items widget

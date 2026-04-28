@@ -28,9 +28,7 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
     }
 
     if (text.trim().length < 5) {
-      emit(
-        const TextAnalysisError('Text must be at least 5 characters long'),
-      );
+      emit(const TextAnalysisError('Text must be at least 5 characters long'));
       return;
     }
 
@@ -56,10 +54,7 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
     emit(TextAnalysisDemo(_createDemoResult(event.analysisType)));
   }
 
-  void _onReset(
-    TextAnalysisReset event,
-    Emitter<TextAnalysisState> emit,
-  ) {
+  void _onReset(TextAnalysisReset event, Emitter<TextAnalysisState> emit) {
     emit(const TextAnalysisInitial());
   }
 
@@ -171,19 +166,16 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
     }
   }
 
-  Map<String, double> _generateSentimentData(
-    String analysisType,
-    String text,
-  ) {
+  Map<String, double> _generateSentimentData(String analysisType, String text) {
     if (analysisType == 'Sentiment Analysis') {
       final hasPositive = text.toLowerCase().contains(
-            RegExp(
-              r'good|great|excellent|amazing|wonderful|perfect|love|like|recommend',
-            ),
-          );
+        RegExp(
+          r'good|great|excellent|amazing|wonderful|perfect|love|like|recommend',
+        ),
+      );
       final hasNegative = text.toLowerCase().contains(
-            RegExp(r'bad|terrible|awful|hate|dislike|worst|horrible'),
-          );
+        RegExp(r'bad|terrible|awful|hate|dislike|worst|horrible'),
+      );
 
       if (hasPositive && !hasNegative) {
         return {'Positive': 0.89, 'Neutral': 0.08, 'Negative': 0.03};
@@ -205,13 +197,14 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
   }
 
   List<String> _extractKeywords(String text) {
-    final words = text
-        .toLowerCase()
-        .replaceAll(RegExp(r'[^\w\s]'), '')
-        .split(' ')
-        .where((word) => word.length > 3)
-        .toSet()
-        .toList();
+    final words =
+        text
+            .toLowerCase()
+            .replaceAll(RegExp(r'[^\w\s]'), '')
+            .split(' ')
+            .where((word) => word.length > 3)
+            .toSet()
+            .toList();
 
     const stopWords = {
       'this',
@@ -267,7 +260,11 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
         characters,
       ),
       'complexity':
-          words > 50 ? 'Complex' : words > 20 ? 'Moderate' : 'Simple',
+          words > 50
+              ? 'Complex'
+              : words > 20
+              ? 'Moderate'
+              : 'Simple',
     };
   }
 

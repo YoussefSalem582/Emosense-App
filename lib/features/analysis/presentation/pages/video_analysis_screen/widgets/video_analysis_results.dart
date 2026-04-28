@@ -1,7 +1,7 @@
 import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/domain/entities/video_analysis_response.dart';
 import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
 
@@ -73,7 +73,9 @@ class VideoAnalysisResults extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.border.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.border.withValues(alpha: 0.3),
+                ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withValues(alpha: 0.08),
@@ -339,7 +341,10 @@ class VideoAnalysisResults extends StatelessWidget {
                                 'Error loading asset image: ${snapshot.assetImagePath}',
                                 name: 'VideoAnalysisResults',
                               );
-                              log('Error details: $error', name: 'VideoAnalysisResults');
+                              log(
+                                'Error details: $error',
+                                name: 'VideoAnalysisResults',
+                              );
                               return _buildImageErrorPlaceholder();
                             },
                           ),
@@ -520,7 +525,9 @@ class VideoAnalysisResults extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: AppColors.border.withValues(alpha: 0.3)),
+                  border: Border.all(
+                    color: AppColors.border.withValues(alpha: 0.3),
+                  ),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -530,7 +537,9 @@ class VideoAnalysisResults extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+                            color: const Color(
+                              0xFF667EEA,
+                            ).withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: const Icon(

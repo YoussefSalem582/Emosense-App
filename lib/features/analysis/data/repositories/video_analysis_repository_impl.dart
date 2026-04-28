@@ -2,12 +2,12 @@ import 'dart:io';
 
 import '../../domain/entities/video_analysis_response.dart';
 import '../../domain/repositories/video_analysis_repository.dart';
-import '../services/video_analysis_api_service.dart';
+import '../datasources/video_analysis_remote_data_source.dart';
 
 class VideoAnalysisRepositoryImpl implements VideoAnalysisRepository {
-  final VideoAnalysisApiService _apiService;
+  VideoAnalysisRepositoryImpl(this._remoteDataSource);
 
-  VideoAnalysisRepositoryImpl(this._apiService);
+  final VideoAnalysisRemoteDataSource _remoteDataSource;
 
   @override
   Future<VideoAnalysisResponse> analyzeVideo({
@@ -16,7 +16,7 @@ class VideoAnalysisRepositoryImpl implements VideoAnalysisRepository {
     int maxFrames = 5,
   }) async {
     try {
-      return await _apiService.analyzeVideo(
+      return await _remoteDataSource.analyzeVideo(
         videoUrl: videoUrl,
         frameInterval: frameInterval,
         maxFrames: maxFrames,
@@ -33,7 +33,7 @@ class VideoAnalysisRepositoryImpl implements VideoAnalysisRepository {
     int maxFrames = 5,
   }) async {
     try {
-      return await _apiService.analyzeVideoFile(
+      return await _remoteDataSource.analyzeVideoFile(
         videoFile: videoFile,
         frameInterval: frameInterval,
         maxFrames: maxFrames,
@@ -44,9 +44,9 @@ class VideoAnalysisRepositoryImpl implements VideoAnalysisRepository {
   }
 
   @override
-  Future<bool> checkConnection() => _apiService.checkConnection();
+  Future<bool> checkConnection() => _remoteDataSource.checkConnection();
 
   @override
   Future<Map<String, dynamic>> getConnectionDetails() =>
-      _apiService.getConnectionDetails();
+      _remoteDataSource.getConnectionDetails();
 }

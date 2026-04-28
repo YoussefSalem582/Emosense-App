@@ -136,7 +136,9 @@ class _VoiceAnalysisSamplesSectionState
                     decoration: BoxDecoration(
                       color:
                           _selectedSample == sample['title']
-                              ? (sample['color'] as Color).withValues(alpha: 0.1)
+                              ? (sample['color'] as Color).withValues(
+                                alpha: 0.1,
+                              )
                               : const Color(0xFFF8FAFC),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
@@ -152,7 +154,9 @@ class _VoiceAnalysisSamplesSectionState
                         Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: (sample['color'] as Color).withValues(alpha: 0.1),
+                            color: (sample['color'] as Color).withValues(
+                              alpha: 0.1,
+                            ),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(

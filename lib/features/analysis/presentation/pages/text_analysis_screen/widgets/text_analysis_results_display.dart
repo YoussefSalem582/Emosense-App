@@ -279,7 +279,9 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFF3B82F6).withValues(alpha: 0.3)),
+        border: Border.all(
+          color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
+        ),
       ),
       child: Text(
         topic,

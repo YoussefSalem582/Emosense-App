@@ -67,16 +67,16 @@ class VoiceAnalysisResult extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        filePath,
-        analysisType,
-        confidence,
-        timestamp,
-        summary,
-        details,
-        emotions,
-        metrics,
-      ];
+    id,
+    filePath,
+    analysisType,
+    confidence,
+    timestamp,
+    summary,
+    details,
+    emotions,
+    metrics,
+  ];
 
   Map<String, dynamic> toMap() {
     return {

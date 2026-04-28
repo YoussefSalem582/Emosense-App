@@ -84,7 +84,9 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                         color:
                             isRecording
                                 ? const Color(0xFFEF4444)
-                                : const Color(0xFFEF4444).withValues(alpha: 0.1),
+                                : const Color(
+                                  0xFFEF4444,
+                                ).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(

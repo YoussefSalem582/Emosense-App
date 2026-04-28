@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Video input widget supporting both URL and file upload
 class VideoInputWidget extends StatefulWidget {
@@ -82,7 +82,9 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                   decoration: BoxDecoration(
                     color: AppColors.surface,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.border.withValues(alpha: 0.3)),
+                    border: Border.all(
+                      color: AppColors.border.withValues(alpha: 0.3),
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -105,12 +107,12 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // Input area
             if (_isUrlInput) _buildUrlInput() else _buildFileInput(),
-            
+
             const SizedBox(height: 10),
-            
+
             // Info text
             Row(
               children: [
@@ -125,13 +127,14 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                     _isUrlInput
                         ? 'Enter video URL from YouTube, Vimeo, or direct links'
                         : kIsWeb
-                            ? 'File upload is not supported on web. Use URL input instead.'
-                            : 'Upload video files from your device (MP4, AVI, MOV)',
+                        ? 'File upload is not supported on web. Use URL input instead.'
+                        : 'Upload video files from your device (MP4, AVI, MOV)',
                     style: TextStyle(
                       fontSize: 12,
-                      color: kIsWeb && !_isUrlInput
-                          ? Colors.orange
-                          : AppColors.textSecondary,
+                      color:
+                          kIsWeb && !_isUrlInput
+                              ? Colors.orange
+                              : AppColors.textSecondary,
                     ),
                   ),
                 ),
@@ -189,14 +192,16 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
       duration: const Duration(milliseconds: 300),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: widget.urlFocusNode.hasFocus
-            ? const Color(0xFF667EEA).withValues(alpha: 0.05)
-            : AppColors.surface,
+        color:
+            widget.urlFocusNode.hasFocus
+                ? const Color(0xFF667EEA).withValues(alpha: 0.05)
+                : AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: widget.urlFocusNode.hasFocus
-              ? const Color(0xFF667EEA)
-              : AppColors.border.withValues(alpha: 0.5),
+          color:
+              widget.urlFocusNode.hasFocus
+                  ? const Color(0xFF667EEA)
+                  : AppColors.border.withValues(alpha: 0.5),
           width: widget.urlFocusNode.hasFocus ? 2 : 1,
         ),
       ),
@@ -212,23 +217,25 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
           border: InputBorder.none,
           prefixIcon: Icon(
             Icons.link_rounded,
-            color: widget.urlFocusNode.hasFocus
-                ? const Color(0xFF667EEA)
-                : AppColors.textSecondary,
+            color:
+                widget.urlFocusNode.hasFocus
+                    ? const Color(0xFF667EEA)
+                    : AppColors.textSecondary,
             size: 20,
           ),
-          suffixIcon: widget.urlController.text.isNotEmpty
-              ? GestureDetector(
-                  onTap: () {
-                    widget.urlController.clear();
-                    widget.onChanged();
-                  },
-                  child: const Icon(
-                    Icons.clear_rounded,
-                    color: AppColors.textSecondary,
-                  ),
-                )
-              : null,
+          suffixIcon:
+              widget.urlController.text.isNotEmpty
+                  ? GestureDetector(
+                    onTap: () {
+                      widget.urlController.clear();
+                      widget.onChanged();
+                    },
+                    child: const Icon(
+                      Icons.clear_rounded,
+                      color: AppColors.textSecondary,
+                    ),
+                  )
+                  : null,
         ),
         onChanged: (value) => widget.onChanged(),
       ),
@@ -237,23 +244,25 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
 
   Widget _buildFileInput() {
     final isWebUnsupported = kIsWeb;
-    
+
     return GestureDetector(
       onTap: isWebUnsupported ? null : _pickVideoFile,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: isWebUnsupported
-              ? Colors.grey.withValues(alpha: 0.1)
-              : widget.selectedFile != null
+          color:
+              isWebUnsupported
+                  ? Colors.grey.withValues(alpha: 0.1)
+                  : widget.selectedFile != null
                   ? const Color(0xFF667EEA).withValues(alpha: 0.05)
                   : AppColors.surface,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isWebUnsupported
-                ? Colors.grey.withValues(alpha: 0.3)
-                : widget.selectedFile != null
+            color:
+                isWebUnsupported
+                    ? Colors.grey.withValues(alpha: 0.3)
+                    : widget.selectedFile != null
                     ? const Color(0xFF667EEA)
                     : AppColors.border.withValues(alpha: 0.5),
             width: widget.selectedFile != null ? 2 : 1,
@@ -265,11 +274,12 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
               isWebUnsupported
                   ? Icons.warning_rounded
                   : widget.selectedFile != null
-                      ? Icons.video_file_rounded
-                      : Icons.upload_file_rounded,
-              color: isWebUnsupported
-                  ? Colors.orange
-                  : widget.selectedFile != null
+                  ? Icons.video_file_rounded
+                  : Icons.upload_file_rounded,
+              color:
+                  isWebUnsupported
+                      ? Colors.orange
+                      : widget.selectedFile != null
                       ? const Color(0xFF667EEA)
                       : AppColors.textSecondary,
               size: 20,
@@ -283,16 +293,18 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                     isWebUnsupported
                         ? 'File upload not supported on web'
                         : widget.selectedFile != null
-                            ? _getFileName(widget.selectedFile!)
-                            : 'Tap to select video file',
+                        ? _getFileName(widget.selectedFile!)
+                        : 'Tap to select video file',
                     style: TextStyle(
                       fontSize: 14,
-                      fontWeight: widget.selectedFile != null
-                          ? FontWeight.w500
-                          : FontWeight.w400,
-                      color: isWebUnsupported
-                          ? Colors.orange
-                          : widget.selectedFile != null
+                      fontWeight:
+                          widget.selectedFile != null
+                              ? FontWeight.w500
+                              : FontWeight.w400,
+                      color:
+                          isWebUnsupported
+                              ? Colors.orange
+                              : widget.selectedFile != null
                               ? AppColors.textPrimary
                               : AppColors.textSecondary,
                     ),
@@ -331,21 +343,23 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
   Future<void> _pickVideoFile() async {
     try {
       HapticFeedback.lightImpact();
-      
+
       // Check if we're on web platform
       if (kIsWeb) {
         // For web, show a message that file upload isn't supported
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('File upload is not supported on web. Please use URL input instead.'),
+              content: Text(
+                'File upload is not supported on web. Please use URL input instead.',
+              ),
               backgroundColor: Colors.orange,
             ),
           );
         }
         return;
       }
-      
+
       final result = await FilePicker.platform.pickFiles(
         type: FileType.video,
         allowMultiple: false,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/analysis/presentation/bloc/voice_analysis_bloc.dart';
-import '../../../widgets/common/animated_background_widget.dart';
-import '../../../widgets/app_bars/analysis_app_bar.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/presentation/widgets/app_bars/analysis_app_bar.dart';
 import 'widgets/widgets.dart';
 
 /// Unified Voice Analysis Screen - Refactored with Modular Widgets
@@ -92,9 +92,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
           children: [
             // Animated Background
             Positioned.fill(
-              child: AnimatedBackgroundWidget(
-                animation: _backgroundAnimation,
-              ),
+              child: AnimatedBackgroundWidget(animation: _backgroundAnimation),
             ),
             // Content
             BlocBuilder<VoiceAnalysisBloc, VoiceAnalysisState>(
@@ -335,10 +333,15 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
 
     // Immediately trigger analysis for the sample
     String analysisType = _getAnalysisTypeForSample(sampleTitle);
-    log('🎯 Auto-analyzing sample with type: $analysisType', name: 'VoiceAnalysis');
+    log(
+      '🎯 Auto-analyzing sample with type: $analysisType',
+      name: 'VoiceAnalysis',
+    );
 
     // Trigger analysis immediately
-    context.read<VoiceAnalysisBloc>().add(VoiceAnalysisDemoRequested(analysisType));
+    context.read<VoiceAnalysisBloc>().add(
+      VoiceAnalysisDemoRequested(analysisType),
+    );
   }
 
   void _loadQuickDemo() {
@@ -354,8 +357,8 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
 
     // Load demo data directly without sample selection
     context.read<VoiceAnalysisBloc>().add(
-          const VoiceAnalysisDemoRequested('Customer Support Analysis'),
-        );
+      const VoiceAnalysisDemoRequested('Customer Support Analysis'),
+    );
   }
 
   void _startAnalysis() {
@@ -396,7 +399,9 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
       log('📊 Analysis type: $analysisType', name: 'VoiceAnalysis');
 
       // For samples, use loadDemoData to get sample-specific results
-      context.read<VoiceAnalysisBloc>().add(VoiceAnalysisDemoRequested(analysisType));
+      context.read<VoiceAnalysisBloc>().add(
+        VoiceAnalysisDemoRequested(analysisType),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -415,11 +420,11 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
 
       // Trigger analysis through the cubit
       context.read<VoiceAnalysisBloc>().add(
-            VoiceAnalysisAnalyzeRequested(
-              filePath: filePath,
-              analysisType: analysisType,
-            ),
-          );
+        VoiceAnalysisAnalyzeRequested(
+          filePath: filePath,
+          analysisType: analysisType,
+        ),
+      );
     }
   }
 
@@ -496,7 +501,10 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
   }
 
   Map<String, dynamic>? _getAnalysisResults(VoiceAnalysisState state) {
-    log('🔍 Current analysis state: ${state.runtimeType}', name: 'VoiceAnalysis');
+    log(
+      '🔍 Current analysis state: ${state.runtimeType}',
+      name: 'VoiceAnalysis',
+    );
 
     if (state is VoiceAnalysisSuccess) {
       final result = state.result;

@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/presentation/bloc/video_analysis_bloc.dart';
-import '../../../widgets/common/animated_background_widget.dart';
-import '../../../widgets/common/animated_loading_indicator.dart';
-import '../../../widgets/app_bars/analysis_app_bar.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/presentation/widgets/app_bars/analysis_app_bar.dart';
 import 'widgets/widgets.dart';
 
 /// Complete Video Analysis Screen with Snapshot Integration
@@ -500,11 +500,12 @@ class _EmployeeVideoAnalysisScreenState
     try {
       if (_selectedVideoFile != null) {
         // Analyze uploaded video file
-        log('Analyzing video file: ${_selectedVideoFile!.path}', name: 'VideoAnalysis');
+        log(
+          'Analyzing video file: ${_selectedVideoFile!.path}',
+          name: 'VideoAnalysis',
+        );
         context.read<VideoAnalysisBloc>().add(
-          VideoAnalysisFromFileSubmitted(
-            videoFile: _selectedVideoFile!,
-          ),
+          VideoAnalysisFromFileSubmitted(videoFile: _selectedVideoFile!),
         );
       } else {
         // Analyze video from URL
@@ -512,8 +513,8 @@ class _EmployeeVideoAnalysisScreenState
         if (url.isNotEmpty) {
           log('Analyzing video URL: $url', name: 'VideoAnalysis');
           context.read<VideoAnalysisBloc>().add(
-                VideoAnalysisFromUrlSubmitted(videoUrl: url),
-              );
+            VideoAnalysisFromUrlSubmitted(videoUrl: url),
+          );
         } else {
           // Show enhanced error feedback
           _showInputError('Please provide a video URL or select a video file');

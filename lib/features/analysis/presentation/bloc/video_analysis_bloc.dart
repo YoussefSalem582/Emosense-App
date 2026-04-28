@@ -77,10 +77,7 @@ class VideoAnalysisBloc extends Bloc<VideoAnalysisEvent, VideoAnalysisState> {
     emit(VideoAnalysisDemo(_createDemoResult(event.videoUrl)));
   }
 
-  void _onReset(
-    VideoAnalysisReset event,
-    Emitter<VideoAnalysisState> emit,
-  ) {
+  void _onReset(VideoAnalysisReset event, Emitter<VideoAnalysisState> emit) {
     emit(const VideoAnalysisInitial());
   }
 

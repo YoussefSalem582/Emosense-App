@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_loading_indicator.dart';
 
 /// Widget for displaying analysis results
 class VoiceAnalysisResultsDisplay extends StatelessWidget {

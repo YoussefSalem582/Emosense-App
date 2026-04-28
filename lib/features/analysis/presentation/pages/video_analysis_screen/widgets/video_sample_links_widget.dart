@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../../core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/constants/app_colors.dart';
 
 /// Widget that provides sample video URLs for testing
 class VideoSampleLinksWidget extends StatelessWidget {
@@ -122,7 +122,9 @@ class VideoSampleLinksWidget extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              border: Border.all(color: AppColors.primary.withValues(alpha: 0.1)),
+              border: Border.all(
+                color: AppColors.primary.withValues(alpha: 0.1),
+              ),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Row(

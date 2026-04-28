@@ -69,17 +69,17 @@ class TextAnalysisResult extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        text,
-        analysisType,
-        confidence,
-        timestamp,
-        summary,
-        details,
-        sentiments,
-        keywords,
-        metrics,
-      ];
+    id,
+    text,
+    analysisType,
+    confidence,
+    timestamp,
+    summary,
+    details,
+    sentiments,
+    keywords,
+    metrics,
+  ];
 
   Map<String, dynamic> toMap() {
     return {
