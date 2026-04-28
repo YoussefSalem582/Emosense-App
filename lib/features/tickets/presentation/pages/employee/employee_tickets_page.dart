@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 
-import '../../bloc/tickets_bloc.dart';
-import '../../widgets/dialogs/create_ticket_dialog.dart';
+import '../../../shared/presentation/bloc/tickets_bloc.dart';
+import '../../../shared/presentation/widgets/dialogs/create_ticket_dialog.dart';
 import 'widgets/review_video_filter_chips_widget.dart';
 
 class EmployeeTicketsScreen extends StatefulWidget {

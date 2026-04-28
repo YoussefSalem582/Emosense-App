@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
 
-import '../../../bloc/tickets_bloc.dart';
+import '../../../../shared/presentation/bloc/tickets_bloc.dart';
 
 class AdminTicketsFilters extends StatelessWidget {
   final TextEditingController searchController;

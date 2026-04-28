@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/usecases/usecase.dart';
-import '../../shared/domain/entities/ticket.dart';
-import '../../shared/domain/repositories/ticket_repository.dart';
-import '../../shared/domain/usecases/assign_ticket_usecase.dart';
-import '../../shared/domain/usecases/create_ticket_usecase.dart';
-import '../../shared/domain/usecases/get_ticket_statistics_usecase.dart';
-import '../../shared/domain/usecases/load_tickets_usecase.dart';
-import '../../shared/domain/usecases/ticket_no_params.dart';
-import '../../shared/domain/usecases/update_ticket_status_usecase.dart';
+import '../../../../../core/usecases/usecase.dart';
+import '../../domain/entities/ticket.dart';
+import '../../domain/repositories/ticket_repository.dart';
+import '../../domain/usecases/assign_ticket_usecase.dart';
+import '../../domain/usecases/create_ticket_usecase.dart';
+import '../../domain/usecases/get_ticket_statistics_usecase.dart';
+import '../../domain/usecases/load_tickets_usecase.dart';
+import '../../domain/usecases/ticket_no_params.dart';
+import '../../domain/usecases/update_ticket_status_usecase.dart';
 
 part 'tickets_event.dart';
 part 'tickets_state.dart';

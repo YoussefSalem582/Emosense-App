@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
-import 'package:emosense_mobile/features/tickets/presentation/bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/features/tickets/shared/presentation/bloc/tickets_bloc.dart';
 import 'package:emosense_mobile/features/admin/presentation/widgets/admin_bottom_nav_bar.dart';
 import 'widgets/admin_app_bar.dart';
 import 'widgets/admin_dialogs.dart';

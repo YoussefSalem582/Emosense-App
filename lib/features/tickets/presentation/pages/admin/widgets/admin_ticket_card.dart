@@ -4,8 +4,8 @@ import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
 import 'package:emosense_mobile/shared/widgets/dialogs/ticket_details_dialog.dart';
 
-import '../../../../domain/entities/ticket.dart';
-import '../../../bloc/tickets_bloc.dart';
+import '../../../../shared/domain/entities/ticket.dart';
+import '../../../../shared/presentation/bloc/tickets_bloc.dart';
 
 class AdminTicketCard extends StatelessWidget {
   final Map<String, dynamic> ticket;

@@ -19,7 +19,7 @@ import '../../features/tickets/shared/domain/usecases/create_ticket_usecase.dart
 import '../../features/tickets/shared/domain/usecases/get_ticket_statistics_usecase.dart';
 import '../../features/tickets/shared/domain/usecases/load_tickets_usecase.dart';
 import '../../features/tickets/shared/domain/usecases/update_ticket_status_usecase.dart';
-import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
+import '../../features/tickets/shared/presentation/bloc/tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
