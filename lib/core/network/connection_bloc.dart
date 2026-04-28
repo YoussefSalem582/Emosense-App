@@ -89,18 +89,14 @@ class ConnectionBloc extends Bloc<ConnectionEvent, BackendConnectionState> {
     await _connectEnvironment(emit);
   }
 
-  Future<void> _connectEnvironment(
-    Emitter<BackendConnectionState> emit,
-  ) async {
+  Future<void> _connectEnvironment(Emitter<BackendConnectionState> emit) async {
     emit(const ConnectionConnecting());
 
     try {
       final result = await _connectionManager.connectUsingEnvironment();
 
       if (!result.success) {
-        emit(
-          ConnectionError(message: result.message, exception: result.error),
-        );
+        emit(ConnectionError(message: result.message, exception: result.error));
       }
     } catch (e) {
       emit(
@@ -123,9 +119,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, BackendConnectionState> {
       final result = await _connectionManager.connectToBackend(event.config);
 
       if (!result.success) {
-        emit(
-          ConnectionError(message: result.message, exception: result.error),
-        );
+        emit(ConnectionError(message: result.message, exception: result.error));
       }
     } catch (e) {
       emit(
@@ -154,9 +148,7 @@ class ConnectionBloc extends Bloc<ConnectionEvent, BackendConnectionState> {
           );
         }
       } else {
-        emit(
-          ConnectionError(message: result.message, exception: result.error),
-        );
+        emit(ConnectionError(message: result.message, exception: result.error));
       }
     } catch (e) {
       emit(

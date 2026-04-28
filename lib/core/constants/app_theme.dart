@@ -489,20 +489,21 @@ class AppTheme {
     return BoxDecoration(
       color: color ?? AppColors.surface,
       borderRadius: BorderRadius.circular(radius),
-      boxShadow: withShadow
-          ? [
-              BoxShadow(
-                color: AppColors.shadowLight,
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-              BoxShadow(
-                color: AppColors.shadowMedium,
-                blurRadius: 16,
-                offset: const Offset(0, 4),
-              ),
-            ]
-          : null,
+      boxShadow:
+          withShadow
+              ? [
+                BoxShadow(
+                  color: AppColors.shadowLight,
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+                BoxShadow(
+                  color: AppColors.shadowMedium,
+                  blurRadius: 16,
+                  offset: const Offset(0, 4),
+                ),
+              ]
+              : null,
       border: Border.all(color: AppColors.border, width: 1),
     );
   }

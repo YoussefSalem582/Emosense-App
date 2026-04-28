@@ -60,18 +60,16 @@ class EmployeeAnalyticsBloc
         'title': 'Ticket Volume',
         'value': _timeRange == 'Today' ? '18' : '89',
         'unit': _timeRange == 'Today' ? 'today' : 'this week',
-        'trend': _timeRange == 'Today'
-            ? '+15% vs yesterday'
-            : '+8% vs last week',
+        'trend':
+            _timeRange == 'Today' ? '+15% vs yesterday' : '+8% vs last week',
         'isPositiveTrend': true,
       },
       {
         'title': 'Resolution Rate',
         'value': _timeRange == 'Today' ? '96%' : '94%',
         'unit': 'success',
-        'trend': _timeRange == 'Today'
-            ? '+2% vs yesterday'
-            : '+5% vs last week',
+        'trend':
+            _timeRange == 'Today' ? '+2% vs yesterday' : '+5% vs last week',
         'isPositiveTrend': true,
       },
       {

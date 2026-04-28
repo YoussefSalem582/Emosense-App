@@ -52,11 +52,11 @@ class EmployeeDashboardData extends Equatable {
 
   @override
   List<Object?> get props => [
-        ticketsResolved,
-        activeTickets,
-        customerSatisfaction,
-        efficiencyScore,
-        recentTickets,
-        quickStats,
-      ];
+    ticketsResolved,
+    activeTickets,
+    customerSatisfaction,
+    efficiencyScore,
+    recentTickets,
+    quickStats,
+  ];
 }

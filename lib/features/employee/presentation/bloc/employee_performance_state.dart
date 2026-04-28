@@ -58,14 +58,14 @@ class EmployeePerformanceData extends Equatable {
 
   @override
   List<Object?> get props => [
-        overallScore,
-        ranking,
-        totalEmployees,
-        monthlyProgress,
-        keyMetrics,
-        performanceBreakdown,
-        achievements,
-        weeklyTrends,
-        goals,
-      ];
+    overallScore,
+    ranking,
+    totalEmployees,
+    monthlyProgress,
+    keyMetrics,
+    performanceBreakdown,
+    achievements,
+    weeklyTrends,
+    goals,
+  ];
 }

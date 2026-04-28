@@ -53,13 +53,13 @@ class EmotionSuccess extends EmotionState {
 
   @override
   List<Object?> get props => [
-        emotionResult,
-        systemMetrics,
-        analyticsSummary,
-        demoResult,
-        cacheStats,
-        modelInfo,
-      ];
+    emotionResult,
+    systemMetrics,
+    analyticsSummary,
+    demoResult,
+    cacheStats,
+    modelInfo,
+  ];
 
   EmotionSuccess copyWith({
     EmotionResult? emotionResult,

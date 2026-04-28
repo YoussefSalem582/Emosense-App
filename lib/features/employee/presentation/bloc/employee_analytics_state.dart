@@ -54,12 +54,12 @@ class EmployeeAnalyticsData extends Equatable {
 
   @override
   List<Object?> get props => [
-        timeRange,
-        metrics,
-        performanceData,
-        ticketTypes,
-        priorityDistribution,
-        resolutionSpeed,
-        goals,
-      ];
+    timeRange,
+    metrics,
+    performanceData,
+    ticketTypes,
+    priorityDistribution,
+    resolutionSpeed,
+    goals,
+  ];
 }

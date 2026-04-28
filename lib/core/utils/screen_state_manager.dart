@@ -3,14 +3,7 @@ import '../constants/app_colors.dart';
 import '../../presentation/screens/common/common_screens.dart';
 
 /// Enum for different screen states
-enum ScreenState {
-  initial,
-  loading,
-  loaded,
-  error,
-  empty,
-  noNetwork,
-}
+enum ScreenState { initial, loading, loaded, error, empty, noNetwork }
 
 /// A widget that manages different screen states
 class ScreenStateManager extends StatelessWidget {
@@ -72,9 +65,7 @@ class ScreenStateManager extends StatelessWidget {
         );
 
       case ScreenState.noNetwork:
-        return ErrorScreen.network(
-          onAction: onRetry,
-        );
+        return ErrorScreen.network(onAction: onRetry);
     }
   }
 }
@@ -192,9 +183,7 @@ class ScreenActions {
         backgroundColor: backgroundColor ?? AppColors.primary,
         duration: duration,
         behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),
     );
   }
@@ -246,31 +235,32 @@ class ScreenActions {
   }) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Row(
-          children: [
-            if (icon != null) ...[
-              Icon(icon, color: confirmColor ?? AppColors.primary),
-              const SizedBox(width: 8),
-            ],
-            Expanded(child: Text(title)),
-          ],
-        ),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: Text(cancelText),
-          ),
-          ElevatedButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: confirmColor ?? AppColors.primary,
+      builder:
+          (context) => AlertDialog(
+            title: Row(
+              children: [
+                if (icon != null) ...[
+                  Icon(icon, color: confirmColor ?? AppColors.primary),
+                  const SizedBox(width: 8),
+                ],
+                Expanded(child: Text(title)),
+              ],
             ),
-            child: Text(confirmText),
+            content: Text(message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(cancelText),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: confirmColor ?? AppColors.primary,
+                ),
+                child: Text(confirmText),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }

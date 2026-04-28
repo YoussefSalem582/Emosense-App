@@ -53,9 +53,7 @@ class EmosenseApp extends StatelessWidget {
       ],
       child: const _ConnectionBootstrap(
         child: BackendConnectionWidget(
-          child: _UserSessionLifecycle(
-            child: _MaterialAppShell(),
-          ),
+          child: _UserSessionLifecycle(child: _MaterialAppShell()),
         ),
       ),
     );
@@ -117,8 +115,8 @@ class _UserSessionLifecycleState extends State<_UserSessionLifecycle> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
-      listenWhen: (prev, curr) =>
-          curr is UserAuthenticated || curr is UserLoggedOut,
+      listenWhen:
+          (prev, curr) => curr is UserAuthenticated || curr is UserLoggedOut,
       listener: (context, state) async {
         if (state is UserAuthenticated) {
           await UserSessionStorage.save(state.user);

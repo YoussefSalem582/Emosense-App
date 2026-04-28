@@ -78,9 +78,10 @@ class EmotionUtils {
   static List<MapEntry<String, double>> getSortedEmotions(
     Map<String, dynamic> allEmotions,
   ) {
-    final entries = allEmotions.entries
-        .map((e) => MapEntry(e.key, (e.value as num).toDouble()))
-        .toList();
+    final entries =
+        allEmotions.entries
+            .map((e) => MapEntry(e.key, (e.value as num).toDouble()))
+            .toList();
     entries.sort((a, b) => b.value.compareTo(a.value));
     return entries;
   }

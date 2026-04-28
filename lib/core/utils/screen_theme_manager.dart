@@ -8,9 +8,13 @@ class ScreenThemeManager {
 
   // Animation configurations
   static const Duration splashAnimationDuration = Duration(milliseconds: 2000);
-  static const Duration onboardingAnimationDuration = Duration(milliseconds: 400);
+  static const Duration onboardingAnimationDuration = Duration(
+    milliseconds: 400,
+  );
   static const Duration loadingAnimationDuration = Duration(milliseconds: 1500);
-  static const Duration transitionAnimationDuration = Duration(milliseconds: 300);
+  static const Duration transitionAnimationDuration = Duration(
+    milliseconds: 300,
+  );
 
   // Screen-specific themes
   static const ScreenTheme splashTheme = ScreenTheme(
@@ -183,7 +187,10 @@ class ScreenThemeManager {
     Color? backgroundColor,
     Color? foregroundColor,
     double borderRadius = 12.0,
-    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 16,
+    ),
   }) {
     return ElevatedButton.styleFrom(
       backgroundColor: backgroundColor ?? AppColors.primary,
@@ -200,7 +207,10 @@ class ScreenThemeManager {
     Color? backgroundColor,
     Color? foregroundColor,
     double borderRadius = 12.0,
-    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 24,
+      vertical: 16,
+    ),
   }) {
     return OutlinedButton.styleFrom(
       backgroundColor: backgroundColor ?? Colors.transparent,
@@ -216,7 +226,10 @@ class ScreenThemeManager {
   static ButtonStyle getTextButtonStyle({
     Color? foregroundColor,
     double borderRadius = 8.0,
-    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 16,
+      vertical: 8,
+    ),
   }) {
     return TextButton.styleFrom(
       foregroundColor: foregroundColor ?? AppColors.textSecondary,
@@ -241,15 +254,17 @@ class ScreenThemeManager {
     return InputDecoration(
       hintText: hintText,
       labelText: labelText,
-      prefixIcon: prefixIcon != null
-          ? Icon(prefixIcon, color: AppColors.textSecondary)
-          : null,
-      suffixIcon: suffixIcon != null
-          ? IconButton(
-              icon: Icon(suffixIcon, color: AppColors.textSecondary),
-              onPressed: onSuffixIconTap,
-            )
-          : null,
+      prefixIcon:
+          prefixIcon != null
+              ? Icon(prefixIcon, color: AppColors.textSecondary)
+              : null,
+      suffixIcon:
+          suffixIcon != null
+              ? IconButton(
+                icon: Icon(suffixIcon, color: AppColors.textSecondary),
+                onPressed: onSuffixIconTap,
+              )
+              : null,
       filled: true,
       fillColor: fillColor ?? AppColors.surfaceContainer,
       border: OutlineInputBorder(
@@ -288,10 +303,7 @@ class ScreenThemeManager {
     return Tween<double>(
       begin: begin,
       end: end,
-    ).animate(CurvedAnimation(
-      parent: controller,
-      curve: curve,
-    ));
+    ).animate(CurvedAnimation(parent: controller, curve: curve));
   }
 
   static Animation<Offset> createSlideAnimation({
@@ -303,10 +315,7 @@ class ScreenThemeManager {
     return Tween<Offset>(
       begin: begin,
       end: end,
-    ).animate(CurvedAnimation(
-      parent: controller,
-      curve: curve,
-    ));
+    ).animate(CurvedAnimation(parent: controller, curve: curve));
   }
 
   static Animation<double> createScaleAnimation({
@@ -318,10 +327,7 @@ class ScreenThemeManager {
     return Tween<double>(
       begin: begin,
       end: end,
-    ).animate(CurvedAnimation(
-      parent: controller,
-      curve: curve,
-    ));
+    ).animate(CurvedAnimation(parent: controller, curve: curve));
   }
 }
 
@@ -410,10 +416,9 @@ extension ScreenExtensions on Widget {
         );
         return AnimatedBuilder(
           animation: animation,
-          builder: (context, child) => FadeTransition(
-            opacity: animation,
-            child: this,
-          ),
+          builder:
+              (context, child) =>
+                  FadeTransition(opacity: animation, child: this),
         );
 
       case AnimationType.slide:
@@ -423,10 +428,9 @@ extension ScreenExtensions on Widget {
         );
         return AnimatedBuilder(
           animation: slideAnimation,
-          builder: (context, child) => SlideTransition(
-            position: slideAnimation,
-            child: this,
-          ),
+          builder:
+              (context, child) =>
+                  SlideTransition(position: slideAnimation, child: this),
         );
 
       case AnimationType.scale:
@@ -436,17 +440,12 @@ extension ScreenExtensions on Widget {
         );
         return AnimatedBuilder(
           animation: animation,
-          builder: (context, child) => ScaleTransition(
-            scale: animation,
-            child: this,
-          ),
+          builder:
+              (context, child) =>
+                  ScaleTransition(scale: animation, child: this),
         );
     }
   }
 }
 
-enum AnimationType {
-  fade,
-  slide,
-  scale,
-}
+enum AnimationType { fade, slide, scale }

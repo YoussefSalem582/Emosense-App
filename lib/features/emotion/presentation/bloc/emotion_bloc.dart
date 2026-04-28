@@ -224,10 +224,7 @@ class EmotionBloc extends Bloc<EmotionEvent, EmotionState> {
     emit(const EmotionInitial());
   }
 
-  void _onErrorCleared(
-    EmotionErrorCleared event,
-    Emitter<EmotionState> emit,
-  ) {
+  void _onErrorCleared(EmotionErrorCleared event, Emitter<EmotionState> emit) {
     if (state is EmotionError) {
       emit(const EmotionInitial());
     }
