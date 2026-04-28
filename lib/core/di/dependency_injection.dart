@@ -25,11 +25,19 @@ import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_performance_bloc.dart';
 import '../../features/auth/auth_choice/presentation/bloc/auth_choice_bloc.dart';
+import '../../features/auth/login/data/repositories/credential_login_gateway_impl.dart';
+import '../../features/auth/login/domain/repositories/credential_login_gateway.dart';
 import '../../features/auth/login/presentation/bloc/login_bloc.dart';
+import '../../features/auth/onboarding/data/repositories/onboarding_repository_impl.dart';
+import '../../features/auth/onboarding/domain/repositories/onboarding_repository.dart';
 import '../../features/auth/onboarding/presentation/bloc/onboarding_bloc.dart';
 import '../../features/auth/role_selection/presentation/bloc/role_selection_bloc.dart';
+import '../../features/auth/signup/data/repositories/registration_gateway_impl.dart';
+import '../../features/auth/signup/domain/repositories/registration_gateway.dart';
 import '../../features/auth/signup/presentation/bloc/signup_bloc.dart';
 import '../../features/auth/shared/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/splash/data/splash_navigation_resolver_impl.dart';
+import '../../features/auth/splash/domain/abstractions/splash_navigation_resolver.dart';
 import '../../features/auth/splash/presentation/bloc/splash_bloc.dart';
 import '../../features/auth/shared/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/shared/data/datasources/auth_remote_datasource_mock.dart';
@@ -125,10 +133,15 @@ void _initAuthSlice() {
   sl.registerLazySingleton(() => GetCachedUserUseCase(sl()));
   sl.registerLazySingleton(() => GoogleSignInUseCase(sl()));
 
+  sl.registerLazySingleton<CredentialLoginGateway>(
+    () => CredentialLoginGatewayImpl(login: sl()),
+  );
+  sl.registerLazySingleton<RegistrationGateway>(() => RegistrationGatewayImpl(register: sl()));
+
   sl.registerLazySingleton<AuthBloc>(
     () => AuthBloc(
-      loginUseCase: sl(),
-      registerUseCase: sl(),
+      credentialLoginGateway: sl(),
+      registrationGateway: sl(),
       logoutUseCase: sl(),
       deleteAccountUseCase: sl(),
       forgotPasswordUseCase: sl(),
@@ -137,8 +150,13 @@ void _initAuthSlice() {
     ),
   );
 
-  sl.registerFactory(() => SplashBloc(authBloc: sl<AuthBloc>()));
-  sl.registerFactory(OnboardingBloc.new);
+  sl.registerLazySingleton<SplashNavigationResolver>(
+    () => SplashNavigationResolverImpl(authBloc: sl()),
+  );
+  sl.registerLazySingleton<OnboardingRepository>(() => OnboardingRepositoryImpl());
+
+  sl.registerFactory(() => SplashBloc(navigationResolver: sl()));
+  sl.registerFactory(() => OnboardingBloc(onboardingRepository: sl()));
   sl.registerFactory(AuthChoiceBloc.new);
   sl.registerFactory(LoginBloc.new);
   sl.registerFactory(SignUpBloc.new);
