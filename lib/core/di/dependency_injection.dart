@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 
 // Services
-import '../../data/services/emotion_api_service.dart';
+import '../services/emotion_api_service.dart';
 import '../../features/analysis/data/datasources/video_analysis_remote_data_source.dart';
 import '../../features/analysis/data/repositories/video_analysis_repository_impl.dart';
 import '../../features/analysis/data/services/video_analysis_api_service.dart';

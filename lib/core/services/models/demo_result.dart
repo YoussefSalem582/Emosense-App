@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 import 'emotion_result.dart';
 
 class DemoResult extends Equatable {

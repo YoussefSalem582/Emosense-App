@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' show log;
+
 import 'package:http/http.dart' as http;
-import '../models/emotion_result.dart';
-import '../models/system_metrics.dart';
-import '../models/analytics_summary.dart';
-import '../models/demo_result.dart';
-import '../../features/analysis/domain/entities/video_analysis_response.dart';
-import '../models/video_analysis_request.dart';
+
+import 'models/analytics_summary.dart';
+import 'models/demo_result.dart';
+import 'models/emotion_result.dart';
+import 'models/system_metrics.dart';
 
 class EmotionApiService {
   // Backend URL - update this to your backend server
@@ -19,7 +19,6 @@ class EmotionApiService {
   // API endpoints
   static const String _healthEndpoint = '/health';
   static const String _predictTextEndpoint = '/predict/text';
-  static const String _predictVideoEndpoint = '/predict/video';
 
   // HTTP client with timeout
   final http.Client _client;
@@ -280,33 +279,6 @@ class EmotionApiService {
     // Backend doesn't support batch endpoint, simulate batch processing
     await Future.delayed(Duration(milliseconds: texts.length * 200));
     return texts.map((text) => _generateMockEmotion(text)).toList();
-  }
-
-  // Video analysis
-  Future<VideoAnalysisResponse> analyzeVideo(
-    VideoAnalysisRequest request,
-  ) async {
-    try {
-      final response = await _client
-          .post(
-            Uri.parse('$_baseUrl$_predictVideoEndpoint'),
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-            },
-            body: json.encode(request.toJson()),
-          )
-          .timeout(const Duration(seconds: 120));
-
-      if (response.statusCode == 200) {
-        final data = json.decode(response.body);
-        return VideoAnalysisResponse.fromJson(data);
-      } else {
-        throw Exception('Failed video analysis: ${response.statusCode}');
-      }
-    } catch (e) {
-      throw Exception('Video analysis error: $e');
-    }
   }
 
   // Get demo results

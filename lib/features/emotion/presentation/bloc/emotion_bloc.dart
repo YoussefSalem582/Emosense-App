@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../data/models/analytics_summary.dart';
-import '../../../../data/models/demo_result.dart';
-import '../../../../data/models/emotion_result.dart';
-import '../../../../data/models/system_metrics.dart';
-import '../../../../data/services/emotion_api_service.dart';
+import '../../../../core/services/emotion_api_service.dart';
+import '../../../../core/services/models/analytics_summary.dart';
+import '../../../../core/services/models/demo_result.dart';
+import '../../../../core/services/models/emotion_result.dart';
+import '../../../../core/services/models/system_metrics.dart';
 
 part 'emotion_event.dart';
 part 'emotion_state.dart';
