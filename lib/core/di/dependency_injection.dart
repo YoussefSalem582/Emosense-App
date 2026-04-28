@@ -24,7 +24,13 @@ import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_performance_bloc.dart';
+import '../../features/auth/auth_choice/presentation/bloc/auth_choice_bloc.dart';
+import '../../features/auth/login/presentation/bloc/login_bloc.dart';
+import '../../features/auth/onboarding/presentation/bloc/onboarding_bloc.dart';
+import '../../features/auth/role_selection/presentation/bloc/role_selection_bloc.dart';
+import '../../features/auth/signup/presentation/bloc/signup_bloc.dart';
 import '../../features/auth/shared/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/splash/presentation/bloc/splash_bloc.dart';
 import '../../features/auth/shared/data/datasources/auth_remote_datasource.dart';
 import '../../features/auth/shared/data/datasources/auth_remote_datasource_mock.dart';
 import '../../features/auth/shared/data/repositories/auth_repository_impl.dart';
@@ -130,6 +136,13 @@ void _initAuthSlice() {
       googleSignInUseCase: sl(),
     ),
   );
+
+  sl.registerFactory(() => SplashBloc(authBloc: sl<AuthBloc>()));
+  sl.registerFactory(OnboardingBloc.new);
+  sl.registerFactory(AuthChoiceBloc.new);
+  sl.registerFactory(LoginBloc.new);
+  sl.registerFactory(SignUpBloc.new);
+  sl.registerFactory(RoleSelectionBloc.new);
 }
 
 void _initEmployee() {
