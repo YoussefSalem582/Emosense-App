@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
-import '../common/surface_section_card.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
 
 class AnalysisInputWidget extends StatelessWidget {
   final String inputType;

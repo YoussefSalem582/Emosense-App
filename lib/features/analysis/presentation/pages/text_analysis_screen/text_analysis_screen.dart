@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/analysis/presentation/bloc/text_analysis_bloc.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_loading_indicator.dart';
-import 'package:emosense_mobile/presentation/widgets/app_bars/analysis_app_bar.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/shared/widgets/app_bars/analysis_app_bar.dart';
 import 'widgets/widgets.dart';
 
 /// Unified Text Analysis Screen - Modularized with Widgets

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
-import '../../models/text_analysis_models.dart';
+import 'package:emosense_mobile/core/core.dart';
+import '../models/text_analysis_models.dart';
 
 /// Constants for the Enhanced Text Analysis screen
 ///

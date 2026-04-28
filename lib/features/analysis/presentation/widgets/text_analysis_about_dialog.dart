@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// About dialog widget for the text analysis screen
 ///

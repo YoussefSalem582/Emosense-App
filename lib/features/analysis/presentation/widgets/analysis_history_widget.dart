@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
-import '../../models/text_analysis_models.dart';
-import '../common/section_title_row.dart';
-import '../common/surface_section_card.dart';
+import 'package:emosense_mobile/core/core.dart';
+import '../models/text_analysis_models.dart';
+import 'package:emosense_mobile/shared/widgets/common/section_title_row.dart';
+import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
 
 class AnalysisHistoryWidget extends StatelessWidget {
   final List<AnalysisHistoryItem> historyItems;

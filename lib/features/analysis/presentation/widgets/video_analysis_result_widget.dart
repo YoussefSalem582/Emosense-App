@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class VideoAnalysisResultWidget extends StatefulWidget {
   final Map<String, dynamic> result;
