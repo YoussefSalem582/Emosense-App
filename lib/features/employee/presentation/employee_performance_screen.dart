@@ -17,20 +17,18 @@ class _EmployeePerformanceScreenState extends State<EmployeePerformanceScreen> {
   @override
   void initState() {
     super.initState();
-    context
-        .read<EmployeePerformanceBloc>()
-        .add(const EmployeePerformanceLoadRequested());
+    context.read<EmployeePerformanceBloc>().add(
+      const EmployeePerformanceLoadRequested(),
+    );
   }
 
   Future<void> _onRefresh() async {
-    context
-        .read<EmployeePerformanceBloc>()
-        .add(const EmployeePerformanceRefreshRequested());
+    context.read<EmployeePerformanceBloc>().add(
+      const EmployeePerformanceRefreshRequested(),
+    );
     await context.read<EmployeePerformanceBloc>().stream.firstWhere(
-          (s) =>
-              s is EmployeePerformanceSuccess ||
-              s is EmployeePerformanceError,
-        );
+      (s) => s is EmployeePerformanceSuccess || s is EmployeePerformanceError,
+    );
   }
 
   @override
@@ -67,9 +65,10 @@ class _EmployeePerformanceScreenState extends State<EmployeePerformanceScreen> {
                     ),
                     const SizedBox(height: 16),
                     FilledButton(
-                      onPressed: () => context
-                          .read<EmployeePerformanceBloc>()
-                          .add(const EmployeePerformanceLoadRequested()),
+                      onPressed:
+                          () => context.read<EmployeePerformanceBloc>().add(
+                            const EmployeePerformanceLoadRequested(),
+                          ),
                       child: const Text('Retry'),
                     ),
                   ],
@@ -115,9 +114,9 @@ class _SummaryCard extends StatelessWidget {
           children: [
             Text(
               'Overall score',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(color: AppColors.textSecondary),
             ),
             const SizedBox(height: 8),
             Row(
@@ -127,16 +126,16 @@ class _SummaryCard extends StatelessWidget {
                 Text(
                   '${data.overallScore}',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '/ 100',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+                    color: AppColors.textSecondary,
+                  ),
                 ),
               ],
             ),
@@ -183,9 +182,9 @@ class _GoalsSection extends StatelessWidget {
           children: [
             Text(
               'Goals',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 12),
             ...goals.map(
@@ -200,9 +199,7 @@ class _GoalsSection extends StatelessWidget {
                         Expanded(
                           child: Text(
                             g['title'] as String? ?? '',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: const TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ),
                         Text(
@@ -216,8 +213,10 @@ class _GoalsSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     LinearProgressIndicator(
-                      value: ((g['progress'] as num?)?.toDouble() ?? 0)
-                          .clamp(0.0, 1.0),
+                      value: ((g['progress'] as num?)?.toDouble() ?? 0).clamp(
+                        0.0,
+                        1.0,
+                      ),
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ],
@@ -246,12 +245,14 @@ class _MetricsSection extends StatelessWidget {
           children: [
             Text(
               'Key metrics',
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
-            ...metrics.take(6).map(
+            ...metrics
+                .take(6)
+                .map(
                   (m) => ListTile(
                     contentPadding: EdgeInsets.zero,
                     title: Text(m['title'] as String? ?? ''),
