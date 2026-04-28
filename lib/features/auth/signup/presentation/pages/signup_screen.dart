@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import 'package:emosense_mobile/core/routing/app_router.dart';
+import 'package:emosense_mobile/features/auth/signup/presentation/bloc/signup_bloc.dart';
+import 'package:emosense_mobile/features/auth/signup/presentation/bloc/signup_event.dart';
+import 'package:emosense_mobile/features/auth/signup/presentation/bloc/signup_state.dart';
 import 'package:emosense_mobile/features/auth/shared/domain/entities/user_entity.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_bloc.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_event.dart';
@@ -11,14 +15,26 @@ import 'package:emosense_mobile/features/auth/shared/presentation/widgets/auth.d
 
 import 'package:emosense_mobile/features/auth/signup/presentation/widgets/signup.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => di.sl<SignUpBloc>(),
+      child: const _SignUpScreenBody(),
+    );
+  }
 }
 
-class _SignUpScreenState extends State<SignUpScreen>
+class _SignUpScreenBody extends StatefulWidget {
+  const _SignUpScreenBody();
+
+  @override
+  State<_SignUpScreenBody> createState() => _SignUpScreenBodyState();
+}
+
+class _SignUpScreenBodyState extends State<_SignUpScreenBody>
     with TickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
@@ -29,11 +45,6 @@ class _SignUpScreenState extends State<SignUpScreen>
   final _employeeIdController = TextEditingController();
   final _departmentController = TextEditingController();
   final _scrollController = ScrollController();
-
-  bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
-  bool _agreeToTerms = false;
-  String _selectedRole = 'Employee'; // Default role
 
   late AnimationController _formController;
   late AnimationController _backgroundController;
@@ -164,47 +175,50 @@ class _SignUpScreenState extends State<SignUpScreen>
                 padding: EdgeInsets.symmetric(
                   horizontal: isSmallScreen ? 16.0 : 24.0,
                 ),
-                child: Column(
-                  children: [
-                    SignupHeader(formAnimation: _formAnimation),
-                    SignupForm(
-                      formAnimation: _formAnimation,
-                      formKey: _formKey,
-                      firstNameController: _firstNameController,
-                      lastNameController: _lastNameController,
-                      emailController: _emailController,
-                      passwordController: _passwordController,
-                      confirmPasswordController: _confirmPasswordController,
-                      employeeIdController: _employeeIdController,
-                      departmentController: _departmentController,
-                      selectedRole: _selectedRole,
-                      onRoleChanged:
-                          (role) => setState(() => _selectedRole = role),
-                      isPasswordVisible: _isPasswordVisible,
-                      isConfirmPasswordVisible: _isConfirmPasswordVisible,
-                      onPasswordVisibilityToggle: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                      onConfirmPasswordVisibilityToggle: () {
-                        setState(() {
-                          _isConfirmPasswordVisible =
-                              !_isConfirmPasswordVisible;
-                        });
-                      },
-                    ),
-                    SignupFooter(
-                      formAnimation: _formAnimation,
-                      selectedRole: _selectedRole,
-                      onSignup: _handleSignUp,
-                      isLoading: loading,
-                      agreeToTerms: _agreeToTerms,
-                      onAgreeToTermsChanged:
-                          (value) => setState(() => _agreeToTerms = value),
-                      onNavigateToLogin: _navigateToLogin,
-                    ),
-                  ],
+                child: BlocBuilder<SignUpBloc, SignUpFormUiState>(
+                  builder: (context, signup) {
+                    return Column(
+                      children: [
+                        SignupHeader(formAnimation: _formAnimation),
+                        SignupForm(
+                          formAnimation: _formAnimation,
+                          formKey: _formKey,
+                          firstNameController: _firstNameController,
+                          lastNameController: _lastNameController,
+                          emailController: _emailController,
+                          passwordController: _passwordController,
+                          confirmPasswordController: _confirmPasswordController,
+                          employeeIdController: _employeeIdController,
+                          departmentController: _departmentController,
+                          selectedRole: signup.selectedRoleLabel,
+                          onRoleChanged:
+                              (role) => context.read<SignUpBloc>().add(
+                                SignUpRoleLabelChanged(role),
+                              ),
+                          isPasswordVisible: signup.passwordVisible,
+                          isConfirmPasswordVisible: signup.confirmPasswordVisible,
+                          onPasswordVisibilityToggle: () => context.read<SignUpBloc>().add(
+                            const SignUpPasswordVisibilityToggled(),
+                          ),
+                          onConfirmPasswordVisibilityToggle: () => context.read<SignUpBloc>().add(
+                            const SignUpConfirmPasswordVisibilityToggled(),
+                          ),
+                        ),
+                        SignupFooter(
+                          formAnimation: _formAnimation,
+                          selectedRole: signup.selectedRoleLabel,
+                          onSignup: _handleSignUp,
+                          isLoading: loading,
+                          agreeToTerms: signup.agreeToTerms,
+                          onAgreeToTermsChanged:
+                              (value) => context.read<SignUpBloc>().add(
+                                SignUpAgreeToTermsChanged(value),
+                              ),
+                          onNavigateToLogin: _navigateToLogin,
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
@@ -219,7 +233,7 @@ class _SignUpScreenState extends State<SignUpScreen>
       return;
     }
 
-    if (!_agreeToTerms) {
+    if (!context.read<SignUpBloc>().state.agreeToTerms) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Please agree to the terms and conditions'),
@@ -232,7 +246,8 @@ class _SignUpScreenState extends State<SignUpScreen>
 
     HapticFeedback.lightImpact();
 
-    final role = _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
+    final roleLabel = context.read<SignUpBloc>().state.selectedRoleLabel;
+    final role = roleLabel == 'Admin' ? UserRole.admin : UserRole.employee;
 
     context.read<AuthBloc>().add(
       AuthRegisterRequested(
