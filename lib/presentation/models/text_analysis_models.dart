@@ -2,6 +2,7 @@
 ///
 /// This file contains all data models and structures used by the
 /// text analysis functionality, ensuring type safety and consistency.
+library;
 
 import 'package:flutter/material.dart';
 

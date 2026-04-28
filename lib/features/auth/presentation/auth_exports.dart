@@ -1,5 +1,7 @@
 /// Auth, onboarding, and splash entrypoints (implementation lives under
 /// [presentation/screens] until files are physically moved here).
+library;
+
 export '../../../presentation/screens/splash_screens/splash_screen.dart';
 export '../../../presentation/screens/onboarding_screens/onboarding_screen.dart';
 export '../../../presentation/screens/auth/auth_choice_screens/auth_choice_screen.dart';
