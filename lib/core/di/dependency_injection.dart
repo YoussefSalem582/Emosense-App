@@ -21,9 +21,12 @@ import '../../features/tickets/domain/usecases/load_tickets_usecase.dart';
 import '../../features/tickets/domain/usecases/update_ticket_status_usecase.dart';
 import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
-import '../../features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
+import '../../features/employee/analysis_tools/presentation/bloc/employee_analysis_tools_bloc.dart';
 import '../../features/employee/dashboard/presentation/bloc/employee_dashboard_bloc.dart';
+import '../../features/employee/navigation/presentation/bloc/employee_navigation_bloc.dart';
 import '../../features/employee/performance/presentation/bloc/employee_performance_bloc.dart';
+import '../../features/employee/profile/presentation/bloc/employee_profile_bloc.dart';
+import '../../features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/auth/presentation/bloc/user_bloc.dart';
 import '../../features/emotion/presentation/bloc/emotion_bloc.dart';
 import '../network/connection_bloc.dart';
@@ -97,9 +100,14 @@ void _initAuthSlice() {
 }
 
 void _initEmployee() {
+  sl.registerFactory<EmployeeNavigationBloc>(() => EmployeeNavigationBloc());
   sl.registerFactory<EmployeeDashboardBloc>(() => EmployeeDashboardBloc());
   sl.registerFactory<EmployeeAnalyticsBloc>(() => EmployeeAnalyticsBloc());
   sl.registerFactory<EmployeePerformanceBloc>(() => EmployeePerformanceBloc());
+  sl.registerFactory<EmployeeProfileBloc>(() => EmployeeProfileBloc());
+  sl.registerFactory<EmployeeAnalysisToolsBloc>(
+    () => EmployeeAnalysisToolsBloc(),
+  );
 }
 
 void _initAdmin() {

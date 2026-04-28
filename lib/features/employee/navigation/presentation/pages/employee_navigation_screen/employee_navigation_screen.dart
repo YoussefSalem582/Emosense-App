@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/features/employee/navigation/presentation/bloc/employee_navigation_bloc.dart';
 import 'package:emosense_mobile/features/employee/shared/presentation/widgets/employee_bottom_nav_bar.dart';
 import 'widgets/employee_app_bar.dart';
 import 'widgets/employee_screen_factory.dart';
@@ -12,7 +14,7 @@ import 'widgets/employee_dialogs.dart';
 /// Features:
 /// - Modular app bar with animations
 /// - Lazy loading screens with caching
-/// - Enhanced state management
+/// - Tab index via [EmployeeNavigationBloc]
 /// - Consistent animations and feedback
 /// - Improved performance and maintainability
 class EmployeeNavigationScreen extends StatefulWidget {
@@ -25,7 +27,6 @@ class EmployeeNavigationScreen extends StatefulWidget {
 
 class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
     with TickerProviderStateMixin, ScreenStateMixin {
-  int _selectedIndex = 0;
   late AnimationController _pulseController;
   late AnimationController _shimmerController;
   late Animation<double> _pulseAnimation;
@@ -56,13 +57,11 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
       curve: Curves.easeInOut,
     );
 
-    // Start continuous animations
     _pulseController.repeat(reverse: true);
     _shimmerController.repeat();
   }
 
   void _preloadEssentialScreens() {
-    // Preload dashboard, performance, profile, tickets, and analysis tools
     EmployeeScreenFactory.preloadScreens([0, 1, 3, 4, 5]);
   }
 
@@ -70,119 +69,134 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
   void dispose() {
     _pulseController.dispose();
     _shimmerController.dispose();
-    EmployeeScreenFactory.clearCache(); // Clean up when disposing
+    EmployeeScreenFactory.clearCache();
     super.dispose();
+  }
+
+  int _selectedIndex(EmployeeNavigationState state) {
+    if (state is EmployeeNavigationReady) return state.selectedIndex;
+    return 0;
   }
 
   @override
   Widget build(BuildContext context) {
     return buildWithState(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF667EEA).withValues(alpha: 0.1),
-              const Color(0xFF764BA2).withValues(alpha: 0.1),
-              const Color(0xFF48CAE4).withValues(alpha: 0.1),
-            ],
-          ),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: EmployeeAppBar(
-            shimmerAnimation: _shimmerAnimation,
-            pulseAnimation: _pulseAnimation,
-            selectedIndex: _selectedIndex,
-            onNotificationPressed:
-                () => EmployeeDialogs.showNotifications(context),
-            onProfilePressed: () => _handleProfileAction(),
-            onProfileMenuSelected: _handleProfileMenuSelection,
-          ),
-          body: Stack(
-            children: [
-              IndexedStack(
-                index: _selectedIndex,
-                children: List.generate(9, (index) {
-                  return EmployeeScreenFactory.getScreen(
-                    index,
-                    onAnalysisToolSelected: (toolIndex) {
-                      _handleAnalysisToolSelection(toolIndex);
-                    },
-                  );
-                }),
+      child: BlocBuilder<EmployeeNavigationBloc, EmployeeNavigationState>(
+        builder: (context, navState) {
+          final selectedIndex = _selectedIndex(navState);
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFF667EEA).withValues(alpha: 0.1),
+                  const Color(0xFF764BA2).withValues(alpha: 0.1),
+                  const Color(0xFF48CAE4).withValues(alpha: 0.1),
+                ],
               ),
-            ],
-          ),
-          bottomNavigationBar: EmployeeBottomNavBar(
-            selectedIndex: _selectedIndex,
-            onItemTapped: _handleBottomNavTap,
-          ),
-        ),
+            ),
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: EmployeeAppBar(
+                shimmerAnimation: _shimmerAnimation,
+                pulseAnimation: _pulseAnimation,
+                selectedIndex: selectedIndex,
+                onNotificationPressed:
+                    () => EmployeeDialogs.showNotifications(context),
+                onProfilePressed: () => _handleProfileAction(context),
+                onProfileMenuSelected:
+                    (v) => _handleProfileMenuSelection(context, v),
+              ),
+              body: Stack(
+                children: [
+                  IndexedStack(
+                    index: selectedIndex,
+                    children: List.generate(9, (index) {
+                      return EmployeeScreenFactory.getScreen(
+                        index,
+                        onAnalysisToolSelected: (toolIndex) {
+                          _handleAnalysisToolSelection(context, toolIndex);
+                        },
+                      );
+                    }),
+                  ),
+                ],
+              ),
+              bottomNavigationBar: EmployeeBottomNavBar(
+                selectedIndex: selectedIndex,
+                onItemTapped: (i) => _handleBottomNavTap(context, i),
+              ),
+            ),
+          );
+        },
       ),
       onRetry: _handleRetry,
     );
   }
 
-  void _handleBottomNavTap(int index) {
-    if (index != _selectedIndex) {
-      setState(() {
-        _selectedIndex = index;
-      });
-
-      // Add haptic feedback
+  void _handleBottomNavTap(BuildContext context, int index) {
+    final bloc = context.read<EmployeeNavigationBloc>();
+    final current = _selectedIndex(bloc.state);
+    if (index != current) {
+      bloc.add(EmployeeNavigationTabSelected(index));
       HapticFeedback.lightImpact();
-
-      // Reset animations when switching screens
       _pulseController.reset();
       _pulseController.forward();
     }
   }
 
-  void _handleAnalysisToolSelection(int toolIndex) {
-    // Handle navigation to specific analysis tools
+  void _handleAnalysisToolSelection(BuildContext context, int toolIndex) {
     switch (toolIndex) {
-      case 0: // Text Analysis
+      case 0:
         AppRouter.toTextAnalysis(context);
         break;
-      case 1: // Voice Analysis
+      case 1:
         AppRouter.toVoiceAnalysis(context);
         break;
-      case 2: // Video Analysis
+      case 2:
         AppRouter.toVideoAnalysis(context);
         break;
       default:
-        // For other tools, navigate within the app
-        setState(() => _selectedIndex = toolIndex + 6);
+        context.read<EmployeeNavigationBloc>().add(
+          EmployeeNavigationTabSelected(toolIndex + 6),
+        );
     }
   }
 
-  void _handleProfileAction() {
-    setState(() => _selectedIndex = 3);
+  void _handleProfileAction(BuildContext context) {
+    context.read<EmployeeNavigationBloc>().add(
+      const EmployeeNavigationTabSelected(3),
+    );
   }
 
-  void _handleProfileMenuSelection(String value) {
+  void _handleProfileMenuSelection(BuildContext context, String value) {
     switch (value) {
       case 'profile':
-        setState(() => _selectedIndex = 3);
+        context.read<EmployeeNavigationBloc>().add(
+          const EmployeeNavigationTabSelected(3),
+        );
         break;
       case 'help':
         EmployeeDialogs.showHelp(context);
         break;
       case 'settings':
-        setState(() => _selectedIndex = 3);
+        context.read<EmployeeNavigationBloc>().add(
+          const EmployeeNavigationTabSelected(3),
+        );
         break;
       case 'logout':
-        _handleLogout();
+        _handleLogout(context);
         break;
       case 'home':
-        setState(() => _selectedIndex = 0);
+        context.read<EmployeeNavigationBloc>().add(
+          const EmployeeNavigationTabSelected(0),
+        );
         break;
     }
   }
 
-  void _handleLogout() {
+  void _handleLogout(BuildContext context) {
     showDialog(
       context: context,
       builder:
