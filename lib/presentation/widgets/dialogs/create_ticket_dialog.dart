@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 
 class CreateTicketDialog extends StatefulWidget {
+  /// When set, receives validated ticket fields (bloc / parent handles persistence).
+  final void Function(Map<String, dynamic> ticketData)? onSubmit;
+
+  /// Legacy: called when [onSubmit] is null and the form is submitted.
   final VoidCallback? onTicketCreated;
 
-  const CreateTicketDialog({super.key, this.onTicketCreated});
+  const CreateTicketDialog({super.key, this.onSubmit, this.onTicketCreated});
 
   @override
   State<CreateTicketDialog> createState() => _CreateTicketDialogState();
@@ -144,7 +148,8 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                 ),
                 SizedBox(height: 16),
                 DropdownButtonFormField<String>(
-                  value: _selectedPriority,
+                  key: ValueKey(_selectedPriority),
+                  initialValue: _selectedPriority,
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     labelText: 'Priority',
@@ -198,16 +203,33 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
   }
 
   void _createTicket() {
-    if (_formKey.currentState!.validate()) {
-      Navigator.pop(context);
-      widget.onTicketCreated?.call();
+    if (!(_formKey.currentState?.validate() ?? false)) return;
 
+    final data = <String, dynamic>{
+      'title': _issueTitleController.text.trim(),
+      'description': _descriptionController.text.trim(),
+      'customer': _customerNameController.text.trim(),
+      'customerName': _customerNameController.text.trim(),
+      'priority': _selectedPriority,
+    };
+    final url = _urlController.text.trim();
+    if (url.isNotEmpty) {
+      data['referenceUrl'] = url;
+    }
+
+    final submit = widget.onSubmit;
+    if (submit != null) {
+      submit(data);
+    } else {
+      widget.onTicketCreated?.call();
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Ticket created successfully!'),
           backgroundColor: AppColors.success,
         ),
       );
     }
+
+    Navigator.pop(context);
   }
 }

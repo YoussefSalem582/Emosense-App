@@ -42,7 +42,7 @@ class TicketsBloc extends Bloc<TicketsEvent, TicketsState> {
   }
 
   TicketFilter _currentFilter = TicketFilter.empty();
-  TicketSortBy _currentSortBy = TicketSortBy.createdDate;
+  final TicketSortBy _currentSortBy = TicketSortBy.createdDate;
   bool _isAdminView = false;
   int _selectedFilterIndex = 0;
 

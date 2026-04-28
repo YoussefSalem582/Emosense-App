@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/core.dart';
+import '../../../../presentation/widgets/dialogs/create_ticket_dialog.dart';
+import '../bloc/tickets_bloc.dart';
 import 'widgets/review_video_filter_chips_widget.dart';
 
 class EmployeeTicketsScreen extends StatefulWidget {
@@ -17,55 +20,15 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
 
   int _selectedFilterIndex = 0;
   bool _showVideoDetailsDialog = false;
-  bool _showCreateTicketDialog = false;
   String? _selectedVideoId;
 
-  // Controllers for the create ticket dialog
-  final TextEditingController _customerNameController = TextEditingController();
-  final TextEditingController _issueTitleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _referenceUrlController = TextEditingController();
-  String _selectedPriority = 'Medium';
-
-  final List<Map<String, dynamic>> _sampleTickets = [
-    {
-      'id': 'TK-001',
-      'title': 'Product Quality Issue',
-      'description': 'Customer reports defective product received',
-      'customer': 'Sarah Johnson',
-      'priority': 'High',
-      'status': 'Open',
-      'created': '2 hours ago',
-      'assignee': 'You',
-      'referenceUrl': 'https://support.example.com/ticket/001',
-    },
-    {
-      'id': 'TK-002',
-      'title': 'Shipping Delay Inquiry',
-      'description': 'Customer asking about delayed shipment',
-      'customer': 'Mike Davis',
-      'priority': 'Medium',
-      'status': 'In Progress',
-      'created': '4 hours ago',
-      'assignee': 'You',
-      'referenceUrl': 'https://support.example.com/ticket/002',
-    },
-    {
-      'id': 'TK-003',
-      'title': 'Refund Request',
-      'description': 'Customer requesting refund for order',
-      'customer': 'Emily Chen',
-      'priority': 'Medium',
-      'status': 'Resolved',
-      'created': '1 day ago',
-      'assignee': 'John Smith',
-      'referenceUrl': 'https://support.example.com/ticket/003',
-    },
-  ];
+  /// True after submitting [TicketsCreateRequested] until we handle result in [BlocConsumer].
+  bool _expectingTicketCreate = false;
 
   @override
   void initState() {
     super.initState();
+    context.read<TicketsBloc>().add(const TicketsLoadEmployeeRequested());
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -84,145 +47,150 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
   void dispose() {
     _fadeController.dispose();
     _backgroundController.dispose();
-    _customerNameController.dispose();
-    _issueTitleController.dispose();
-    _descriptionController.dispose();
-    _referenceUrlController.dispose();
     super.dispose();
   }
 
-  void _createNewTicket() {
-    if (_customerNameController.text.isNotEmpty &&
-        _issueTitleController.text.isNotEmpty &&
-        _descriptionController.text.isNotEmpty) {
-      // Generate a new ticket ID
-      int ticketNumber = _sampleTickets.length + 1;
-      String ticketId = 'TK-${ticketNumber.toString().padLeft(3, '0')}';
-
-      // Create new ticket
-      Map<String, dynamic> newTicket = {
-        'id': ticketId,
-        'title': _issueTitleController.text,
-        'description': _descriptionController.text,
-        'customer': _customerNameController.text,
-        'priority': _selectedPriority,
-        'status': 'Open',
-        'created': 'Just now',
-        'assignee': 'You',
-        'referenceUrl':
-            _referenceUrlController.text.isNotEmpty
-                ? _referenceUrlController.text
-                : null,
-      };
-
-      setState(() {
-        _sampleTickets.insert(0, newTicket); // Add to the beginning of the list
-        _showCreateTicketDialog = false;
-      });
-
-      // Clear the form
-      _clearCreateTicketForm();
-
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ticket $ticketId created successfully!'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    } else {
-      // Show error message for missing fields
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please fill in all required fields'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
-  }
-
-  void _clearCreateTicketForm() {
-    _customerNameController.clear();
-    _issueTitleController.clear();
-    _descriptionController.clear();
-    _referenceUrlController.clear();
-    setState(() {
-      _selectedPriority = 'Medium';
-    });
+  void _openCreateTicketDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => CreateTicketDialog(
+        onSubmit: (data) {
+          setState(() => _expectingTicketCreate = true);
+          context.read<TicketsBloc>().add(TicketsCreateRequested(data));
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final customSpacing = theme.extension<CustomSpacing>()!;
+    final customSpacing = Theme.of(context).extension<CustomSpacing>()!;
 
-    return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Stack(
-          children: [
-            // Animated Background with gradient
-            Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF6366F1), // Primary purple
-                    Color(0xFF8B5CF6), // Secondary purple
-                    Color(0xFF06B6D4), // Cyan at bottom
-                  ],
+    return BlocConsumer<TicketsBloc, TicketsState>(
+      listenWhen: (prev, curr) {
+        if (!_expectingTicketCreate) return false;
+        return (prev is TicketsLoading && curr is TicketsSuccess) ||
+            (prev is TicketsLoading && curr is TicketsError);
+      },
+      listener: (context, state) {
+        setState(() => _expectingTicketCreate = false);
+        if (state is TicketsSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Ticket created successfully'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        } else if (state is TicketsError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      builder: (context, state) {
+        final tickets =
+            state is TicketsSuccess && state.employeeData != null
+                ? state.employeeData!.assignedTickets
+                : <Map<String, dynamic>>[];
+
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF6366F1),
+                      Color(0xFF8B5CF6),
+                      Color(0xFF06B6D4),
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            // Main Content
-            SafeArea(
-              child: Column(
-                children: [
-                  SizedBox(height: customSpacing.md),
-
-                  // Section Header with New Ticket Button
-                  _buildSectionHeader(customSpacing),
-
-                  SizedBox(height: customSpacing.md),
-
-                  // Filter Chips
-                  ReviewVideoFilterChipsWidget(
-                    spacing: customSpacing,
-                    selectedFilterIndex: _selectedFilterIndex,
-                    onFilterChanged:
-                        (index) => setState(() => _selectedFilterIndex = index),
-                    tickets: _sampleTickets,
-                  ),
-
-                  SizedBox(height: customSpacing.md),
-
-                  // Tickets List
-                  Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: customSpacing.md,
-                      ),
-                      itemCount: _getFilteredTickets().length,
-                      itemBuilder: (context, index) {
-                        final ticket = _getFilteredTickets()[index];
-                        return _buildTicketCard(ticket, customSpacing);
-                      },
-                    ),
-                  ),
-                ],
+              SafeArea(
+                child: _buildTicketsBody(state, customSpacing),
               ),
-            ),
-
-            // Dialogs
-            if (_showVideoDetailsDialog) _buildTicketDetailsDialog(),
-            if (_showCreateTicketDialog) _buildCreateTicketDialog(),
-          ],
-        ),
+              if (_showVideoDetailsDialog && tickets.isNotEmpty)
+                _buildTicketDetailsDialog(tickets),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildSectionHeader(CustomSpacing spacing) {
+  Widget _buildTicketsBody(
+    TicketsState state,
+    CustomSpacing customSpacing,
+  ) {
+    if (state is TicketsLoading || state is TicketsInitial) {
+      return const Center(
+        child: CircularProgressIndicator(color: Colors.white),
+      );
+    }
+    if (state is TicketsError) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                state.message,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+              SizedBox(height: customSpacing.md),
+              FilledButton(
+                onPressed:
+                    () => context.read<TicketsBloc>().add(
+                          const TicketsLoadEmployeeRequested(),
+                        ),
+                child: const Text('Retry'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    if (state is TicketsSuccess && state.employeeData != null) {
+      final list = state.employeeData!.assignedTickets;
+      return Column(
+        children: [
+          SizedBox(height: customSpacing.md),
+          _buildSectionHeader(customSpacing, list.length),
+          SizedBox(height: customSpacing.md),
+          ReviewVideoFilterChipsWidget(
+            spacing: customSpacing,
+            selectedFilterIndex: _selectedFilterIndex,
+            onFilterChanged:
+                (index) => setState(() => _selectedFilterIndex = index),
+            tickets: list,
+          ),
+          SizedBox(height: customSpacing.md),
+          Expanded(
+            child: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: customSpacing.md),
+              itemCount: _getFilteredTickets(list).length,
+              itemBuilder: (context, index) {
+                final ticket = _getFilteredTickets(list)[index];
+                return _buildTicketCard(ticket, customSpacing);
+              },
+            ),
+          ),
+        ],
+      );
+    }
+    return const SizedBox.shrink();
+  }
+
+  Widget _buildSectionHeader(CustomSpacing spacing, int totalTickets) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: spacing.md),
       child: Row(
@@ -240,14 +208,14 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               ),
               SizedBox(height: spacing.xs),
               Text(
-                'Total Tickets: ${_sampleTickets.length}',
+                'Total Tickets: $totalTickets',
                 style: const TextStyle(fontSize: 14, color: Colors.white70),
               ),
             ],
           ),
           const Spacer(),
           ElevatedButton.icon(
-            onPressed: () => setState(() => _showCreateTicketDialog = true),
+            onPressed: _openCreateTicketDialog,
             icon: const Icon(Icons.add, size: 16),
             label: const Text('New Ticket'),
             style: ElevatedButton.styleFrom(
@@ -421,6 +389,8 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     switch (priority.toLowerCase()) {
       case 'high':
         return Colors.red;
+      case 'critical':
+        return Colors.purple;
       case 'medium':
         return Colors.orange;
       case 'low':
@@ -445,29 +415,32 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     }
   }
 
-  List<Map<String, dynamic>> _getFilteredTickets() {
+  List<Map<String, dynamic>> _getFilteredTickets(
+    List<Map<String, dynamic>> all,
+  ) {
     switch (_selectedFilterIndex) {
-      case 1: // Open
-        return _sampleTickets
-            .where((ticket) => ticket['status'] == 'Open')
-            .toList();
-      case 2: // In Progress
-        return _sampleTickets
+      case 1:
+        return all.where((ticket) => ticket['status'] == 'Open').toList();
+      case 2:
+        return all
             .where((ticket) => ticket['status'] == 'In Progress')
             .toList();
-      case 3: // Resolved
-        return _sampleTickets
-            .where((ticket) => ticket['status'] == 'Resolved')
-            .toList();
-      default: // All
-        return _sampleTickets;
+      case 3:
+        return all.where((ticket) => ticket['status'] == 'Resolved').toList();
+      default:
+        return all;
     }
   }
 
-  Widget _buildTicketDetailsDialog() {
-    final ticket = _sampleTickets.firstWhere(
+  String _assigneeLabel(Map<String, dynamic> ticket) {
+    final v = ticket['assignedTo'] ?? ticket['assignee'];
+    return v?.toString() ?? '';
+  }
+
+  Widget _buildTicketDetailsDialog(List<Map<String, dynamic>> tickets) {
+    final ticket = tickets.firstWhere(
       (t) => t['id'] == _selectedVideoId,
-      orElse: () => _sampleTickets.first,
+      orElse: () => tickets.first,
     );
 
     return Container(
@@ -515,11 +488,17 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               ),
               const SizedBox(height: 20),
               _buildDetailRow('Ticket ID:', ticket['id']),
-              _buildDetailRow('Customer:', ticket['customer']),
-              _buildDetailRow('Priority:', ticket['priority']),
-              _buildDetailRow('Status:', ticket['status']),
-              _buildDetailRow('Created:', ticket['created']),
-              _buildDetailRow('Assignee:', ticket['assignee']),
+              _buildDetailRow(
+                'Customer:',
+                '${ticket['customer'] ?? ticket['customerName'] ?? ''}',
+              ),
+              _buildDetailRow('Priority:', '${ticket['priority']}'),
+              _buildDetailRow('Status:', '${ticket['status']}'),
+              _buildDetailRow(
+                'Created:',
+                '${ticket['created'] ?? ticket['createdAt'] ?? ''}',
+              ),
+              _buildDetailRow('Assignee:', _assigneeLabel(ticket)),
               if (ticket['referenceUrl'] != null)
                 _buildDetailRow('Reference URL:', ticket['referenceUrl']),
               const SizedBox(height: 16),
@@ -595,150 +574,6 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCreateTicketDialog() {
-    return Container(
-      color: Colors.black.withValues(alpha: 0.5),
-      child: Center(
-        child: Container(
-          margin: const EdgeInsets.all(20),
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(Icons.add_circle, color: Color(0xFF6366F1)),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'New Support Ticket',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      _clearCreateTicketForm();
-                      setState(() => _showCreateTicketDialog = false);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.grey[100],
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(
-                        Icons.close,
-                        size: 20,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _customerNameController,
-                decoration: InputDecoration(
-                  hintText: 'Customer Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _issueTitleController,
-                decoration: InputDecoration(
-                  hintText: 'Issue Title',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _descriptionController,
-                maxLines: 3,
-                decoration: InputDecoration(
-                  hintText: 'Description',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _referenceUrlController,
-                decoration: InputDecoration(
-                  hintText: 'Reference URL (Optional)',
-                  prefixIcon: const Icon(Icons.link),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: _selectedPriority,
-                decoration: InputDecoration(
-                  hintText: 'Priority',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                items: const [
-                  DropdownMenuItem(value: 'High', child: Text('High')),
-                  DropdownMenuItem(value: 'Medium', child: Text('Medium')),
-                  DropdownMenuItem(value: 'Low', child: Text('Low')),
-                ],
-                onChanged: (value) {
-                  if (value != null) {
-                    setState(() {
-                      _selectedPriority = value;
-                    });
-                  }
-                },
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () {
-                        _clearCreateTicketForm();
-                        setState(() => _showCreateTicketDialog = false);
-                      },
-                      child: const Text('Cancel'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _createNewTicket,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6366F1),
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text('Create Ticket'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }
