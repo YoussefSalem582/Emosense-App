@@ -24,7 +24,19 @@ import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_performance_bloc.dart';
-import '../../features/auth/presentation/bloc/user_bloc.dart';
+import '../../features/auth/shared/data/datasources/auth_local_datasource.dart';
+import '../../features/auth/shared/data/datasources/auth_remote_datasource.dart';
+import '../../features/auth/shared/data/datasources/auth_remote_datasource_mock.dart';
+import '../../features/auth/shared/data/repositories/auth_repository_impl.dart';
+import '../../features/auth/shared/domain/repositories/auth_repository.dart';
+import '../../features/auth/shared/domain/usecases/delete_account_usecase.dart';
+import '../../features/auth/shared/domain/usecases/forgot_password_usecase.dart';
+import '../../features/auth/shared/domain/usecases/get_cached_user_usecase.dart';
+import '../../features/auth/shared/domain/usecases/google_sign_in_usecase.dart';
+import '../../features/auth/shared/domain/usecases/login_usecase.dart';
+import '../../features/auth/shared/domain/usecases/logout_usecase.dart';
+import '../../features/auth/shared/domain/usecases/register_usecase.dart';
+import '../../features/auth/shared/presentation/bloc/auth_bloc.dart';
 import '../../features/emotion/presentation/bloc/emotion_bloc.dart';
 import '../network/connection_bloc.dart';
 
@@ -93,7 +105,31 @@ void _initTickets() {
 }
 
 void _initAuthSlice() {
-  sl.registerFactory<UserBloc>(() => UserBloc());
+  sl.registerLazySingleton<AuthRemoteDataSource>(() => AuthRemoteDataSourceMock());
+  sl.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSourceImpl());
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(remoteDataSource: sl(), localDataSource: sl()),
+  );
+
+  sl.registerLazySingleton(() => LoginUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterUseCase(sl()));
+  sl.registerLazySingleton(() => LogoutUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteAccountUseCase(sl()));
+  sl.registerLazySingleton(() => ForgotPasswordUseCase(sl()));
+  sl.registerLazySingleton(() => GetCachedUserUseCase(sl()));
+  sl.registerLazySingleton(() => GoogleSignInUseCase(sl()));
+
+  sl.registerLazySingleton<AuthBloc>(
+    () => AuthBloc(
+      loginUseCase: sl(),
+      registerUseCase: sl(),
+      logoutUseCase: sl(),
+      deleteAccountUseCase: sl(),
+      forgotPasswordUseCase: sl(),
+      getCachedUserUseCase: sl(),
+      googleSignInUseCase: sl(),
+    ),
+  );
 }
 
 void _initEmployee() {
