@@ -1,18 +1,22 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../services/onboarding_preferences.dart';
+import 'package:emosense_mobile/features/auth/onboarding/domain/repositories/onboarding_repository.dart';
+
 import 'onboarding_event.dart';
 import 'onboarding_state.dart';
 
 /// Manages pager index persistence and onboarding completion writes.
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  OnboardingBloc() : super(const OnboardingState()) {
+  OnboardingBloc({required OnboardingRepository onboardingRepository}) : _onboarding = onboardingRepository,
+      super(const OnboardingState()) {
     on<OnboardingPageChanged>(_onPageChanged);
     on<OnboardingNextPressed>(_onNext);
     on<OnboardingPreviousPressed>(_onPrev);
     on<OnboardingSkipped>(_onSkipped);
     on<OnboardingCompleted>(_onCompleted);
   }
+
+  final OnboardingRepository _onboarding;
 
   void _onPageChanged(OnboardingPageChanged event, Emitter<OnboardingState> emit) {
     emit(state.copyWith(currentPage: event.index));
@@ -40,7 +44,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   }
 
   Future<void> _persistComplete(Emitter<OnboardingState> emit) async {
-    await OnboardingPreferences.setOnboardingCompleted();
+    await _onboarding.markCompleted();
     emit(state.copyWith(completedFlow: true));
   }
 }

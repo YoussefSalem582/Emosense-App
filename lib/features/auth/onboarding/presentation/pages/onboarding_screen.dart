@@ -7,7 +7,7 @@ import 'package:emosense_mobile/core/routing/app_router.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/bloc/onboarding_bloc.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/bloc/onboarding_event.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/bloc/onboarding_state.dart';
-import 'package:emosense_mobile/features/auth/onboarding/presentation/models/onboarding_models.dart';
+import 'package:emosense_mobile/features/auth/onboarding/domain/entities/onboarding_page_data.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/widgets/onboarding.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
 
