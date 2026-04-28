@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
-import '../../widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
 
 class AdminUserManagementScreen extends StatefulWidget {
   const AdminUserManagementScreen({super.key});

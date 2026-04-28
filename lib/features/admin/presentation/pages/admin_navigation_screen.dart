@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../core/core.dart';
-import '../../../core/di/dependency_injection.dart' as di;
-import '../../../features/tickets/presentation/bloc/tickets_bloc.dart';
-import '../../widgets/navigation/admin_bottom_nav_bar.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/features/tickets/presentation/bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/presentation/widgets/navigation/admin_bottom_nav_bar.dart';
 import 'widgets/admin_app_bar.dart';
 import 'widgets/admin_dialogs.dart';
 import 'admin_dashboard_screen.dart';
 import 'admin_user_management_screen.dart';
 import 'admin_system_config_screen.dart';
-import '../../../features/tickets/presentation/admin/admin_tickets_screen.dart';
+import 'package:emosense_mobile/features/tickets/presentation/pages/admin/admin_tickets_page.dart';
 import 'admin_profile_screen.dart';
 
 /// Enhanced Admin Navigation Screen with modular components

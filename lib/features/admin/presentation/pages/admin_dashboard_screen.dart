@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 
-import '../../../core/core.dart';
-import '../../widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
   const AdminDashboardScreen({super.key});
@@ -109,8 +109,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                         ElevatedButton(
                           onPressed: () {
                             context.read<AdminDashboardBloc>().add(
-                                  const AdminDashboardLoadRequested(),
-                                );
+                              const AdminDashboardLoadRequested(),
+                            );
                           },
                           child: const Text('Retry'),
                         ),
@@ -142,8 +142,8 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     return RefreshIndicator(
       onRefresh: () async {
         context.read<AdminDashboardBloc>().add(
-              const AdminDashboardRefreshRequested(),
-            );
+          const AdminDashboardRefreshRequested(),
+        );
         await Future<void>.delayed(const Duration(milliseconds: 850));
       },
       child: SingleChildScrollView(

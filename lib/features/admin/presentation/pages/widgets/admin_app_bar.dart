@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Enhanced app bar widget for admin navigation screen
 class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
