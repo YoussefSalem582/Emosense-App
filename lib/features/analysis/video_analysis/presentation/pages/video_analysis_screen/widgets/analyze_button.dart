@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/bloc_exports.dart';
 import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
 
 /// Analyze button widget with dynamic states and animations

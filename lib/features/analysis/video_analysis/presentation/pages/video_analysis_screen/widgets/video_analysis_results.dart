@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/video_analysis/domain/entities/video_analysis_response.dart';
-import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/bloc_exports.dart';
 
 /// Enhanced Video Analysis Results with Improved Snapshot Display
 ///

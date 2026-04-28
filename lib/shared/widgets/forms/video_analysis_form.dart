@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/bloc/bloc_exports.dart';
 
 class VideoAnalysisForm extends StatefulWidget {
   const VideoAnalysisForm({super.key});

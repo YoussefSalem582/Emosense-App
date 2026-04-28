@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/constants/text_templates.dart' as core_templates;
-import 'package:emosense_mobile/features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
+import 'package:emosense_mobile/features/analysis/text_analysis/presentation/bloc/bloc_exports.dart';
 import 'package:emosense_mobile/features/analysis/text_analysis/presentation/services/text_analysis_actions_handler.dart';
 import 'analysis.dart';
 
