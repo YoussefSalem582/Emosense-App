@@ -7,13 +7,13 @@ import '../../data/services/emotion_api_service.dart';
 
 // Repositories
 import '../../data/repositories/video_analysis_repository.dart';
-import '../../data/repositories/mock_ticket_repository.dart';
-import '../../domain/repositories/ticket_repository.dart';
+import '../../features/tickets/data/repositories/mock_ticket_repository.dart';
+import '../../features/tickets/domain/repositories/ticket_repository.dart';
 
-// Use Cases
-import '../../domain/usecases/ticket_usecases.dart';
+// Use cases
+import '../../features/tickets/domain/usecases/ticket_usecases.dart';
 
-// Cubits
+// Cubits / Bloc
 import '../../presentation/cubit/video_analysis/video_analysis_cubit.dart';
 import '../../presentation/cubit/emotion/emotion_cubit.dart';
 import '../../presentation/cubit/user/user_cubit.dart';
@@ -24,15 +24,13 @@ import '../../presentation/cubit/employee_dashboard/employee_dashboard_cubit.dar
 import '../../presentation/cubit/employee_analytics/employee_analytics_cubit.dart';
 import '../../presentation/cubit/employee_performance/employee_performance_cubit.dart';
 import '../../presentation/cubit/admin_dashboard/admin_dashboard_cubit.dart';
-import '../../presentation/cubit/tickets/tickets_cubit.dart';
+import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
 
 final GetIt sl = GetIt.instance;
 
 Future<void> init() async {
-  // HTTP Client
   sl.registerLazySingleton<http.Client>(() => http.Client());
 
-  // API Services
   sl.registerLazySingleton<VideoAnalysisApiService>(
     () => VideoAnalysisApiService(client: sl()),
   );
@@ -40,13 +38,33 @@ Future<void> init() async {
     () => EmotionApiService(client: sl()),
   );
 
-  // Repositories
   sl.registerLazySingleton<VideoAnalysisRepository>(
     () => VideoAnalysisRepository(sl()),
   );
+
+  _initTickets();
+
+  sl.registerFactory<VideoAnalysisCubit>(() => VideoAnalysisCubit(sl()));
+  sl.registerFactory<TextAnalysisCubit>(() => TextAnalysisCubit(sl()));
+  sl.registerFactory<VoiceAnalysisCubit>(() => VoiceAnalysisCubit());
+  sl.registerFactory<AnalysisCubit>(() => AnalysisCubit(sl()));
+
+  sl.registerFactory<EmotionCubit>(() => EmotionCubit(sl()));
+  sl.registerFactory<UserCubit>(() => UserCubit());
+
+  sl.registerFactory<EmployeeDashboardCubit>(() => EmployeeDashboardCubit());
+  sl.registerFactory<EmployeeAnalyticsCubit>(() => EmployeeAnalyticsCubit());
+  sl.registerFactory<EmployeePerformanceCubit>(
+    () => EmployeePerformanceCubit(),
+  );
+
+  sl.registerFactory<AdminDashboardCubit>(() => AdminDashboardCubit());
+}
+
+/// Ticket use cases, mock repository, and [TicketsBloc] factory.
+void _initTickets() {
   sl.registerLazySingleton<TicketRepository>(() => MockTicketRepository());
 
-  // Use Cases
   sl.registerFactory<LoadTicketsUseCase>(() => LoadTicketsUseCase(sl()));
   sl.registerFactory<CreateTicketUseCase>(() => CreateTicketUseCase(sl()));
   sl.registerFactory<UpdateTicketStatusUseCase>(
@@ -57,29 +75,8 @@ Future<void> init() async {
     () => GetTicketStatisticsUseCase(sl()),
   );
 
-  // Analysis Cubits
-  sl.registerFactory<VideoAnalysisCubit>(() => VideoAnalysisCubit(sl()));
-  sl.registerFactory<TextAnalysisCubit>(() => TextAnalysisCubit(sl()));
-  sl.registerFactory<VoiceAnalysisCubit>(() => VoiceAnalysisCubit());
-  sl.registerFactory<AnalysisCubit>(() => AnalysisCubit(sl()));
-
-  // Core Cubits
-  sl.registerFactory<EmotionCubit>(() => EmotionCubit(sl()));
-  sl.registerFactory<UserCubit>(() => UserCubit());
-
-  // Employee Cubits
-  sl.registerFactory<EmployeeDashboardCubit>(() => EmployeeDashboardCubit());
-  sl.registerFactory<EmployeeAnalyticsCubit>(() => EmployeeAnalyticsCubit());
-  sl.registerFactory<EmployeePerformanceCubit>(
-    () => EmployeePerformanceCubit(),
-  );
-
-  // Admin Cubits
-  sl.registerFactory<AdminDashboardCubit>(() => AdminDashboardCubit());
-
-  // Unified Tickets Cubit with Use Cases
-  sl.registerFactory<TicketsCubit>(
-    () => TicketsCubit(
+  sl.registerFactory<TicketsBloc>(
+    () => TicketsBloc(
       loadTicketsUseCase: sl(),
       createTicketUseCase: sl(),
       updateTicketStatusUseCase: sl(),

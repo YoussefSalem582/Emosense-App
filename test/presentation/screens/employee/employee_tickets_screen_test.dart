@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:emosense_mobile/presentation/screens/employee/employee_tickets_screen/employee_tickets_screen.dart';
+import 'package:emosense_mobile/features/tickets/presentation/employee/employee_tickets_screen.dart';
 import 'package:emosense_mobile/core/core.dart';
 
 void main() {

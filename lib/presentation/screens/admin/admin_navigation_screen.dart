@@ -5,15 +5,15 @@ import '../../../core/core.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/utils/screen_state_manager.dart';
 import '../../../core/di/dependency_injection.dart' as di;
+import '../../../features/tickets/presentation/bloc/tickets_bloc.dart';
 import '../../cubit/admin_dashboard/admin_dashboard_cubit.dart';
-import '../../cubit/tickets/tickets_cubit.dart';
 import '../../widgets/navigation/admin_bottom_nav_bar.dart';
 import 'widgets/admin_app_bar.dart';
 import 'widgets/admin_dialogs.dart';
 import 'admin_dashboard_screen.dart';
 import 'admin_user_management_screen.dart';
 import 'admin_system_config_screen.dart';
-import 'admin_tickets_screen/admin_tickets_screen.dart';
+import '../../../features/tickets/presentation/admin/admin_tickets_screen.dart';
 import 'admin_profile_screen.dart';
 
 /// Enhanced Admin Navigation Screen with modular components
@@ -97,7 +97,7 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
         break;
       case 2:
         screen = BlocProvider(
-          create: (context) => di.sl<TicketsCubit>(),
+          create: (context) => di.sl<TicketsBloc>(),
           child: const AdminTicketsScreen(),
         );
         break;

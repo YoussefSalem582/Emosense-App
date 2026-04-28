@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../domain/models/ticket.dart';
+import '../../domain/entities/ticket.dart';
 import '../../domain/repositories/ticket_repository.dart';
 
 /// Mock implementation of ticket repository for development

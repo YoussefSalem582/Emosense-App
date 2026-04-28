@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/core.dart';
-import '../../../../cubit/tickets/tickets_cubit.dart';
+import '../../bloc/tickets_bloc.dart';
 
 class AdminTicketsFilters extends StatelessWidget {
   final TextEditingController searchController;
-  final TicketsCubit cubit;
+  final TicketsBloc bloc;
 
   const AdminTicketsFilters({
     super.key,
     required this.searchController,
-    required this.cubit,
+    required this.bloc,
   });
 
   @override
@@ -35,7 +36,9 @@ class AdminTicketsFilters extends StatelessWidget {
                 ),
               ),
               onChanged: (value) {
-                cubit.updateSearchQuery(value, isAdminView: true);
+                bloc.add(
+                  TicketsSearchQueryChanged(value, isAdminView: true),
+                );
               },
             ),
           ),

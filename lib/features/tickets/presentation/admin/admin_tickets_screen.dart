@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/core.dart';
-import '../../../cubit/tickets/tickets_cubit.dart';
-import '../../../widgets/common/animated_background_widget.dart';
+import '../../../../../presentation/widgets/common/animated_background_widget.dart';
+import '../bloc/tickets_bloc.dart';
 import 'widgets/widgets.dart';
 
 class AdminTicketsScreen extends StatefulWidget {
@@ -33,8 +34,9 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
 
     _searchController = TextEditingController();
 
-    // Load tickets when screen initializes
-    context.read<TicketsCubit>().loadAllTickets(isAdminView: true);
+    context.read<TicketsBloc>().add(
+      const TicketsLoadAllRequested(isAdminView: true),
+    );
   }
 
   @override
@@ -52,12 +54,9 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
     return Scaffold(
       body: Stack(
         children: [
-          // Animated background
           AnimatedBackgroundWidget(animation: _backgroundAnimation),
-
-          // Main content
           SafeArea(
-            child: BlocBuilder<TicketsCubit, TicketsState>(
+            child: BlocBuilder<TicketsBloc, TicketsState>(
               builder: (context, state) {
                 if (state is TicketsLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -89,8 +88,8 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
                         SizedBox(height: customSpacing.lg),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<TicketsCubit>().loadAllTickets(
-                              isAdminView: true,
+                            context.read<TicketsBloc>().add(
+                              const TicketsLoadAllRequested(isAdminView: true),
                             );
                           },
                           child: const Text('Retry'),
@@ -124,11 +123,10 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
     AdminTicketsData data,
     CustomSpacing spacing,
   ) {
-    final cubit = context.read<TicketsCubit>();
+    final bloc = context.read<TicketsBloc>();
 
     return CustomScrollView(
       slivers: [
-        // Header
         SliverToBoxAdapter(
           child: AdminTicketsHeader(
             totalCount: data.totalCount,
@@ -137,31 +135,23 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
             },
           ),
         ),
-
         SliverToBoxAdapter(child: SizedBox(height: spacing.xl)),
-
-        // Search and filters
         SliverToBoxAdapter(
           child: AdminTicketsFilters(
             searchController: _searchController,
-            cubit: cubit,
+            bloc: bloc,
           ),
         ),
-
         SliverToBoxAdapter(child: SizedBox(height: spacing.lg)),
-
-        // Tickets list
         SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: spacing.lg),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               final ticket = data.filteredTickets[index];
-              return AdminTicketCard(ticket: ticket, cubit: cubit);
+              return AdminTicketCard(ticket: ticket, bloc: bloc);
             }, childCount: data.filteredTickets.length),
           ),
         ),
-
-        // Bottom padding
         SliverToBoxAdapter(child: SizedBox(height: spacing.xl)),
       ],
     );

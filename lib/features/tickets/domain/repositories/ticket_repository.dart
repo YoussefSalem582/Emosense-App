@@ -1,4 +1,4 @@
-import '../models/ticket.dart';
+import '../entities/ticket.dart';
 
 /// Repository interface for ticket operations
 abstract class TicketRepository {

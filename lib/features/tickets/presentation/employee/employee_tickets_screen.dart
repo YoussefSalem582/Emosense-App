@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../../core/core.dart';
-import '../../../../core/di/dependency_injection.dart' as di;
-import '../../../cubit/tickets/tickets_cubit.dart';
 import 'widgets/review_video_filter_chips_widget.dart';
 
 class EmployeeTicketsScreen extends StatefulWidget {
@@ -158,11 +156,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     final theme = Theme.of(context);
     final customSpacing = theme.extension<CustomSpacing>()!;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => di.sl<TicketsCubit>()..loadTickets()),
-      ],
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
@@ -225,7 +219,6 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
             if (_showCreateTicketDialog) _buildCreateTicketDialog(),
           ],
         ),
-      ),
     );
   }
 

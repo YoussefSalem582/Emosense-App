@@ -1,4 +1,4 @@
-part of 'tickets_cubit.dart';
+part of 'tickets_bloc.dart';
 
 abstract class TicketsState extends Equatable {
   const TicketsState();
@@ -41,7 +41,6 @@ class TicketsError extends TicketsState {
   List<Object?> get props => [message];
 }
 
-// Data classes for both views
 class AdminTicketsData extends Equatable {
   final List<Map<String, dynamic>> allTickets;
   final List<Map<String, dynamic>> filteredTickets;

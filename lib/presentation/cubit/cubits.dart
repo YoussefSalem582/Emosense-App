@@ -13,9 +13,6 @@ export 'employee_performance/employee_performance_cubit.dart';
 // Admin Cubits
 export 'admin_dashboard/admin_dashboard_cubit.dart';
 
-// Unified Tickets Cubit
-export 'tickets/tickets_cubit.dart';
-
 // Core Cubits
 export 'user/user_cubit.dart';
 export 'analysis/analysis_cubit.dart';

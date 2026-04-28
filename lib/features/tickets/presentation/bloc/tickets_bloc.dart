@@ -1,21 +1,22 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/models/ticket.dart';
-import '../../../domain/usecases/ticket_usecases.dart';
-import '../../../domain/repositories/ticket_repository.dart';
-import '../../../core/usecases/usecase.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../domain/entities/ticket.dart';
+import '../../domain/repositories/ticket_repository.dart';
+import '../../domain/usecases/ticket_usecases.dart';
 
+part 'tickets_event.dart';
 part 'tickets_state.dart';
 
-class TicketsCubit extends Cubit<TicketsState> {
+class TicketsBloc extends Bloc<TicketsEvent, TicketsState> {
   final LoadTicketsUseCase _loadTicketsUseCase;
   final CreateTicketUseCase _createTicketUseCase;
   final UpdateTicketStatusUseCase _updateTicketStatusUseCase;
   final AssignTicketUseCase _assignTicketUseCase;
   final GetTicketStatisticsUseCase _getTicketStatisticsUseCase;
 
-  TicketsCubit({
+  TicketsBloc({
     required LoadTicketsUseCase loadTicketsUseCase,
     required CreateTicketUseCase createTicketUseCase,
     required UpdateTicketStatusUseCase updateTicketStatusUseCase,
@@ -26,89 +27,81 @@ class TicketsCubit extends Cubit<TicketsState> {
        _updateTicketStatusUseCase = updateTicketStatusUseCase,
        _assignTicketUseCase = assignTicketUseCase,
        _getTicketStatisticsUseCase = getTicketStatisticsUseCase,
-       super(const TicketsInitial());
+       super(const TicketsInitial()) {
+    on<TicketsLoadAllRequested>(_onLoadAll);
+    on<TicketsLoadEmployeeRequested>(_onLoadEmployee);
+    on<TicketsFilterChanged>(_onFilterChanged);
+    on<TicketsPriorityFilterChanged>(_onPriorityFilterChanged);
+    on<TicketsSearchQueryChanged>(_onSearchQueryChanged);
+    on<TicketsFilterIndexChanged>(_onFilterIndexChanged);
+    on<TicketsCreateRequested>(_onCreate);
+    on<TicketsStatusUpdateRequested>(_onStatusUpdate);
+    on<TicketsAssignRequested>(_onAssign);
+    on<TicketsStatisticsRequested>(_onStatistics);
+    on<TicketsPriorityUpdateRequested>(_onPriorityUpdate);
+  }
 
-  // Current filter state
   TicketFilter _currentFilter = TicketFilter.empty();
   TicketSortBy _currentSortBy = TicketSortBy.createdDate;
   bool _isAdminView = false;
-
-  // For legacy compatibility
   int _selectedFilterIndex = 0;
 
-  // Getters for backward compatibility
-  String get selectedFilter => _currentFilter.status?.displayName ?? 'all';
-  String get selectedPriority => _currentFilter.priority?.displayName ?? 'all';
+  String get selectedFilter =>
+      _currentFilter.status?.displayName ?? 'all';
+  String get selectedPriority =>
+      _currentFilter.priority?.displayName ?? 'all';
   String get searchQuery => _currentFilter.searchQuery;
   int get selectedFilterIndex => _selectedFilterIndex;
 
-  /// Load tickets with current filter
-  Future<void> loadAllTickets({bool isAdminView = false}) async {
-    _isAdminView = isAdminView;
-    emit(const TicketsLoading());
+  Future<void> _onLoadAll(
+    TicketsLoadAllRequested event,
+    Emitter<TicketsState> emit,
+  ) =>
+      _loadAllTickets(emit, isAdminView: event.isAdminView);
 
-    try {
-      // Adjust filter based on view type
-      final filter =
-          isAdminView
-              ? _currentFilter
-              : _currentFilter.copyWith(source: TicketSource.employee);
+  Future<void> _onLoadEmployee(
+    TicketsLoadEmployeeRequested event,
+    Emitter<TicketsState> emit,
+  ) =>
+      _loadAllTickets(emit, isAdminView: false);
 
-      final params = LoadTicketsParams(filter: filter, sortBy: _currentSortBy);
-
-      final result = await _loadTicketsUseCase(params);
-
-      result.fold((failure) => emit(TicketsError(failure.message)), (tickets) {
-        if (isAdminView) {
-          _emitAdminSuccess(tickets);
-        } else {
-          _emitEmployeeSuccess(tickets);
-        }
-      });
-    } catch (e) {
-      emit(TicketsError('Failed to load tickets: $e'));
-    }
-  }
-
-  /// Load tickets for employee view (backward compatibility)
-  Future<void> loadTickets() async {
-    await loadAllTickets(isAdminView: false);
-  }
-
-  /// Update filter and reload tickets
-  Future<void> updateFilter(String filter, {bool isAdminView = true}) async {
-    final status = filter == 'all' ? null : TicketStatus.fromString(filter);
+  Future<void> _onFilterChanged(
+    TicketsFilterChanged event,
+    Emitter<TicketsState> emit,
+  ) async {
+    final status =
+        event.filter == 'all' ? null : TicketStatus.fromString(event.filter);
     _currentFilter = _currentFilter.copyWith(status: status);
-    await loadAllTickets(isAdminView: isAdminView);
+    await _loadAllTickets(emit, isAdminView: event.isAdminView);
   }
 
-  /// Update priority filter and reload tickets
-  Future<void> updatePriorityFilter(
-    String priority, {
-    bool isAdminView = true,
-  }) async {
+  Future<void> _onPriorityFilterChanged(
+    TicketsPriorityFilterChanged event,
+    Emitter<TicketsState> emit,
+  ) async {
     final priorityEnum =
-        priority == 'all' ? null : TicketPriority.fromString(priority);
+        event.priority == 'all'
+            ? null
+            : TicketPriority.fromString(event.priority);
     _currentFilter = _currentFilter.copyWith(priority: priorityEnum);
-    await loadAllTickets(isAdminView: isAdminView);
+    await _loadAllTickets(emit, isAdminView: event.isAdminView);
   }
 
-  /// Update search query and reload tickets
-  Future<void> updateSearchQuery(
-    String query, {
-    bool isAdminView = true,
-  }) async {
-    _currentFilter = _currentFilter.copyWith(searchQuery: query);
-    await loadAllTickets(isAdminView: isAdminView);
+  Future<void> _onSearchQueryChanged(
+    TicketsSearchQueryChanged event,
+    Emitter<TicketsState> emit,
+  ) async {
+    _currentFilter = _currentFilter.copyWith(searchQuery: event.query);
+    await _loadAllTickets(emit, isAdminView: event.isAdminView);
   }
 
-  /// Update filter index (for backward compatibility)
-  Future<void> updateFilterIndex(int index, {bool isAdminView = true}) async {
-    _selectedFilterIndex = index;
-
-    // Map index to actual filter
+  Future<void> _onFilterIndexChanged(
+    TicketsFilterIndexChanged event,
+    Emitter<TicketsState> emit,
+  ) async {
+    _selectedFilterIndex = event.index;
     String filterName;
-    switch (index) {
+    switch (event.index) {
       case 0:
         filterName = 'all';
         break;
@@ -127,123 +120,154 @@ class TicketsCubit extends Cubit<TicketsState> {
       default:
         filterName = 'all';
     }
-
-    await updateFilter(filterName, isAdminView: isAdminView);
+    final status =
+        filterName == 'all' ? null : TicketStatus.fromString(filterName);
+    _currentFilter = _currentFilter.copyWith(status: status);
+    await _loadAllTickets(emit, isAdminView: event.isAdminView);
   }
 
-  /// Create a new ticket
-  Future<void> createTicket(Map<String, dynamic> ticketData) async {
+  Future<void> _onCreate(
+    TicketsCreateRequested event,
+    Emitter<TicketsState> emit,
+  ) async {
     emit(const TicketsLoading());
-
     try {
-      // Convert map to Ticket model
+      final data = event.ticketData;
       final ticket = Ticket(
-        id: '', // Will be generated by use case
-        title: ticketData['title'] ?? '',
-        description: ticketData['description'] ?? '',
+        id: '',
+        title: data['title'] ?? '',
+        description: data['description'] ?? '',
         status: TicketStatus.open,
-        priority: TicketPriority.fromString(ticketData['priority'] ?? 'Medium'),
+        priority: TicketPriority.fromString(data['priority'] ?? 'Medium'),
         source: TicketSource.employee,
-        customerName:
-            ticketData['customer'] ?? ticketData['customerName'] ?? '',
-        category: ticketData['category'] ?? 'General',
+        customerName: data['customer'] ?? data['customerName'] ?? '',
+        category: data['category'] ?? 'General',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
-        referenceUrl: ticketData['referenceUrl'],
+        referenceUrl: data['referenceUrl'],
       );
 
-      final params = CreateTicketParams(ticket: ticket);
-      final result = await _createTicketUseCase(params);
+      final result = await _createTicketUseCase(
+        CreateTicketParams(ticket: ticket),
+      );
 
-      result.fold((failure) => emit(TicketsError(failure.message)), (ticket) {
-        // Reload tickets after creation
-        loadAllTickets(isAdminView: _isAdminView);
-      });
+      result.fold(
+        (failure) => emit(TicketsError(failure.message)),
+        (_) => _loadAllTickets(emit, isAdminView: _isAdminView),
+      );
     } catch (e) {
       emit(TicketsError('Failed to create ticket: $e'));
     }
   }
 
-  /// Update ticket status
-  Future<void> updateTicketStatus(String ticketId, TicketStatus status) async {
+  Future<void> _onStatusUpdate(
+    TicketsStatusUpdateRequested event,
+    Emitter<TicketsState> emit,
+  ) async {
     emit(const TicketsLoading());
-
     try {
-      final params = UpdateTicketStatusParams(
-        ticketId: ticketId,
-        newStatus: status,
+      final result = await _updateTicketStatusUseCase(
+        UpdateTicketStatusParams(
+          ticketId: event.ticketId,
+          newStatus: event.status,
+        ),
       );
 
-      final result = await _updateTicketStatusUseCase(params);
-
-      result.fold((failure) => emit(TicketsError(failure.message)), (_) {
-        // Reload tickets after update
-        loadAllTickets(isAdminView: _isAdminView);
-      });
+      result.fold(
+        (failure) => emit(TicketsError(failure.message)),
+        (_) => _loadAllTickets(emit, isAdminView: _isAdminView),
+      );
     } catch (e) {
       emit(TicketsError('Failed to update ticket status: $e'));
     }
   }
 
-  /// Assign ticket to an employee
-  Future<void> assignTicket(String ticketId, String employeeId) async {
+  Future<void> _onAssign(
+    TicketsAssignRequested event,
+    Emitter<TicketsState> emit,
+  ) async {
     emit(const TicketsLoading());
-
     try {
-      final params = AssignTicketParams(
-        ticketId: ticketId,
-        assigneeId: employeeId,
+      final result = await _assignTicketUseCase(
+        AssignTicketParams(
+          ticketId: event.ticketId,
+          assigneeId: event.employeeId,
+        ),
       );
 
-      final result = await _assignTicketUseCase(params);
-
-      result.fold((failure) => emit(TicketsError(failure.message)), (_) {
-        // Reload tickets after assignment
-        loadAllTickets(isAdminView: _isAdminView);
-      });
+      result.fold(
+        (failure) => emit(TicketsError(failure.message)),
+        (_) => _loadAllTickets(emit, isAdminView: _isAdminView),
+      );
     } catch (e) {
       emit(TicketsError('Failed to assign ticket: $e'));
     }
   }
 
-  /// Get ticket statistics
-  Future<void> getTicketStatistics({bool isAdminView = true}) async {
+  Future<void> _onStatistics(
+    TicketsStatisticsRequested event,
+    Emitter<TicketsState> emit,
+  ) async {
     try {
       final result = await _getTicketStatisticsUseCase(const NoParams());
 
-      result.fold((failure) => emit(TicketsError(failure.message)), (
-        statistics,
-      ) {
-        if (isAdminView) {
-          _emitAdminStatistics(statistics);
-        } else {
-          _emitEmployeeStatistics(statistics);
-        }
-      });
+      result.fold(
+        (failure) => emit(TicketsError(failure.message)),
+        (statistics) {
+          if (event.isAdminView) {
+            _emitAdminStatistics(emit, statistics);
+          } else {
+            _emitEmployeeStatistics(emit, statistics);
+          }
+        },
+      );
     } catch (e) {
       emit(TicketsError('Failed to load statistics: $e'));
     }
   }
 
-  /// Update ticket priority
-  Future<void> updateTicketPriority(
-    String ticketId,
-    TicketPriority priority,
+  Future<void> _onPriorityUpdate(
+    TicketsPriorityUpdateRequested event,
+    Emitter<TicketsState> emit,
   ) async {
     emit(const TicketsLoading());
-
     try {
-      // For now, just reload tickets as the priority update functionality
-      // would need to be implemented in the repository layer
-      loadAllTickets(isAdminView: _isAdminView);
+      await _loadAllTickets(emit, isAdminView: _isAdminView);
     } catch (e) {
       emit(TicketsError('Failed to update ticket priority: $e'));
     }
   }
 
-  // Helper methods for emitting success states
-  void _emitAdminSuccess(List<Ticket> tickets) {
-    // Convert tickets to legacy format
+  Future<void> _loadAllTickets(
+    Emitter<TicketsState> emit, {
+    required bool isAdminView,
+  }) async {
+    _isAdminView = isAdminView;
+    emit(const TicketsLoading());
+
+    try {
+      final filter =
+          isAdminView
+              ? _currentFilter
+              : _currentFilter.copyWith(source: TicketSource.employee);
+
+      final params = LoadTicketsParams(filter: filter, sortBy: _currentSortBy);
+
+      final result = await _loadTicketsUseCase(params);
+
+      result.fold((failure) => emit(TicketsError(failure.message)), (tickets) {
+        if (isAdminView) {
+          _emitAdminSuccess(emit, tickets);
+        } else {
+          _emitEmployeeSuccess(emit, tickets);
+        }
+      });
+    } catch (e) {
+      emit(TicketsError('Failed to load tickets: $e'));
+    }
+  }
+
+  void _emitAdminSuccess(Emitter<TicketsState> emit, List<Ticket> tickets) {
     final allTickets = tickets.map((ticket) => ticket.toMap()).toList();
     final filteredTickets = _filterTickets(allTickets);
 
@@ -269,8 +293,7 @@ class TicketsCubit extends Cubit<TicketsState> {
     emit(TicketsSuccess.admin(data));
   }
 
-  void _emitEmployeeSuccess(List<Ticket> tickets) {
-    // Convert tickets to legacy format and filter for employee
+  void _emitEmployeeSuccess(Emitter<TicketsState> emit, List<Ticket> tickets) {
     final allTickets = tickets.map((ticket) => ticket.toMap()).toList();
 
     final data = EmployeeTicketsData(
@@ -286,7 +309,10 @@ class TicketsCubit extends Cubit<TicketsState> {
     emit(TicketsSuccess.employee(data));
   }
 
-  void _emitAdminStatistics(TicketStatistics statistics) {
+  void _emitAdminStatistics(
+    Emitter<TicketsState> emit,
+    TicketStatistics statistics,
+  ) {
     final data = AdminTicketsData(
       allTickets: [],
       filteredTickets: [],
@@ -296,8 +322,8 @@ class TicketsCubit extends Cubit<TicketsState> {
       resolvedCount: statistics.resolvedCount,
       closedCount: statistics.closedCount,
       highPriorityCount: statistics.highPriorityCount,
-      mediumPriorityCount: 0, // Not available in TicketStatistics
-      lowPriorityCount: 0, // Not available in TicketStatistics
+      mediumPriorityCount: 0,
+      lowPriorityCount: 0,
       criticalCount: statistics.criticalPriorityCount,
       recentTickets: [],
     );
@@ -305,7 +331,10 @@ class TicketsCubit extends Cubit<TicketsState> {
     emit(TicketsSuccess.admin(data));
   }
 
-  void _emitEmployeeStatistics(TicketStatistics statistics) {
+  void _emitEmployeeStatistics(
+    Emitter<TicketsState> emit,
+    TicketStatistics statistics,
+  ) {
     final data = EmployeeTicketsData(
       assignedTickets: [],
       recentTickets: [],
@@ -318,13 +347,11 @@ class TicketsCubit extends Cubit<TicketsState> {
     emit(TicketsSuccess.employee(data));
   }
 
-  // Helper method for filtering (backward compatibility)
   List<Map<String, dynamic>> _filterTickets(
     List<Map<String, dynamic>> tickets,
   ) {
     var filtered = tickets;
 
-    // Apply status filter
     if (_currentFilter.status != null) {
       filtered =
           filtered
@@ -335,18 +362,17 @@ class TicketsCubit extends Cubit<TicketsState> {
               .toList();
     }
 
-    // Apply priority filter
     if (_currentFilter.priority != null) {
       filtered =
           filtered
               .where(
                 (ticket) =>
-                    ticket['priority'] == _currentFilter.priority!.displayName,
+                    ticket['priority'] ==
+                    _currentFilter.priority!.displayName,
               )
               .toList();
     }
 
-    // Apply search filter
     if (_currentFilter.searchQuery.isNotEmpty) {
       filtered =
           filtered.where((ticket) {

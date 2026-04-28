@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../core/core.dart';
-import '../../../../../domain/models/ticket.dart';
-import '../../../../cubit/tickets/tickets_cubit.dart';
-import '../../../../widgets/dialogs/ticket_details_dialog.dart';
+import '../../../../../presentation/widgets/dialogs/ticket_details_dialog.dart';
+import '../../../domain/entities/ticket.dart';
+import '../../bloc/tickets_bloc.dart';
 
 class AdminTicketCard extends StatelessWidget {
   final Map<String, dynamic> ticket;
-  final TicketsCubit cubit;
+  final TicketsBloc bloc;
 
-  const AdminTicketCard({super.key, required this.ticket, required this.cubit});
+  const AdminTicketCard({super.key, required this.ticket, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -194,13 +195,13 @@ class AdminTicketCard extends StatelessWidget {
 
               switch (value) {
                 case 'assign':
-                  _showAssignDialog(context, ticket, cubit);
+                  _showAssignDialog(context, ticket, bloc);
                   break;
                 case 'status':
-                  _showStatusDialog(context, ticket, cubit);
+                  _showStatusDialog(context, ticket, bloc);
                   break;
                 case 'priority':
-                  _showPriorityDialog(context, ticket, cubit);
+                  _showPriorityDialog(context, ticket, bloc);
                   break;
               }
             },
@@ -336,7 +337,7 @@ class AdminTicketCard extends StatelessWidget {
 void _showAssignDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsCubit cubit,
+  TicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -353,7 +354,7 @@ void _showAssignDialog(
                 title: const Text('John Smith'),
                 subtitle: const Text('Senior Support'),
                 onTap: () {
-                  cubit.assignTicket(ticketId, 'John Smith');
+                  bloc.add(TicketsAssignRequested(ticketId, 'John Smith'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -361,7 +362,7 @@ void _showAssignDialog(
                 title: const Text('Sarah Johnson'),
                 subtitle: const Text('Technical Lead'),
                 onTap: () {
-                  cubit.assignTicket(ticketId, 'Sarah Johnson');
+                  bloc.add(TicketsAssignRequested(ticketId, 'Sarah Johnson'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -369,7 +370,7 @@ void _showAssignDialog(
                 title: const Text('Lisa Wong'),
                 subtitle: const Text('Customer Success'),
                 onTap: () {
-                  cubit.assignTicket(ticketId, 'Lisa Wong');
+                  bloc.add(TicketsAssignRequested(ticketId, 'Lisa Wong'));
                   Navigator.of(context).pop();
                 },
               ),
@@ -388,7 +389,7 @@ void _showAssignDialog(
 void _showStatusDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsCubit cubit,
+  TicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -404,21 +405,36 @@ void _showStatusDialog(
               ListTile(
                 title: const Text('Open'),
                 onTap: () {
-                  cubit.updateTicketStatus(ticketId, TicketStatus.open);
+                  bloc.add(
+                    TicketsStatusUpdateRequested(
+                      ticketId,
+                      TicketStatus.open,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
                 title: const Text('In Progress'),
                 onTap: () {
-                  cubit.updateTicketStatus(ticketId, TicketStatus.inProgress);
+                  bloc.add(
+                    TicketsStatusUpdateRequested(
+                      ticketId,
+                      TicketStatus.inProgress,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
                 title: const Text('Resolved'),
                 onTap: () {
-                  cubit.updateTicketStatus(ticketId, TicketStatus.resolved);
+                  bloc.add(
+                    TicketsStatusUpdateRequested(
+                      ticketId,
+                      TicketStatus.resolved,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
@@ -437,7 +453,7 @@ void _showStatusDialog(
 void _showPriorityDialog(
   BuildContext context,
   Map<String, dynamic> ticket,
-  TicketsCubit cubit,
+  TicketsBloc bloc,
 ) {
   final ticketId = ticket['id']?.toString();
   if (ticketId == null) return;
@@ -453,28 +469,48 @@ void _showPriorityDialog(
               ListTile(
                 title: const Text('Low'),
                 onTap: () {
-                  cubit.updateTicketPriority(ticketId, TicketPriority.low);
+                  bloc.add(
+                    TicketsPriorityUpdateRequested(
+                      ticketId,
+                      TicketPriority.low,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
                 title: const Text('Medium'),
                 onTap: () {
-                  cubit.updateTicketPriority(ticketId, TicketPriority.medium);
+                  bloc.add(
+                    TicketsPriorityUpdateRequested(
+                      ticketId,
+                      TicketPriority.medium,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
                 title: const Text('High'),
                 onTap: () {
-                  cubit.updateTicketPriority(ticketId, TicketPriority.high);
+                  bloc.add(
+                    TicketsPriorityUpdateRequested(
+                      ticketId,
+                      TicketPriority.high,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
               ListTile(
                 title: const Text('Critical'),
                 onTap: () {
-                  cubit.updateTicketPriority(ticketId, TicketPriority.critical);
+                  bloc.add(
+                    TicketsPriorityUpdateRequested(
+                      ticketId,
+                      TicketPriority.critical,
+                    ),
+                  );
                   Navigator.of(context).pop();
                 },
               ),

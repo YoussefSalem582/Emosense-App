@@ -1,6 +1,6 @@
-import '../../core/usecases/usecase.dart';
-import '../../core/errors/failures.dart';
-import '../models/ticket.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../../../core/errors/failures.dart';
+import '../entities/ticket.dart';
 import '../repositories/ticket_repository.dart';
 
 /// No parameters class for use cases without parameters
