@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/routing/app_router.dart';
 import 'widgets/onboarding.dart';
-import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
-import 'package:emosense_mobile/presentation/services/onboarding_preferences.dart';
-import 'package:emosense_mobile/presentation/models/onboarding_models.dart';
+import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/features/auth/presentation/services/onboarding_preferences.dart';
+import 'package:emosense_mobile/features/auth/presentation/models/onboarding_models.dart';
 
 /// Onboarding Screen with feature showcase and modern UI
 ///

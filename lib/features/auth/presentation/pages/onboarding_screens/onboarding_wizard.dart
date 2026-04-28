@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/constants/app_colors.dart';
 
 /// A comprehensive onboarding screen with step-by-step progress
 class OnboardingWizard extends StatefulWidget {
