@@ -12,7 +12,7 @@ import 'features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import 'features/auth/presentation/bloc/user_bloc.dart';
 import 'features/emotion/presentation/bloc/emotion_bloc.dart';
 import 'features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
-import 'features/employee/presentation/bloc/employee_dashboard_bloc.dart';
+import 'features/employee/dashboard/presentation/bloc/employee_dashboard_bloc.dart';
 import 'features/employee/presentation/bloc/employee_performance_bloc.dart';
 import 'core/network/connection_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/backend_connection_widget.dart';
