@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfileBasicStatsWidget extends StatelessWidget {
   final int ticketsResolved;
@@ -15,68 +17,50 @@ class ProfileBasicStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.bar_chart,
+            title: 'Activity Overview',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.bar_chart, color: AppColors.primary),
-                const SizedBox(width: 8),
-                Text(
-                  'Activity Overview',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: _buildStatItem(
+                  'Tickets Resolved',
+                  ticketsResolved.toString(),
+                  Icons.check_circle,
+                  AppColors.primary,
                 ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildStatItem(
-                    'Tickets Resolved',
-                    ticketsResolved.toString(),
-                    Icons.check_circle,
-                    AppColors.primary,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: _buildStatItem(
-                    'Customer Rating',
-                    customerRating.toString(),
-                    Icons.star,
-                    AppColors.warning,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            Center(
-              child: _buildStatItem(
-                'Avg Response Time',
-                responseTime,
-                Icons.timer,
-                AppColors.info,
               ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: _buildStatItem(
+                  'Customer Rating',
+                  customerRating.toString(),
+                  Icons.star,
+                  AppColors.warning,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Center(
+            child: _buildStatItem(
+              'Avg Response Time',
+              responseTime,
+              Icons.timer,
+              AppColors.info,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

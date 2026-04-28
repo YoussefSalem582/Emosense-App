@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfileActionsWidget extends StatelessWidget {
   final List<ProfileAction> actions;
@@ -13,86 +15,65 @@ class ProfileActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.admin_panel_settings_outlined,
+            title: 'Actions',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.admin_panel_settings_outlined,
-                  color: AppColors.primary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'Actions',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
+          const SizedBox(height: 16),
+          ...actions.map(
+            (action) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: _buildActionButton(context, action),
             ),
-            const SizedBox(height: 16),
-            ...actions.map(
-              (action) => Padding(
-                padding: const EdgeInsets.only(bottom: 8),
-                child: _buildActionButton(context, action),
-              ),
-            ),
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      AppColors.error,
-                      AppColors.error.withValues(alpha: 0.8),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.error.withValues(alpha: 0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppColors.error,
+                    AppColors.error.withValues(alpha: 0.8),
                   ],
                 ),
-                child: ElevatedButton.icon(
-                  onPressed: onSignOut,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.white,
-                    elevation: 0,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.error.withValues(alpha: 0.3),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
                   ),
-                  icon: const Icon(Icons.logout),
-                  label: const Text(
-                    'Sign Out',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ],
+              ),
+              child: ElevatedButton.icon(
+                onPressed: onSignOut,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.white,
+                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
+                ),
+                icon: const Icon(Icons.logout),
+                label: const Text(
+                  'Sign Out',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

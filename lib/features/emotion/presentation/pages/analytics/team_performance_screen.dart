@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/flat_toolbar_surface.dart';
 
 class TeamPerformanceScreen extends StatefulWidget {
   const TeamPerformanceScreen({super.key});
@@ -57,18 +58,7 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
   }
 
   Widget _buildTeamHeader() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return FlatToolbarSurface(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

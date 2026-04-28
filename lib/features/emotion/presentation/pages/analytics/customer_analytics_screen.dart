@@ -66,18 +66,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
   }
 
   Widget _buildAnalyticsHeader() {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+    return FlatToolbarSurface(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

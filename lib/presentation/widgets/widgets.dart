@@ -10,6 +10,7 @@ export 'common/animated_loading_indicator.dart';
 export 'common/surface_section_card.dart';
 export 'common/section_title_row.dart';
 export 'common/profile_section_card.dart';
+export 'common/flat_toolbar_surface.dart';
 export 'app_bars/app_bar.dart';
 export 'auth/auth.dart';
 export 'dialogs/dialogs.dart';
