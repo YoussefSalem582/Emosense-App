@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/shared/presentation/common_screens.dart';
-import 'package:emosense_mobile/features/auth/onboarding/presentation/pages/onboarding_wizard.dart';
+
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/features/auth/onboarding/presentation/pages/onboarding_screen.dart';
+import 'package:emosense_mobile/shared/presentation/common_screens.dart';
 
 /// Example implementation showing how to use the enhanced screen components
 class ExampleScreensDemo extends StatefulWidget {
@@ -39,9 +40,9 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
             onTap: () => _showEmptyStateScreen(),
           ),
           _buildDemoCard(
-            title: 'Onboarding Wizard',
-            description: 'Step-by-step onboarding with animations',
-            onTap: () => _showOnboardingWizard(),
+            title: 'Onboarding',
+            description: 'App onboarding carousel',
+            onTap: () => _showOnboarding(),
           ),
           _buildDemoCard(
             title: 'Settings Screen',
@@ -131,41 +132,11 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     );
   }
 
-  void _showOnboardingWizard() {
+  void _showOnboarding() {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:
-            (context) => OnboardingWizard(
-              steps: [
-                const OnboardingStep(
-                  title: 'Welcome to EmoSense',
-                  description:
-                      'Discover the power of emotional intelligence with our advanced AI platform.',
-                  icon: Icons.psychology,
-                  primaryColor: AppColors.primary,
-                  secondaryColor: AppColors.accent,
-                ),
-                const OnboardingStep(
-                  title: 'Analyze Emotions',
-                  description:
-                      'Get deep insights into emotions from text, voice, and video content.',
-                  icon: Icons.analytics,
-                  primaryColor: AppColors.accent,
-                  secondaryColor: AppColors.secondary,
-                ),
-                const OnboardingStep(
-                  title: 'Make Better Decisions',
-                  description:
-                      'Use emotional insights to improve customer experiences and business outcomes.',
-                  icon: Icons.trending_up,
-                  primaryColor: AppColors.success,
-                  secondaryColor: AppColors.primary,
-                ),
-              ],
-              onComplete: () => Navigator.pop(context),
-              onSkip: () => Navigator.pop(context),
-            ),
+        builder: (context) => const OnboardingScreen(),
       ),
     );
   }
