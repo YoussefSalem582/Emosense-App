@@ -1,14 +1,14 @@
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../entities/ticket.dart';
-import '../repositories/ticket_repository.dart';
+import '../repositories/ticket_ports.dart';
 import 'ticket_failures.dart';
 
 /// Use case for creating a ticket.
 class CreateTicketUseCase implements UseCase<Ticket, CreateTicketParams> {
-  CreateTicketUseCase(this.repository);
+  CreateTicketUseCase(this.creator);
 
-  final TicketRepository repository;
+  final TicketCreator creator;
 
   @override
   Future<Either<Failure, Ticket>> call(CreateTicketParams params) async {
@@ -24,7 +24,7 @@ class CreateTicketUseCase implements UseCase<Ticket, CreateTicketParams> {
         updatedAt: DateTime.now(),
       );
 
-      final createdTicket = await repository.createTicket(ticket);
+      final createdTicket = await creator.createTicket(ticket);
       return eitherRight(createdTicket);
     } catch (e) {
       return eitherLeft(TicketFailure(e.toString()));

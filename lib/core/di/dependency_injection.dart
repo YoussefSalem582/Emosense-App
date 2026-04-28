@@ -14,11 +14,17 @@ import '../../features/tickets/shared/data/datasources/mock_ticket_local_data_so
 import '../../features/tickets/shared/data/datasources/ticket_local_data_source.dart';
 import '../../features/tickets/shared/data/repositories/ticket_repository_impl.dart';
 import '../../features/tickets/shared/domain/repositories/ticket_repository.dart';
-import '../../features/tickets/shared/domain/usecases/assign_ticket_usecase.dart';
-import '../../features/tickets/shared/domain/usecases/create_ticket_usecase.dart';
-import '../../features/tickets/shared/domain/usecases/get_ticket_statistics_usecase.dart';
-import '../../features/tickets/shared/domain/usecases/load_tickets_usecase.dart';
-import '../../features/tickets/shared/domain/usecases/update_ticket_status_usecase.dart';
+import '../../features/tickets/admin/data/repositories/admin_tickets_repository_impl.dart';
+import '../../features/tickets/admin/domain/repositories/admin_tickets_repository.dart';
+import '../../features/tickets/admin/domain/usecases/admin_create_ticket_usecase.dart';
+import '../../features/tickets/admin/domain/usecases/admin_load_tickets_usecase.dart';
+import '../../features/tickets/admin/domain/usecases/assign_ticket_usecase.dart';
+import '../../features/tickets/admin/domain/usecases/get_ticket_statistics_usecase.dart';
+import '../../features/tickets/admin/domain/usecases/update_ticket_status_usecase.dart';
+import '../../features/tickets/employee/data/repositories/employee_tickets_repository_impl.dart';
+import '../../features/tickets/employee/domain/repositories/employee_tickets_repository.dart';
+import '../../features/tickets/employee/domain/usecases/employee_create_ticket_usecase.dart';
+import '../../features/tickets/employee/domain/usecases/employee_load_tickets_usecase.dart';
 import '../../features/tickets/admin/presentation/bloc/admin_tickets_bloc.dart';
 import '../../features/tickets/employee/presentation/bloc/employee_tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
@@ -72,30 +78,50 @@ void _initTickets() {
   );
   sl.registerLazySingleton<TicketRepository>(() => TicketRepositoryImpl(sl()));
 
-  sl.registerFactory<LoadTicketsUseCase>(() => LoadTicketsUseCase(sl()));
-  sl.registerFactory<CreateTicketUseCase>(() => CreateTicketUseCase(sl()));
-  sl.registerFactory<UpdateTicketStatusUseCase>(
-    () => UpdateTicketStatusUseCase(sl()),
+  sl.registerLazySingleton<AdminTicketsRepository>(
+    () => AdminTicketsRepositoryImpl(sl<TicketRepository>()),
   );
-  sl.registerFactory<AssignTicketUseCase>(() => AssignTicketUseCase(sl()));
+  sl.registerLazySingleton<EmployeeTicketsRepository>(
+    () => EmployeeTicketsRepositoryImpl(sl<TicketRepository>()),
+  );
+
+  sl.registerFactory<AdminLoadTicketsUseCase>(
+    () => AdminLoadTicketsUseCase(sl<AdminTicketsRepository>()),
+  );
+  sl.registerFactory<EmployeeLoadTicketsUseCase>(
+    () => EmployeeLoadTicketsUseCase(sl<EmployeeTicketsRepository>()),
+  );
+  sl.registerFactory<AdminCreateTicketUseCase>(
+    () => AdminCreateTicketUseCase(sl<AdminTicketsRepository>()),
+  );
+  sl.registerFactory<EmployeeCreateTicketUseCase>(
+    () => EmployeeCreateTicketUseCase(sl<EmployeeTicketsRepository>()),
+  );
+
+  sl.registerFactory<UpdateTicketStatusUseCase>(
+    () => UpdateTicketStatusUseCase(sl<AdminTicketsRepository>()),
+  );
+  sl.registerFactory<AssignTicketUseCase>(
+    () => AssignTicketUseCase(sl<AdminTicketsRepository>()),
+  );
   sl.registerFactory<GetTicketStatisticsUseCase>(
-    () => GetTicketStatisticsUseCase(sl()),
+    () => GetTicketStatisticsUseCase(sl<AdminTicketsRepository>()),
   );
 
   sl.registerFactory<AdminTicketsBloc>(
     () => AdminTicketsBloc(
-      loadTicketsUseCase: sl(),
-      createTicketUseCase: sl(),
-      updateTicketStatusUseCase: sl(),
-      assignTicketUseCase: sl(),
-      getTicketStatisticsUseCase: sl(),
+      loadTicketsUseCase: sl<AdminLoadTicketsUseCase>(),
+      createTicketUseCase: sl<AdminCreateTicketUseCase>(),
+      updateTicketStatusUseCase: sl<UpdateTicketStatusUseCase>(),
+      assignTicketUseCase: sl<AssignTicketUseCase>(),
+      getTicketStatisticsUseCase: sl<GetTicketStatisticsUseCase>(),
     ),
   );
 
   sl.registerFactory<EmployeeTicketsBloc>(
     () => EmployeeTicketsBloc(
-      loadTicketsUseCase: sl(),
-      createTicketUseCase: sl(),
+      loadTicketsUseCase: sl<EmployeeLoadTicketsUseCase>(),
+      createTicketUseCase: sl<EmployeeCreateTicketUseCase>(),
     ),
   );
 }

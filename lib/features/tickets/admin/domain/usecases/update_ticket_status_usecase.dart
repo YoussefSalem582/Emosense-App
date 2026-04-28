@@ -1,15 +1,16 @@
-import '../../../../../core/errors/failures.dart';
-import '../../../../../core/usecases/usecase.dart';
-import '../entities/ticket.dart';
-import '../repositories/ticket_repository.dart';
-import 'ticket_failures.dart';
+import 'package:emosense_mobile/core/errors/failures.dart';
+import 'package:emosense_mobile/core/usecases/usecase.dart';
+import 'package:emosense_mobile/features/tickets/shared/domain/entities/ticket.dart';
+import 'package:emosense_mobile/features/tickets/shared/domain/usecases/ticket_failures.dart';
 
-/// Use case for updating ticket status.
+import '../repositories/admin_tickets_repository.dart';
+
+/// Use case for updating ticket status (admin flow).
 class UpdateTicketStatusUseCase
     implements UseCase<Ticket, UpdateTicketStatusParams> {
   UpdateTicketStatusUseCase(this.repository);
 
-  final TicketRepository repository;
+  final AdminTicketsRepository repository;
 
   @override
   Future<Either<Failure, Ticket>> call(UpdateTicketStatusParams params) async {

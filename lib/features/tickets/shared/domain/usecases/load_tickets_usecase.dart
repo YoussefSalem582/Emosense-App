@@ -1,19 +1,19 @@
 import '../../../../../core/errors/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../entities/ticket.dart';
-import '../repositories/ticket_repository.dart';
+import '../repositories/ticket_ports.dart';
 import 'ticket_failures.dart';
 
 /// Use case for loading tickets with filtering.
 class LoadTicketsUseCase implements UseCase<List<Ticket>, LoadTicketsParams> {
-  LoadTicketsUseCase(this.repository);
+  LoadTicketsUseCase(this.reader);
 
-  final TicketRepository repository;
+  final TicketListReader reader;
 
   @override
   Future<Either<Failure, List<Ticket>>> call(LoadTicketsParams params) async {
     try {
-      final tickets = await repository.getTicketsByFilter(params.filter);
+      final tickets = await reader.getTicketsByFilter(params.filter);
 
       final sortedTickets = _sortTickets(tickets, params.sortBy);
       final paginatedTickets = _paginateTickets(

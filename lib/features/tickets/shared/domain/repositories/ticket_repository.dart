@@ -1,17 +1,20 @@
 import '../entities/ticket.dart';
+import 'ticket_ports.dart';
 
 /// Repository interface for ticket operations
-abstract class TicketRepository {
+abstract class TicketRepository implements TicketListReader, TicketCreator {
   /// Get all tickets
   Future<List<Ticket>> getAllTickets();
 
   /// Get tickets by filter
+  @override
   Future<List<Ticket>> getTicketsByFilter(TicketFilter filter);
 
   /// Get ticket by ID
   Future<Ticket?> getTicketById(String id);
 
   /// Create a new ticket
+  @override
   Future<Ticket> createTicket(Ticket ticket);
 
   /// Update an existing ticket

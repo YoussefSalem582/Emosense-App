@@ -4,12 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/usecases/usecase.dart';
 import '../../../shared/domain/entities/ticket.dart';
 import '../../../shared/domain/repositories/ticket_repository.dart';
-import '../../../shared/domain/usecases/assign_ticket_usecase.dart';
 import '../../../shared/domain/usecases/create_ticket_usecase.dart';
-import '../../../shared/domain/usecases/get_ticket_statistics_usecase.dart';
 import '../../../shared/domain/usecases/load_tickets_usecase.dart';
 import '../../../shared/domain/usecases/ticket_no_params.dart';
-import '../../../shared/domain/usecases/update_ticket_status_usecase.dart';
+import '../../domain/usecases/admin_create_ticket_usecase.dart';
+import '../../domain/usecases/admin_load_tickets_usecase.dart';
+import '../../domain/usecases/assign_ticket_usecase.dart';
+import '../../domain/usecases/get_ticket_statistics_usecase.dart';
+import '../../domain/usecases/update_ticket_status_usecase.dart';
 import '../../../shared/presentation/models/ticket_ui_models.dart';
 
 part 'admin_tickets_event.dart';
@@ -18,8 +20,8 @@ part 'admin_tickets_state.dart';
 /// Manages ticket list CRUD/filtering for admin screens.
 class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
   AdminTicketsBloc({
-    required LoadTicketsUseCase loadTicketsUseCase,
-    required CreateTicketUseCase createTicketUseCase,
+    required AdminLoadTicketsUseCase loadTicketsUseCase,
+    required AdminCreateTicketUseCase createTicketUseCase,
     required UpdateTicketStatusUseCase updateTicketStatusUseCase,
     required AssignTicketUseCase assignTicketUseCase,
     required GetTicketStatisticsUseCase getTicketStatisticsUseCase,
@@ -41,8 +43,8 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
     on<AdminTicketsPriorityUpdateRequested>(_onPriorityUpdate);
   }
 
-  final LoadTicketsUseCase _loadTicketsUseCase;
-  final CreateTicketUseCase _createTicketUseCase;
+  final AdminLoadTicketsUseCase _loadTicketsUseCase;
+  final AdminCreateTicketUseCase _createTicketUseCase;
   final UpdateTicketStatusUseCase _updateTicketStatusUseCase;
   final AssignTicketUseCase _assignTicketUseCase;
   final GetTicketStatisticsUseCase _getTicketStatisticsUseCase;

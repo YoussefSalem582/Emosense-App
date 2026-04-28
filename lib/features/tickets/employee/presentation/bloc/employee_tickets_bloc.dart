@@ -5,6 +5,8 @@ import 'package:emosense_mobile/core/usecases/usecase.dart';
 import '../../../shared/domain/entities/ticket.dart';
 import '../../../shared/domain/usecases/create_ticket_usecase.dart';
 import '../../../shared/domain/usecases/load_tickets_usecase.dart';
+import '../../domain/usecases/employee_create_ticket_usecase.dart';
+import '../../domain/usecases/employee_load_tickets_usecase.dart';
 import '../../../shared/presentation/models/ticket_ui_models.dart';
 
 part 'employee_tickets_event.dart';
@@ -13,8 +15,8 @@ part 'employee_tickets_state.dart';
 /// Manages ticket lists for employee screens (filters to [TicketSource.employee]).
 class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsState> {
   EmployeeTicketsBloc({
-    required LoadTicketsUseCase loadTicketsUseCase,
-    required CreateTicketUseCase createTicketUseCase,
+    required EmployeeLoadTicketsUseCase loadTicketsUseCase,
+    required EmployeeCreateTicketUseCase createTicketUseCase,
   }) : _loadTicketsUseCase = loadTicketsUseCase,
        _createTicketUseCase = createTicketUseCase,
        super(const EmployeeTicketsInitial()) {
@@ -22,8 +24,8 @@ class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsStat
     on<EmployeeTicketsCreateRequested>(_onCreate);
   }
 
-  final LoadTicketsUseCase _loadTicketsUseCase;
-  final CreateTicketUseCase _createTicketUseCase;
+  final EmployeeLoadTicketsUseCase _loadTicketsUseCase;
+  final EmployeeCreateTicketUseCase _createTicketUseCase;
 
   Future<void> _onLoad(
     EmployeeTicketsLoadRequested event,
