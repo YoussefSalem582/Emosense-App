@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../../models/text_analysis_models.dart';
+import '../common/section_title_row.dart';
+import '../common/surface_section_card.dart';
 
 class AnalysisQuickActionsWidget extends StatelessWidget {
   final List<AnalysisQuickAction> actions;
@@ -12,35 +14,19 @@ class AnalysisQuickActionsWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final customSpacing = theme.extension<CustomSpacing>()!;
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.lg),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.flash_on, color: AppColors.primary, size: 24),
-              SizedBox(width: customSpacing.sm),
-              Text(
-                'Quick Actions',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
+          AppSectionTitleRow(
+            icon: Icons.flash_on,
+            title: 'Quick Actions',
+            titleStyle: theme.textTheme.titleLarge?.copyWith(
+              color: AppColors.textPrimary,
+              fontWeight: FontWeight.w700,
+            ),
           ),
           SizedBox(height: customSpacing.md),
           GridView.builder(

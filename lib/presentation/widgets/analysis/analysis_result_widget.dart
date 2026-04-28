@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../common/surface_section_card.dart';
 
 class AnalysisResultWidget extends StatefulWidget {
   final Map<String, dynamic>? result;
@@ -78,20 +79,10 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
       opacity: _fadeAnimation,
       child: SlideTransition(
         position: _slideAnimation,
-        child: Container(
+        child: SurfaceSectionCard(
           margin: EdgeInsets.all(customSpacing.md),
           padding: EdgeInsets.all(customSpacing.lg),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 8),
-              ),
-            ],
-          ),
+          elevation: SurfaceElevation.result,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

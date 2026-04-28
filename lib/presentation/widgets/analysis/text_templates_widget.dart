@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../common/surface_section_card.dart';
 
 class TextTemplatesWidget extends StatelessWidget {
   final List<TextTemplate> templates;
@@ -66,20 +67,10 @@ class TextTemplatesWidget extends StatelessWidget {
             ? groupedTemplates[selectedCategory] ?? []
             : templates;
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.lg),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+      elevation: SurfaceElevation.textPanel,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

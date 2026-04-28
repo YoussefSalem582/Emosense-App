@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../common/surface_section_card.dart';
 
 /// Widget for selecting analysis type and settings
 ///
@@ -24,20 +25,10 @@ class TextAnalysisSettingsWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final customSpacing = theme.extension<CustomSpacing>()!;
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.md),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+      elevation: SurfaceElevation.settings,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

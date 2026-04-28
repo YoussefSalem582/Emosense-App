@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../common/surface_section_card.dart';
 
 /// Widget specifically for displaying text analysis results
 class TextAnalysisResultWidget extends StatelessWidget {
@@ -33,20 +34,10 @@ class TextAnalysisResultWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.lg),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+      elevation: SurfaceElevation.textPanel,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -61,20 +52,10 @@ class TextAnalysisResultWidget extends StatelessWidget {
   }
 
   Widget _buildLoadingState(ThemeData theme, CustomSpacing spacing) {
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(spacing.md),
       padding: EdgeInsets.all(spacing.xl),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
+      elevation: SurfaceElevation.textPanel,
       child: Column(
         children: [
           const CircularProgressIndicator(

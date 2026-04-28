@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
 import '../../models/text_analysis_models.dart';
+import '../common/section_title_row.dart';
+import '../common/surface_section_card.dart';
 
 class AnalysisHistoryWidget extends StatelessWidget {
   final List<AnalysisHistoryItem> historyItems;
@@ -23,44 +25,29 @@ class AnalysisHistoryWidget extends StatelessWidget {
       return _buildEmptyState(theme, customSpacing);
     }
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.lg),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.history, color: AppColors.primary, size: 24),
-              SizedBox(width: customSpacing.sm),
-              Text(
-                'Recent Analysis',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              const Spacer(),
-              if (onViewAll != null)
-                TextButton(
-                  onPressed: onViewAll,
-                  child: Text(
-                    'View All',
-                    style: TextStyle(color: AppColors.primary),
-                  ),
-                ),
-            ],
+          AppSectionTitleRow(
+            icon: Icons.history,
+            title: 'Recent Analysis',
+            titleStyle: theme.textTheme.titleLarge?.copyWith(
+              color: AppColors.textPrimary,
+              fontWeight: FontWeight.w700,
+            ),
+            trailing:
+                onViewAll != null
+                    ? TextButton(
+                      onPressed: onViewAll,
+                      child: const Text(
+                        'View All',
+                        style: TextStyle(color: AppColors.primary),
+                      ),
+                    )
+                    : null,
           ),
           SizedBox(height: customSpacing.md),
           ...historyItems
@@ -72,20 +59,9 @@ class AnalysisHistoryWidget extends StatelessWidget {
   }
 
   Widget _buildEmptyState(ThemeData theme, CustomSpacing spacing) {
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.all(spacing.md),
       padding: EdgeInsets.all(spacing.xl),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 15,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
       child: Column(
         children: [
           Icon(
