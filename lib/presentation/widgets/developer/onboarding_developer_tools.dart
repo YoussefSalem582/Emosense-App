@@ -4,7 +4,7 @@ import '../../services/onboarding_preferences.dart';
 /// Developer utility widget for testing onboarding flow
 /// This widget provides easy access to reset onboarding status for testing purposes
 class OnboardingDeveloperTools extends StatefulWidget {
-  const OnboardingDeveloperTools({Key? key}) : super(key: key);
+  const OnboardingDeveloperTools({super.key});
 
   @override
   State<OnboardingDeveloperTools> createState() =>

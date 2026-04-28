@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
+
 import '../../../core/core.dart';
 import 'analytics/analytics_header.dart';
 import 'analytics/metrics_grid.dart';
 import 'analytics/performance_trends_chart.dart';
 import 'analytics/detailed_analytics.dart';
 import 'analytics/goals_and_targets.dart';
-import '../../cubit/employee_analytics/employee_analytics_cubit.dart';
 
 class AnalyticsSection extends StatefulWidget {
   final ThemeData theme;
@@ -30,6 +31,7 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
   late Animation<double> _cardAnimation;
 
   int _selectedMetricIndex = 0;
+  bool _analyticsFetchRequested = false;
 
   @override
   void initState() {
@@ -57,6 +59,15 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_analyticsFetchRequested) {
+      _analyticsFetchRequested = true;
+      context.read<EmployeeAnalyticsBloc>().add(const EmployeeAnalyticsFetched());
+    }
+  }
+
+  @override
   void dispose() {
     _chartAnimationController.dispose();
     _cardAnimationController.dispose();
@@ -65,31 +76,31 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => EmployeeAnalyticsCubit()..loadAnalytics(),
-      child: BlocBuilder<EmployeeAnalyticsCubit, EmployeeAnalyticsState>(
-        builder: (context, state) {
-          if (state is EmployeeAnalyticsLoading) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return BlocBuilder<EmployeeAnalyticsBloc, EmployeeAnalyticsState>(
+      builder: (context, state) {
+        if (state is EmployeeAnalyticsLoading ||
+            state is EmployeeAnalyticsInitial) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-          if (state is EmployeeAnalyticsError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('Error: ${state.message}'),
-                  ElevatedButton(
-                    onPressed: () =>
-                        context.read<EmployeeAnalyticsCubit>().loadAnalytics(),
-                    child: const Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          }
+        if (state is EmployeeAnalyticsError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Error: ${state.message}'),
+                ElevatedButton(
+                  onPressed: () => context.read<EmployeeAnalyticsBloc>().add(
+                        const EmployeeAnalyticsFetched(),
+                      ),
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          );
+        }
 
-          return SingleChildScrollView(
+        return SingleChildScrollView(
             padding: EdgeInsets.all(widget.customSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,8 +163,7 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
               ],
             ),
           );
-        },
-      ),
+      },
     );
   }
 }

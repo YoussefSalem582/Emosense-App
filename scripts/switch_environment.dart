@@ -8,14 +8,16 @@
 ///
 /// This script copies the appropriate environment file to .env
 /// so the app loads the correct configuration.
+library;
 
+import 'dart:developer' show log;
 import 'dart:io';
 
 void main(List<String> arguments) {
   if (arguments.isEmpty) {
-    print('❌ Error: Please specify an environment');
-    print('Usage: dart scripts/switch_environment.dart <environment>');
-    print('Available environments: development, production');
+    log('❌ Error: Please specify an environment', name: 'switch_environment');
+    log('Usage: dart scripts/switch_environment.dart <environment>', name: 'switch_environment');
+    log('Available environments: development, production', name: 'switch_environment');
     exit(1);
   }
 
@@ -23,17 +25,17 @@ void main(List<String> arguments) {
   final validEnvironments = ['development', 'production'];
 
   if (!validEnvironments.contains(environment)) {
-    print('❌ Error: Invalid environment "$environment"');
-    print('Available environments: ${validEnvironments.join(', ')}');
+    log('❌ Error: Invalid environment "$environment"', name: 'switch_environment');
+    log('Available environments: ${validEnvironments.join(', ')}', name: 'switch_environment');
     exit(1);
   }
 
   try {
     switchEnvironment(environment);
-    print('✅ Successfully switched to $environment environment');
-    print('🔄 You may need to restart your Flutter app');
+    log('✅ Successfully switched to $environment environment', name: 'switch_environment');
+    log('🔄 You may need to restart your Flutter app', name: 'switch_environment');
   } catch (e) {
-    print('❌ Error switching environment: $e');
+    log('❌ Error switching environment: $e', name: 'switch_environment');
     exit(1);
   }
 }
@@ -51,7 +53,7 @@ void switchEnvironment(String environment) {
   if (targetFile.existsSync()) {
     final backupFile = File('.env.backup');
     targetFile.copySync(backupFile.path);
-    print('📄 Created backup: .env.backup');
+    log('📄 Created backup: .env.backup', name: 'switch_environment');
   }
 
   // Copy environment file to .env
@@ -79,22 +81,22 @@ void displayEnvironmentSummary(String environment) {
     }
   }
 
-  print('\n📋 Environment Configuration Summary:');
-  print('🌍 Environment: $environment');
-  print('🔗 API URL: $apiBaseUrl');
-  print('🎭 Mock Data: $enableMockData');
-  print('🐛 Debug Mode: $debugMode');
+  log('\n📋 Environment Configuration Summary:', name: 'switch_environment');
+  log('🌍 Environment: $environment', name: 'switch_environment');
+  log('🔗 API URL: $apiBaseUrl', name: 'switch_environment');
+  log('🎭 Mock Data: $enableMockData', name: 'switch_environment');
+  log('🐛 Debug Mode: $debugMode', name: 'switch_environment');
 
   if (environment == 'production') {
-    print('\n⚠️  Production Environment Notes:');
-    print('   • Backend deployed on Render');
-    print('   • Cold starts may take 30-60 seconds');
-    print('   • Mock data is disabled');
-    print('   • Debug logging is disabled');
+    log('\n⚠️  Production Environment Notes:', name: 'switch_environment');
+    log('   • Backend deployed on Render', name: 'switch_environment');
+    log('   • Cold starts may take 30-60 seconds', name: 'switch_environment');
+    log('   • Mock data is disabled', name: 'switch_environment');
+    log('   • Debug logging is disabled', name: 'switch_environment');
   } else {
-    print('\n🛠️  Development Environment Notes:');
-    print('   • Local backend expected at localhost:8002');
-    print('   • Mock data enabled as fallback');
-    print('   • Debug logging enabled');
+    log('\n🛠️  Development Environment Notes:', name: 'switch_environment');
+    log('   • Local backend expected at localhost:8002', name: 'switch_environment');
+    log('   • Mock data enabled as fallback', name: 'switch_environment');
+    log('   • Debug logging enabled', name: 'switch_environment');
   }
 }

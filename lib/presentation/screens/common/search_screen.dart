@@ -40,7 +40,7 @@ class _SearchScreenState extends State<SearchScreen>
   List<dynamic> _results = [];
   bool _isLoading = false;
   bool _hasSearched = false;
-  Map<String, dynamic> _appliedFilters = {};
+  final Map<String, dynamic> _appliedFilters = {};
 
   @override
   void initState() {

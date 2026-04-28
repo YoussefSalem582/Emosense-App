@@ -103,8 +103,9 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
     );
 
     // Simulate loading completion
+    final navigator = Navigator.of(context);
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pop(context);
+      navigator.pop();
     });
   }
 
@@ -245,7 +246,7 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
               margin: const EdgeInsets.only(bottom: 8),
               child: ListTile(
                 title: Text(item.toString()),
-                subtitle: Text('Description for ${item}'),
+                subtitle: Text('Description for $item'),
                 leading: const Icon(Icons.search),
                 onTap: () {},
               ),

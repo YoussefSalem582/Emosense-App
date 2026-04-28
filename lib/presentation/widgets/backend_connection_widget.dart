@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BackendConnectionWidget extends StatelessWidget {
   final Widget child;
   
-  const BackendConnectionWidget({Key? key, required this.child}) : super(key: key);
+  const BackendConnectionWidget({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
