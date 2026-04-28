@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../../models/text_analysis_models.dart';
 
 class AnalysisQuickActionsWidget extends StatelessWidget {
   final List<AnalysisQuickAction> actions;
@@ -122,20 +123,4 @@ class AnalysisQuickActionsWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-class AnalysisQuickAction {
-  final String title;
-  final String description;
-  final IconData icon;
-  final Color color;
-  final VoidCallback onTap;
-
-  const AnalysisQuickAction({
-    required this.title,
-    required this.description,
-    required this.icon,
-    required this.color,
-    required this.onTap,
-  });
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
-import 'analysis_quick_actions_widget.dart';
-import 'analysis_history_widget.dart';
+import '../../models/text_analysis_models.dart';
 
 /// Constants for the Enhanced Text Analysis screen
 ///

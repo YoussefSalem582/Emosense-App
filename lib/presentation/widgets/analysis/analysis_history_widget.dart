@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/core.dart';
+import '../../models/text_analysis_models.dart';
 
 class AnalysisHistoryWidget extends StatelessWidget {
   final List<AnalysisHistoryItem> historyItems;
@@ -183,27 +184,26 @@ class AnalysisHistoryWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              if (item.confidence != null)
-                Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: spacing.sm,
-                    vertical: spacing.xs,
-                  ),
-                  decoration: BoxDecoration(
-                    color: _getConfidenceColor(
-                      item.confidence!,
-                    ).withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    '${(item.confidence! * 100).toInt()}%',
-                    style: TextStyle(
-                      color: _getConfidenceColor(item.confidence!),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: spacing.sm,
+                  vertical: spacing.xs,
+                ),
+                decoration: BoxDecoration(
+                  color: _getConfidenceColor(
+                    item.confidence,
+                  ).withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  item.confidencePercentage,
+                  style: TextStyle(
+                    color: _getConfidenceColor(item.confidence),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
+              ),
               SizedBox(width: spacing.sm),
               Icon(
                 Icons.chevron_right,
@@ -263,22 +263,4 @@ class AnalysisHistoryWidget extends StatelessWidget {
       return 'Just now';
     }
   }
-}
-
-class AnalysisHistoryItem {
-  final String id;
-  final String title;
-  final String type;
-  final DateTime timestamp;
-  final double? confidence;
-  final Map<String, dynamic>? result;
-
-  const AnalysisHistoryItem({
-    required this.id,
-    required this.title,
-    required this.type,
-    required this.timestamp,
-    this.confidence,
-    this.result,
-  });
 }
