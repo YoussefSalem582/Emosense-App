@@ -1,43 +1,57 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'employee_performance_event.dart';
 part 'employee_performance_state.dart';
 
-class EmployeePerformanceCubit extends Cubit<EmployeePerformanceState> {
-  EmployeePerformanceCubit() : super(const EmployeePerformanceInitial());
+class EmployeePerformanceBloc
+    extends Bloc<EmployeePerformanceEvent, EmployeePerformanceState> {
+  EmployeePerformanceBloc() : super(const EmployeePerformanceInitial()) {
+    on<EmployeePerformanceLoadRequested>(_onLoad);
+    on<EmployeePerformanceRefreshRequested>(_onRefresh);
+  }
 
-  /// Load performance data
-  Future<void> loadPerformance() async {
+  Future<void> _onLoad(
+    EmployeePerformanceLoadRequested event,
+    Emitter<EmployeePerformanceState> emit,
+  ) async {
+    await _load(emit);
+  }
+
+  Future<void> _onRefresh(
+    EmployeePerformanceRefreshRequested event,
+    Emitter<EmployeePerformanceState> emit,
+  ) async {
+    await _load(emit);
+  }
+
+  Future<void> _load(Emitter<EmployeePerformanceState> emit) async {
     emit(const EmployeePerformanceLoading());
 
     try {
-      // Simulate loading performance data
       await Future.delayed(const Duration(milliseconds: 600));
 
-      final performanceData = EmployeePerformanceData(
-        overallScore: 94,
-        ranking: 3,
-        totalEmployees: 25,
-        monthlyProgress: 0.87,
-        keyMetrics: _getKeyMetrics(),
-        performanceBreakdown: _getPerformanceBreakdown(),
-        achievements: _getAchievements(),
-        weeklyTrends: _getWeeklyTrends(),
-        goals: _getGoals(),
+      emit(
+        EmployeePerformanceSuccess(
+          EmployeePerformanceData(
+            overallScore: 94,
+            ranking: 3,
+            totalEmployees: 25,
+            monthlyProgress: 0.87,
+            keyMetrics: _keyMetrics(),
+            performanceBreakdown: _performanceBreakdown(),
+            achievements: _achievements(),
+            weeklyTrends: _weeklyTrends(),
+            goals: _goals(),
+          ),
+        ),
       );
-
-      emit(EmployeePerformanceSuccess(performanceData));
     } catch (e) {
       emit(EmployeePerformanceError(e.toString()));
     }
   }
 
-  /// Refresh performance data
-  Future<void> refreshPerformance() async {
-    await loadPerformance();
-  }
-
-  List<Map<String, dynamic>> _getKeyMetrics() {
+  List<Map<String, dynamic>> _keyMetrics() {
     return [
       {
         'title': 'Tickets Resolved',
@@ -84,7 +98,7 @@ class EmployeePerformanceCubit extends Cubit<EmployeePerformanceState> {
     ];
   }
 
-  Map<String, dynamic> _getPerformanceBreakdown() {
+  Map<String, dynamic> _performanceBreakdown() {
     return {
       'ticketResolution': 0.94,
       'customerSatisfaction': 0.96,
@@ -94,7 +108,7 @@ class EmployeePerformanceCubit extends Cubit<EmployeePerformanceState> {
     };
   }
 
-  List<Map<String, dynamic>> _getAchievements() {
+  List<Map<String, dynamic>> _achievements() {
     return [
       {
         'title': 'Customer Champion',
@@ -117,7 +131,7 @@ class EmployeePerformanceCubit extends Cubit<EmployeePerformanceState> {
     ];
   }
 
-  List<Map<String, dynamic>> _getWeeklyTrends() {
+  List<Map<String, dynamic>> _weeklyTrends() {
     return [
       {'day': 'Mon', 'tickets': 18, 'satisfaction': 4.7},
       {'day': 'Tue', 'tickets': 22, 'satisfaction': 4.8},
@@ -129,7 +143,7 @@ class EmployeePerformanceCubit extends Cubit<EmployeePerformanceState> {
     ];
   }
 
-  List<Map<String, dynamic>> _getGoals() {
+  List<Map<String, dynamic>> _goals() {
     return [
       {
         'title': 'Monthly Resolution Target',

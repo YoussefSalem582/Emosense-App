@@ -1,4 +1,4 @@
-part of 'voice_analysis_cubit.dart';
+part of 'voice_analysis_bloc.dart';
 
 abstract class VoiceAnalysisState extends Equatable {
   const VoiceAnalysisState();
@@ -42,7 +42,6 @@ class VoiceAnalysisDemo extends VoiceAnalysisState {
   List<Object?> get props => [demoResult];
 }
 
-/// Voice Analysis Result Model
 class VoiceAnalysisResult extends Equatable {
   final String id;
   final String filePath;
@@ -68,18 +67,17 @@ class VoiceAnalysisResult extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    filePath,
-    analysisType,
-    confidence,
-    timestamp,
-    summary,
-    details,
-    emotions,
-    metrics,
-  ];
+        id,
+        filePath,
+        analysisType,
+        confidence,
+        timestamp,
+        summary,
+        details,
+        emotions,
+        metrics,
+      ];
 
-  /// Convert to Map format for compatibility with existing widgets
   Map<String, dynamic> toMap() {
     return {
       'id': id,

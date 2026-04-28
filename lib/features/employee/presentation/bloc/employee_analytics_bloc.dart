@@ -1,69 +1,75 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'employee_analytics_event.dart';
 part 'employee_analytics_state.dart';
 
-class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
-  EmployeeAnalyticsCubit() : super(const EmployeeAnalyticsInitial());
+class EmployeeAnalyticsBloc
+    extends Bloc<EmployeeAnalyticsEvent, EmployeeAnalyticsState> {
+  String _timeRange = 'This Week';
 
-  String _selectedTimeRange = 'This Week';
+  EmployeeAnalyticsBloc() : super(const EmployeeAnalyticsInitial()) {
+    on<EmployeeAnalyticsFetched>(_onFetched);
+    on<EmployeeAnalyticsRefreshRequested>(_onRefresh);
+  }
 
-  String get selectedTimeRange => _selectedTimeRange;
-
-  /// Load analytics data
-  Future<void> loadAnalytics([String? timeRange]) async {
-    if (timeRange != null) {
-      _selectedTimeRange = timeRange;
+  Future<void> _onFetched(
+    EmployeeAnalyticsFetched event,
+    Emitter<EmployeeAnalyticsState> emit,
+  ) async {
+    if (event.timeRange != null) {
+      _timeRange = event.timeRange!;
     }
+    await _fetch(emit);
+  }
 
+  Future<void> _onRefresh(
+    EmployeeAnalyticsRefreshRequested event,
+    Emitter<EmployeeAnalyticsState> emit,
+  ) async {
+    await _fetch(emit);
+  }
+
+  Future<void> _fetch(Emitter<EmployeeAnalyticsState> emit) async {
     emit(const EmployeeAnalyticsLoading());
 
     try {
-      // Simulate loading analytics data
       await Future.delayed(const Duration(milliseconds: 800));
 
-      final analyticsData = EmployeeAnalyticsData(
-        timeRange: _selectedTimeRange,
-        metrics: _getMetricsForTimeRange(),
-        performanceData: _getPerformanceData(),
-        ticketTypes: _getTicketTypes(),
-        priorityDistribution: _getPriorityDistribution(),
-        resolutionSpeed: _getResolutionSpeed(),
-        goals: _getGoals(),
+      emit(
+        EmployeeAnalyticsSuccess(
+          EmployeeAnalyticsData(
+            timeRange: _timeRange,
+            metrics: _metricsForTimeRange(),
+            performanceData: _performanceData(),
+            ticketTypes: _ticketTypes(),
+            priorityDistribution: _priorityDistribution(),
+            resolutionSpeed: _resolutionSpeed(),
+            goals: _goals(),
+          ),
+        ),
       );
-
-      emit(EmployeeAnalyticsSuccess(analyticsData));
     } catch (e) {
       emit(EmployeeAnalyticsError(e.toString()));
     }
   }
 
-  /// Change time range and reload data
-  Future<void> changeTimeRange(String timeRange) async {
-    await loadAnalytics(timeRange);
-  }
-
-  /// Refresh analytics data
-  Future<void> refreshAnalytics() async {
-    await loadAnalytics();
-  }
-
-  List<Map<String, dynamic>> _getMetricsForTimeRange() {
+  List<Map<String, dynamic>> _metricsForTimeRange() {
     return [
       {
         'title': 'Ticket Volume',
-        'value': _selectedTimeRange == 'Today' ? '18' : '89',
-        'unit': _selectedTimeRange == 'Today' ? 'today' : 'this week',
-        'trend': _selectedTimeRange == 'Today'
+        'value': _timeRange == 'Today' ? '18' : '89',
+        'unit': _timeRange == 'Today' ? 'today' : 'this week',
+        'trend': _timeRange == 'Today'
             ? '+15% vs yesterday'
             : '+8% vs last week',
         'isPositiveTrend': true,
       },
       {
         'title': 'Resolution Rate',
-        'value': _selectedTimeRange == 'Today' ? '96%' : '94%',
+        'value': _timeRange == 'Today' ? '96%' : '94%',
         'unit': 'success',
-        'trend': _selectedTimeRange == 'Today'
+        'trend': _timeRange == 'Today'
             ? '+2% vs yesterday'
             : '+5% vs last week',
         'isPositiveTrend': true,
@@ -77,10 +83,10 @@ class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
       },
       {
         'title': 'Tickets Handled',
-        'value': _selectedTimeRange == 'Today' ? '15' : '78',
-        'unit': _selectedTimeRange == 'Today' ? 'today' : 'this week',
-        'trend': _selectedTimeRange == 'Today' ? 'Target: 20' : 'Target: 80',
-        'isPositiveTrend': _selectedTimeRange == 'Today' ? false : true,
+        'value': _timeRange == 'Today' ? '15' : '78',
+        'unit': _timeRange == 'Today' ? 'today' : 'this week',
+        'trend': _timeRange == 'Today' ? 'Target: 20' : 'Target: 80',
+        'isPositiveTrend': _timeRange == 'Today' ? false : true,
       },
       {
         'title': 'First Resolution',
@@ -92,14 +98,14 @@ class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
       {
         'title': 'Customer Escalations',
         'value': '2',
-        'unit': _selectedTimeRange == 'Today' ? 'today' : 'this week',
+        'unit': _timeRange == 'Today' ? 'today' : 'this week',
         'trend': '-50% vs last period',
         'isPositiveTrend': true,
       },
     ];
   }
 
-  Map<String, dynamic> _getPerformanceData() {
+  Map<String, dynamic> _performanceData() {
     return {
       'bestDay': 'Wednesday',
       'bestDayImprovement': '+12%',
@@ -110,7 +116,7 @@ class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
     };
   }
 
-  List<Map<String, dynamic>> _getTicketTypes() {
+  List<Map<String, dynamic>> _ticketTypes() {
     return [
       {'label': 'Product Issues', 'percentage': 0.45},
       {'label': 'Shipping', 'percentage': 0.25},
@@ -119,11 +125,11 @@ class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
     ];
   }
 
-  Map<String, dynamic> _getPriorityDistribution() {
+  Map<String, dynamic> _priorityDistribution() {
     return {'high': 32, 'medium': 48, 'low': 20};
   }
 
-  List<Map<String, dynamic>> _getResolutionSpeed() {
+  List<Map<String, dynamic>> _resolutionSpeed() {
     return [
       {'timeRange': 'Same Day', 'percentage': '45%'},
       {'timeRange': '1-2 Days', 'percentage': '35%'},
@@ -132,7 +138,7 @@ class EmployeeAnalyticsCubit extends Cubit<EmployeeAnalyticsState> {
     ];
   }
 
-  List<Map<String, dynamic>> _getGoals() {
+  List<Map<String, dynamic>> _goals() {
     return [
       {
         'title': 'Ticket Efficiency',

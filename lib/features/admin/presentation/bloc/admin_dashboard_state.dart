@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'admin_dashboard_bloc.dart';
 
 abstract class AdminDashboardState extends Equatable {
   const AdminDashboardState();
@@ -7,9 +7,13 @@ abstract class AdminDashboardState extends Equatable {
   List<Object?> get props => [];
 }
 
-class AdminDashboardInitial extends AdminDashboardState {}
+class AdminDashboardInitial extends AdminDashboardState {
+  const AdminDashboardInitial();
+}
 
-class AdminDashboardLoading extends AdminDashboardState {}
+class AdminDashboardLoading extends AdminDashboardState {
+  const AdminDashboardLoading();
+}
 
 class AdminDashboardLoaded extends AdminDashboardState {
   final Map<String, dynamic> dashboardData;

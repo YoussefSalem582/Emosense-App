@@ -1,4 +1,4 @@
-part of 'employee_dashboard_cubit.dart';
+part of 'employee_dashboard_bloc.dart';
 
 abstract class EmployeeDashboardState extends Equatable {
   const EmployeeDashboardState();
@@ -52,11 +52,11 @@ class EmployeeDashboardData extends Equatable {
 
   @override
   List<Object?> get props => [
-    ticketsResolved,
-    activeTickets,
-    customerSatisfaction,
-    efficiencyScore,
-    recentTickets,
-    quickStats,
-  ];
+        ticketsResolved,
+        activeTickets,
+        customerSatisfaction,
+        efficiencyScore,
+        recentTickets,
+        quickStats,
+      ];
 }

@@ -1,26 +1,36 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../data/services/emotion_api_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../data/services/emotion_api_service.dart';
+
+part 'text_analysis_event.dart';
 part 'text_analysis_state.dart';
 
-class TextAnalysisCubit extends Cubit<TextAnalysisState> {
+class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
   final EmotionApiService _apiService;
 
-  TextAnalysisCubit(this._apiService) : super(const TextAnalysisInitial());
+  TextAnalysisBloc(this._apiService) : super(const TextAnalysisInitial()) {
+    on<TextAnalysisAnalyzeRequested>(_onAnalyze);
+    on<TextAnalysisDemoRequested>(_onDemo);
+    on<TextAnalysisReset>(_onReset);
+  }
 
-  /// Analyze text input using real API
-  Future<void> analyzeText({
-    required String text,
-    required String analysisType,
-  }) async {
+  Future<void> _onAnalyze(
+    TextAnalysisAnalyzeRequested event,
+    Emitter<TextAnalysisState> emit,
+  ) async {
+    final text = event.text;
+    final analysisType = event.analysisType;
+
     if (text.trim().isEmpty) {
       emit(const TextAnalysisError('Text cannot be empty'));
       return;
     }
 
     if (text.trim().length < 5) {
-      emit(const TextAnalysisError('Text must be at least 5 characters long'));
+      emit(
+        const TextAnalysisError('Text must be at least 5 characters long'),
+      );
       return;
     }
 
@@ -39,22 +49,20 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
     }
   }
 
-  /// Load demo data for testing
-  void loadDemoData(String analysisType) {
-    emit(TextAnalysisDemo(_createDemoResult(analysisType)));
+  void _onDemo(
+    TextAnalysisDemoRequested event,
+    Emitter<TextAnalysisState> emit,
+  ) {
+    emit(TextAnalysisDemo(_createDemoResult(event.analysisType)));
   }
 
-  /// Reset to initial state
-  void reset() {
+  void _onReset(
+    TextAnalysisReset event,
+    Emitter<TextAnalysisState> emit,
+  ) {
     emit(const TextAnalysisInitial());
   }
 
-  /// Clear current analysis
-  void clearAnalysis() {
-    emit(const TextAnalysisInitial());
-  }
-
-  /// Convert emotion result to text analysis result format
   TextAnalysisResult _convertToTextAnalysisResult(
     dynamic emotionResult,
     String text,
@@ -94,31 +102,11 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
     );
   }
 
-  /// Extract keywords from text
   List<String> _extractKeywordsFromText(String text) {
     final words = text.toLowerCase().split(RegExp(r'\W+'));
     return words.where((word) => word.length > 3).take(5).toList();
   }
 
-  /// Create analysis result based on type
-  TextAnalysisResult _createAnalysisResult(String text, String analysisType) {
-    final now = DateTime.now();
-
-    return TextAnalysisResult(
-      id: now.millisecondsSinceEpoch.toString(),
-      text: text,
-      analysisType: analysisType,
-      confidence: _generateConfidence(analysisType),
-      timestamp: now,
-      summary: _generateSummary(analysisType, text),
-      details: _generateAnalysisDetails(analysisType, text),
-      sentiments: _generateSentimentData(analysisType, text),
-      keywords: _extractKeywords(text),
-      metrics: _generateMetrics(text),
-    );
-  }
-
-  /// Create demo result for testing
   TextAnalysisResult _createDemoResult(String analysisType) {
     final now = DateTime.now();
     const demoText =
@@ -136,42 +124,6 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
       keywords: _extractKeywords(demoText),
       metrics: _generateMetrics(demoText),
     );
-  }
-
-  double _generateConfidence(String analysisType) {
-    switch (analysisType) {
-      case 'Sentiment Analysis':
-        return 0.91;
-      case 'Emotion Detection':
-        return 0.88;
-      case 'Topic Classification':
-        return 0.93;
-      case 'Intent Recognition':
-        return 0.86;
-      case 'Language Detection':
-        return 0.95;
-      default:
-        return 0.89;
-    }
-  }
-
-  String _generateSummary(String analysisType, String text) {
-    switch (analysisType) {
-      case 'Sentiment Analysis':
-        return text.length > 100
-            ? 'Positive sentiment detected with high confidence'
-            : 'Brief positive text analyzed successfully';
-      case 'Emotion Detection':
-        return 'Primary emotions: Joy and satisfaction identified';
-      case 'Topic Classification':
-        return 'Category: Product Review - Customer Feedback';
-      case 'Intent Recognition':
-        return 'Intent: Product Recommendation and Positive Review';
-      case 'Language Detection':
-        return 'Language: English (US) - Confidence: 95%';
-      default:
-        return 'Text analysis completed successfully';
-    }
   }
 
   List<String> _generateAnalysisDetails(String analysisType, String text) {
@@ -219,16 +171,19 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
     }
   }
 
-  Map<String, double> _generateSentimentData(String analysisType, String text) {
+  Map<String, double> _generateSentimentData(
+    String analysisType,
+    String text,
+  ) {
     if (analysisType == 'Sentiment Analysis') {
       final hasPositive = text.toLowerCase().contains(
-        RegExp(
-          r'good|great|excellent|amazing|wonderful|perfect|love|like|recommend',
-        ),
-      );
+            RegExp(
+              r'good|great|excellent|amazing|wonderful|perfect|love|like|recommend',
+            ),
+          );
       final hasNegative = text.toLowerCase().contains(
-        RegExp(r'bad|terrible|awful|hate|dislike|worst|horrible'),
-      );
+            RegExp(r'bad|terrible|awful|hate|dislike|worst|horrible'),
+          );
 
       if (hasPositive && !hasNegative) {
         return {'Positive': 0.89, 'Neutral': 0.08, 'Negative': 0.03};
@@ -250,16 +205,14 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
   }
 
   List<String> _extractKeywords(String text) {
-    final words =
-        text
-            .toLowerCase()
-            .replaceAll(RegExp(r'[^\w\s]'), '')
-            .split(' ')
-            .where((word) => word.length > 3)
-            .toSet()
-            .toList();
+    final words = text
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^\w\s]'), '')
+        .split(' ')
+        .where((word) => word.length > 3)
+        .toSet()
+        .toList();
 
-    // Filter out common stop words
     const stopWords = {
       'this',
       'that',
@@ -314,11 +267,7 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
         characters,
       ),
       'complexity':
-          words > 50
-              ? 'Complex'
-              : words > 20
-              ? 'Moderate'
-              : 'Simple',
+          words > 50 ? 'Complex' : words > 20 ? 'Moderate' : 'Simple',
     };
   }
 
@@ -326,9 +275,8 @@ class TextAnalysisCubit extends Cubit<TextAnalysisState> {
     if (sentences == 0 || words == 0) return 0.0;
 
     final avgWordsPerSentence = words / sentences;
-    final avgSyllablesPerWord = characters / words / 2; // Rough estimate
+    final avgSyllablesPerWord = characters / words / 2;
 
-    // Simplified Flesch Reading Ease Score
     final score =
         206.835 - (1.015 * avgWordsPerSentence) - (84.6 * avgSyllablesPerWord);
     return (score / 100).clamp(0.0, 1.0);

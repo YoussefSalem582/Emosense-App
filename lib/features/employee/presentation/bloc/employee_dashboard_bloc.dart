@@ -1,41 +1,54 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'employee_dashboard_event.dart';
 part 'employee_dashboard_state.dart';
 
-class EmployeeDashboardCubit extends Cubit<EmployeeDashboardState> {
-  EmployeeDashboardCubit() : super(const EmployeeDashboardInitial());
+class EmployeeDashboardBloc
+    extends Bloc<EmployeeDashboardEvent, EmployeeDashboardState> {
+  EmployeeDashboardBloc() : super(const EmployeeDashboardInitial()) {
+    on<EmployeeDashboardLoadRequested>(_onLoad);
+    on<EmployeeDashboardRefreshRequested>(_onRefresh);
+  }
 
-  /// Load dashboard data
-  Future<void> loadDashboard() async {
+  Future<void> _onLoad(
+    EmployeeDashboardLoadRequested event,
+    Emitter<EmployeeDashboardState> emit,
+  ) async {
+    await _loadDashboard(emit);
+  }
+
+  Future<void> _onRefresh(
+    EmployeeDashboardRefreshRequested event,
+    Emitter<EmployeeDashboardState> emit,
+  ) async {
+    await _loadDashboard(emit);
+  }
+
+  Future<void> _loadDashboard(Emitter<EmployeeDashboardState> emit) async {
     emit(const EmployeeDashboardLoading());
 
     try {
-      // Simulate loading dashboard data
       await Future.delayed(const Duration(milliseconds: 500));
 
-      final dashboardData = EmployeeDashboardData(
-        ticketsResolved: 42,
-        activeTickets: 8,
-        customerSatisfaction: 4.8,
-        efficiencyScore: 94,
-        recentTickets: _getRecentTickets(),
-        quickStats: _getQuickStats(),
+      emit(
+        EmployeeDashboardSuccess(
+          EmployeeDashboardData(
+            ticketsResolved: 42,
+            activeTickets: 8,
+            customerSatisfaction: 4.8,
+            efficiencyScore: 94,
+            recentTickets: _recentTickets(),
+            quickStats: _quickStats(),
+          ),
+        ),
       );
-
-      emit(EmployeeDashboardSuccess(dashboardData));
     } catch (e) {
       emit(EmployeeDashboardError(e.toString()));
     }
   }
 
-  /// Refresh dashboard data
-  Future<void> refreshDashboard() async {
-    await loadDashboard();
-  }
-
-  /// Get recent tickets data
-  List<Map<String, dynamic>> _getRecentTickets() {
+  List<Map<String, dynamic>> _recentTickets() {
     return [
       {
         'id': '#TK-001',
@@ -64,8 +77,7 @@ class EmployeeDashboardCubit extends Cubit<EmployeeDashboardState> {
     ];
   }
 
-  /// Get quick stats data
-  List<Map<String, dynamic>> _getQuickStats() {
+  List<Map<String, dynamic>> _quickStats() {
     return [
       {
         'title': 'Today\'s Tickets',

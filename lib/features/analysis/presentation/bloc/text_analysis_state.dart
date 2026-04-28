@@ -1,4 +1,4 @@
-part of 'text_analysis_cubit.dart';
+part of 'text_analysis_bloc.dart';
 
 abstract class TextAnalysisState extends Equatable {
   const TextAnalysisState();
@@ -42,7 +42,6 @@ class TextAnalysisDemo extends TextAnalysisState {
   List<Object?> get props => [demoResult];
 }
 
-/// Text Analysis Result Model
 class TextAnalysisResult extends Equatable {
   final String id;
   final String text;
@@ -70,19 +69,18 @@ class TextAnalysisResult extends Equatable {
 
   @override
   List<Object?> get props => [
-    id,
-    text,
-    analysisType,
-    confidence,
-    timestamp,
-    summary,
-    details,
-    sentiments,
-    keywords,
-    metrics,
-  ];
+        id,
+        text,
+        analysisType,
+        confidence,
+        timestamp,
+        summary,
+        details,
+        sentiments,
+        keywords,
+        metrics,
+      ];
 
-  /// Convert to Map format for compatibility with existing widgets
   Map<String, dynamic> toMap() {
     return {
       'id': id,

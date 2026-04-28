@@ -1,15 +1,23 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+part 'voice_analysis_event.dart';
 part 'voice_analysis_state.dart';
 
-class VoiceAnalysisCubit extends Cubit<VoiceAnalysisState> {
-  VoiceAnalysisCubit() : super(const VoiceAnalysisInitial());
+class VoiceAnalysisBloc extends Bloc<VoiceAnalysisEvent, VoiceAnalysisState> {
+  VoiceAnalysisBloc() : super(const VoiceAnalysisInitial()) {
+    on<VoiceAnalysisAnalyzeRequested>(_onAnalyze);
+    on<VoiceAnalysisDemoRequested>(_onDemo);
+    on<VoiceAnalysisReset>(_onReset);
+  }
 
-  /// Analyze audio file from path
-  Future<void> analyzeAudio({
-    required String filePath,
-    required String analysisType,
-  }) async {
+  Future<void> _onAnalyze(
+    VoiceAnalysisAnalyzeRequested event,
+    Emitter<VoiceAnalysisState> emit,
+  ) async {
+    final filePath = event.filePath;
+    final analysisType = event.analysisType;
+
     if (filePath.trim().isEmpty) {
       emit(const VoiceAnalysisError('Audio file path cannot be empty'));
       return;
@@ -27,7 +35,6 @@ class VoiceAnalysisCubit extends Cubit<VoiceAnalysisState> {
     emit(const VoiceAnalysisLoading());
 
     try {
-      // Simulate analysis process
       await Future.delayed(const Duration(seconds: 3));
 
       final result = _createAnalysisResult(filePath, analysisType);
@@ -37,39 +44,35 @@ class VoiceAnalysisCubit extends Cubit<VoiceAnalysisState> {
     }
   }
 
-  /// Load demo data for testing
-  Future<void> loadDemoData(String analysisType) async {
+  Future<void> _onDemo(
+    VoiceAnalysisDemoRequested event,
+    Emitter<VoiceAnalysisState> emit,
+  ) async {
     emit(const VoiceAnalysisLoading());
 
     try {
-      // Simulate analysis processing time
       await Future.delayed(const Duration(seconds: 2));
 
-      final demoResult = _createDemoResult(analysisType);
+      final demoResult = _createDemoResult(event.analysisType);
       emit(VoiceAnalysisDemo(demoResult));
     } catch (e) {
       emit(VoiceAnalysisError('Demo analysis failed: ${e.toString()}'));
     }
   }
 
-  /// Reset to initial state
-  void reset() {
+  void _onReset(
+    VoiceAnalysisReset event,
+    Emitter<VoiceAnalysisState> emit,
+  ) {
     emit(const VoiceAnalysisInitial());
   }
 
-  /// Clear current analysis
-  void clearAnalysis() {
-    emit(const VoiceAnalysisInitial());
-  }
-
-  /// Validate audio file path
   bool _isValidAudioFile(String path) {
     final validExtensions = ['.mp3', '.wav', '.m4a'];
     return validExtensions.any((ext) => path.toLowerCase().endsWith(ext)) ||
-        path.startsWith('/audio/'); // Sample files
+        path.startsWith('/audio/');
   }
 
-  /// Create analysis result based on type
   VoiceAnalysisResult _createAnalysisResult(
     String filePath,
     String analysisType,
@@ -89,7 +92,6 @@ class VoiceAnalysisCubit extends Cubit<VoiceAnalysisState> {
     );
   }
 
-  /// Create demo result for testing
   VoiceAnalysisResult _createDemoResult(String analysisType) {
     final now = DateTime.now();
 

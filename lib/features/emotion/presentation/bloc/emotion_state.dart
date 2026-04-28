@@ -1,4 +1,4 @@
-part of 'emotion_cubit.dart';
+part of 'emotion_bloc.dart';
 
 abstract class EmotionState extends Equatable {
   const EmotionState();
@@ -53,13 +53,13 @@ class EmotionSuccess extends EmotionState {
 
   @override
   List<Object?> get props => [
-    emotionResult,
-    systemMetrics,
-    analyticsSummary,
-    demoResult,
-    cacheStats,
-    modelInfo,
-  ];
+        emotionResult,
+        systemMetrics,
+        analyticsSummary,
+        demoResult,
+        cacheStats,
+        modelInfo,
+      ];
 
   EmotionSuccess copyWith({
     EmotionResult? emotionResult,
