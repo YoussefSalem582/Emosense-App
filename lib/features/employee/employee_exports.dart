@@ -1,4 +1,4 @@
-/// Employee shell and primary surfaces (`features/employee/presentation/pages`).
+/// Employee shell and primary surfaces (`features/employee/*` sub-features).
 library;
 
 export 'package:emosense_mobile/features/employee/navigation/presentation/pages/employee_navigation_screen/employee_navigation_screen.dart';
