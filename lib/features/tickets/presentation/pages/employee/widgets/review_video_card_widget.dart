@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class ReviewVideoCardWidget extends StatelessWidget {
   final Map<String, dynamic> video;

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/core.dart';
-import '../../../../../presentation/widgets/common/animated_background_widget.dart';
-import '../../../../../presentation/widgets/dialogs/create_ticket_dialog.dart';
-import '../bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
+
+import '../../bloc/tickets_bloc.dart';
+import '../../widgets/dialogs/create_ticket_dialog.dart';
 import 'widgets/widgets.dart';
 
 class AdminTicketsScreen extends StatefulWidget {
@@ -134,11 +135,12 @@ class _AdminTicketsScreenState extends State<AdminTicketsScreen>
             onCreateTicket: () {
               showDialog<void>(
                 context: context,
-                builder: (dialogContext) => CreateTicketDialog(
-                  onSubmit: (ticketData) {
-                    bloc.add(TicketsCreateRequested(ticketData));
-                  },
-                ),
+                builder:
+                    (dialogContext) => CreateTicketDialog(
+                      onSubmit: (ticketData) {
+                        bloc.add(TicketsCreateRequested(ticketData));
+                      },
+                    ),
               );
             },
           ),

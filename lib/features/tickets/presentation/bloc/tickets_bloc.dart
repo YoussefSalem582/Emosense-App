@@ -4,7 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/ticket.dart';
 import '../../domain/repositories/ticket_repository.dart';
-import '../../domain/usecases/ticket_usecases.dart';
+import '../../domain/usecases/assign_ticket_usecase.dart';
+import '../../domain/usecases/create_ticket_usecase.dart';
+import '../../domain/usecases/get_ticket_statistics_usecase.dart';
+import '../../domain/usecases/load_tickets_usecase.dart';
+import '../../domain/usecases/ticket_no_params.dart';
+import '../../domain/usecases/update_ticket_status_usecase.dart';
 
 part 'tickets_event.dart';
 part 'tickets_state.dart';
@@ -46,24 +51,20 @@ class TicketsBloc extends Bloc<TicketsEvent, TicketsState> {
   bool _isAdminView = false;
   int _selectedFilterIndex = 0;
 
-  String get selectedFilter =>
-      _currentFilter.status?.displayName ?? 'all';
-  String get selectedPriority =>
-      _currentFilter.priority?.displayName ?? 'all';
+  String get selectedFilter => _currentFilter.status?.displayName ?? 'all';
+  String get selectedPriority => _currentFilter.priority?.displayName ?? 'all';
   String get searchQuery => _currentFilter.searchQuery;
   int get selectedFilterIndex => _selectedFilterIndex;
 
   Future<void> _onLoadAll(
     TicketsLoadAllRequested event,
     Emitter<TicketsState> emit,
-  ) =>
-      _loadAllTickets(emit, isAdminView: event.isAdminView);
+  ) => _loadAllTickets(emit, isAdminView: event.isAdminView);
 
   Future<void> _onLoadEmployee(
     TicketsLoadEmployeeRequested event,
     Emitter<TicketsState> emit,
-  ) =>
-      _loadAllTickets(emit, isAdminView: false);
+  ) => _loadAllTickets(emit, isAdminView: false);
 
   Future<void> _onFilterChanged(
     TicketsFilterChanged event,
@@ -211,16 +212,15 @@ class TicketsBloc extends Bloc<TicketsEvent, TicketsState> {
     try {
       final result = await _getTicketStatisticsUseCase(const NoParams());
 
-      result.fold(
-        (failure) => emit(TicketsError(failure.message)),
-        (statistics) {
-          if (event.isAdminView) {
-            _emitAdminStatistics(emit, statistics);
-          } else {
-            _emitEmployeeStatistics(emit, statistics);
-          }
-        },
-      );
+      result.fold((failure) => emit(TicketsError(failure.message)), (
+        statistics,
+      ) {
+        if (event.isAdminView) {
+          _emitAdminStatistics(emit, statistics);
+        } else {
+          _emitEmployeeStatistics(emit, statistics);
+        }
+      });
     } catch (e) {
       emit(TicketsError('Failed to load statistics: $e'));
     }
@@ -367,8 +367,7 @@ class TicketsBloc extends Bloc<TicketsEvent, TicketsState> {
           filtered
               .where(
                 (ticket) =>
-                    ticket['priority'] ==
-                    _currentFilter.priority!.displayName,
+                    ticket['priority'] == _currentFilter.priority!.displayName,
               )
               .toList();
     }

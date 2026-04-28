@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/core.dart';
-import '../../../../presentation/widgets/dialogs/create_ticket_dialog.dart';
-import '../bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/core/core.dart';
+
+import '../../bloc/tickets_bloc.dart';
+import '../../widgets/dialogs/create_ticket_dialog.dart';
 import 'widgets/review_video_filter_chips_widget.dart';
 
 class EmployeeTicketsScreen extends StatefulWidget {
@@ -53,12 +54,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
   void _openCreateTicketDialog() {
     showDialog<void>(
       context: context,
-      builder: (dialogContext) => CreateTicketDialog(
-        onSubmit: (data) {
-          setState(() => _expectingTicketCreate = true);
-          context.read<TicketsBloc>().add(TicketsCreateRequested(data));
-        },
-      ),
+      builder:
+          (dialogContext) => CreateTicketDialog(
+            onSubmit: (data) {
+              setState(() => _expectingTicketCreate = true);
+              context.read<TicketsBloc>().add(TicketsCreateRequested(data));
+            },
+          ),
     );
   }
 
@@ -83,10 +85,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           );
         } else if (state is TicketsError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
+            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
           );
         }
       },
@@ -113,9 +112,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                   ),
                 ),
               ),
-              SafeArea(
-                child: _buildTicketsBody(state, customSpacing),
-              ),
+              SafeArea(child: _buildTicketsBody(state, customSpacing)),
               if (_showVideoDetailsDialog && tickets.isNotEmpty)
                 _buildTicketDetailsDialog(tickets),
             ],
@@ -125,10 +122,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     );
   }
 
-  Widget _buildTicketsBody(
-    TicketsState state,
-    CustomSpacing customSpacing,
-  ) {
+  Widget _buildTicketsBody(TicketsState state, CustomSpacing customSpacing) {
     if (state is TicketsLoading || state is TicketsInitial) {
       return const Center(
         child: CircularProgressIndicator(color: Colors.white),
@@ -150,8 +144,8 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               FilledButton(
                 onPressed:
                     () => context.read<TicketsBloc>().add(
-                          const TicketsLoadEmployeeRequested(),
-                        ),
+                      const TicketsLoadEmployeeRequested(),
+                    ),
                 child: const Text('Retry'),
               ),
             ],

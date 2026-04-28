@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../core/core.dart';
-import '../../../../../presentation/widgets/dialogs/ticket_details_dialog.dart';
-import '../../../domain/entities/ticket.dart';
-import '../../bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/dialogs/ticket_details_dialog.dart';
+
+import '../../../../domain/entities/ticket.dart';
+import '../../../bloc/tickets_bloc.dart';
 
 class AdminTicketCard extends StatelessWidget {
   final Map<String, dynamic> ticket;
@@ -406,10 +407,7 @@ void _showStatusDialog(
                 title: const Text('Open'),
                 onTap: () {
                   bloc.add(
-                    TicketsStatusUpdateRequested(
-                      ticketId,
-                      TicketStatus.open,
-                    ),
+                    TicketsStatusUpdateRequested(ticketId, TicketStatus.open),
                   );
                   Navigator.of(context).pop();
                 },

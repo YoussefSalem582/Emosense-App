@@ -1,25 +1,25 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import '../../domain/entities/ticket.dart';
 import '../../domain/repositories/ticket_repository.dart';
+import 'ticket_local_data_source.dart';
 
-/// Mock implementation of ticket repository for development
-class MockTicketRepository implements TicketRepository {
-  // In-memory storage for development
+/// In-memory [TicketLocalDataSource] for development (replaces API until wired).
+class MockTicketLocalDataSource implements TicketLocalDataSource {
   final List<Ticket> _tickets = [];
   final StreamController<List<Ticket>> _ticketsController =
       StreamController.broadcast();
 
-  MockTicketRepository() {
+  MockTicketLocalDataSource() {
     _initializeMockData();
   }
 
-  /// Get stream of tickets for real-time updates
   Stream<List<Ticket>> get ticketsStream => _ticketsController.stream;
 
   @override
   Future<List<Ticket>> getAllTickets() async {
-    // Simulate network delay
     await Future.delayed(const Duration(milliseconds: 300));
     return List.from(_tickets);
   }
@@ -83,7 +83,6 @@ class MockTicketRepository implements TicketRepository {
       throw Exception('Ticket not found');
     }
 
-    // Create assignee (in real app, this would come from user service)
     final assignee = Assignee(
       id: assigneeId,
       name: _getAssigneeName(assigneeId),
@@ -153,7 +152,6 @@ class MockTicketRepository implements TicketRepository {
   Future<List<Ticket>> getTicketsCreatedBy(String userId) async {
     await Future.delayed(const Duration(milliseconds: 150));
 
-    // In a real app, tickets would have a createdBy field
     return _tickets
         .where((ticket) => ticket.source == TicketSource.employee)
         .toList();
@@ -174,7 +172,6 @@ class MockTicketRepository implements TicketRepository {
     return TicketStatistics.fromTickets(_tickets);
   }
 
-  /// Initialize mock data
   void _initializeMockData() {
     final now = DateTime.now();
 
