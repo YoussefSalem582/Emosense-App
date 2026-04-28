@@ -1,5 +1,7 @@
 import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../config/app_config.dart';
 import 'api_client.dart';
@@ -194,6 +196,8 @@ class ConnectionManager {
   /// Timer for periodic health checks
   Timer? _healthCheckTimer;
 
+  StreamSubscription<List<ConnectivityResult>>? _connectivitySubscription;
+
   /// Private constructor for singleton pattern
   ConnectionManager._internal();
 
@@ -201,6 +205,23 @@ class ConnectionManager {
   static ConnectionManager get instance {
     _instance ??= ConnectionManager._internal();
     return _instance!;
+  }
+
+  /// Drops the singleton and releases streams/timers so each test starts clean.
+  /// Production code should not call this.
+  @visibleForTesting
+  static Future<void> resetForTesting() async {
+    final existing = _instance;
+    if (existing == null) return;
+    await existing._connectivitySubscription?.cancel();
+    existing._connectivitySubscription = null;
+    existing._stopHealthCheck();
+    if (!existing._statusController.isClosed) {
+      await existing._statusController.close();
+    }
+    existing._currentConfig = null;
+    existing._currentStatus = ConnectionStatus.disconnected;
+    _instance = null;
   }
 
   /// Initialize the connection manager
@@ -224,7 +245,10 @@ class ConnectionManager {
 
     // Start monitoring network connectivity changes
     // When network becomes available, attempt to reconnect
-    _networkInfo.connectivityStream.listen(_onConnectivityChanged);
+    await _connectivitySubscription?.cancel();
+    _connectivitySubscription = _networkInfo.connectivityStream.listen(
+      _onConnectivityChanged,
+    );
 
     // Start periodic health checks to monitor backend status
     _startHealthCheck();
@@ -469,9 +493,14 @@ class ConnectionManager {
     }
   }
 
-  /// Dispose resources
+  /// Dispose resources (e.g. tests or app teardown). The singleton is not
+  /// reinitialized automatically after this; call [initialize] again if needed.
   void dispose() {
-    _statusController.close();
+    _connectivitySubscription?.cancel();
+    _connectivitySubscription = null;
     _stopHealthCheck();
+    if (!_statusController.isClosed) {
+      _statusController.close();
+    }
   }
 }
