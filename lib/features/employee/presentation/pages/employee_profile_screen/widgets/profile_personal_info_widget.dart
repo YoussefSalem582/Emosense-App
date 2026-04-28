@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfilePersonalInfoWidget extends StatelessWidget {
   final String name;
@@ -19,43 +21,25 @@ class ProfilePersonalInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.person_outline, color: AppColors.primary),
-                const SizedBox(width: 8),
-                Text(
-                  'Personal Information',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.person_outline,
+            title: 'Personal Information',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
             ),
-            const SizedBox(height: 16),
-            _buildInfoItem('Name', name),
-            _buildInfoItem('Email', email),
-            _buildInfoItem('Phone', phone),
-            _buildInfoItem('Department', department),
-            _buildInfoItem('Employee ID', employeeId),
-          ],
-        ),
+          ),
+          const SizedBox(height: 16),
+          _buildInfoItem('Name', name),
+          _buildInfoItem('Email', email),
+          _buildInfoItem('Phone', phone),
+          _buildInfoItem('Department', department),
+          _buildInfoItem('Employee ID', employeeId),
+        ],
       ),
     );
   }

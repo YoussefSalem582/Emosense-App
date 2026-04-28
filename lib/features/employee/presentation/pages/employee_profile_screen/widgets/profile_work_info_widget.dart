@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfileWorkInfoWidget extends StatelessWidget {
   final String startDate;
@@ -17,42 +19,24 @@ class ProfileWorkInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.work_outline, color: AppColors.primary),
-                const SizedBox(width: 8),
-                Text(
-                  'Work Information',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.work_outline,
+            title: 'Work Information',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
             ),
-            const SizedBox(height: 16),
-            _buildInfoItem('Start Date', startDate),
-            _buildInfoItem('Location', location),
-            _buildInfoItem('Manager', manager),
-            _buildInfoItem('Team', team),
-          ],
-        ),
+          ),
+          const SizedBox(height: 16),
+          _buildInfoItem('Start Date', startDate),
+          _buildInfoItem('Location', location),
+          _buildInfoItem('Manager', manager),
+          _buildInfoItem('Team', team),
+        ],
       ),
     );
   }

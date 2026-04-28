@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfileQuickActionsWidget extends StatelessWidget {
   final VoidCallback onEditProfile;
@@ -19,69 +21,51 @@ class ProfileQuickActionsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.flash_on,
+            title: 'Quick Actions',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.flash_on, color: AppColors.primary),
-                const SizedBox(width: 8),
-                Text(
-                  'Quick Actions',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildActionItem(
-              'Edit Profile',
-              Icons.edit_outlined,
-              onEditProfile,
-              AppColors.primary,
-            ),
-            _buildActionItem(
-              'Change Password',
-              Icons.lock_outline,
-              onChangePassword,
-              AppColors.secondary,
-            ),
-            _buildActionItem(
-              'Request Time Off',
-              Icons.calendar_month_outlined,
-              onTimeOffRequest,
-              AppColors.info,
-            ),
-            _buildActionItem(
-              'Help & Support',
-              Icons.help_outline,
-              onHelpSupport,
-              AppColors.warning,
-            ),
-            const Divider(height: 24),
-            _buildActionItem(
-              'Sign Out',
-              Icons.logout,
-              onSignOut,
-              AppColors.error,
-            ),
-          ],
-        ),
+          const SizedBox(height: 16),
+          _buildActionItem(
+            'Edit Profile',
+            Icons.edit_outlined,
+            onEditProfile,
+            AppColors.primary,
+          ),
+          _buildActionItem(
+            'Change Password',
+            Icons.lock_outline,
+            onChangePassword,
+            AppColors.secondary,
+          ),
+          _buildActionItem(
+            'Request Time Off',
+            Icons.calendar_month_outlined,
+            onTimeOffRequest,
+            AppColors.info,
+          ),
+          _buildActionItem(
+            'Help & Support',
+            Icons.help_outline,
+            onHelpSupport,
+            AppColors.warning,
+          ),
+          const Divider(height: 24),
+          _buildActionItem(
+            'Sign Out',
+            Icons.logout,
+            onSignOut,
+            AppColors.error,
+          ),
+        ],
       ),
     );
   }

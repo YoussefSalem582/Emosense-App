@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/presentation/widgets/common/section_title_row.dart';
 
 class ProfileSettingsWidget extends StatelessWidget {
   final bool notificationsEnabled;
@@ -21,57 +23,39 @@ class ProfileSettingsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 6,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: Colors.white.withValues(alpha: 0.9),
-          border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
-            width: 1,
+    return ProfileSectionCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppSectionTitleRow(
+            icon: Icons.settings_outlined,
+            title: 'Settings',
+            titleStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontWeight: FontWeight.w600,
+              color: AppColors.textPrimary,
+            ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.settings_outlined, color: AppColors.primary),
-                const SizedBox(width: 8),
-                Text(
-                  'Settings',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildSettingRow(
-              context,
-              'Notifications',
-              notificationsEnabled,
-              onNotificationsChanged,
-            ),
-            _buildSettingRow(
-              context,
-              'Email Alerts',
-              emailAlerts,
-              onEmailAlertsChanged,
-            ),
-            const SizedBox(height: 16),
-            _buildDropdownSetting(context, 'Language', selectedLanguage, [
-              'English',
-              'Spanish',
-              'French',
-              'German',
-            ], onLanguageChanged),
-          ],
-        ),
+          const SizedBox(height: 16),
+          _buildSettingRow(
+            context,
+            'Notifications',
+            notificationsEnabled,
+            onNotificationsChanged,
+          ),
+          _buildSettingRow(
+            context,
+            'Email Alerts',
+            emailAlerts,
+            onEmailAlertsChanged,
+          ),
+          const SizedBox(height: 16),
+          _buildDropdownSetting(context, 'Language', selectedLanguage, [
+            'English',
+            'Spanish',
+            'French',
+            'German',
+          ], onLanguageChanged),
+        ],
       ),
     );
   }

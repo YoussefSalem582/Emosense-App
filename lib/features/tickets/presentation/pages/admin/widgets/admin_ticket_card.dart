@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 import 'package:emosense_mobile/presentation/widgets/dialogs/ticket_details_dialog.dart';
 
 import '../../../../domain/entities/ticket.dart';
@@ -17,46 +18,41 @@ class AdminTicketCard extends StatelessWidget {
     final theme = Theme.of(context);
     final customSpacing = theme.extension<CustomSpacing>()!;
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.only(bottom: customSpacing.md),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.95),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) => TicketDetailsDialog(ticket: ticket),
-          );
-        },
-        child: Padding(
-          padding: EdgeInsets.all(customSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeaderRow(theme, customSpacing),
-              SizedBox(height: customSpacing.sm),
-              _buildTitle(theme),
-              SizedBox(height: customSpacing.sm),
-              _buildDescription(theme),
-              SizedBox(height: customSpacing.md),
-              _buildStatusAndPriorityRow(customSpacing),
-              SizedBox(height: customSpacing.md),
-              _buildFooterRow(theme, customSpacing),
-              if (ticket['source']?.toString() == 'Employee Ticket') ...[
+      padding: EdgeInsets.zero,
+      color: Colors.white.withValues(alpha: 0.95),
+      elevation: SurfaceElevation.settings,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) => TicketDetailsDialog(ticket: ticket),
+            );
+          },
+          child: Padding(
+            padding: EdgeInsets.all(customSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeaderRow(theme, customSpacing),
                 SizedBox(height: customSpacing.sm),
-                _buildEmployeeTicketInfo(theme, customSpacing),
+                _buildTitle(theme),
+                SizedBox(height: customSpacing.sm),
+                _buildDescription(theme),
+                SizedBox(height: customSpacing.md),
+                _buildStatusAndPriorityRow(customSpacing),
+                SizedBox(height: customSpacing.md),
+                _buildFooterRow(theme, customSpacing),
+                if (ticket['source']?.toString() == 'Employee Ticket') ...[
+                  SizedBox(height: customSpacing.sm),
+                  _buildEmployeeTicketInfo(theme, customSpacing),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),

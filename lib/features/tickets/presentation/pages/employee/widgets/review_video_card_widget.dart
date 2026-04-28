@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 
 class ReviewVideoCardWidget extends StatelessWidget {
   final Map<String, dynamic> video;
@@ -18,20 +19,16 @@ class ReviewVideoCardWidget extends StatelessWidget {
     final priorityColor = _getPriorityColor(video['priority']);
     final statusColor = _getStatusColor(video['status']);
 
-    return Container(
+    return SurfaceSectionCard(
       margin: EdgeInsets.only(bottom: spacing.md),
       padding: EdgeInsets.all(spacing.md),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.black.withValues(alpha: 0.1),
+          blurRadius: 8,
+          offset: const Offset(0, 2),
+        ),
+      ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
