@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class LiveMonitorScreen extends StatefulWidget {
   const LiveMonitorScreen({super.key});
@@ -59,9 +59,8 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                   ? Icons.pause_circle_outline
                   : Icons.play_circle_outline,
             ),
-            tooltip: _isAutoRefresh
-                ? 'Pause Auto-refresh'
-                : 'Start Auto-refresh',
+            tooltip:
+                _isAutoRefresh ? 'Pause Auto-refresh' : 'Start Auto-refresh',
           ),
           IconButton(
             onPressed: () => _manualRefresh(),
@@ -232,37 +231,41 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: _filters.map((filter) {
-                  final isSelected = _selectedFilter == filter;
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: FilterChip(
-                      label: Text(filter),
-                      selected: isSelected,
-                      onSelected: (selected) {
-                        setState(() {
-                          _selectedFilter = filter;
-                        });
-                      },
-                      backgroundColor: Colors.transparent,
-                      selectedColor: AppColors.accent.withValues(alpha: 0.1),
-                      labelStyle: TextStyle(
-                        color: isSelected
-                            ? AppColors.accent
-                            : AppColors.textSecondary,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                      side: BorderSide(
-                        color: isSelected
-                            ? AppColors.accent
-                            : AppColors.textLight,
-                      ),
-                    ),
-                  );
-                }).toList(),
+                children:
+                    _filters.map((filter) {
+                      final isSelected = _selectedFilter == filter;
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: FilterChip(
+                          label: Text(filter),
+                          selected: isSelected,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedFilter = filter;
+                            });
+                          },
+                          backgroundColor: Colors.transparent,
+                          selectedColor: AppColors.accent.withValues(
+                            alpha: 0.1,
+                          ),
+                          labelStyle: TextStyle(
+                            color:
+                                isSelected
+                                    ? AppColors.accent
+                                    : AppColors.textSecondary,
+                            fontWeight:
+                                isSelected ? FontWeight.w600 : FontWeight.w500,
+                            fontSize: 12,
+                          ),
+                          side: BorderSide(
+                            color:
+                                isSelected
+                                    ? AppColors.accent
+                                    : AppColors.textLight,
+                          ),
+                        ),
+                      );
+                    }).toList(),
               ),
             ),
           ),
@@ -502,17 +505,19 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
     String time,
     String channel,
   ) {
-    Color sentimentColor = sentiment == 'positive'
-        ? AppColors.positive
-        : sentiment == 'negative'
-        ? AppColors.negative
-        : AppColors.neutral;
+    Color sentimentColor =
+        sentiment == 'positive'
+            ? AppColors.positive
+            : sentiment == 'negative'
+            ? AppColors.negative
+            : AppColors.neutral;
 
-    IconData sentimentIcon = sentiment == 'positive'
-        ? Icons.sentiment_satisfied
-        : sentiment == 'negative'
-        ? Icons.sentiment_dissatisfied
-        : Icons.sentiment_neutral;
+    IconData sentimentIcon =
+        sentiment == 'positive'
+            ? Icons.sentiment_satisfied
+            : sentiment == 'negative'
+            ? Icons.sentiment_dissatisfied
+            : Icons.sentiment_neutral;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),

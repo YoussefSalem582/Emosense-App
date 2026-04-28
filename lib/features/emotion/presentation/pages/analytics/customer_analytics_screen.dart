@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 
-import '../../widgets/widgets.dart';
+import 'package:emosense_mobile/presentation/widgets/widgets.dart';
 
 class CustomerAnalyticsScreen extends StatefulWidget {
   const CustomerAnalyticsScreen({super.key});
@@ -46,7 +46,10 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
             tooltip: 'Export Report',
           ),
           IconButton(
-            onPressed: () => context.read<EmotionBloc>().add(const EmotionLoadSystemMetricsRequested()),
+            onPressed:
+                () => context.read<EmotionBloc>().add(
+                  const EmotionLoadSystemMetricsRequested(),
+                ),
             icon: const Icon(Icons.refresh_rounded),
             tooltip: 'Refresh Data',
           ),
@@ -98,21 +101,22 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
                 ),
                 child: DropdownButton<String>(
                   value: _selectedTimeframe,
-                  onChanged: (value) =>
-                      setState(() => _selectedTimeframe = value!),
+                  onChanged:
+                      (value) => setState(() => _selectedTimeframe = value!),
                   underline: const SizedBox(),
-                  items: _timeframes.map((timeframe) {
-                    return DropdownMenuItem(
-                      value: timeframe,
-                      child: Text(
-                        timeframe,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                  items:
+                      _timeframes.map((timeframe) {
+                        return DropdownMenuItem(
+                          value: timeframe,
+                          child: Text(
+                            timeframe,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
             ],
@@ -285,11 +289,12 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
     double confidence,
     String time,
   ) {
-    Color sentimentColor = sentiment == 'positive'
-        ? AppColors.positive
-        : sentiment == 'negative'
-        ? AppColors.negative
-        : AppColors.neutral;
+    Color sentimentColor =
+        sentiment == 'positive'
+            ? AppColors.positive
+            : sentiment == 'negative'
+            ? AppColors.negative
+            : AppColors.neutral;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -522,9 +527,10 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
           decoration: BoxDecoration(
-            color: isPositive
-                ? AppColors.success.withValues(alpha: 0.1)
-                : AppColors.error.withValues(alpha: 0.1),
+            color:
+                isPositive
+                    ? AppColors.success.withValues(alpha: 0.1)
+                    : AppColors.error.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(4),
           ),
           child: Text(
@@ -699,47 +705,52 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
     }
 
     context.read<EmotionBloc>().add(
-          EmotionAnalyzeTextRequested(_feedbackController.text.trim()),
-        );
+      EmotionAnalyzeTextRequested(_feedbackController.text.trim()),
+    );
   }
 
   void _showSampleFeedback() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Sample Customer Feedback'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: AppStrings.customerServiceExamples.map((example) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: GestureDetector(
-                onTap: () {
-                  _feedbackController.text = example
-                      .replaceAll(RegExp(r'^[^\s]+\s'), '')
-                      .replaceAll('"', '');
-                  Navigator.of(context).pop();
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(example, style: const TextStyle(fontSize: 14)),
-                ),
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Sample Customer Feedback'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children:
+                  AppStrings.customerServiceExamples.map((example) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: GestureDetector(
+                        onTap: () {
+                          _feedbackController.text = example
+                              .replaceAll(RegExp(r'^[^\s]+\s'), '')
+                              .replaceAll('"', '');
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: AppColors.background,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            example,
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Close'),
               ),
-            );
-          }).toList(),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Close'),
+            ],
           ),
-        ],
-      ),
     );
   }
 

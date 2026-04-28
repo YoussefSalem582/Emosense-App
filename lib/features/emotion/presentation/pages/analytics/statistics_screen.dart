@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class StatisticsScreen extends StatefulWidget {
   const StatisticsScreen({super.key});
@@ -80,7 +80,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             ),
           ),
           IconButton(
-            onPressed: () => context.read<EmotionBloc>().add(const EmotionLoadSystemMetricsRequested()),
+            onPressed:
+                () => context.read<EmotionBloc>().add(
+                  const EmotionLoadSystemMetricsRequested(),
+                ),
             icon: const Icon(Icons.refresh, color: Colors.white, size: 24),
             tooltip: 'Refresh data',
           ),
@@ -98,33 +101,34 @@ class _StatisticsScreenState extends State<StatisticsScreen>
         borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
-        children: _periods.map((period) {
-          final isSelected = _selectedPeriod == period;
-          return Expanded(
-            child: GestureDetector(
-              onTap: () => setState(() => _selectedPeriod = period),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.white.withValues(alpha: 0.3)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  period,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: isSelected ? Colors.white : Colors.white70,
-                    fontWeight: isSelected
-                        ? FontWeight.bold
-                        : FontWeight.normal,
+        children:
+            _periods.map((period) {
+              final isSelected = _selectedPeriod == period;
+              return Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() => _selectedPeriod = period),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      color:
+                          isSelected
+                              ? Colors.white.withValues(alpha: 0.3)
+                              : Colors.transparent,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      period,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: isSelected ? Colors.white : Colors.white70,
+                        fontWeight:
+                            isSelected ? FontWeight.bold : FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          );
-        }).toList(),
+              );
+            }).toList(),
       ),
     );
   }
@@ -332,26 +336,29 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       subtitle: 'Breakdown by emotion type',
       icon: Icons.pie_chart,
       color: AppColors.primary,
-      child: analytics?.emotionCounts.isNotEmpty == true
-          ? Column(
-              children: analytics!.emotionCounts.entries.map((entry) {
-                final percentage = analytics.totalAnalyses > 0
-                    ? (entry.value / analytics.totalAnalyses) * 100
-                    : 0.0;
-                return _buildProgressBar(
-                  entry.key,
-                  entry.value,
-                  percentage,
-                  EmotionUtils.getEmotionColor(entry.key),
-                );
-              }).toList(),
-            )
-          : const Center(
-              child: Text(
-                'No emotion data available',
-                style: TextStyle(color: AppColors.textSecondary),
+      child:
+          analytics?.emotionCounts.isNotEmpty == true
+              ? Column(
+                children:
+                    analytics!.emotionCounts.entries.map((entry) {
+                      final percentage =
+                          analytics.totalAnalyses > 0
+                              ? (entry.value / analytics.totalAnalyses) * 100
+                              : 0.0;
+                      return _buildProgressBar(
+                        entry.key,
+                        entry.value,
+                        percentage,
+                        EmotionUtils.getEmotionColor(entry.key),
+                      );
+                    }).toList(),
+              )
+              : const Center(
+                child: Text(
+                  'No emotion data available',
+                  style: TextStyle(color: AppColors.textSecondary),
+                ),
               ),
-            ),
     );
   }
 
@@ -362,26 +369,29 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       subtitle: 'Overall sentiment breakdown',
       icon: Icons.sentiment_satisfied,
       color: AppColors.accent,
-      child: analytics?.sentimentCounts.isNotEmpty == true
-          ? Column(
-              children: analytics!.sentimentCounts.entries.map((entry) {
-                final percentage = analytics.totalAnalyses > 0
-                    ? (entry.value / analytics.totalAnalyses) * 100
-                    : 0.0;
-                return _buildProgressBar(
-                  entry.key,
-                  entry.value,
-                  percentage,
-                  _getSentimentColor(entry.key),
-                );
-              }).toList(),
-            )
-          : const Center(
-              child: Text(
-                'No sentiment data available',
-                style: TextStyle(color: AppColors.textSecondary),
+      child:
+          analytics?.sentimentCounts.isNotEmpty == true
+              ? Column(
+                children:
+                    analytics!.sentimentCounts.entries.map((entry) {
+                      final percentage =
+                          analytics.totalAnalyses > 0
+                              ? (entry.value / analytics.totalAnalyses) * 100
+                              : 0.0;
+                      return _buildProgressBar(
+                        entry.key,
+                        entry.value,
+                        percentage,
+                        _getSentimentColor(entry.key),
+                      );
+                    }).toList(),
+              )
+              : const Center(
+                child: Text(
+                  'No sentiment data available',
+                  style: TextStyle(color: AppColors.textSecondary),
+                ),
               ),
-            ),
     );
   }
 
@@ -409,40 +419,45 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       subtitle: 'Backend system health metrics',
       icon: Icons.monitor_heart,
       color: AppColors.success,
-      child: metrics != null
-          ? Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildMiniStat(
-                      'CPU',
-                      metrics.cpuUsageFormatted,
-                      AppColors.primary,
-                    ),
-                    _buildMiniStat(
-                      'Memory',
-                      metrics.memoryUsageFormatted,
-                      AppColors.accent,
-                    ),
-                    _buildMiniStat('Uptime', metrics.uptime, AppColors.success),
-                  ],
+      child:
+          metrics != null
+              ? Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildMiniStat(
+                        'CPU',
+                        metrics.cpuUsageFormatted,
+                        AppColors.primary,
+                      ),
+                      _buildMiniStat(
+                        'Memory',
+                        metrics.memoryUsageFormatted,
+                        AppColors.accent,
+                      ),
+                      _buildMiniStat(
+                        'Uptime',
+                        metrics.uptime,
+                        AppColors.success,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  _buildProgressBar(
+                    'Success Rate',
+                    metrics.successfulRequests,
+                    metrics.successRate,
+                    AppColors.success,
+                  ),
+                ],
+              )
+              : const Center(
+                child: Text(
+                  'Loading system metrics...',
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
-                const SizedBox(height: 16),
-                _buildProgressBar(
-                  'Success Rate',
-                  metrics.successfulRequests,
-                  metrics.successRate,
-                  AppColors.success,
-                ),
-              ],
-            )
-          : const Center(
-              child: Text(
-                'Loading system metrics...',
-                style: TextStyle(color: AppColors.textSecondary),
               ),
-            ),
     );
   }
 
@@ -453,45 +468,48 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       subtitle: 'Request processing statistics',
       icon: Icons.api,
       color: AppColors.info,
-      child: analytics?.performanceStats != null
-          ? Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    _buildMiniStat(
-                      'Avg Time',
-                      analytics!
-                          .performanceStats
-                          .averageProcessingTimeFormatted,
-                      AppColors.info,
-                    ),
-                    _buildMiniStat(
-                      'Success',
-                      analytics.performanceStats.successRateFormatted,
+      child:
+          analytics?.performanceStats != null
+              ? Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildMiniStat(
+                        'Avg Time',
+                        analytics!
+                            .performanceStats
+                            .averageProcessingTimeFormatted,
+                        AppColors.info,
+                      ),
+                      _buildMiniStat(
+                        'Success',
+                        analytics.performanceStats.successRateFormatted,
+                        AppColors.success,
+                      ),
+                      _buildMiniStat(
+                        'Total',
+                        analytics.performanceStats.totalRequests.toString(),
+                        AppColors.primary,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  LinearProgressIndicator(
+                    value: analytics.performanceStats.successRate,
+                    backgroundColor: AppColors.info.withValues(alpha: 0.2),
+                    valueColor: AlwaysStoppedAnimation<Color>(
                       AppColors.success,
                     ),
-                    _buildMiniStat(
-                      'Total',
-                      analytics.performanceStats.totalRequests.toString(),
-                      AppColors.primary,
-                    ),
-                  ],
+                  ),
+                ],
+              )
+              : const Center(
+                child: Text(
+                  'Loading API metrics...',
+                  style: TextStyle(color: AppColors.textSecondary),
                 ),
-                const SizedBox(height: 16),
-                LinearProgressIndicator(
-                  value: analytics.performanceStats.successRate,
-                  backgroundColor: AppColors.info.withValues(alpha: 0.2),
-                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.success),
-                ),
-              ],
-            )
-          : const Center(
-              child: Text(
-                'Loading API metrics...',
-                style: TextStyle(color: AppColors.textSecondary),
               ),
-            ),
     );
   }
 

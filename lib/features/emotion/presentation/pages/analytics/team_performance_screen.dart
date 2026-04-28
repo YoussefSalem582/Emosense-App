@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class TeamPerformanceScreen extends StatefulWidget {
   const TeamPerformanceScreen({super.key});
@@ -92,21 +92,22 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
                 ),
                 child: DropdownButton<String>(
                   value: _selectedDepartment,
-                  onChanged: (value) =>
-                      setState(() => _selectedDepartment = value!),
+                  onChanged:
+                      (value) => setState(() => _selectedDepartment = value!),
                   underline: const SizedBox(),
-                  items: _departments.map((department) {
-                    return DropdownMenuItem(
-                      value: department,
-                      child: Text(
-                        department,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    );
-                  }).toList(),
+                  items:
+                      _departments.map((department) {
+                        return DropdownMenuItem(
+                          value: department,
+                          child: Text(
+                            department,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        );
+                      }).toList(),
                 ),
               ),
             ],
@@ -693,11 +694,12 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: score >= 90
-                    ? AppColors.success
-                    : score >= 80
-                    ? AppColors.warning
-                    : AppColors.error,
+                color:
+                    score >= 90
+                        ? AppColors.success
+                        : score >= 80
+                        ? AppColors.warning
+                        : AppColors.error,
               ),
             ),
           ),
