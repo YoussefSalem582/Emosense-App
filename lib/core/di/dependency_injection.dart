@@ -21,7 +21,7 @@ import '../../features/tickets/domain/usecases/load_tickets_usecase.dart';
 import '../../features/tickets/domain/usecases/update_ticket_status_usecase.dart';
 import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
-import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
+import '../../features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
 import '../../features/employee/presentation/bloc/employee_performance_bloc.dart';
 import '../../features/auth/presentation/bloc/user_bloc.dart';
