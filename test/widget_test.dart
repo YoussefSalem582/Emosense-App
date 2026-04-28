@@ -1,24 +1,33 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
+// Basic smoke test: DI + root app render on the splash route.
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 
-import 'package:emosense_mobile/main.dart';
+import 'package:emosense_mobile/app.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/core/network/connection_manager.dart';
 
 void main() {
-  testWidgets('Emosense app smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const EmosenseApp());
+  setUp(() async {
+    await ConnectionManager.resetForTesting();
+    await GetIt.instance.reset();
+    await di.initDependencies();
+  });
 
-    // Verify that our app contains the main elements
-    expect(find.text('Dashboard'), findsOneWidget);
-    expect(find.text('Analytics'), findsOneWidget);
-    expect(find.text('Teams'), findsOneWidget);
-    expect(find.text('Live Monitor'), findsOneWidget);
-    expect(find.text('Settings'), findsOneWidget);
+  tearDown(() async {
+    await GetIt.instance.reset();
+    await ConnectionManager.resetForTesting();
+  });
+
+  testWidgets('Emosense app smoke test', (WidgetTester tester) async {
+    await tester.pumpWidget(const EmosenseApp());
+    await tester.pump();
+
+    // Splash uses chained [Future.delayed] calls; drain them so no timers
+    // outlive the test. Then onboarding is shown.
+    await tester.pump(const Duration(seconds: 4));
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('Welcome to EmoSense'), findsOneWidget);
   });
 }

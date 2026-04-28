@@ -1,140 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:emosense_mobile/features/tickets/presentation/employee/employee_tickets_screen.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
+import 'package:emosense_mobile/core/network/connection_manager.dart';
+import 'package:emosense_mobile/features/tickets/presentation/bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/features/tickets/presentation/employee/employee_tickets_screen.dart';
+
+/// Pumps the screen; avoids [pumpAndSettle] because of repeating animations.
+Future<void> pumpTicketsScreen(WidgetTester tester) async {
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: ThemeData(extensions: const [CustomSpacing()]),
+      home: BlocProvider(
+        create: (_) => di.sl<TicketsBloc>(),
+        child: const EmployeeTicketsScreen(),
+      ),
+    ),
+  );
+  await tester.pump();
+  await tester.pump(const Duration(milliseconds: 500));
+}
 
 void main() {
+  setUp(() async {
+    await ConnectionManager.resetForTesting();
+    await GetIt.instance.reset();
+    await di.initDependencies();
+  });
+
+  tearDown(() async {
+    await GetIt.instance.reset();
+    await ConnectionManager.resetForTesting();
+  });
+
   group('EmployeeTicketsScreen', () {
-    testWidgets('should display tickets screen with tabs', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData(extensions: const [CustomSpacing()]),
-          home: const EmployeeTicketsScreen(),
-        ),
-      );
+    testWidgets('shows header, filters, and employee tickets from bloc',
+        (tester) async {
+      await pumpTicketsScreen(tester);
 
-      // Wait for the widget to settle
-      await tester.pumpAndSettle();
-
-      // Check if the screen title is displayed
-      expect(find.text('Customer Interactions'), findsOneWidget);
-      expect(
-        find.text('Manage customer tickets • Support dashboard'),
-        findsOneWidget,
-      );
-
-      // Check if tabs are displayed
-      expect(find.text('My Tickets'), findsOneWidget);
-      expect(find.text('Analytics'), findsOneWidget);
-
-      // Check if the new ticket button is displayed
+      expect(find.text('My Support Tickets'), findsOneWidget);
+      expect(find.text('Total Tickets: 3'), findsOneWidget);
       expect(find.text('New Ticket'), findsOneWidget);
 
-      // Check if filter chips are displayed
-      expect(find.text('All (12)'), findsOneWidget);
-      expect(find.text('Open (8)'), findsOneWidget);
-      expect(find.text('In Progress (3)'), findsOneWidget);
-      expect(find.text('Resolved (1)'), findsOneWidget);
-    });
+      expect(find.text('All (3)'), findsOneWidget);
+      expect(find.text('Open (2)'), findsOneWidget);
+      expect(find.text('In Progress (1)'), findsOneWidget);
+      expect(find.text('Resolved (0)'), findsOneWidget);
 
-    testWidgets('should switch between tabs correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData(extensions: const [CustomSpacing()]),
-          home: const EmployeeTicketsScreen(),
-        ),
-      );
-
-      await tester.pumpAndSettle();
-
-      // Initially on My Tickets tab
-      expect(find.text('My Support Tickets'), findsOneWidget);
-
-      // Tap on Analytics tab
-      await tester.tap(find.text('Analytics'));
-      await tester.pumpAndSettle();
-
-      // Should show analytics content
-      expect(find.text('Ticket Analytics'), findsOneWidget);
-      expect(find.text('Total Tickets'), findsOneWidget);
-      expect(find.text('Resolved'), findsOneWidget);
-      expect(find.text('Avg Time'), findsOneWidget);
-    });
-
-    testWidgets('should display ticket cards', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData(extensions: const [CustomSpacing()]),
-          home: const EmployeeTicketsScreen(),
-        ),
-      );
-
-      await tester.pumpAndSettle();
-
-      // Check if sample tickets are displayed
-      expect(find.text('TK-001'), findsOneWidget);
+      // Newest-first order: EMP-003, EMP-001, then EMP-002 (scroll to see).
+      expect(find.text('EMP-003'), findsOneWidget);
+      expect(find.text('Account Access Issue'), findsOneWidget);
+      expect(find.text('EMP-001'), findsOneWidget);
       expect(find.text('Product Quality Issue'), findsOneWidget);
-      expect(find.text('Sarah Johnson'), findsOneWidget);
 
-      expect(find.text('TK-002'), findsOneWidget);
+      await tester.drag(
+        find.byWidgetPredicate(
+          (w) => w is ListView && w.scrollDirection == Axis.vertical,
+        ),
+        const Offset(0, -400),
+      );
+      await tester.pump();
+      expect(find.text('EMP-002'), findsOneWidget);
       expect(find.text('Shipping Delay Inquiry'), findsOneWidget);
-      expect(find.text('Mike Davis'), findsOneWidget);
     });
 
-    testWidgets('should filter tickets correctly', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData(extensions: const [CustomSpacing()]),
-          home: const EmployeeTicketsScreen(),
-        ),
-      );
+    testWidgets('filters tickets by status chips', (tester) async {
+      await pumpTicketsScreen(tester);
 
-      await tester.pumpAndSettle();
+      expect(find.text('EMP-003'), findsOneWidget);
+      expect(find.text('EMP-001'), findsOneWidget);
 
-      // Initially shows all tickets
-      expect(find.text('TK-001'), findsOneWidget);
-      expect(find.text('TK-002'), findsOneWidget);
-      expect(find.text('TK-003'), findsOneWidget);
+      await tester.tap(find.text('Open (2)'));
+      await tester.pump(const Duration(milliseconds: 100));
 
-      // Tap on Open filter
-      await tester.tap(find.text('Open (8)'));
-      await tester.pumpAndSettle();
+      expect(find.text('EMP-003'), findsOneWidget);
+      expect(find.text('EMP-001'), findsOneWidget);
+      expect(find.text('EMP-002'), findsNothing);
 
-      // Should only show open tickets
-      expect(find.text('TK-001'), findsOneWidget);
-      expect(find.text('TK-002'), findsNothing);
-      expect(find.text('TK-003'), findsNothing);
+      await tester.tap(find.text('In Progress (1)'));
+      await tester.pump(const Duration(milliseconds: 100));
 
-      // Tap on Resolved filter
-      await tester.tap(find.text('Resolved (1)'));
-      await tester.pumpAndSettle();
+      expect(find.text('EMP-002'), findsOneWidget);
+      expect(find.text('EMP-001'), findsNothing);
+      expect(find.text('EMP-003'), findsNothing);
 
-      // Should only show resolved tickets
-      expect(find.text('TK-001'), findsNothing);
-      expect(find.text('TK-002'), findsNothing);
-      expect(find.text('TK-003'), findsOneWidget);
+      await tester.tap(find.text('Resolved (0)'));
+      await tester.pump(const Duration(milliseconds: 100));
+
+      expect(find.text('EMP-001'), findsNothing);
+      expect(find.text('EMP-002'), findsNothing);
+      expect(find.text('EMP-003'), findsNothing);
     });
 
-    testWidgets('should open create ticket dialog', (tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: ThemeData(extensions: const [CustomSpacing()]),
-          home: const EmployeeTicketsScreen(),
-        ),
-      );
+    testWidgets('opens create ticket dialog', (tester) async {
+      await pumpTicketsScreen(tester);
 
-      await tester.pumpAndSettle();
-
-      // Tap on New Ticket button
       await tester.tap(find.text('New Ticket'));
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(milliseconds: 100));
 
-      // Should show create ticket dialog
-      expect(find.text('Create New Ticket'), findsOneWidget);
-      expect(find.text('Title'), findsOneWidget);
-      expect(find.text('Description'), findsOneWidget);
+      expect(find.text('New Support Ticket'), findsOneWidget);
       expect(find.text('Cancel'), findsOneWidget);
       expect(find.text('Create Ticket'), findsOneWidget);
+      expect(find.byType(TextFormField), findsWidgets);
     });
   });
 }
