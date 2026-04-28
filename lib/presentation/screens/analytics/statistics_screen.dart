@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/emotion/emotion_cubit.dart';
+import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 
 import '../../../core/core.dart';
 
@@ -80,7 +80,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             ),
           ),
           IconButton(
-            onPressed: () => context.read<EmotionCubit>().loadSystemMetrics(),
+            onPressed: () => context.read<EmotionBloc>().add(const EmotionLoadSystemMetricsRequested()),
             icon: const Icon(Icons.refresh, color: Colors.white, size: 24),
             tooltip: 'Refresh data',
           ),
@@ -197,7 +197,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   Widget _buildDistributionTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-      child: BlocBuilder<EmotionCubit, EmotionState>(
+      child: BlocBuilder<EmotionBloc, EmotionState>(
         builder: (context, state) {
           return Column(
             children: [
@@ -216,7 +216,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
   Widget _buildPerformanceTab() {
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(24, 32, 24, 32),
-      child: BlocBuilder<EmotionCubit, EmotionState>(
+      child: BlocBuilder<EmotionBloc, EmotionState>(
         builder: (context, state) {
           return Column(
             children: [

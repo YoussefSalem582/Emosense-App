@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../core/di/dependency_injection.dart' as di;
 import '../../employee_dashboard_screen/employee_dashboard_screen.dart';
 import '../../employee_profile_screen/employee_profile_screen.dart';
+import '../../../../../features/employee/presentation/employee_performance_screen.dart';
+import '../../../../../features/tickets/presentation/bloc/tickets_bloc.dart';
 import '../../../../../features/tickets/presentation/employee/employee_tickets_screen.dart';
 import '../../../analysis/video_analysis_screen/video_analysis_screen.dart';
 import '../../employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
@@ -56,14 +61,17 @@ class EmployeeScreenFactory {
     switch (index) {
       case 0: // Dashboard
         return const EmployeeDashboardScreen();
-      case 1: // Performance (placeholder)
-        return _buildPerformanceScreen();
+      case 1: // Performance
+        return const EmployeePerformanceScreen();
       case 2: // Customer Analytics
         return const CustomerAnalyticsScreen();
       case 3: // Profile
         return const EmployeeProfileScreen();
       case 4: // Tickets
-        return const EmployeeTicketsScreen();
+        return BlocProvider(
+          create: (_) => di.sl<TicketsBloc>(),
+          child: const EmployeeTicketsScreen(),
+        );
       case 5: // Analysis Tools
         return EmployeeAnalysisToolsScreen(
           onAnalysisToolSelected: onAnalysisToolSelected,
@@ -77,16 +85,6 @@ class EmployeeScreenFactory {
       default:
         return _buildPlaceholderScreen(index);
     }
-  }
-
-  /// Build performance screen placeholder
-  static Widget _buildPerformanceScreen() {
-    return const PlaceholderScreen(
-      title: 'Performance Analytics',
-      description: 'Track your performance metrics and goals',
-      icon: Icons.trending_up,
-      comingSoon: true,
-    );
   }
 
   /// Build text analysis placeholder

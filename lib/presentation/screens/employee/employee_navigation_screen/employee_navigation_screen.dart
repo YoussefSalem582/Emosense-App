@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../../../core/core.dart';
 import '../../../widgets/navigation/employee_bottom_nav_bar.dart';
 import 'widgets/employee_app_bar.dart';
@@ -61,8 +62,8 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
   }
 
   void _preloadEssentialScreens() {
-    // Preload the most commonly used screens
-    EmployeeScreenFactory.preloadScreens([0, 3, 4, 5]);
+    // Preload dashboard, performance, profile, tickets, and analysis tools
+    EmployeeScreenFactory.preloadScreens([0, 1, 3, 4, 5]);
   }
 
   @override
@@ -204,7 +205,7 @@ class _EmployeeNavigationScreenState extends State<EmployeeNavigationScreen>
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  AppRouter.toSplash(context);
+                  AuthSessionNavigator.signOutAndGoToSplash(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,

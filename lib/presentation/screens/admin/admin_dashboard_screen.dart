@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/admin/presentation/bloc/admin_dashboard_bloc.dart';
+
 import '../../../core/core.dart';
-import '../../cubit/admin_dashboard/admin_dashboard_cubit.dart';
-import '../../cubit/admin_dashboard/admin_dashboard_state.dart';
 import '../../widgets/common/animated_background_widget.dart';
 
 class AdminDashboardScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     super.initState();
     _initializeAnimations();
     // Load dashboard data when the screen initializes
-    context.read<AdminDashboardCubit>().loadDashboard();
+    context.read<AdminDashboardBloc>().add(const AdminDashboardLoadRequested());
   }
 
   void _initializeAnimations() {
@@ -74,7 +74,7 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
           // Dashboard Content
           FadeTransition(
             opacity: _fadeAnimation,
-            child: BlocBuilder<AdminDashboardCubit, AdminDashboardState>(
+            child: BlocBuilder<AdminDashboardBloc, AdminDashboardState>(
               builder: (context, state) {
                 if (state is AdminDashboardLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -108,7 +108,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
                         SizedBox(height: customSpacing.lg),
                         ElevatedButton(
                           onPressed: () {
-                            context.read<AdminDashboardCubit>().loadDashboard();
+                            context.read<AdminDashboardBloc>().add(
+                                  const AdminDashboardLoadRequested(),
+                                );
                           },
                           child: const Text('Retry'),
                         ),
@@ -138,7 +140,12 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
     CustomSpacing customSpacing,
   ) {
     return RefreshIndicator(
-      onRefresh: () => context.read<AdminDashboardCubit>().refreshDashboard(),
+      onRefresh: () async {
+        context.read<AdminDashboardBloc>().add(
+              const AdminDashboardRefreshRequested(),
+            );
+        await Future<void>.delayed(const Duration(milliseconds: 850));
+      },
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(customSpacing.lg),

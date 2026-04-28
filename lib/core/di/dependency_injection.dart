@@ -6,31 +6,31 @@ import '../../data/services/emotion_api_service.dart';
 import '../../features/analysis/data/repositories/video_analysis_repository_impl.dart';
 import '../../features/analysis/data/services/video_analysis_api_service.dart';
 import '../../features/analysis/domain/repositories/video_analysis_repository.dart';
+import '../../features/analysis/presentation/bloc/text_analysis_bloc.dart';
 import '../../features/analysis/presentation/bloc/video_analysis_bloc.dart';
+import '../../features/analysis/presentation/bloc/voice_analysis_bloc.dart';
 import '../../features/tickets/data/repositories/mock_ticket_repository.dart';
 import '../../features/tickets/domain/repositories/ticket_repository.dart';
 import '../../features/tickets/domain/usecases/ticket_usecases.dart';
 import '../../features/tickets/presentation/bloc/tickets_bloc.dart';
+import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
+import '../../features/employee/presentation/bloc/employee_analytics_bloc.dart';
+import '../../features/employee/presentation/bloc/employee_dashboard_bloc.dart';
+import '../../features/employee/presentation/bloc/employee_performance_bloc.dart';
+import '../../features/auth/presentation/bloc/user_bloc.dart';
+import '../../features/emotion/presentation/bloc/emotion_bloc.dart';
+import '../network/connection_bloc.dart';
 
-// Cubits
-import '../../presentation/cubit/emotion/emotion_cubit.dart';
-import '../../presentation/cubit/user/user_cubit.dart';
-import '../../presentation/cubit/text_analysis/text_analysis_cubit.dart';
-import '../../presentation/cubit/voice_analysis/voice_analysis_cubit.dart';
-import '../../presentation/cubit/analysis/analysis_cubit.dart';
-import '../../presentation/cubit/employee_dashboard/employee_dashboard_cubit.dart';
-import '../../presentation/cubit/employee_analytics/employee_analytics_cubit.dart';
-import '../../presentation/cubit/employee_performance/employee_performance_cubit.dart';
-import '../../presentation/cubit/admin_dashboard/admin_dashboard_cubit.dart';
 final GetIt sl = GetIt.instance;
 
-Future<void> init() async {
+/// Registers all dependencies (aligned with reference app naming).
+Future<void> initDependencies() async {
   // HTTP Client
   sl.registerLazySingleton<http.Client>(() => http.Client());
 
   _initAnalysis();
   _initTickets();
-  _initPresentationCubits();
+  _initGlobalBlocs();
 }
 
 void _initAnalysis() {
@@ -44,20 +44,18 @@ void _initAnalysis() {
     () => VideoAnalysisRepositoryImpl(sl()),
   );
   sl.registerFactory<VideoAnalysisBloc>(() => VideoAnalysisBloc(sl()));
-  sl.registerFactory<TextAnalysisCubit>(() => TextAnalysisCubit(sl()));
-  sl.registerFactory<VoiceAnalysisCubit>(() => VoiceAnalysisCubit());
-  sl.registerFactory<AnalysisCubit>(() => AnalysisCubit(sl()));
+  sl.registerFactory<TextAnalysisBloc>(() => TextAnalysisBloc(sl()));
+  sl.registerFactory<VoiceAnalysisBloc>(() => VoiceAnalysisBloc());
 }
 
-void _initPresentationCubits() {
-  sl.registerFactory<EmotionCubit>(() => EmotionCubit(sl()));
-  sl.registerFactory<UserCubit>(() => UserCubit());
-  sl.registerFactory<EmployeeDashboardCubit>(() => EmployeeDashboardCubit());
-  sl.registerFactory<EmployeeAnalyticsCubit>(() => EmployeeAnalyticsCubit());
-  sl.registerFactory<EmployeePerformanceCubit>(
-    () => EmployeePerformanceCubit(),
-  );
-  sl.registerFactory<AdminDashboardCubit>(() => AdminDashboardCubit());
+void _initGlobalBlocs() {
+  sl.registerFactory<UserBloc>(() => UserBloc());
+  sl.registerFactory<EmotionBloc>(() => EmotionBloc(sl()));
+  sl.registerFactory<ConnectionBloc>(() => ConnectionBloc());
+  sl.registerFactory<EmployeeDashboardBloc>(() => EmployeeDashboardBloc());
+  sl.registerFactory<EmployeeAnalyticsBloc>(() => EmployeeAnalyticsBloc());
+  sl.registerFactory<EmployeePerformanceBloc>(() => EmployeePerformanceBloc());
+  sl.registerFactory<AdminDashboardBloc>(() => AdminDashboardBloc());
 }
 
 void _initTickets() {

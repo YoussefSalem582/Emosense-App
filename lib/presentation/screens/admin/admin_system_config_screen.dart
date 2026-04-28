@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/core.dart';
+import '../../widgets/cards/connection_status_card.dart';
 import '../../widgets/common/animated_background_widget.dart';
 
 class AdminSystemConfigScreen extends StatefulWidget {
@@ -81,6 +83,8 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                   ), // Space for admin badge
                   _buildHeader(theme, customSpacing),
                   SizedBox(height: customSpacing.xl),
+                  _buildBackendSection(context, customSpacing),
+                  SizedBox(height: customSpacing.xl),
                   _buildSystemInfo(customSpacing),
                   SizedBox(height: customSpacing.xl),
                   _buildSystemSettings(customSpacing),
@@ -93,6 +97,36 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBackendSection(
+    BuildContext context,
+    CustomSpacing customSpacing,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Backend connection',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Colors.white,
+          ),
+        ),
+        SizedBox(height: customSpacing.sm),
+        const ConnectionStatusCard(),
+        SizedBox(height: customSpacing.sm),
+        TextButton.icon(
+          onPressed: () => AppRouter.toAppStatus(context),
+          icon: const Icon(Icons.info_outline, color: Colors.white70),
+          label: const Text(
+            'Full connection details',
+            style: TextStyle(color: Colors.white70),
+          ),
+        ),
+      ],
     );
   }
 
@@ -367,7 +401,7 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                 _systemSettings[key] = newValue;
               });
             },
-            activeColor: _getSettingColor(key),
+            activeThumbColor: _getSettingColor(key),
           ),
         ],
       ),

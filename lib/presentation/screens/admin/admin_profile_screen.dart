@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../core/core.dart';
 import '../../widgets/common/animated_background_widget.dart';
 
@@ -738,10 +739,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  // Handle logout logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Signed out successfully')),
-                  );
+                  AuthSessionNavigator.signOutAndGoToSplash(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFFF6B6B),

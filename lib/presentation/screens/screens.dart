@@ -18,3 +18,4 @@ export 'onboarding_screens/onboarding_screen.dart';
 export 'auth/auth_choice_screens/auth_choice_screen.dart';
 export 'auth/login_screens/login_screen.dart';
 export 'auth/signup_screens/signup_screen.dart';
+export 'auth/role_selection_screen.dart';

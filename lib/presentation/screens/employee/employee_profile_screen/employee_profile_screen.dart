@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../core/core.dart';
 import '../../../widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
@@ -87,6 +88,25 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
                       (value) => setState(() => _emailAlerts = value),
                   onLanguageChanged:
                       (value) => setState(() => _selectedLanguage = value!),
+                ),
+                const SizedBox(height: 20),
+                Card(
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.cloud_outlined,
+                      color: AppColors.primary,
+                    ),
+                    title: const Text('App & connection status'),
+                    subtitle: const Text(
+                      'Backend connectivity and diagnostics',
+                    ),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => AppRouter.toAppStatus(context),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 ProfileQuickActionsWidget(
@@ -216,7 +236,7 @@ class _EmployeeProfileScreenState extends State<EmployeeProfileScreen>
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.pushReplacementNamed(context, '/');
+                  AuthSessionNavigator.signOutAndGoToSplash(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,

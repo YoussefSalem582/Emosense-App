@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/core.dart';
-import '../../../core/routing/app_router.dart';
-import '../../../core/utils/screen_state_manager.dart';
 import '../../../core/di/dependency_injection.dart' as di;
 import '../../../features/tickets/presentation/bloc/tickets_bloc.dart';
-import '../../cubit/admin_dashboard/admin_dashboard_cubit.dart';
 import '../../widgets/navigation/admin_bottom_nav_bar.dart';
 import 'widgets/admin_app_bar.dart';
 import 'widgets/admin_dialogs.dart';
@@ -87,10 +84,7 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
     Widget screen;
     switch (index) {
       case 0:
-        screen = BlocProvider(
-          create: (context) => AdminDashboardCubit(),
-          child: const AdminDashboardScreen(),
-        );
+        screen = const AdminDashboardScreen();
         break;
       case 1:
         screen = const AdminUserManagementScreen();
@@ -340,7 +334,7 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
               ElevatedButton(
                 onPressed: () {
                   Navigator.pop(context);
-                  AppRouter.toSplash(context);
+                  AuthSessionNavigator.signOutAndGoToSplash(context);
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,

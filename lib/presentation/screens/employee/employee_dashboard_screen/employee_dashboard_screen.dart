@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/features/employee/presentation/bloc/employee_dashboard_bloc.dart';
+
 import '../../../../core/core.dart';
-import '../../../cubit/employee_dashboard/employee_dashboard_cubit.dart';
 import '../../../widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
 import '../../screens.dart';
@@ -26,7 +27,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen>
     super.initState();
     _initializeAnimations();
     // Load dashboard data when the screen initializes
-    context.read<EmployeeDashboardCubit>().loadDashboard();
+    context
+        .read<EmployeeDashboardBloc>()
+        .add(const EmployeeDashboardLoadRequested());
   }
 
   void _initializeAnimations() {
@@ -76,7 +79,7 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen>
           // Dashboard Content
           FadeTransition(
             opacity: _fadeAnimation,
-            child: BlocBuilder<EmployeeDashboardCubit, EmployeeDashboardState>(
+            child: BlocBuilder<EmployeeDashboardBloc, EmployeeDashboardState>(
               builder: (context, state) {
                 if (state is EmployeeDashboardLoading) {
                   return const Center(child: CircularProgressIndicator());
@@ -109,9 +112,9 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen>
                         SizedBox(height: customSpacing.lg),
                         ElevatedButton(
                           onPressed: () {
-                            context
-                                .read<EmployeeDashboardCubit>()
-                                .refreshDashboard();
+                            context.read<EmployeeDashboardBloc>().add(
+                                  const EmployeeDashboardRefreshRequested(),
+                                );
                           },
                           child: const Text('Retry'),
                         ),
@@ -125,9 +128,10 @@ class _EmployeeDashboardScreenState extends State<EmployeeDashboardScreen>
 
                 return RefreshIndicator(
                   onRefresh: () async {
-                    await context
-                        .read<EmployeeDashboardCubit>()
-                        .refreshDashboard();
+                    context.read<EmployeeDashboardBloc>().add(
+                          const EmployeeDashboardRefreshRequested(),
+                        );
+                    await Future<void>.delayed(const Duration(milliseconds: 550));
                   },
                   child: CustomScrollView(
                     slivers: [

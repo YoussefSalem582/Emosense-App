@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/core.dart';
-import '../../cubit/emotion/emotion_cubit.dart';
+import 'package:emosense_mobile/features/emotion/presentation/bloc/emotion_bloc.dart';
 
 import '../../widgets/widgets.dart';
 
@@ -46,7 +46,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
             tooltip: 'Export Report',
           ),
           IconButton(
-            onPressed: () => context.read<EmotionCubit>().loadSystemMetrics(),
+            onPressed: () => context.read<EmotionBloc>().add(const EmotionLoadSystemMetricsRequested()),
             icon: const Icon(Icons.refresh_rounded),
             tooltip: 'Refresh Data',
           ),
@@ -167,7 +167,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         children: [
           _buildCustomerFeedbackInput(),
           const SizedBox(height: 24),
-          BlocBuilder<EmotionCubit, EmotionState>(
+          BlocBuilder<EmotionBloc, EmotionState>(
             builder: (context, state) {
               if (state is EmotionSuccess) {
                 return _buildAnalysisResults(state);
@@ -698,7 +698,9 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       return;
     }
 
-    context.read<EmotionCubit>().analyzeText(_feedbackController.text.trim());
+    context.read<EmotionBloc>().add(
+          EmotionAnalyzeTextRequested(_feedbackController.text.trim()),
+        );
   }
 
   void _showSampleFeedback() {

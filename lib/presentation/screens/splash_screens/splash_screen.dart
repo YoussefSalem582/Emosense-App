@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../../core/core.dart';
-import '../../../core/routing/app_router.dart';
+import '../../../domain/entities/user_entity.dart';
+import '../../../features/auth/presentation/bloc/user_bloc.dart';
 import 'widgets/splash.dart';
 
 /// Enhanced Splash Screen with modern animations and branding
@@ -132,12 +134,23 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> _navigateToNextScreen() async {
     try {
-      // Always navigate to onboarding after splash
       if (!mounted) return;
+
+      final userState = context.read<UserBloc>().state;
+      if (userState is UserAuthenticated) {
+        switch (userState.user.role) {
+          case UserRole.admin:
+            AppRouter.toAdminDashboard(context);
+            break;
+          case UserRole.employee:
+            AppRouter.toEmployeeDashboard(context);
+            break;
+        }
+        return;
+      }
 
       AppRouter.toOnboarding(context);
     } catch (e) {
-      // Fallback navigation to onboarding
       if (mounted) {
         AppRouter.toOnboarding(context);
       }

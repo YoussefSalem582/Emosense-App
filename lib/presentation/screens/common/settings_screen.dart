@@ -220,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   item.onChanged!(value);
                 }
               : null,
-          activeColor: AppColors.primary,
+          activeThumbColor: AppColors.primary,
         );
         
       case SettingsItemType.info:
