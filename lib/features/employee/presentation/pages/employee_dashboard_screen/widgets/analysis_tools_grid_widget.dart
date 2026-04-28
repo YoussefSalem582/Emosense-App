@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 
 class AnalysisToolsGridWidget extends StatelessWidget {
   final VoidCallback onTextAnalysisTap;
@@ -112,20 +113,16 @@ class _AnalysisToolCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: SurfaceSectionCard(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: color.withValues(alpha: 0.1),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
-            ),
-          ],
-          border: Border.all(color: color.withValues(alpha: 0.1), width: 1),
-        ),
+        boxShadow: [
+          BoxShadow(
+            color: color.withValues(alpha: 0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+        border: Border.all(color: color.withValues(alpha: 0.1), width: 1),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

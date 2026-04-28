@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 
 // Using dynamic data type until cubit is implemented
 class RecentActivityListWidget extends StatelessWidget {
@@ -65,18 +66,15 @@ class RecentActivityListWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: customSpacing.md),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.primary.withValues(alpha: 0.05),
-                  blurRadius: 20,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
+          SurfaceSectionCard(
+            padding: EdgeInsets.zero,
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
+              ),
+            ],
             child: ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),

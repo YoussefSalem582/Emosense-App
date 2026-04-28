@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 
 /// Widget that provides sample video URLs for testing
 class VideoSampleLinksWidget extends StatelessWidget {
@@ -51,20 +52,10 @@ class VideoSampleLinksWidget extends StatelessWidget {
           offset: Offset(0, 50 * (1 - animation.value)),
           child: Opacity(
             opacity: animation.value.clamp(0.0, 1.0),
-            child: Container(
+            child: SurfaceSectionCard(
               margin: const EdgeInsets.only(bottom: 20),
               padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 20,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
+              elevation: SurfaceElevation.mediumPanel,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/presentation/widgets/common/surface_section_card.dart';
 import '../../../core/core.dart';
 
 class VideoAnalysisResultWidget extends StatefulWidget {
@@ -55,19 +56,10 @@ class _VideoAnalysisResultWidgetState extends State<VideoAnalysisResultWidget>
           begin: const Offset(0, 0.3),
           end: Offset.zero,
         ).animate(_animation),
-        child: Container(
+        child: SurfaceSectionCard(
           margin: EdgeInsets.all(customSpacing.md),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
+          padding: EdgeInsets.zero,
+          elevation: SurfaceElevation.textPanel,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
