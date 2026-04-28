@@ -161,7 +161,8 @@ class OnboardingDotIndicator extends StatelessWidget {
           height: dotSize,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isActive ? activeColor : inactiveColor.withValues(alpha: 0.4),
+            color:
+                isActive ? activeColor : inactiveColor.withValues(alpha: 0.4),
             boxShadow:
                 isActive
                     ? [

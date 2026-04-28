@@ -46,24 +46,34 @@ class SplashBackground extends StatelessWidget {
               ...List.generate(25, (index) {
                 final double offset = (index * 0.1) % 1.0;
                 final double size = 1.5 + (index % 4) * 0.8;
-                final double left = (index * 60.0) % MediaQuery.of(context).size.width;
-                final double initialTop = (index * 90.0) % MediaQuery.of(context).size.height;
-                
+                final double left =
+                    (index * 60.0) % MediaQuery.of(context).size.width;
+                final double initialTop =
+                    (index * 90.0) % MediaQuery.of(context).size.height;
+
                 // Different particle colors for variety
-                final Color particleColor = [
-                  Colors.blue.withValues(alpha: 0.4),
-                  Colors.purple.withValues(alpha: 0.3),
-                  Colors.indigo.withValues(alpha: 0.35),
-                  Colors.teal.withValues(alpha: 0.25),
-                ][index % 4];
+                final Color particleColor =
+                    [
+                      Colors.blue.withValues(alpha: 0.4),
+                      Colors.purple.withValues(alpha: 0.3),
+                      Colors.indigo.withValues(alpha: 0.35),
+                      Colors.teal.withValues(alpha: 0.25),
+                    ][index % 4];
 
                 return AnimatedPositioned(
                   duration: Duration(milliseconds: 800 + (index * 30)),
-                  left: left + (particleAnimation.value * 20 * (index % 2 == 0 ? 1 : -1)),
-                  top: initialTop + (particleAnimation.value * 150 * (1 + offset)),
+                  left:
+                      left +
+                      (particleAnimation.value *
+                          20 *
+                          (index % 2 == 0 ? 1 : -1)),
+                  top:
+                      initialTop +
+                      (particleAnimation.value * 150 * (1 + offset)),
                   child: Opacity(
-                    opacity: (0.4 * (1 - particleAnimation.value * 0.7)) * 
-                           (0.5 + 0.5 * backgroundAnimation.value),
+                    opacity:
+                        (0.4 * (1 - particleAnimation.value * 0.7)) *
+                        (0.5 + 0.5 * backgroundAnimation.value),
                     child: Container(
                       width: size,
                       height: size,
@@ -86,16 +96,25 @@ class SplashBackground extends StatelessWidget {
               // Add some larger floating elements
               ...List.generate(8, (index) {
                 final double size = 8.0 + (index % 3) * 4.0;
-                final double left = (index * 80.0) % MediaQuery.of(context).size.width;
-                final double top = (index * 120.0) % MediaQuery.of(context).size.height;
-                
+                final double left =
+                    (index * 80.0) % MediaQuery.of(context).size.width;
+                final double top =
+                    (index * 120.0) % MediaQuery.of(context).size.height;
+
                 return AnimatedPositioned(
                   duration: Duration(milliseconds: 1200 + (index * 100)),
-                  left: left + (particleAnimation.value * 30 * (index % 2 == 0 ? 1 : -1)),
-                  top: top + (particleAnimation.value * 80 * (1 + (index * 0.1))),
+                  left:
+                      left +
+                      (particleAnimation.value *
+                          30 *
+                          (index % 2 == 0 ? 1 : -1)),
+                  top:
+                      top +
+                      (particleAnimation.value * 80 * (1 + (index * 0.1))),
                   child: Opacity(
-                    opacity: (0.15 * (1 - particleAnimation.value * 0.5)) * 
-                           backgroundAnimation.value,
+                    opacity:
+                        (0.15 * (1 - particleAnimation.value * 0.5)) *
+                        backgroundAnimation.value,
                     child: Container(
                       width: size,
                       height: size,

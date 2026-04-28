@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Entry for the named route [AppRouter.roleSelection].
 ///
@@ -12,9 +12,7 @@ class RoleSelectionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign in'),
-      ),
+      appBar: AppBar(title: const Text('Sign in')),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
@@ -27,9 +25,9 @@ class RoleSelectionScreen extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'You can pick Admin or Employee when you sign in or create an account.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
             ),
             const Spacer(),
             FilledButton(
@@ -37,8 +35,8 @@ class RoleSelectionScreen extends StatelessWidget {
               child: const Text('Continue'),
             ),
             TextButton(
-              onPressed: () =>
-                  AuthSessionNavigator.signOutAndGoToSplash(context),
+              onPressed:
+                  () => AuthSessionNavigator.signOutAndGoToSplash(context),
               child: const Text('Back to start'),
             ),
           ],

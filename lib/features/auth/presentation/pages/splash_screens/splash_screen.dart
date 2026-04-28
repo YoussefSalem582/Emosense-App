@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/core.dart';
-import '../../../domain/entities/user_entity.dart';
-import '../../../features/auth/presentation/bloc/user_bloc.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/presentation/bloc/user_bloc.dart';
 import 'widgets/splash.dart';
 
 /// Enhanced Splash Screen with modern animations and branding

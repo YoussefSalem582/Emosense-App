@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/entities/user_entity.dart';
-import '../../../../features/auth/presentation/bloc/user_bloc.dart';
-import '../../employee/employee_navigation_screen/employee_navigation_screen.dart';
-import '../../admin/admin_navigation_screen.dart';
-import '../../../widgets/auth/auth.dart';
-import '../../../widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/presentation/bloc/user_bloc.dart';
+import 'package:emosense_mobile/features/employee/presentation/pages/employee_navigation_screen/employee_navigation_screen.dart';
+import 'package:emosense_mobile/features/admin/presentation/pages/admin_navigation_screen.dart';
+import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_loading_indicator.dart';
 import 'widgets/login.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -204,8 +204,8 @@ class _LoginScreenState extends State<LoginScreen>
 
       if (mounted) {
         context.read<UserBloc>().add(
-              UserSet(_userForSession(email: _emailController.text)),
-            );
+          UserSet(_userForSession(email: _emailController.text)),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => targetScreen),
@@ -276,15 +276,16 @@ class _LoginScreenState extends State<LoginScreen>
         }
 
         context.read<UserBloc>().add(
-              UserSet(
-                _userForSession(
-                  email: _emailController.text.isNotEmpty
+          UserSet(
+            _userForSession(
+              email:
+                  _emailController.text.isNotEmpty
                       ? _emailController.text
                       : '${provider.toLowerCase()}@social.local',
-                  displayName: '$provider user',
-                ),
-              ),
-            );
+              displayName: '$provider user',
+            ),
+          ),
+        );
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => targetScreen),
@@ -293,13 +294,9 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
-  UserEntity _userForSession({
-    required String email,
-    String? displayName,
-  }) {
+  UserEntity _userForSession({required String email, String? displayName}) {
     final trimmed = email.trim();
-    final role =
-        _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
+    final role = _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
     final id = trimmed.isNotEmpty ? trimmed : 'local-user';
     final localPart =
         trimmed.contains('@') ? trimmed.split('@').first : trimmed;

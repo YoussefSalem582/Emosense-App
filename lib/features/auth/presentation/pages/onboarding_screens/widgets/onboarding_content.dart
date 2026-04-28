@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'onboarding.dart';
-import '../../../models/onboarding_models.dart';
+import 'package:emosense_mobile/presentation/models/onboarding_models.dart';
 
 /// Main content widget for the onboarding screen
 ///

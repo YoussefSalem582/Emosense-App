@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/routing/app_router.dart';
-import '../../../../domain/entities/user_entity.dart';
-import '../../../../features/auth/presentation/bloc/user_bloc.dart';
-import '../../../widgets/auth/auth.dart';
+import 'package:emosense_mobile/core/routing/app_router.dart';
+import 'package:emosense_mobile/domain/entities/user_entity.dart';
+import 'package:emosense_mobile/features/auth/presentation/bloc/user_bloc.dart';
+import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
 import 'widgets/signup.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -255,15 +255,15 @@ class _SignUpScreenState extends State<SignUpScreen>
     final last = _lastNameController.text.trim();
     final name = '$first $last'.trim();
     final employeeId = _employeeIdController.text.trim();
-    final role =
-        _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
+    final role = _selectedRole == 'Admin' ? UserRole.admin : UserRole.employee;
     final id = employeeId.isNotEmpty ? employeeId : email;
 
     return UserEntity(
       id: id.isNotEmpty ? id : 'new-user',
-      name: name.isNotEmpty
-          ? name
-          : (email.contains('@') ? email.split('@').first : 'User'),
+      name:
+          name.isNotEmpty
+              ? name
+              : (email.contains('@') ? email.split('@').first : 'User'),
       email: email,
       role: role,
       createdAt: DateTime.now(),

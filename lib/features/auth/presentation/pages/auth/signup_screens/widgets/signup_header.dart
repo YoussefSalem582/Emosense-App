@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/auth/auth.dart';
+import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
 
-/// Login screen header widget
-class LoginHeader extends StatelessWidget {
-  final Animation<double> logoAnimation;
+/// Signup screen header widget
+class SignupHeader extends StatelessWidget {
   final Animation<double> formAnimation;
 
-  const LoginHeader({
-    super.key,
-    required this.logoAnimation,
-    required this.formAnimation,
-  });
+  const SignupHeader({super.key, required this.formAnimation});
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +14,11 @@ class LoginHeader extends StatelessWidget {
 
     return Column(
       children: [
-        SizedBox(height: isSmallScreen ? 30 : 40),
-        LogoWidget(animation: logoAnimation),
         SizedBox(height: isSmallScreen ? 20 : 30),
         WelcomeTextWidget(
           animation: formAnimation,
-          title: 'Welcome Back!',
-          subtitle: 'Choose your role and sign in to access Emosense',
+          title: 'Create Account',
+          subtitle: 'Join Emosense and start your journey',
         ),
         SizedBox(height: isSmallScreen ? 20 : 30),
       ],

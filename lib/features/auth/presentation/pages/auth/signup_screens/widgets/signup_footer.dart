@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../widgets/auth/auth.dart';
+import 'package:emosense_mobile/presentation/widgets/auth/auth.dart';
 
 /// Signup footer widget with terms and navigation
 class SignupFooter extends StatelessWidget {

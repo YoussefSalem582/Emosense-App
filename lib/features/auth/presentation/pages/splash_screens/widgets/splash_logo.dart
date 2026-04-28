@@ -47,10 +47,7 @@ class SplashLogo extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
-                      colors: [
-                        Color(0xFF667EEA),
-                        Color(0xFF764BA2),
-                      ],
+                      colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
                     ),
                   ),
                   child: Image.asset(
@@ -62,10 +59,7 @@ class SplashLogo extends StatelessWidget {
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
-                            colors: [
-                              Color(0xFF667EEA),
-                              Color(0xFF764BA2),
-                            ],
+                            colors: [Color(0xFF667EEA), Color(0xFF764BA2)],
                           ),
                         ),
                         child: const Center(

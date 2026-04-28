@@ -24,15 +24,16 @@ class SplashText extends StatelessWidget {
               children: [
                 // App Name with enhanced gradient
                 ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFF667EEA),
-                      Color(0xFF764BA2),
-                      Color(0xFF667EEA),
-                    ],
-                  ).createShader(bounds),
+                  shaderCallback:
+                      (bounds) => const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color(0xFF667EEA),
+                          Color(0xFF764BA2),
+                          Color(0xFF667EEA),
+                        ],
+                      ).createShader(bounds),
                   child: const Text(
                     'EmoSense',
                     style: TextStyle(
@@ -55,7 +56,10 @@ class SplashText extends StatelessWidget {
 
                 // Tagline with better styling
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 8,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(20),

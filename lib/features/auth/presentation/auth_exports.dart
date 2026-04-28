@@ -1,9 +1,8 @@
-/// Auth, onboarding, and splash entrypoints (implementation lives under
-/// [presentation/screens] until files are physically moved here).
+/// Auth, onboarding, and splash (`features/auth/presentation/pages`).
 library;
 
-export '../../../presentation/screens/splash_screens/splash_screen.dart';
-export '../../../presentation/screens/onboarding_screens/onboarding_screen.dart';
-export '../../../presentation/screens/auth/auth_choice_screens/auth_choice_screen.dart';
-export '../../../presentation/screens/auth/login_screens/login_screen.dart';
-export '../../../presentation/screens/auth/signup_screens/signup_screen.dart';
+export 'package:emosense_mobile/features/auth/presentation/pages/splash_screens/splash_screen.dart';
+export 'package:emosense_mobile/features/auth/presentation/pages/onboarding_screens/onboarding_screen.dart';
+export 'package:emosense_mobile/features/auth/presentation/pages/auth/auth_choice_screens/auth_choice_screen.dart';
+export 'package:emosense_mobile/features/auth/presentation/pages/auth/login_screens/login_screen.dart';
+export 'package:emosense_mobile/features/auth/presentation/pages/auth/signup_screens/signup_screen.dart';

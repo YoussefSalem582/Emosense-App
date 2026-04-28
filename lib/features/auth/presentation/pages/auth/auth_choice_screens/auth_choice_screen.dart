@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../core/routing/app_router.dart';
+import 'package:emosense_mobile/core/routing/app_router.dart';
 import 'widgets/auth_choice.dart';
 
 /// Authentication choice screen where users can choose between Login and Sign Up

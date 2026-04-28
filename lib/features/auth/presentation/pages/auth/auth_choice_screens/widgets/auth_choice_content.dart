@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'auth_choice_header.dart';
 import 'auth_choice_buttons.dart';
 import 'auth_choice_navigation.dart';
-import '../../../../widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/presentation/widgets/common/animated_background_widget.dart';
 
 /// Main content widget for the auth choice screen
 class AuthChoiceContent extends StatelessWidget {
