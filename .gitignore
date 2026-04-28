@@ -1,3 +1,6 @@
+# Local / machine-specific (never commit secrets)
+.claude/settings.local.json
+
 # Miscellaneous
 *.class
 *.log

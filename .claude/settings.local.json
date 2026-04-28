@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter doctor:*)",
+      "Bash(flutter config:*)",
+      "Bash(cmd /c \"flutter config --list\")",
+      "Bash(cmd /c \"flutter doctor -v\")",
+      "Bash(cmd /c \"where flutter && flutter config --list\")",
+      "Bash(cmd /c \"set ANDROID_HOME && set ANDROID_SDK_ROOT && set ANDROID_AVD_HOME\")",
+      "Bash(powershell -Command \"Get-Command flutter -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source\")",
+      "Bash(reg query:*)",
+      "Bash(reg add:*)",
+      "Bash(powershell.exe -Command \":*)"
+    ]
+  }
+}

@@ -1,0 +1,73 @@
+# ============================================================
+# .cursorignore — Exclude from Cursor AI context
+# Paths are relative to this file's location (technology_ninety_two_app/)
+# Sibling-repo paths below work when the workspace is opened from the parent.
+# Full inventory: AGENTS.md — "Agent tooling layout (repository root)"
+# ============================================================
+
+# Sibling repos (reference only — Cursor must never edit these)
+technology_ninety_two_backend-main/vendor/
+technology_ninety_two_backend-main/node_modules/
+technology_ninety_two_backend-main/storage/
+technology_ninety_two_backend-main/bootstrap/
+technology_ninety_two_backend-main/public/
+technology_ninety_two_backend-main/tests/
+technology_ninety_two_front_end-main/node_modules/
+technology_ninety_two_front_end-main/.next/
+technology_ninety_two_front_end-main/out/
+
+# Flutter build artifacts
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+android/.gradle/
+android/app/build/
+ios/Pods/
+ios/.symlinks/
+
+# Generated files (auto-generated, not useful context)
+lib/l10n/generated/
+**/*.g.dart
+**/*.freezed.dart
+**/*.mocks.dart
+**/*.config.dart
+
+# Assets (binary — not useful for code context)
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+**/*.svg
+**/*.ttf
+**/*.otf
+**/*.woff
+**/*.woff2
+**/*.ico
+**/*.mp4
+**/*.mp3
+**/*.pdf
+
+# IDE & OS
+.idea/
+.vscode/
+.windsurf/
+*.iml
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+**/*.log
+**/*.log.*
+
+# Lock files (large, low signal)
+**/pnpm-lock.yaml
+**/package-lock.json
+**/composer.lock
+pubspec.lock
