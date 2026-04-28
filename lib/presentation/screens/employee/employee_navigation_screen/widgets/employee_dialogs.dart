@@ -1,3 +1,5 @@
+import 'dart:developer' show log;
+
 import 'package:flutter/material.dart';
 import '../../../../../core/core.dart';
 
@@ -430,7 +432,13 @@ class _FeedbackDialogState extends State<_FeedbackDialog> {
           onPressed:
               _rating > 0
                   ? () {
-                    // TODO: Submit feedback
+                    final comment = _feedbackController.text.trim();
+                    log(
+                      'Employee feedback: rating=$_rating'
+                      '${comment.isEmpty ? '' : ', comment=$comment'}',
+                      name: 'EmployeeFeedback',
+                    );
+                    if (!context.mounted) return;
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
