@@ -7,6 +7,12 @@ import '../../features/analysis/video_analysis/data/datasources/video_analysis_r
 import '../../features/analysis/video_analysis/data/repositories/video_analysis_repository_impl.dart';
 import '../../features/analysis/video_analysis/data/services/video_analysis_api_service.dart';
 import '../../features/analysis/video_analysis/domain/repositories/video_analysis_repository.dart';
+import '../../features/analysis/text_analysis/data/datasources/text_analysis_remote_data_source.dart';
+import '../../features/analysis/text_analysis/data/datasources/text_analysis_remote_data_source_impl.dart';
+import '../../features/analysis/text_analysis/data/repositories/text_analysis_repository_impl.dart';
+import '../../features/analysis/text_analysis/domain/repositories/text_analysis_repository.dart';
+import '../../features/analysis/voice_analysis/data/repositories/voice_analysis_repository_impl.dart';
+import '../../features/analysis/voice_analysis/domain/repositories/voice_analysis_repository.dart';
 import '../../features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
 import '../../features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
 import '../../features/analysis/voice_analysis/presentation/bloc/voice_analysis_bloc.dart';
@@ -52,8 +58,17 @@ void _initAnalysis() {
     () => VideoAnalysisRepositoryImpl(sl()),
   );
   sl.registerFactory<VideoAnalysisBloc>(() => VideoAnalysisBloc(sl()));
+  sl.registerLazySingleton<TextAnalysisRemoteDataSource>(
+    () => TextAnalysisRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<TextAnalysisRepository>(
+    () => TextAnalysisRepositoryImpl(sl()),
+  );
   sl.registerFactory<TextAnalysisBloc>(() => TextAnalysisBloc(sl()));
-  sl.registerFactory<VoiceAnalysisBloc>(() => VoiceAnalysisBloc());
+  sl.registerLazySingleton<VoiceAnalysisRepository>(
+    () => VoiceAnalysisRepositoryImpl(),
+  );
+  sl.registerFactory<VoiceAnalysisBloc>(() => VoiceAnalysisBloc(sl()));
 }
 
 // ─── Emotion API + dashboards ───────────────────────────────────────────────

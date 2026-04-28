@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../core/services/emotion_api_service.dart';
+import '../../domain/entities/text_analysis_result.dart';
+import '../../domain/repositories/text_analysis_repository.dart';
 
 part 'text_analysis_event.dart';
 part 'text_analysis_state.dart';
 
 class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
-  final EmotionApiService _apiService;
+  final TextAnalysisRepository _repository;
 
-  TextAnalysisBloc(this._apiService) : super(const TextAnalysisInitial()) {
+  TextAnalysisBloc(this._repository) : super(const TextAnalysisInitial()) {
     on<TextAnalysisAnalyzeRequested>(_onAnalyze);
     on<TextAnalysisDemoRequested>(_onDemo);
     on<TextAnalysisReset>(_onReset);
@@ -35,11 +36,9 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
     emit(const TextAnalysisLoading());
 
     try {
-      final emotionResult = await _apiService.predictEmotion(text);
-      final result = _convertToTextAnalysisResult(
-        emotionResult,
-        text,
-        analysisType,
+      final result = await _repository.analyzeText(
+        text: text,
+        analysisType: analysisType,
       );
       emit(TextAnalysisSuccess(result));
     } catch (e) {
@@ -51,231 +50,10 @@ class TextAnalysisBloc extends Bloc<TextAnalysisEvent, TextAnalysisState> {
     TextAnalysisDemoRequested event,
     Emitter<TextAnalysisState> emit,
   ) {
-    emit(TextAnalysisDemo(_createDemoResult(event.analysisType)));
+    emit(TextAnalysisDemo(_repository.buildDemoResult(event.analysisType)));
   }
 
   void _onReset(TextAnalysisReset event, Emitter<TextAnalysisState> emit) {
     emit(const TextAnalysisInitial());
-  }
-
-  TextAnalysisResult _convertToTextAnalysisResult(
-    dynamic emotionResult,
-    String text,
-    String analysisType,
-  ) {
-    return TextAnalysisResult(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      text: text,
-      analysisType: analysisType,
-      confidence: emotionResult.confidence,
-      timestamp: DateTime.now(),
-      summary:
-          'Emotion detected: ${emotionResult.emotion} with ${emotionResult.sentiment} sentiment',
-      details: [
-        'Text Length: ${text.length} characters',
-        'Word Count: ${text.split(' ').length} words',
-        'Dominant Emotion: ${emotionResult.emotion}',
-        'Sentiment: ${emotionResult.sentiment}',
-        'Confidence: ${(emotionResult.confidence * 100).toStringAsFixed(1)}%',
-        if (emotionResult.processingTimeMs != null)
-          'Processing Time: ${emotionResult.processingTimeMs!.toStringAsFixed(1)}ms',
-      ],
-      sentiments: {
-        emotionResult.sentiment: emotionResult.confidence,
-        'neutral': 1.0 - emotionResult.confidence,
-      },
-      keywords: _extractKeywordsFromText(text),
-      metrics: {
-        'emotion': emotionResult.emotion,
-        'sentiment': emotionResult.sentiment,
-        'confidence': emotionResult.confidence,
-        'processing_time': emotionResult.processingTimeMs ?? 0,
-        'text_length': text.length,
-        'word_count': text.split(' ').length,
-        'emotions_breakdown': emotionResult.allEmotions,
-      },
-    );
-  }
-
-  List<String> _extractKeywordsFromText(String text) {
-    final words = text.toLowerCase().split(RegExp(r'\W+'));
-    return words.where((word) => word.length > 3).take(5).toList();
-  }
-
-  TextAnalysisResult _createDemoResult(String analysisType) {
-    final now = DateTime.now();
-    const demoText =
-        "This is a great product! I'm really happy with my purchase and would definitely recommend it to others.";
-
-    return TextAnalysisResult(
-      id: 'demo_${now.millisecondsSinceEpoch}',
-      text: demoText,
-      analysisType: analysisType,
-      confidence: 0.91,
-      timestamp: now,
-      summary: 'Demo analysis completed successfully for $analysisType',
-      details: _generateAnalysisDetails(analysisType, demoText),
-      sentiments: _generateSentimentData(analysisType, demoText),
-      keywords: _extractKeywords(demoText),
-      metrics: _generateMetrics(demoText),
-    );
-  }
-
-  List<String> _generateAnalysisDetails(String analysisType, String text) {
-    switch (analysisType) {
-      case 'Sentiment Analysis':
-        return [
-          'Overall sentiment: Positive (89%)',
-          'Positive indicators: ${text.contains('great') || text.contains('good') ? 'Strong' : 'Moderate'}',
-          'Negative indicators: Minimal (3%)',
-          'Neutral content: 8%',
-        ];
-      case 'Emotion Detection':
-        return [
-          'Primary emotion: Joy (72%)',
-          'Secondary emotion: Satisfaction (18%)',
-          'Confidence level: High',
-          'Emotional intensity: Moderate to High',
-        ];
-      case 'Topic Classification':
-        return [
-          'Main topic: Product/Service Review',
-          'Sub-category: Customer Experience',
-          'Domain: E-commerce/Retail',
-          'Relevance score: 94%',
-        ];
-      case 'Intent Recognition':
-        return [
-          'Primary intent: Recommendation (85%)',
-          'Secondary intent: Review sharing (12%)',
-          'Action likelihood: High',
-          'User engagement level: Positive',
-        ];
-      case 'Language Detection':
-        return [
-          'Detected language: English',
-          'Regional variant: US English',
-          'Confidence: 95%',
-          'Character encoding: UTF-8',
-        ];
-      default:
-        return [
-          'Analysis completed successfully',
-          'Results are ready for review',
-        ];
-    }
-  }
-
-  Map<String, double> _generateSentimentData(String analysisType, String text) {
-    if (analysisType == 'Sentiment Analysis') {
-      final hasPositive = text.toLowerCase().contains(
-        RegExp(
-          r'good|great|excellent|amazing|wonderful|perfect|love|like|recommend',
-        ),
-      );
-      final hasNegative = text.toLowerCase().contains(
-        RegExp(r'bad|terrible|awful|hate|dislike|worst|horrible'),
-      );
-
-      if (hasPositive && !hasNegative) {
-        return {'Positive': 0.89, 'Neutral': 0.08, 'Negative': 0.03};
-      } else if (hasNegative && !hasPositive) {
-        return {'Negative': 0.82, 'Neutral': 0.12, 'Positive': 0.06};
-      } else {
-        return {'Neutral': 0.65, 'Positive': 0.25, 'Negative': 0.10};
-      }
-    } else if (analysisType == 'Emotion Detection') {
-      return {
-        'Joy': 0.72,
-        'Satisfaction': 0.18,
-        'Excitement': 0.06,
-        'Neutral': 0.04,
-      };
-    }
-
-    return {'Positive': 0.75, 'Neutral': 0.20, 'Negative': 0.05};
-  }
-
-  List<String> _extractKeywords(String text) {
-    final words =
-        text
-            .toLowerCase()
-            .replaceAll(RegExp(r'[^\w\s]'), '')
-            .split(' ')
-            .where((word) => word.length > 3)
-            .toSet()
-            .toList();
-
-    const stopWords = {
-      'this',
-      'that',
-      'with',
-      'have',
-      'will',
-      'from',
-      'they',
-      'know',
-      'want',
-      'been',
-      'good',
-      'much',
-      'some',
-      'time',
-      'very',
-      'when',
-      'come',
-      'here',
-      'just',
-      'like',
-      'long',
-      'make',
-      'many',
-      'over',
-      'such',
-      'take',
-      'than',
-      'them',
-      'well',
-      'were',
-    };
-
-    return words.where((word) => !stopWords.contains(word)).take(10).toList();
-  }
-
-  Map<String, dynamic> _generateMetrics(String text) {
-    final words = text.split(' ').length;
-    final characters = text.length;
-    final sentences =
-        text.split(RegExp(r'[.!?]')).where((s) => s.trim().isNotEmpty).length;
-
-    return {
-      'wordCount': words,
-      'characterCount': characters,
-      'sentenceCount': sentences,
-      'averageWordsPerSentence':
-          sentences > 0 ? (words / sentences).toStringAsFixed(1) : '0',
-      'readabilityScore': _calculateReadabilityScore(
-        words,
-        sentences,
-        characters,
-      ),
-      'complexity':
-          words > 50
-              ? 'Complex'
-              : words > 20
-              ? 'Moderate'
-              : 'Simple',
-    };
-  }
-
-  double _calculateReadabilityScore(int words, int sentences, int characters) {
-    if (sentences == 0 || words == 0) return 0.0;
-
-    final avgWordsPerSentence = words / sentences;
-    final avgSyllablesPerWord = characters / words / 2;
-
-    final score =
-        206.835 - (1.015 * avgWordsPerSentence) - (84.6 * avgSyllablesPerWord);
-    return (score / 100).clamp(0.0, 1.0);
   }
 }
