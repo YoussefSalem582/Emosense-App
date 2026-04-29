@@ -45,7 +45,6 @@ Those directories are for reference only (API contracts, route definitions, mode
 |-----------|---------|
 | `lib/core/config/` | `app_config` / environment bootstrap |
 | `lib/core/routing/` | `AppRouter` |
-| `lib/core/` | DI, API, networking, utilities |
-| `lib/shared/` | assets, spacing, reusable widgets |
+| `lib/core/` | DI, API, networking, utilities, **`widgets/`** (app-wide reusable UI) |
 | `lib/features/` | Feature modules (Clean Architecture) |
 | `lib/l10n/` | ARB files + generated localizations |

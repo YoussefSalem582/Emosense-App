@@ -173,7 +173,7 @@ sl.registerFactory(() => FeatureBloc(useCase: sl()));  // Factory — new instan
 
 ## Shared Widgets
 
-Always check `lib/shared/widgets/` before building new UI:
+Always check `lib/core/widgets/` before building new UI:
 
 **Inputs**: `AppTextField`, `AppPhoneField`, `AppDropdownField`, `AppSearchableDropdownField`, `AppDateField`, `AppDateInputSheet`
 **Buttons**: `AppButton`

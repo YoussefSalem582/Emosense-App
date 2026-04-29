@@ -38,9 +38,9 @@ Those directories are for reference only (API contracts, route definitions, mode
 |-----------|---------|
 | `lib/core/config/` | `app_config.dart` (+ dotenv bootstrapping) |
 | `lib/core/routing/` | Navigator wiring via `AppRouter` |
-| `lib/core/` | DI, constants, APIs, routing, helpers |
+| `lib/core/` | DI, constants, APIs, routing, helpers, **`widgets/`** (app-wide reusable UI) |
 | `lib/core/network/` | HTTP client + connectivity stack (`network_info`, connection blocs/events) |
-| `lib/shared/` | assets/spacing/widgets shared across modules |
+| `lib/features/` | Feature modules (Clean Architecture) |
 | `lib/l10n/` | ARB files + codegen output |
 
 ## Dart & Flutter Conventions
@@ -140,7 +140,7 @@ Helpers: `AppSpacing.verticalBase`, `AppSpacing.horizontalSM`, `AppSpacing.pageP
 
 ### Shared Widgets
 
-Check `lib/shared/widgets/` before building new UI. Existing components:
+Check `lib/core/widgets/` before building new UI. Existing components:
 
 **Inputs**: `AppTextField`, `AppPhoneField`, `AppDropdownField`, `AppSearchableDropdownField`, `AppDateField`, `AppDateInputSheet`
 **Buttons**: `AppButton`
@@ -547,7 +547,7 @@ lib/features/<feature_name>/
 
 - Pages: `presentation/pages/<name>_page.dart`
 - Widgets: `presentation/widgets/`
-- Use shared widgets from `lib/shared/widgets/`
+- Use shared widgets from `lib/core/widgets/`
 
 ### Step 12 — Register in DI
 

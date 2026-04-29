@@ -58,9 +58,8 @@ Those directories are for reference only (API contracts, route definitions, mode
 |-----------|---------|
 | `lib/core/config/` | `app_config.dart` — dotenv / API settings |
 | `lib/core/routing/` | `AppRouter` — named routes + `generateRoute` |
-| `lib/core/` | api, constants, DI, errors, utilities, routing |
+| `lib/core/` | api, constants, DI, errors, utilities, routing, **`widgets/`** (shared UI barrel) |
 | `lib/core/network/` | `ApiClient`, connection stack (`network_info`, `connection_*`, etc.) |
-| `lib/shared/` | assets, spacing, reusable widgets |
 | `lib/features/` | Feature modules (Clean Architecture) |
 | `lib/l10n/` | ARB files + generated localizations |
 
@@ -165,7 +164,7 @@ Helpers: `AppSpacing.verticalBase`, `AppSpacing.horizontalSM`, `AppSpacing.pageP
 
 ### Shared Widgets
 
-Check `lib/shared/widgets/` before building new UI. Existing components:
+Check `lib/core/widgets/` before building new UI. Existing components:
 
 **Inputs**: `AppTextField`, `AppPhoneField`, `AppDropdownField`, `AppSearchableDropdownField`, `AppDateField`, `AppDateInputSheet`
 **Buttons**: `AppButton`

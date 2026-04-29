@@ -95,7 +95,7 @@ lib/features/<feature_name>/
 
 - Pages: `presentation/pages/<name>_page.dart`
 - Widgets: `presentation/widgets/`
-- Use shared widgets from `lib/shared/widgets/`
+- Use shared widgets from `lib/core/widgets/`
 
 ### Step 12 — Register in DI
 

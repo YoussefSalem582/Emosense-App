@@ -38,7 +38,7 @@ alwaysApply: false
 
 ## Shared Widgets
 
-Always check `lib/shared/widgets/` before creating new widgets:
+Always check `lib/core/widgets/` before creating new widgets:
 - `AppButton` — Elevated/outlined/text/icon/loading button
 - `AppTextField` — Text field, password field, dropdown
 - `AppPhoneField` — Phone input with country code picker

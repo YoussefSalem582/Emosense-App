@@ -58,7 +58,7 @@ Helpers: `AppSpacing.verticalBase`, `AppSpacing.horizontalSM`, `AppSpacing.pageP
 
 ## Shared Widgets
 
-Check `lib/shared/widgets/` before building new UI. Existing components:
+Check `lib/core/widgets/` before building new UI. Existing components:
 
 **Inputs**: `AppTextField`, `AppPhoneField`, `AppDropdownField`, `AppSearchableDropdownField`, `AppDateField`, `AppDateInputSheet`
 **Buttons**: `AppButton`
