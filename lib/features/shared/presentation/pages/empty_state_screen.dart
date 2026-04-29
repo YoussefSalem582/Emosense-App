@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/constants/app_colors.dart';
 
 /// A screen that shows when there's no data to display
 class EmptyStateScreen extends StatelessWidget {

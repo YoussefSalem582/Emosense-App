@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
-import '../../shared/presentation/common_screens.dart';
+import '../../features/shared/presentation/common_screens.dart';
 
 /// Enum for different screen states
 enum ScreenState { initial, loading, loaded, error, empty, noNetwork }

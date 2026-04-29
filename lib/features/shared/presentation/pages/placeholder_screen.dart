@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Placeholder screen for screens under development
 class PlaceholderScreen extends StatelessWidget {

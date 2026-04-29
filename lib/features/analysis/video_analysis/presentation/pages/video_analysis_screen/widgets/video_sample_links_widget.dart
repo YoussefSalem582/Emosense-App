@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
-import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 /// Widget that provides sample video URLs for testing
 class VideoSampleLinksWidget extends StatelessWidget {

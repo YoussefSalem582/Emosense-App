@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../core/core.dart';
-import '../../../core/network/connection_bloc.dart';
-import '../../widgets/cards/connection_status_card.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/network/connection_bloc.dart';
+import 'package:emosense_mobile/core/widgets/cards/connection_status_card.dart';
 
 /// Diagnostics surface for backend connectivity (named route [AppRouter.appStatus]).
 class AppStatusScreen extends StatelessWidget {

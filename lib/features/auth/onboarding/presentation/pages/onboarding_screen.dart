@@ -9,7 +9,7 @@ import 'package:emosense_mobile/features/auth/onboarding/presentation/bloc/onboa
 import 'package:emosense_mobile/features/auth/onboarding/presentation/bloc/onboarding_state.dart';
 import 'package:emosense_mobile/features/auth/onboarding/domain/entities/onboarding_page_data.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/widgets/onboarding.dart';
-import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/core/widgets/common/animated_background_widget.dart';
 
 /// Onboarding carousel: [OnboardingBloc] owns pager index and completion persistence.
 class OnboardingScreen extends StatelessWidget {

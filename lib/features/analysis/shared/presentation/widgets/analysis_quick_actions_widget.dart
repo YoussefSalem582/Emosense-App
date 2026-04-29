@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/text_analysis/presentation/models/text_analysis_models.dart';
-import 'package:emosense_mobile/shared/widgets/common/section_title_row.dart';
-import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/widgets/common/section_title_row.dart';
+import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 class AnalysisQuickActionsWidget extends StatelessWidget {
   final List<AnalysisQuickAction> actions;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/constants/app_colors.dart';
 
 /// A comprehensive settings screen with organized sections
 class SettingsScreen extends StatefulWidget {

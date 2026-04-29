@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
-import 'package:emosense_mobile/shared/widgets/dialogs/ticket_details_dialog.dart';
+import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/widgets/dialogs/ticket_details_dialog.dart';
 
 import '../../../shared/domain/entities/ticket.dart';
 import '../bloc/admin_tickets_bloc.dart';

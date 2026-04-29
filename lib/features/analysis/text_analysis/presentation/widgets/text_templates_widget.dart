@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 class TextTemplatesWidget extends StatelessWidget {
   final List<TextTemplate> templates;

@@ -4,7 +4,7 @@ import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import 'package:emosense_mobile/features/employee/profile/domain/entities/employee_profile.dart';
 import 'package:emosense_mobile/features/employee/profile/domain/repositories/employee_profile_repository.dart';
-import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/core/widgets/common/animated_background_widget.dart';
 import 'widgets/widgets.dart';
 
 class EmployeeProfileScreen extends StatefulWidget {

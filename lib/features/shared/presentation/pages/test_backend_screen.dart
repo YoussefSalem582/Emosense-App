@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/backend_connection_test.dart';
+import 'package:emosense_mobile/core/widgets/backend_connection_test.dart';
 
 /// Developer-style API checks (named route [AppRouter.testBackend]).
 class TestBackendScreen extends StatelessWidget {

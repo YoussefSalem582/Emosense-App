@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/shared/widgets/common/animated_loading_indicator.dart';
+import 'package:emosense_mobile/core/widgets/common/animated_loading_indicator.dart';
 
 class AuthButtonWidget extends StatelessWidget {
   final Animation<double> animation;

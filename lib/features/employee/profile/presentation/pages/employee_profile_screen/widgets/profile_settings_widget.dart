@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/shared/widgets/common/profile_section_card.dart';
-import 'package:emosense_mobile/shared/widgets/common/section_title_row.dart';
+import 'package:emosense_mobile/core/widgets/common/profile_section_card.dart';
+import 'package:emosense_mobile/core/widgets/common/section_title_row.dart';
 
 class ProfileSettingsWidget extends StatelessWidget {
   final bool notificationsEnabled;

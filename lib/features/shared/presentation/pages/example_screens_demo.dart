@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/constants/app_colors.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/pages/onboarding_screen.dart';
-import 'package:emosense_mobile/shared/presentation/common_screens.dart';
+import 'package:emosense_mobile/features/shared/presentation/common_screens.dart';
 
 /// Example implementation showing how to use the enhanced screen components
 class ExampleScreensDemo extends StatefulWidget {

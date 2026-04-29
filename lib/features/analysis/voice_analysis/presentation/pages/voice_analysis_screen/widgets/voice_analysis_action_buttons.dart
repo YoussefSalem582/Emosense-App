@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:emosense_mobile/shared/widgets/common/surface_section_card.dart';
+import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 /// Widget for action buttons
 class VoiceAnalysisActionButtons extends StatelessWidget {

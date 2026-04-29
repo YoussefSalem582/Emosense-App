@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/shared/widgets/common/animated_background_widget.dart';
+import 'package:emosense_mobile/core/widgets/common/animated_background_widget.dart';
 
 import '../bloc/admin_tickets_bloc.dart';
 import '../../../shared/presentation/models/ticket_ui_models.dart';

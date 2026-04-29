@@ -1,4 +1,4 @@
-// Cross-feature widgets under lib/shared/widgets.
+// App-wide reusable widgets under lib/core/widgets.
 
 export 'cards/cards.dart';
 export 'buttons/buttons.dart';

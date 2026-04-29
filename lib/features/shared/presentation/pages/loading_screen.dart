@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/constants/app_colors.dart';
 
 /// A reusable loading screen with animated indicators
 class LoadingScreen extends StatefulWidget {

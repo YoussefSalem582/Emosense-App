@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/shared/widgets/common/flat_toolbar_surface.dart';
+import 'package:emosense_mobile/core/widgets/common/flat_toolbar_surface.dart';
 
 class TeamPerformanceScreen extends StatefulWidget {
   const TeamPerformanceScreen({super.key});
