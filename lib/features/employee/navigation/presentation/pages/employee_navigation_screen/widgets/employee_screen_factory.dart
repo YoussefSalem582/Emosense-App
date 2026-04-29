@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
-import 'package:emosense_mobile/features/analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
 import 'package:emosense_mobile/features/employee/analysis_tools/presentation/pages/employee_analysis_tools_screen/employee_analysis_tools_screen.dart';
 import 'package:emosense_mobile/features/employee/dashboard/presentation/pages/employee_dashboard_screen/employee_dashboard_screen.dart';
 import 'package:emosense_mobile/features/employee/performance/presentation/pages/employee_performance_screen.dart';

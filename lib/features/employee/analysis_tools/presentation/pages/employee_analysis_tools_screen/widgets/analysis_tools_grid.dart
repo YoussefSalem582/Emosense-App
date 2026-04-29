@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/core.dart';
-import 'package:emosense_mobile/features/analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
+import 'package:emosense_mobile/features/analysis/video_analysis/presentation/pages/video_analysis_screen/video_analysis_screen.dart';
 import 'analysis_tool_card.dart';
 
 /// Grid widget that displays all available analysis tools

@@ -6,7 +6,7 @@ export 'core_screens.dart';
 export 'package:emosense_mobile/features/auth/presentation/pages/auth/auth.dart';
 export 'package:emosense_mobile/features/admin/presentation/pages/admin_screens.dart';
 export 'package:emosense_mobile/features/employee/employee_screens.dart';
-export 'package:emosense_mobile/features/analysis/presentation/pages/analysis_screens.dart';
+export 'package:emosense_mobile/features/analysis/shared/presentation/pages/analysis_screens.dart';
 export 'package:emosense_mobile/features/emotion/presentation/pages/analytics/analytics_screens.dart';
 
 export 'package:emosense_mobile/features/auth/presentation/pages/splash_screens/splash_screen.dart';

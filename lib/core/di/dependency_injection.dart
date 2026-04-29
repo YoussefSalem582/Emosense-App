@@ -3,17 +3,19 @@ import 'package:http/http.dart' as http;
 
 // Services
 import '../services/emotion_api_service.dart';
-import '../../features/analysis/data/datasources/video_analysis_remote_data_source.dart';
-import '../../features/analysis/data/repositories/video_analysis_repository_impl.dart';
-import '../../features/analysis/data/services/video_analysis_api_service.dart';
-import '../../features/analysis/domain/repositories/video_analysis_repository.dart';
-import '../../features/analysis/presentation/bloc/text_analysis_bloc.dart';
-import '../../features/analysis/presentation/bloc/video_analysis_bloc.dart';
-import '../../features/analysis/presentation/bloc/voice_analysis_bloc.dart';
-import '../../features/tickets/shared/data/datasources/mock_ticket_local_data_source.dart';
-import '../../features/tickets/shared/data/datasources/ticket_local_data_source.dart';
-import '../../features/tickets/shared/data/repositories/ticket_repository_impl.dart';
-import '../../features/tickets/shared/domain/repositories/ticket_repository.dart';
+import '../../features/analysis/text_analysis/data/datasources/text_analysis_remote_data_source.dart';
+import '../../features/analysis/text_analysis/data/datasources/text_analysis_remote_data_source_impl.dart';
+import '../../features/analysis/text_analysis/data/repositories/text_analysis_repository_impl.dart';
+import '../../features/analysis/text_analysis/domain/repositories/text_analysis_repository.dart';
+import '../../features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
+import '../../features/analysis/video_analysis/data/datasources/video_analysis_remote_data_source.dart';
+import '../../features/analysis/video_analysis/data/repositories/video_analysis_repository_impl.dart';
+import '../../features/analysis/video_analysis/data/services/video_analysis_api_service.dart';
+import '../../features/analysis/video_analysis/domain/repositories/video_analysis_repository.dart';
+import '../../features/analysis/video_analysis/presentation/bloc/video_analysis_bloc.dart';
+import '../../features/analysis/voice_analysis/data/repositories/voice_analysis_repository_impl.dart';
+import '../../features/analysis/voice_analysis/domain/repositories/voice_analysis_repository.dart';
+import '../../features/analysis/voice_analysis/presentation/bloc/voice_analysis_bloc.dart';
 import '../../features/tickets/admin/data/repositories/admin_tickets_repository_impl.dart';
 import '../../features/tickets/admin/domain/repositories/admin_tickets_repository.dart';
 import '../../features/tickets/admin/domain/usecases/admin_create_ticket_usecase.dart';
@@ -21,12 +23,16 @@ import '../../features/tickets/admin/domain/usecases/admin_load_tickets_usecase.
 import '../../features/tickets/admin/domain/usecases/assign_ticket_usecase.dart';
 import '../../features/tickets/admin/domain/usecases/get_ticket_statistics_usecase.dart';
 import '../../features/tickets/admin/domain/usecases/update_ticket_status_usecase.dart';
+import '../../features/tickets/admin/presentation/bloc/admin_tickets_bloc.dart';
 import '../../features/tickets/employee/data/repositories/employee_tickets_repository_impl.dart';
 import '../../features/tickets/employee/domain/repositories/employee_tickets_repository.dart';
 import '../../features/tickets/employee/domain/usecases/employee_create_ticket_usecase.dart';
 import '../../features/tickets/employee/domain/usecases/employee_load_tickets_usecase.dart';
-import '../../features/tickets/admin/presentation/bloc/admin_tickets_bloc.dart';
 import '../../features/tickets/employee/presentation/bloc/employee_tickets_bloc.dart';
+import '../../features/tickets/shared/data/datasources/mock_ticket_local_data_source.dart';
+import '../../features/tickets/shared/data/datasources/ticket_local_data_source.dart';
+import '../../features/tickets/shared/data/repositories/ticket_repository_impl.dart';
+import '../../features/tickets/shared/domain/repositories/ticket_repository.dart';
 import '../../features/admin/presentation/bloc/admin_dashboard_bloc.dart';
 import '../../features/employee/analysis_tools/data/datasources/employee_analysis_tools_local_data_source.dart';
 import '../../features/employee/analysis_tools/data/datasources/employee_analysis_tools_local_data_source_impl.dart';
@@ -83,8 +89,17 @@ void _initAnalysis() {
     () => VideoAnalysisRepositoryImpl(sl()),
   );
   sl.registerFactory<VideoAnalysisBloc>(() => VideoAnalysisBloc(sl()));
+  sl.registerLazySingleton<TextAnalysisRemoteDataSource>(
+    () => TextAnalysisRemoteDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<TextAnalysisRepository>(
+    () => TextAnalysisRepositoryImpl(sl()),
+  );
   sl.registerFactory<TextAnalysisBloc>(() => TextAnalysisBloc(sl()));
-  sl.registerFactory<VoiceAnalysisBloc>(() => VoiceAnalysisBloc());
+  sl.registerLazySingleton<VoiceAnalysisRepository>(
+    () => VoiceAnalysisRepositoryImpl(),
+  );
+  sl.registerFactory<VoiceAnalysisBloc>(() => VoiceAnalysisBloc(sl()));
 }
 
 // ─── Emotion API + dashboards ───────────────────────────────────────────────
