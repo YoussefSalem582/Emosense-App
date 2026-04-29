@@ -11,26 +11,30 @@ class TicketDetailsDialog extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(
         dialogTheme: DialogThemeData(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        textTheme: Theme.of(
-          context,
-        ).textTheme.apply(bodyColor: Colors.black, displayColor: Colors.black),
+        textTheme: Theme.of(context).textTheme.apply(
+              bodyColor: AppColors.textPrimary,
+              displayColor: AppColors.textPrimary,
+            ),
       ),
       child: AlertDialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Ticket Details',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: AppFonts.copyWith(
+            AppFonts.bodyLarge(color: AppColors.textPrimary),
+            fontWeight: AppFonts.bold,
+          ),
         ),
         content: Container(
           width: double.maxFinite,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
@@ -75,15 +79,15 @@ class TicketDetailsDialog extends StatelessWidget {
               SizedBox(height: 16),
               Text(
                 'Description:',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               SizedBox(height: 8),
               Text(
                 ticket['description']?.toString() ?? 'No description available',
-                style: TextStyle(color: Colors.black),
+                style: AppFonts.bodyMedium(color: AppColors.textPrimary),
               ),
             ],
           ),
@@ -91,15 +95,21 @@ class TicketDetailsDialog extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Close', style: TextStyle(color: Colors.black54)),
+            child: Text(
+              'Close',
+              style: AppFonts.bodySmall(color: AppColors.textSecondary),
+            ),
           ),
           ElevatedButton(
             onPressed: () => _updateTicketStatus(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.white,
             ),
-            child: Text('Update Status'),
+            child: Text(
+              'Update Status',
+              style: AppFonts.button(color: AppColors.white),
+            ),
           ),
         ],
       ),
@@ -116,13 +126,18 @@ class TicketDetailsDialog extends StatelessWidget {
             width: 80,
             child: Text(
               '$label:',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.medium,
               ),
             ),
           ),
-          Expanded(child: Text(value, style: TextStyle(color: Colors.black))),
+          Expanded(
+            child: Text(
+              value,
+              style: AppFonts.bodySmall(color: AppColors.textPrimary),
+            ),
+          ),
         ],
       ),
     );
@@ -142,9 +157,9 @@ class TicketDetailsDialog extends StatelessWidget {
             width: 80,
             child: Text(
               '$label:',
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.medium,
               ),
             ),
           ),
@@ -153,10 +168,10 @@ class TicketDetailsDialog extends StatelessWidget {
               onTap: () => _handleUrlTap(context, url),
               child: Text(
                 url,
-                style: TextStyle(
-                  color: AppColors.primary,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.primary),
+                  fontWeight: AppFonts.medium,
                   decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
@@ -174,24 +189,33 @@ class TicketDetailsDialog extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.white,
-          title: Text('Open Link', style: TextStyle(color: Colors.black)),
+          backgroundColor: AppColors.surface,
+          title: Text(
+            'Open Link',
+            style: AppFonts.bodyLarge(color: AppColors.textPrimary),
+          ),
           content: Text(
             'Do you want to open this link?\n\n$url',
-            style: TextStyle(color: Colors.black),
+            style: AppFonts.bodyMedium(color: AppColors.textPrimary),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: Text('Cancel', style: TextStyle(color: Colors.black54)),
+              child: Text(
+                'Cancel',
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
+              ),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(context).pop(true),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                foregroundColor: AppColors.white,
               ),
-              child: Text('Open'),
+              child: Text(
+                'Open',
+                style: AppFonts.button(color: AppColors.white),
+              ),
             ),
           ],
         );
@@ -204,11 +228,14 @@ class TicketDetailsDialog extends StatelessWidget {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Opening: $url'),
+            content: Text(
+              'Opening: $url',
+              style: AppFonts.bodySmall(color: AppColors.white),
+            ),
             backgroundColor: AppColors.primary,
             action: SnackBarAction(
               label: 'Copy',
-              textColor: Colors.white,
+              textColor: AppColors.white,
               onPressed: () {
                 // Here you would copy to clipboard
                 // Clipboard.setData(ClipboardData(text: url));
@@ -224,7 +251,10 @@ class TicketDetailsDialog extends StatelessWidget {
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Ticket updated!'),
+        content: Text(
+          'Ticket updated!',
+          style: AppFonts.bodySmall(color: AppColors.white),
+        ),
         backgroundColor: AppColors.success,
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class DividerWidget extends StatelessWidget {
   final Animation<double> animation;
   final String text;
@@ -10,7 +12,7 @@ class DividerWidget extends StatelessWidget {
     super.key,
     required this.animation,
     this.text = 'OR',
-    this.color = Colors.white,
+    this.color = AppColors.white,
     this.opacity = 0.3,
   });
 
@@ -33,9 +35,9 @@ class DividerWidget extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   text,
-                  style: TextStyle(
-                    color: color.withValues(alpha: 0.8),
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelMedium(color: color.withValues(alpha: 0.8)),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),

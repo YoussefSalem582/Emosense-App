@@ -9,7 +9,7 @@
 
 ## 🎯 Executive Summary
 
-Emosense is a Flutter mobile application centred on emotion recognition and analytics, with complementary workforce surfaces (profiles, KPIs, attendance, tickets, HR-style flows). The codebase uses **Clean Architecture + BLoC**, bilingual ARB localization, offline-first resilience, and scalable feature modules (`auth`, `analysis`, `employee`, `emotion`, `tickets`, etc.). App-wide shell screens and the central **`screens.dart`** routing barrel live under **`lib/features/shared/presentation/`**; cross-cutting reusable widgets (barrel **`widgets/widgets.dart`**) live under **`lib/core/widgets/`**.
+Emosense is a Flutter mobile application centred on emotion recognition and analytics, with complementary workforce surfaces (profiles, KPIs, attendance, tickets, HR-style flows). The codebase uses **Clean Architecture + BLoC**, bilingual ARB localization, offline-first resilience, and scalable feature modules (`auth`, `analysis`, `employee`, `emotion`, `tickets`, etc.). App-wide shell screens and the central **`screens.dart`** routing barrel live under **`lib/features/shared/presentation/`**; cross-cutting reusable widgets (barrel **`widgets/widgets.dart`**) live under **`lib/core/widgets/`**. **Design tokens:** portfolio-style **`AppColors`** / **`AppFonts`** / **`AppLocaleBinding`** live under **`lib/core/utils/assets/`** (with **`constants/app_colors.dart`** re-exporting colors for backward compatibility).
 
 ### Key Highlights
 
@@ -23,7 +23,7 @@ Emosense is a Flutter mobile application centred on emotion recognition and anal
 - ✅ **Zero compilation errors** — static analysis passing clean
 - ✅ **Comprehensive documentation** — 10 technical guides in `tech_readme_files/` (agent tooling in `AGENTS.md`; mirrored rules in `.agents/`; `project-scope` + `documentation-updates` in `.cursor/rules/` and `.agents/rules/`; folder tree in `01_folder_structure.md`)
 - ✅ **Unit test suite** — 29 test files, 471 test cases across all implemented features (all passing)
-- ✅ **Bilingual support** (English/Arabic with full RTL) — default locale: Arabic; Arabic uses Tajawal font
+- ✅ **Bilingual support** (English/Arabic with full RTL) — default locale: Arabic; Arabic uses Tajawal font; shell, auth, **`lib/core`** routing/snackbars and shared widgets (analysis app bar, analytics header, emotion input, analyze button, connection card, ticket dialog, EMO loader, **employee analytics section** goals/trends/detailed cards, app bar stats row, onboarding dev tools, **core cards** analytics/demo/instructions/video/system/results + **modern button** + **backend connection test**), **admin/employee/auth/tickets surfaces** in the latest token pass (**`admin_app_bar`**, **`profile_header`**, **`onboarding_content`**, **`admin_tickets_header`**, **`welcome_header`**, **`divider_widget`**, **`employee_tab_bar`**, **`admin_ticket_card`**, **`text_input_widget`**), **emotion analytics**, **tickets**, **admin profile**, **employee** profile/nav/dialogs, and **admin** surfaces touched in typography/token passes increasingly use centralized **`AppFonts`** / **`AppColors`**
 - ✅ **Secure token storage** via FlutterSecureStorage (encrypted)
 - ✅ **Claude Code hygiene** — signing secrets do not belong in `.claude/settings.json`; `.claude/settings.local.json` is gitignored (`08_security_and_environment.md`)
 - ✅ **Environment-driven config** — secrets in `.env` loaded via **`AppConfig`** (`flutter_dotenv`; `AppConfig.loadConfig()` in `lib/main.dart`)

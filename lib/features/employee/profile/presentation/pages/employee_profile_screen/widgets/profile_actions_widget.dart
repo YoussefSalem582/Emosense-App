@@ -58,7 +58,7 @@ class ProfileActionsWidget extends StatelessWidget {
                 onPressed: onSignOut,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.transparent,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   elevation: 0,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
@@ -66,9 +66,9 @@ class ProfileActionsWidget extends StatelessWidget {
                   ),
                 ),
                 icon: const Icon(Icons.logout),
-                label: const Text(
+                label: Text(
                   'Sign Out',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  style: AppFonts.button(color: AppColors.white),
                 ),
               ),
             ),

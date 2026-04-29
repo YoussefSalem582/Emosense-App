@@ -40,32 +40,30 @@ class AnalyzeButton extends StatelessWidget {
                         width: 24,
                         height: 24,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: AppColors.white,
                           strokeWidth: 2,
                         ),
                       ),
                       const SizedBox(width: 16),
-                      const Text(
+                      Text(
                         AppStrings.analyzing,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.white),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ] else ...[
                       const Icon(
                         Icons.psychology,
-                        color: Colors.white,
+                        color: AppColors.white,
                         size: 24,
                       ),
                       const SizedBox(width: 12),
-                      const Text(
+                      Text(
                         AppStrings.analyzeButton,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.white),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ],

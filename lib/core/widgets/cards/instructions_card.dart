@@ -9,11 +9,11 @@ class InstructionsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -44,16 +44,12 @@ class InstructionsCard extends StatelessWidget {
             gradient: AppColors.primaryGradient,
             borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
-          child: const Icon(Icons.lightbulb, color: Colors.white, size: 24),
+          child: const Icon(Icons.lightbulb, color: AppColors.white, size: 24),
         ),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           AppStrings.howToUseTitle,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.textPrimary,
-          ),
+          style: AppFonts.h6(color: AppColors.textPrimary),
         ),
       ],
     );
@@ -115,10 +111,9 @@ class InstructionsCard extends StatelessWidget {
             child: Center(
               child: Text(
                 number,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: color,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyLarge(color: color),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ),
@@ -130,19 +125,15 @@ class InstructionsCard extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -168,15 +159,15 @@ class InstructionsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.tips_and_updates, color: AppColors.primary),
-              SizedBox(width: 8),
+              const Icon(Icons.tips_and_updates, color: AppColors.primary),
+              const SizedBox(width: 8),
               Text(
                 AppStrings.tryExamplesTitle,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ],
@@ -193,7 +184,7 @@ class InstructionsCard extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 4),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+        style: AppFonts.bodySmall(color: AppColors.textSecondary),
       ),
     );
   }

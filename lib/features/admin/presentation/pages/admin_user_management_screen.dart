@@ -168,16 +168,16 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                 children: [
                   Text(
                     'User Management',
-                    style: theme.textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                    style: AppFonts.copyWith(
+                      AppFonts.h5(color: AppColors.white),
+                      fontWeight: AppFonts.black,
                     ),
                   ),
                   SizedBox(height: customSpacing.xs),
                   Text(
                     'Manage users, roles, and permissions',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey,
+                    style: AppFonts.bodyMedium(
+                      color: AppColors.white.withValues(alpha: 0.85),
                     ),
                   ),
                   SizedBox(height: customSpacing.sm),
@@ -201,10 +201,9 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                         SizedBox(width: customSpacing.xs),
                         Text(
                           '${_users.length} users active',
-                          style: TextStyle(
-                            color: AppColors.success,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.copyWith(
+                            AppFonts.caption(color: AppColors.success),
+                            fontWeight: AppFonts.semiBold,
                           ),
                         ),
                       ],
@@ -284,10 +283,9 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                     SizedBox(width: customSpacing.xs),
                     Text(
                       _selectedFilter.toUpperCase(),
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                      style: AppFonts.copyWith(
+                        AppFonts.caption(color: AppColors.primary),
+                        fontWeight: AppFonts.semiBold,
                       ),
                     ),
                   ],
@@ -365,19 +363,17 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
           backgroundColor: user['color'],
           child: Text(
             user['avatar'],
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.white),
+              fontWeight: AppFonts.bold,
             ),
           ),
         ),
         title: Text(
           user['name'],
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
-            fontSize: 16,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.bold,
           ),
         ),
         subtitle: Column(
@@ -386,7 +382,7 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
             SizedBox(height: customSpacing.xs),
             Text(
               user['email'],
-              style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+              style: AppFonts.caption(color: AppColors.textSecondary),
             ),
             SizedBox(height: customSpacing.xs),
             Row(
@@ -402,10 +398,9 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                   ),
                   child: Text(
                     user['role'],
-                    style: TextStyle(
-                      color: _getRoleColor(user['role']),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.copyWith(
+                      AppFonts.labelSmall(color: _getRoleColor(user['role'])),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ),
@@ -423,10 +418,11 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                   ),
                   child: Text(
                     user['status'],
-                    style: TextStyle(
-                      color: _getStatusColor(user['status']),
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.copyWith(
+                      AppFonts.labelSmall(
+                        color: _getStatusColor(user['status']),
+                      ),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ),
@@ -435,7 +431,10 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
             SizedBox(height: customSpacing.xs),
             Text(
               '${user['department']} • Last login: ${user['lastLogin']}',
-              style: TextStyle(color: AppColors.textLight, fontSize: 11),
+              style: AppFonts.copyWith(
+                AppFonts.caption(color: AppColors.textLight),
+                fontSize: 11,
+              ),
             ),
           ],
         ),
@@ -614,9 +613,9 @@ class _AdminUserManagementScreenState extends State<AdminUserManagementScreen>
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
                 ),
-                child: const Text(
+                child: Text(
                   'Delete',
-                  style: TextStyle(color: Colors.white),
+                  style: AppFonts.button(color: AppColors.white),
                 ),
               ),
             ],

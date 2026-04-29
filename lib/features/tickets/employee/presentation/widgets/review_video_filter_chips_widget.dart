@@ -64,10 +64,11 @@ class ReviewVideoFilterChipsWidget extends StatelessWidget {
               child: Center(
                 child: Text(
                   filters[index],
-                  style: TextStyle(
-                    color: isSelected ? const Color(0xFF6366F1) : Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(
+                      color: isSelected ? AppColors.primary : AppColors.white,
+                    ),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),

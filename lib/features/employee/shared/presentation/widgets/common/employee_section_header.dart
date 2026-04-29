@@ -38,20 +38,18 @@ class EmployeeSectionHeader extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimary,
+                      style: AppFonts.copyWith(
+                        AppFonts.h6(color: AppColors.textPrimary),
+                        fontWeight: AppFonts.bold,
                       ),
                     ),
                     if (subtitle != null) ...[
                       const SizedBox(height: 4),
                       Text(
                         subtitle!,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textSecondary,
-                          fontWeight: FontWeight.w500,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textSecondary),
+                          fontWeight: AppFonts.medium,
                         ),
                       ),
                     ],
@@ -72,10 +70,9 @@ class EmployeeSectionHeader extends StatelessWidget {
                   ),
                   child: Text(
                     badgeText!,
-                    style: TextStyle(
-                      color: badgeColor ?? AppColors.primary,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.copyWith(
+                      AppFonts.caption(color: badgeColor ?? AppColors.primary),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ),
@@ -94,7 +91,7 @@ class EmployeeSectionHeader extends StatelessWidget {
                   label: Text(actionText!),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: AppColors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 8,

@@ -151,14 +151,13 @@ class TextAnalysisSettingsWidget extends StatelessWidget {
           Icon(
             icon,
             size: 16,
-            color: isEnabled ? Colors.white : AppColors.textSecondary,
+            color: isEnabled ? AppColors.white : AppColors.textSecondary,
           ),
           const SizedBox(width: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
-              color: isEnabled ? Colors.white : AppColors.textSecondary,
+            style: AppFonts.caption(
+              color: isEnabled ? AppColors.white : AppColors.textSecondary,
             ),
           ),
         ],
@@ -167,9 +166,9 @@ class TextAnalysisSettingsWidget extends StatelessWidget {
       onSelected: (selected) {
         // Handle setting toggle
       },
-      backgroundColor: Colors.grey[100],
+      backgroundColor: AppColors.surfaceContainer,
       selectedColor: AppColors.primary,
-      checkmarkColor: Colors.white,
+      checkmarkColor: AppColors.white,
     );
   }
 }

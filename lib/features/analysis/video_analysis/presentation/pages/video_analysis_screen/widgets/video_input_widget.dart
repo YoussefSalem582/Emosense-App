@@ -68,13 +68,9 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Video Source',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.button(color: AppColors.textPrimary),
                 ),
                 const Spacer(),
                 // Toggle buttons
@@ -129,11 +125,10 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                         : kIsWeb
                         ? 'File upload is not supported on web. Use URL input instead.'
                         : 'Upload video files from your device (MP4, AVI, MOV)',
-                    style: TextStyle(
-                      fontSize: 12,
+                    style: AppFonts.caption(
                       color:
                           kIsWeb && !_isUrlInput
-                              ? Colors.orange
+                              ? AppColors.warning
                               : AppColors.textSecondary,
                     ),
                   ),
@@ -170,15 +165,13 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
             Icon(
               icon,
               size: 16,
-              color: isSelected ? Colors.white : AppColors.textSecondary,
+              color: isSelected ? AppColors.white : AppColors.textSecondary,
             ),
             const SizedBox(width: 6),
             Text(
               label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: isSelected ? Colors.white : AppColors.textSecondary,
+              style: AppFonts.labelMedium(
+                color: isSelected ? AppColors.white : AppColors.textSecondary,
               ),
             ),
           ],
@@ -210,9 +203,8 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
         focusNode: widget.urlFocusNode,
         decoration: InputDecoration(
           hintText: 'Enter video URL (YouTube, Vimeo, etc.)',
-          hintStyle: TextStyle(
+          hintStyle: AppFonts.bodySmall(
             color: AppColors.textSecondary.withValues(alpha: 0.7),
-            fontSize: 14,
           ),
           border: InputBorder.none,
           prefixIcon: Icon(
@@ -278,7 +270,7 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                   : Icons.upload_file_rounded,
               color:
                   isWebUnsupported
-                      ? Colors.orange
+                      ? AppColors.warning
                       : widget.selectedFile != null
                       ? const Color(0xFF667EEA)
                       : AppColors.textSecondary,
@@ -295,28 +287,24 @@ class _VideoInputWidgetState extends State<VideoInputWidget> {
                         : widget.selectedFile != null
                         ? _getFileName(widget.selectedFile!)
                         : 'Tap to select video file',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight:
-                          widget.selectedFile != null
-                              ? FontWeight.w500
-                              : FontWeight.w400,
-                      color:
-                          isWebUnsupported
-                              ? Colors.orange
-                              : widget.selectedFile != null
-                              ? AppColors.textPrimary
-                              : AppColors.textSecondary,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(
+                        color: isWebUnsupported
+                            ? AppColors.warning
+                            : widget.selectedFile != null
+                                ? AppColors.textPrimary
+                                : AppColors.textSecondary,
+                      ),
+                      fontWeight: widget.selectedFile != null
+                          ? AppFonts.medium
+                          : AppFonts.regular,
                     ),
                   ),
                   if (widget.selectedFile != null) ...[
                     const SizedBox(height: 2),
                     Text(
                       _getFileSize(widget.selectedFile!),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textSecondary,
-                      ),
+                      style: AppFonts.caption(color: AppColors.textSecondary),
                     ),
                   ],
                 ],

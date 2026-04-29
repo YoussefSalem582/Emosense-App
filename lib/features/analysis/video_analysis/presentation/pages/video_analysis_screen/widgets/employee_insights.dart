@@ -83,13 +83,9 @@ class EmployeeInsights extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           'Employee Action Items',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
+          style: AppFonts.button(color: AppColors.textPrimary),
         ),
       ],
     );
@@ -128,20 +124,16 @@ class EmployeeInsights extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(color: color),
                       fontSize: 13,
-                      fontWeight: FontWeight.w600,
-                      color: color,
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     description,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textSecondary,
-                    ),
+                    style: AppFonts.labelMedium(color: AppColors.textSecondary),
                   ),
                 ],
               ),
@@ -207,19 +199,14 @@ class EmployeeInsights extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-            color: color,
+          style: AppFonts.copyWith(
+            AppFonts.caption(color: color),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textSecondary,
-          ),
+          style: AppFonts.labelSmall(color: AppColors.textSecondary),
         ),
       ],
     );
@@ -240,7 +227,7 @@ class EmployeeInsights extends StatelessWidget {
               children: [
                 Text(
                   'This action will help you follow up on the customer video analysis results.',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 16),
                 if (actionTitle.contains('Schedule'))

@@ -13,7 +13,8 @@ part 'employee_tickets_event.dart';
 part 'employee_tickets_state.dart';
 
 /// Manages ticket lists for employee screens (filters to [TicketSource.employee]).
-class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsState> {
+class EmployeeTicketsBloc
+    extends Bloc<EmployeeTicketsEvent, EmployeeTicketsState> {
   EmployeeTicketsBloc({
     required EmployeeLoadTicketsUseCase loadTicketsUseCase,
     required EmployeeCreateTicketUseCase createTicketUseCase,
@@ -30,8 +31,7 @@ class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsStat
   Future<void> _onLoad(
     EmployeeTicketsLoadRequested event,
     Emitter<EmployeeTicketsState> emit,
-  ) =>
-      _loadTickets(emit);
+  ) => _loadTickets(emit);
 
   Future<void> _onCreate(
     EmployeeTicketsCreateRequested event,
@@ -81,12 +81,11 @@ class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsStat
 
       final result = await _loadTicketsUseCase(params);
 
-      result.fold(
-        (failure) => emit(EmployeeTicketsError(failure.message)),
-        (tickets) {
-          emit(EmployeeTicketsSuccess(_buildEmployeeData(tickets)));
-        },
-      );
+      result.fold((failure) => emit(EmployeeTicketsError(failure.message)), (
+        tickets,
+      ) {
+        emit(EmployeeTicketsSuccess(_buildEmployeeData(tickets)));
+      });
     } catch (e) {
       emit(EmployeeTicketsError('Failed to load tickets: $e'));
     }
@@ -102,8 +101,7 @@ class EmployeeTicketsBloc extends Bloc<EmployeeTicketsEvent, EmployeeTicketsStat
       pendingCount: allTickets.where((t) => t['status'] == 'Open').length,
       inProgressCount:
           allTickets.where((t) => t['status'] == 'In Progress').length,
-      completedCount:
-          allTickets.where((t) => t['status'] == 'Resolved').length,
+      completedCount: allTickets.where((t) => t['status'] == 'Resolved').length,
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class AuthLinkWidget extends StatelessWidget {
   final Animation<double> animation;
   final String leadingText;
@@ -30,19 +32,17 @@ class AuthLinkWidget extends StatelessWidget {
             children: [
               Text(
                 leadingText,
-                style: TextStyle(
+                style: AppFonts.bodyMedium(
                   color: textColor.withValues(alpha: 0.8),
-                  fontSize: 16,
                 ),
               ),
               TextButton(
                 onPressed: onPressed,
                 child: Text(
                   linkText,
-                  style: TextStyle(
-                    color: linkColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: linkColor),
+                    fontWeight: AppFonts.bold,
                     decoration: TextDecoration.underline,
                     decorationColor: linkColor,
                   ),

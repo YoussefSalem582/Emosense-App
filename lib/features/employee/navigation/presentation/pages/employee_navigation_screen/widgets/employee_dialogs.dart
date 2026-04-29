@@ -49,12 +49,12 @@ class _NotificationsDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.notifications_active,
-              color: Color(0xFF667EEA),
+              color: AppColors.primary,
               size: 20,
             ),
           ),
@@ -124,20 +124,20 @@ class _NotificationsDialog extends StatelessWidget {
       decoration: BoxDecoration(
         color:
             isUnread
-                ? const Color(0xFF667EEA).withValues(alpha: 0.05)
-                : Colors.grey.withValues(alpha: 0.05),
+                ? AppColors.primary.withValues(alpha: 0.05)
+                : AppColors.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color:
               isUnread
-                  ? const Color(0xFF667EEA).withValues(alpha: 0.2)
-                  : Colors.grey.withValues(alpha: 0.2),
+                  ? AppColors.primary.withValues(alpha: 0.2)
+                  : AppColors.border,
         ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, size: 20, color: const Color(0xFF667EEA)),
+          Icon(icon, size: 20, color: AppColors.primary),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -148,10 +148,10 @@ class _NotificationsDialog extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        style: TextStyle(
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
                           fontWeight:
-                              isUnread ? FontWeight.w600 : FontWeight.w500,
-                          fontSize: 14,
+                              isUnread ? AppFonts.semiBold : AppFonts.medium,
                         ),
                       ),
                     ),
@@ -160,7 +160,7 @@ class _NotificationsDialog extends StatelessWidget {
                         width: 8,
                         height: 8,
                         decoration: const BoxDecoration(
-                          color: Color(0xFF667EEA),
+                          color: AppColors.primary,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -169,16 +169,13 @@ class _NotificationsDialog extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 12,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   time,
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: AppColors.textSecondary),
                     fontSize: 11,
                   ),
                 ),
@@ -204,12 +201,12 @@ class _HelpDialog extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: const Icon(
               Icons.help_outline,
-              color: Color(0xFF667EEA),
+              color: AppColors.primary,
               size: 20,
             ),
           ),
@@ -262,7 +259,7 @@ class _HelpDialog extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      leading: Icon(icon, color: const Color(0xFF667EEA)),
+      leading: Icon(icon, color: AppColors.primary),
       title: Text(title),
       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
       onTap: onTap,
@@ -286,14 +283,17 @@ class _QuickActionsSheet extends StatelessWidget {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
+              color: AppColors.border,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
+          Text(
             'Quick Actions',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: AppFonts.copyWith(
+              AppFonts.h6(),
+              fontWeight: AppFonts.semiBold,
+            ),
           ),
           const SizedBox(height: 20),
           Row(
@@ -351,19 +351,19 @@ class _QuickActionsSheet extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+          color: AppColors.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: const Color(0xFF667EEA).withValues(alpha: 0.2),
+            color: AppColors.primary.withValues(alpha: 0.2),
           ),
         ),
         child: Column(
           children: [
-            Icon(icon, color: const Color(0xFF667EEA), size: 32),
+            Icon(icon, color: AppColors.primary, size: 32),
             const SizedBox(height: 8),
             Text(
               title,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 12),
+              style: AppFonts.labelMedium(color: AppColors.textPrimary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -402,7 +402,7 @@ class _FeedbackDialogState extends State<_FeedbackDialog> {
                 onTap: () => setState(() => _rating = index + 1),
                 child: Icon(
                   Icons.star,
-                  color: index < _rating ? Colors.amber : Colors.grey[300],
+                  color: index < _rating ? AppColors.warning : AppColors.border,
                   size: 32,
                 ),
               );

@@ -41,13 +41,9 @@ class SystemMetricsCard extends StatelessWidget {
               children: [
                 const Icon(Icons.monitor, color: AppColors.primary, size: 28),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'System Metrics',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.h6(color: AppColors.textPrimary),
                 ),
                 const Spacer(),
                 if (onToggleAutoRefresh != null)
@@ -73,14 +69,15 @@ class SystemMetricsCard extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             if (metrics == null)
-              const Center(
+              Center(
                 child: Column(
                   children: [
-                    CircularProgressIndicator(color: AppColors.primary),
-                    SizedBox(height: 16),
+                    const CircularProgressIndicator(color: AppColors.primary),
+                    const SizedBox(height: 16),
                     Text(
                       'Loading system metrics...',
-                      style: TextStyle(color: AppColors.textSecondary),
+                      style:
+                          AppFonts.bodyMedium(color: AppColors.textSecondary),
                     ),
                   ],
                 ),
@@ -150,18 +147,12 @@ class SystemMetricsCard extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         'Uptime: ${metrics!.uptime}',
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
+                        style: AppFonts.caption(color: AppColors.textSecondary),
                       ),
                       const Spacer(),
                       Text(
                         'Last updated: ${_formatTimestamp()}',
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
+                        style: AppFonts.caption(color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -197,11 +188,7 @@ class SystemMetricsCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppFonts.labelLarge(color: AppColors.textSecondary),
                 ),
               ),
             ],
@@ -209,10 +196,9 @@ class SystemMetricsCard extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              color: color,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: color),
+              fontWeight: AppFonts.bold,
             ),
           ),
           if (progress != null) ...[
@@ -280,10 +266,9 @@ class SystemMetricsCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Cache Performance',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -329,15 +314,14 @@ class SystemMetricsCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
-            color: color,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: color),
+            fontWeight: AppFonts.bold,
           ),
         ),
         Text(
           label,
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textSecondary),
           textAlign: TextAlign.center,
         ),
       ],

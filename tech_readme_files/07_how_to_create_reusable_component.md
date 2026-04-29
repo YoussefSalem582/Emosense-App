@@ -22,6 +22,8 @@ lib/core/widgets/
 └── responsive/        ← ResponsiveLayout
 ```
 
+**Colours & typography:** definitions live in **`lib/core/utils/assets/`** — `app_colors.dart`, `app_fonts.dart`, barrel `assets.dart`. `lib/core/constants/app_colors.dart` re-exports colours for backward compatibility.
+
 ---
 
 ## When to Create a Shared Widget

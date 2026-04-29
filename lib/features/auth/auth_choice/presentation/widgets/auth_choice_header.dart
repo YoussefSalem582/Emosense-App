@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// Auth choice screen header with app branding
 class AuthChoiceHeader extends StatelessWidget {
   final Animation<double> fadeAnimation;
@@ -69,10 +71,10 @@ class AuthChoiceHeader extends StatelessWidget {
             // Welcome Text
             Text(
               'Welcome to EmoSense',
-              style: TextStyle(
+              style: AppFonts.copyWith(
+                AppFonts.h4(color: Colors.white),
                 fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
+                fontWeight: AppFonts.bold,
                 shadows: [
                   Shadow(
                     color: Colors.black.withValues(alpha: 0.3),
@@ -88,10 +90,10 @@ class AuthChoiceHeader extends StatelessWidget {
             // Subtitle
             Text(
               'Choose how you\'d like to continue',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white.withValues(alpha: 0.9),
-                fontWeight: FontWeight.w400,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(
+                  color: Colors.white.withValues(alpha: 0.9),
+                ),
                 shadows: [
                   Shadow(
                     color: Colors.black.withValues(alpha: 0.2),

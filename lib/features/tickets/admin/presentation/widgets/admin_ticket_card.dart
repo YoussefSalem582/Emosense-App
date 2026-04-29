@@ -15,8 +15,7 @@ class AdminTicketCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final customSpacing = theme.extension<CustomSpacing>()!;
+    final customSpacing = Theme.of(context).extension<CustomSpacing>()!;
 
     return SurfaceSectionCard(
       margin: EdgeInsets.only(bottom: customSpacing.md),
@@ -38,18 +37,18 @@ class AdminTicketCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeaderRow(theme, customSpacing),
+                _buildHeaderRow(customSpacing),
                 SizedBox(height: customSpacing.sm),
-                _buildTitle(theme),
+                _buildTitle(),
                 SizedBox(height: customSpacing.sm),
-                _buildDescription(theme),
+                _buildDescription(),
                 SizedBox(height: customSpacing.md),
                 _buildStatusAndPriorityRow(customSpacing),
                 SizedBox(height: customSpacing.md),
-                _buildFooterRow(theme, customSpacing),
+                _buildFooterRow(customSpacing),
                 if (ticket['source']?.toString() == 'Employee Ticket') ...[
                   SizedBox(height: customSpacing.sm),
-                  _buildEmployeeTicketInfo(theme, customSpacing),
+                  _buildEmployeeTicketInfo(customSpacing),
                 ],
               ],
             ),
@@ -59,7 +58,7 @@ class AdminTicketCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderRow(ThemeData theme, CustomSpacing spacing) {
+  Widget _buildHeaderRow(CustomSpacing spacing) {
     return Row(
       children: [
         Container(
@@ -70,53 +69,57 @@ class AdminTicketCard extends StatelessWidget {
           decoration: BoxDecoration(
             color:
                 ticket['source'] == 'Employee Ticket'
-                    ? Colors.blue.withValues(alpha: 0.1)
-                    : Colors.purple.withValues(alpha: 0.1),
+                    ? AppColors.info.withValues(alpha: 0.1)
+                    : AppColors.accent.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color:
                   ticket['source'] == 'Employee Ticket'
-                      ? Colors.blue.withValues(alpha: 0.3)
-                      : Colors.purple.withValues(alpha: 0.3),
+                      ? AppColors.info.withValues(alpha: 0.3)
+                      : AppColors.accent.withValues(alpha: 0.3),
             ),
           ),
           child: Text(
             ticket['source'] ?? 'Admin Ticket',
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color:
-                  ticket['source'] == 'Employee Ticket'
-                      ? Colors.blue[700]
-                      : Colors.purple[700],
+            style: AppFonts.copyWith(
+              AppFonts.labelSmall(
+                color:
+                    ticket['source'] == 'Employee Ticket'
+                        ? AppColors.info
+                        : AppColors.accentDark,
+              ),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
         const Spacer(),
         Text(
           ticket['id']?.toString() ?? 'NO-ID',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: Colors.grey[600],
-            fontWeight: FontWeight.w500,
+          style: AppFonts.copyWith(
+            AppFonts.caption(color: AppColors.textSecondary),
+            fontWeight: AppFonts.medium,
           ),
         ),
       ],
     );
   }
 
-  Widget _buildTitle(ThemeData theme) {
+  Widget _buildTitle() {
     return Text(
       ticket['title']?.toString() ?? 'No Title',
-      style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+      style: AppFonts.copyWith(
+        AppFonts.bodyLarge(color: AppColors.textPrimary),
+        fontWeight: AppFonts.bold,
+      ),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
   }
 
-  Widget _buildDescription(ThemeData theme) {
+  Widget _buildDescription() {
     return Text(
       ticket['description']?.toString() ?? 'No Description',
-      style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+      style: AppFonts.bodyMedium(color: AppColors.textSecondary),
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
@@ -143,10 +146,11 @@ class AdminTicketCard extends StatelessWidget {
           ),
           child: Text(
             ticket['status']?.toString() ?? 'Unknown',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: _getStatusColor(ticket['status']?.toString()),
+            style: AppFonts.copyWith(
+              AppFonts.caption(
+                color: _getStatusColor(ticket['status']?.toString()),
+              ),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -169,10 +173,11 @@ class AdminTicketCard extends StatelessWidget {
           ),
           child: Text(
             ticket['priority']?.toString() ?? 'Unknown',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: _getPriorityColor(ticket['priority']?.toString()),
+            style: AppFonts.copyWith(
+              AppFonts.caption(
+                color: _getPriorityColor(ticket['priority']?.toString()),
+              ),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -235,33 +240,33 @@ class AdminTicketCard extends StatelessWidget {
                     ),
                   ),
                 ],
-            child: Icon(Icons.more_vert, color: Colors.grey[600]),
+            child: Icon(Icons.more_vert, color: AppColors.textSecondary),
           ),
     );
   }
 
-  Widget _buildFooterRow(ThemeData theme, CustomSpacing spacing) {
+  Widget _buildFooterRow(CustomSpacing spacing) {
     return Row(
       children: [
         Row(
           children: [
             CircleAvatar(
               radius: 12,
-              backgroundColor: ticket['assignedToColor'] ?? Colors.grey,
+              backgroundColor: ticket['assignedToColor'] ?? AppColors.textTertiary,
               child: Text(
                 ticket['assignedToAvatar'] ?? '?',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
+                style: AppFonts.copyWith(
+                  AppFonts.caption(color: AppColors.white),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ),
             SizedBox(width: spacing.xs),
             Text(
               ticket['assignedTo'] ?? 'Unassigned',
-              style: theme.textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.w500,
+              style: AppFonts.copyWith(
+                AppFonts.caption(color: AppColors.textPrimary),
+                fontWeight: AppFonts.medium,
               ),
             ),
           ],
@@ -269,30 +274,29 @@ class AdminTicketCard extends StatelessWidget {
         const Spacer(),
         Text(
           ticket['createdAt'] ?? '',
-          style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
       ],
     );
   }
 
-  Widget _buildEmployeeTicketInfo(ThemeData theme, CustomSpacing spacing) {
+  Widget _buildEmployeeTicketInfo(CustomSpacing spacing) {
     return Row(
       children: [
-        Icon(Icons.person, size: 16, color: Colors.grey[600]),
+        Icon(Icons.person, size: 16, color: AppColors.textSecondary),
         SizedBox(width: spacing.xs),
         Text(
           'Customer: ${ticket['customerName']?.toString() ?? 'Unknown'}',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: Colors.grey[600],
+          style: AppFonts.caption(color: AppColors.textSecondary).copyWith(
             fontStyle: FontStyle.italic,
           ),
         ),
         const Spacer(),
         Text(
           'by ${ticket['employeeName']?.toString() ?? 'Unknown'}',
-          style: theme.textTheme.bodySmall?.copyWith(
-            color: Colors.blue[600],
-            fontWeight: FontWeight.w500,
+          style: AppFonts.copyWith(
+            AppFonts.caption(color: AppColors.info),
+            fontWeight: AppFonts.medium,
           ),
         ),
       ],
@@ -300,32 +304,32 @@ class AdminTicketCard extends StatelessWidget {
   }
 
   Color _getPriorityColor(String? priority) {
-    if (priority == null) return Colors.grey;
+    if (priority == null) return AppColors.textTertiary;
     switch (priority.toLowerCase()) {
       case 'critical':
-        return Colors.red;
+        return AppColors.error;
       case 'high':
-        return Colors.orange;
+        return AppColors.warning;
       case 'medium':
-        return Colors.blue;
+        return AppColors.info;
       case 'low':
-        return Colors.green;
+        return AppColors.success;
       default:
-        return Colors.grey;
+        return AppColors.textTertiary;
     }
   }
 
   Color _getStatusColor(String? status) {
-    if (status == null) return Colors.grey;
+    if (status == null) return AppColors.textTertiary;
     switch (status.toLowerCase()) {
       case 'open':
-        return Colors.orange;
+        return AppColors.warning;
       case 'in progress':
-        return Colors.blue;
+        return AppColors.info;
       case 'resolved':
-        return Colors.green;
+        return AppColors.success;
       default:
-        return Colors.grey;
+        return AppColors.textTertiary;
     }
   }
 }
@@ -359,7 +363,9 @@ void _showAssignDialog(
                 title: const Text('Sarah Johnson'),
                 subtitle: const Text('Technical Lead'),
                 onTap: () {
-                  bloc.add(AdminTicketsAssignRequested(ticketId, 'Sarah Johnson'));
+                  bloc.add(
+                    AdminTicketsAssignRequested(ticketId, 'Sarah Johnson'),
+                  );
                   Navigator.of(context).pop();
                 },
               ),
@@ -403,7 +409,10 @@ void _showStatusDialog(
                 title: const Text('Open'),
                 onTap: () {
                   bloc.add(
-                    AdminTicketsStatusUpdateRequested(ticketId, TicketStatus.open),
+                    AdminTicketsStatusUpdateRequested(
+                      ticketId,
+                      TicketStatus.open,
+                    ),
                   );
                   Navigator.of(context).pop();
                 },

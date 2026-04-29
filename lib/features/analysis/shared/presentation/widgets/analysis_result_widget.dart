@@ -96,8 +96,7 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
                   SizedBox(width: customSpacing.sm),
                   Text(
                     '${widget.analysisType} Results',
-                    style: theme.textTheme.titleLarge?.copyWith(
-                      color: AppColors.textPrimary,
+                    style: AppFonts.h6(color: AppColors.textPrimary).copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -136,10 +135,8 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
               SizedBox(height: spacing.md),
               Text(
                 'Analyzing...',
-                style: TextStyle(
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppFonts.bodyMedium(color: AppColors.textSecondary)
+                    .copyWith(fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -184,15 +181,12 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
           children: [
             Text(
               'Confidence',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.w500,
-              ),
+              style: AppFonts.bodyMedium(color: AppColors.textSecondary)
+                  .copyWith(fontWeight: FontWeight.w500),
             ),
             Text(
               '${(confidence * 100).toInt()}%',
-              style: TextStyle(
-                color: AppColors.textPrimary,
+              style: AppFonts.bodyMedium(color: AppColors.textPrimary).copyWith(
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -267,7 +261,7 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
                 return Chip(
                   label: Text(emotion.toString()),
                   backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                  labelStyle: TextStyle(color: AppColors.primary),
+                  labelStyle: AppFonts.bodySmall(color: AppColors.primary),
                 );
               }).toList(),
         ),
@@ -300,7 +294,7 @@ class _AnalysisResultWidgetState extends State<AnalysisResultWidget>
                 return Chip(
                   label: Text(keyword.toString()),
                   backgroundColor: AppColors.secondary.withValues(alpha: 0.1),
-                  labelStyle: TextStyle(color: AppColors.secondary),
+                  labelStyle: AppFonts.bodySmall(color: AppColors.secondary),
                 );
               }).toList(),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for direct text input
 class TextAnalysisInputSection extends StatelessWidget {
@@ -17,7 +18,7 @@ class TextAnalysisInputSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -37,22 +38,21 @@ class TextAnalysisInputSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                    color: AppColors.primaryLight.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.edit_note,
-                    color: Color(0xFF3B82F6),
+                    color: AppColors.primaryLight,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Text Input',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -66,12 +66,9 @@ class TextAnalysisInputSection extends StatelessWidget {
               maxLines: 6,
               decoration: InputDecoration(
                 hintText: _getHintText(),
-                hintStyle: const TextStyle(
-                  color: Color(0xFF94A3B8),
-                  fontSize: 14,
-                ),
+                hintStyle: AppFonts.bodySmall(color: AppColors.textLight),
                 filled: true,
-                fillColor: const Color(0xFFF8FAFC),
+                fillColor: AppColors.surfaceVariant,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none,
@@ -79,12 +76,12 @@ class TextAnalysisInputSection extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(
-                    color: Color(0xFF3B82F6),
+                    color: AppColors.primaryLight,
                     width: 2,
                   ),
                 ),
               ),
-              style: const TextStyle(fontSize: 14, color: Color(0xFF1E293B)),
+              style: AppFonts.bodySmall(color: AppColors.darkSurface),
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A reusable error screen with different error types
 class ErrorScreen extends StatelessWidget {
@@ -153,10 +154,9 @@ class ErrorScreen extends StatelessWidget {
               // Error title
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary,
+                style: AppFonts.copyWith(
+                  AppFonts.h5(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -166,11 +166,7 @@ class ErrorScreen extends StatelessWidget {
               // Error message
               Text(
                 message,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
+                style: AppFonts.bodyMedium(color: AppColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
 

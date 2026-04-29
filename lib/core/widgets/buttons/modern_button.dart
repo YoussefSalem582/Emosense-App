@@ -154,11 +154,9 @@ class _ModernButtonState extends State<ModernButton>
       children.add(
         Text(
           widget.text,
-          style: TextStyle(
+          style: AppFonts.copyWith(
+            AppFonts.button(color: config.textColor),
             fontSize: sizeConfig.fontSize,
-            fontWeight: FontWeight.w600,
-            color: config.textColor,
-            fontFamily: 'Inter',
           ),
         ),
       );
@@ -354,11 +352,9 @@ class GlassButton extends StatelessWidget {
     children.add(
       Text(
         text,
-        style: TextStyle(
+        style: AppFonts.copyWith(
+          AppFonts.button(color: AppColors.textPrimary),
           fontSize: sizeConfig.fontSize,
-          fontWeight: FontWeight.w600,
-          color: AppColors.textPrimary,
-          fontFamily: 'Inter',
         ),
       ),
     );

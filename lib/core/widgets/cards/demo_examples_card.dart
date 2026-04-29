@@ -26,8 +26,8 @@ class DemoExamplesCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.indigo.withValues(alpha: 0.1),
-              Colors.blue.withValues(alpha: 0.1),
+              AppColors.primaryDark.withValues(alpha: 0.1),
+              AppColors.info.withValues(alpha: 0.1),
             ],
           ),
         ),
@@ -39,37 +39,36 @@ class DemoExamplesCard extends StatelessWidget {
               children: [
                 const Icon(
                   Icons.lightbulb_outline,
-                  color: Colors.indigo,
+                  color: AppColors.primaryDark,
                   size: 28,
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Demo Examples',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.h6(color: AppColors.textPrimary),
                 ),
                 const Spacer(),
                 if (onRefresh != null)
                   IconButton(
                     onPressed: onRefresh,
-                    icon: const Icon(Icons.refresh, color: Colors.indigo),
+                    icon: const Icon(Icons.refresh, color: AppColors.primaryDark),
                     tooltip: 'Refresh examples',
                   ),
               ],
             ),
             const SizedBox(height: 20),
             if (demoResult == null)
-              const Center(
+              Center(
                 child: Column(
                   children: [
-                    CircularProgressIndicator(color: Colors.indigo),
-                    SizedBox(height: 16),
+                    const CircularProgressIndicator(
+                      color: AppColors.primaryDark,
+                    ),
+                    const SizedBox(height: 16),
                     Text(
                       'Loading demo examples...',
-                      style: TextStyle(color: AppColors.textSecondary),
+                      style:
+                          AppFonts.bodyMedium(color: AppColors.textSecondary),
                     ),
                   ],
                 ),
@@ -92,9 +91,11 @@ class DemoExamplesCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.indigo.withValues(alpha: 0.1),
+        color: AppColors.primaryDark.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.indigo.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: AppColors.primaryDark.withValues(alpha: 0.3),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -103,7 +104,7 @@ class DemoExamplesCard extends StatelessWidget {
             'Total Examples',
             demoResult!.totalExamples.toString(),
             Icons.list_alt,
-            Colors.indigo,
+            AppColors.primaryDark,
           ),
           _buildStatColumn(
             'High Confidence',
@@ -115,7 +116,7 @@ class DemoExamplesCard extends StatelessWidget {
             'Categories',
             demoResult!.examplesByEmotion.length.toString(),
             Icons.category,
-            Colors.blue,
+            AppColors.info,
           ),
         ],
       ),
@@ -128,10 +129,9 @@ class DemoExamplesCard extends StatelessWidget {
       children: [
         Text(
           'Try these examples:',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
         const SizedBox(height: 12),
@@ -143,11 +143,8 @@ class DemoExamplesCard extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               '... and ${demoResult!.examples.length - 6} more examples',
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontSize: 12,
-                fontStyle: FontStyle.italic,
-              ),
+              style: AppFonts.caption(color: AppColors.textSecondary)
+                  .copyWith(fontStyle: FontStyle.italic),
             ),
           ),
       ],
@@ -184,10 +181,10 @@ class DemoExamplesCard extends StatelessWidget {
                     Expanded(
                       child: Text(
                         example.text,
-                        style: TextStyle(
-                          color: AppColors.textPrimary,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.medium,
                           fontSize: 15,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -226,12 +223,13 @@ class DemoExamplesCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             example.emotion.toUpperCase(),
-                            style: TextStyle(
-                              color: EmotionUtils.getEmotionColor(
-                                example.emotion,
+                            style: AppFonts.copyWith(
+                              AppFonts.labelMedium(
+                                color: EmotionUtils.getEmotionColor(
+                                  example.emotion,
+                                ),
                               ),
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: AppFonts.bold,
                             ),
                           ),
                         ],
@@ -251,10 +249,12 @@ class DemoExamplesCard extends StatelessWidget {
                       ),
                       child: Text(
                         example.sentiment,
-                        style: TextStyle(
-                          color: _getSentimentColor(example.sentiment),
+                        style: AppFonts.copyWith(
+                          AppFonts.caption(
+                            color: _getSentimentColor(example.sentiment),
+                          ),
                           fontSize: 11,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: AppFonts.medium,
                         ),
                       ),
                     ),
@@ -271,13 +271,14 @@ class DemoExamplesCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           example.confidenceFormatted,
-                          style: TextStyle(
-                            color:
-                                example.isHighConfidence
-                                    ? AppColors.success
-                                    : AppColors.textSecondary,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.copyWith(
+                            AppFonts.caption(
+                              color:
+                                  example.isHighConfidence
+                                      ? AppColors.success
+                                      : AppColors.textSecondary,
+                            ),
+                            fontWeight: AppFonts.semiBold,
                           ),
                         ),
                       ],
@@ -289,8 +290,8 @@ class DemoExamplesCard extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
                       'Category: ${example.category}',
-                      style: TextStyle(
-                        color: AppColors.textSecondary,
+                      style: AppFonts.caption(color: AppColors.textSecondary)
+                          .copyWith(
                         fontSize: 11,
                         fontStyle: FontStyle.italic,
                       ),
@@ -316,15 +317,14 @@ class DemoExamplesCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
-            color: color,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: color),
+            fontWeight: AppFonts.bold,
           ),
         ),
         Text(
           label,
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textSecondary),
           textAlign: TextAlign.center,
         ),
       ],

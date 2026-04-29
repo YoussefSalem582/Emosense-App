@@ -55,12 +55,13 @@ class ResultsCard extends StatelessWidget {
                               size: 20,
                             ),
                             const SizedBox(width: 8),
-                            const Text(
+                            Text(
                               'Emotion Breakdown',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary,
+                              style: AppFonts.copyWith(
+                                AppFonts.bodyMedium(
+                                  color: AppColors.textPrimary,
+                                ),
+                                fontWeight: AppFonts.semiBold,
                               ),
                             ),
                           ],
@@ -89,12 +90,13 @@ class ResultsCard extends StatelessWidget {
                               size: 20,
                             ),
                             const SizedBox(width: 8),
-                            const Text(
+                            Text(
                               'AI Insights',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.textPrimary,
+                              style: AppFonts.copyWith(
+                                AppFonts.bodyMedium(
+                                  color: AppColors.textPrimary,
+                                ),
+                                fontWeight: AppFonts.semiBold,
                               ),
                             ),
                           ],
@@ -131,12 +133,11 @@ class ResultsCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      const Text(
+                      Text(
                         'Recommended Actions',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimary,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ],
@@ -176,10 +177,11 @@ class ResultsCard extends StatelessWidget {
                                     const SizedBox(width: 6),
                                     Text(
                                       action['text'] as String,
-                                      style: TextStyle(
-                                        color: action['color'] as Color,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
+                                      style: AppFonts.copyWith(
+                                        AppFonts.caption(
+                                          color: action['color'] as Color,
+                                        ),
+                                        fontWeight: AppFonts.semiBold,
                                       ),
                                     ),
                                   ],
@@ -206,24 +208,23 @@ class ResultsCard extends StatelessWidget {
             gradient: AppColors.successGradient,
             borderRadius: BorderRadius.circular(16),
           ),
-          child: const Icon(Icons.analytics, color: Colors.white, size: 24),
+          child: const Icon(Icons.analytics, color: AppColors.white, size: 24),
         ),
         const SizedBox(width: 16),
-        const Expanded(
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Analysis Complete',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimary,
+                style: AppFonts.copyWith(
+                  AppFonts.h6(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               Text(
                 'Comprehensive emotion analysis results',
-                style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ],
           ),
@@ -250,12 +251,12 @@ class ResultsCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 6),
-              const Text(
+              Text(
                 'COMPLETE',
-                style: TextStyle(
-                  color: AppColors.success,
+                style: AppFonts.copyWith(
+                  AppFonts.labelSmall(color: AppColors.success),
                   fontSize: 11,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ],
@@ -288,48 +289,48 @@ class ResultsCard extends StatelessWidget {
             width: 80,
             height: 80,
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(20),
             ),
             child: Center(
               child: Text(
                 EmotionUtils.getEmotionEmoji(result.emotion),
-                style: const TextStyle(fontSize: 48),
+                style: AppFonts.copyWith(
+                  AppFonts.h1(),
+                  fontWeight: AppFonts.regular,
+                  height: 1.0,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 16),
           Text(
             result.emotion.toUpperCase(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 28,
-              fontWeight: FontWeight.w800,
+            style: AppFonts.copyWith(
+              AppFonts.h4(color: AppColors.white),
+              fontWeight: AppFonts.extraBold,
               letterSpacing: 1.2,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Sentiment: ${result.sentiment}',
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.bodyMedium(
+              color: AppColors.white.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(25),
             ),
             child: Text(
               'Confidence: ${EmotionUtils.formatConfidence(result.confidence)}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
+              style: AppFonts.copyWith(
+                AppFonts.bodyLarge(color: AppColors.white),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -390,18 +391,17 @@ class ResultsCard extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: color,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: color),
+              fontWeight: AppFonts.bold,
             ),
           ),
           Text(
             label,
-            style: TextStyle(
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: color),
               fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: color,
+              fontWeight: AppFonts.medium,
             ),
             textAlign: TextAlign.center,
           ),
@@ -427,21 +427,17 @@ class ResultsCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     entry.key,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.textPrimary,
-                    ),
+                    style:
+                        AppFonts.labelLarge(color: AppColors.textPrimary),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   '$percentage%',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: emotionColor,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: emotionColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -505,11 +501,9 @@ class ResultsCard extends StatelessWidget {
             Expanded(
               child: Text(
                 insight['text'] as String,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.caption(
                   color: insight['color'] as Color,
-                ),
+                ).copyWith(fontWeight: AppFonts.medium),
                 overflow: TextOverflow.ellipsis,
               ),
             ),

@@ -287,9 +287,9 @@ class VideoSamplesWidget extends StatelessWidget {
         SizedBox(height: spacing.sm),
         Text(
           video.category.name,
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.9),
-            fontWeight: FontWeight.w600,
+          style: AppFonts.copyWith(
+            AppFonts.labelLarge(color: AppColors.white.withValues(alpha: 0.9)),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
       ],

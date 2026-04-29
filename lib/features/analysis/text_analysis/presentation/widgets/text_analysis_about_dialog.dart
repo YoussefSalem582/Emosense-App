@@ -95,11 +95,7 @@ class TextAnalysisAboutDialog extends StatelessWidget {
       children: [
         Text(
           title,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-            color: AppColors.textPrimary,
-          ),
+          style: AppFonts.button(color: AppColors.textPrimary),
         ),
         const SizedBox(height: 8),
         ...items.map(
@@ -107,10 +103,9 @@ class TextAnalysisAboutDialog extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 4),
             child: Text(
               item,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-                height: 1.4,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textSecondary),
+                height: AppFonts.lineHeightNormal,
               ),
             ),
           ),
@@ -135,12 +130,9 @@ class TextAnalysisAboutDialog extends StatelessWidget {
             children: [
               Icon(Icons.info_outline, color: AppColors.primary, size: 20),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'Technical Information',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
-                ),
+                style: AppFonts.button(color: AppColors.textPrimary),
               ),
             ],
           ),
@@ -164,17 +156,17 @@ class TextAnalysisAboutDialog extends StatelessWidget {
         children: [
           Text(
             '$label:',
-            style: const TextStyle(
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textSecondary),
               fontSize: 13,
-              color: AppColors.textSecondary,
             ),
           ),
           Text(
             value,
-            style: const TextStyle(
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textPrimary),
               fontSize: 13,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+              fontWeight: AppFonts.medium,
             ),
           ),
         ],

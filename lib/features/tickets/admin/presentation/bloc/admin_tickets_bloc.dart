@@ -53,27 +53,22 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
   final TicketSortBy _currentSortBy = TicketSortBy.createdDate;
   int _selectedFilterIndex = 0;
 
-  String get selectedFilter =>
-      _currentFilter.status?.displayName ?? 'all';
-  String get selectedPriority =>
-      _currentFilter.priority?.displayName ?? 'all';
+  String get selectedFilter => _currentFilter.status?.displayName ?? 'all';
+  String get selectedPriority => _currentFilter.priority?.displayName ?? 'all';
   String get searchQuery => _currentFilter.searchQuery;
   int get selectedFilterIndex => _selectedFilterIndex;
 
   Future<void> _onLoad(
     AdminTicketsLoadRequested event,
     Emitter<AdminTicketsState> emit,
-  ) =>
-      _loadAllTickets(emit);
+  ) => _loadAllTickets(emit);
 
   Future<void> _onFilterChanged(
     AdminTicketsFilterChanged event,
     Emitter<AdminTicketsState> emit,
   ) async {
     final status =
-        event.filter == 'all'
-            ? null
-            : TicketStatus.fromString(event.filter);
+        event.filter == 'all' ? null : TicketStatus.fromString(event.filter);
     _currentFilter = _currentFilter.copyWith(status: status);
     await _loadAllTickets(emit);
   }
@@ -240,17 +235,18 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
     emit(const AdminTicketsLoading());
 
     try {
-      final params =
-          LoadTicketsParams(filter: _currentFilter, sortBy: _currentSortBy);
+      final params = LoadTicketsParams(
+        filter: _currentFilter,
+        sortBy: _currentSortBy,
+      );
 
       final result = await _loadTicketsUseCase(params);
 
-      result.fold(
-        (failure) => emit(AdminTicketsError(failure.message)),
-        (tickets) {
-          emit(AdminTicketsSuccess(_buildLoadedTicketsData(tickets)));
-        },
-      );
+      result.fold((failure) => emit(AdminTicketsError(failure.message)), (
+        tickets,
+      ) {
+        emit(AdminTicketsSuccess(_buildLoadedTicketsData(tickets)));
+      });
     } catch (e) {
       emit(AdminTicketsError('Failed to load tickets: $e'));
     }
@@ -306,8 +302,7 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
           filtered
               .where(
                 (ticket) =>
-                    ticket['status'] ==
-                    _currentFilter.status!.displayName,
+                    ticket['status'] == _currentFilter.status!.displayName,
               )
               .toList();
     }
@@ -317,8 +312,7 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
           filtered
               .where(
                 (ticket) =>
-                    ticket['priority'] ==
-                    _currentFilter.priority!.displayName,
+                    ticket['priority'] == _currentFilter.priority!.displayName,
               )
               .toList();
     }
@@ -329,18 +323,13 @@ class AdminTicketsBloc extends Bloc<AdminTicketsEvent, AdminTicketsState> {
             final query = _currentFilter.searchQuery.toLowerCase();
             return ticket['title']?.toString().toLowerCase().contains(query) ==
                     true ||
-                ticket['description']
-                        ?.toString()
-                        .toLowerCase()
-                        .contains(query) ==
+                ticket['description']?.toString().toLowerCase().contains(
+                      query,
+                    ) ==
                     true ||
-                ticket['customer']
-                        ?.toString()
-                        .toLowerCase()
-                        .contains(query) ==
+                ticket['customer']?.toString().toLowerCase().contains(query) ==
                     true ||
-                ticket['id']?.toString().toLowerCase().contains(query) ==
-                    true;
+                ticket['id']?.toString().toLowerCase().contains(query) == true;
           }).toList();
     }
 

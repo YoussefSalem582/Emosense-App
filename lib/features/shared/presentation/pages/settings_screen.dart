@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A comprehensive settings screen with organized sections
 class SettingsScreen extends StatefulWidget {
@@ -109,10 +110,8 @@ class _SettingsScreenState extends State<SettingsScreen>
             padding: const EdgeInsets.only(left: 16, bottom: 8),
             child: Text(
               section.title!,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+              style: AppFonts.bodyLarge(color: AppColors.textPrimary).copyWith(
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -177,20 +176,16 @@ class _SettingsScreenState extends State<SettingsScreen>
                 : null,
         title: Text(
           item.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.medium,
           ),
         ),
         subtitle:
             item.subtitle != null
                 ? Text(
                   item.subtitle!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 )
                 : null,
         trailing: _buildTrailing(item),
@@ -227,10 +222,7 @@ class _SettingsScreenState extends State<SettingsScreen>
         return item.trailingText != null
             ? Text(
               item.trailingText!,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
-              ),
+              style: AppFonts.bodySmall(color: AppColors.textSecondary),
             )
             : null;
 

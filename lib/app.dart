@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/constants/app_theme.dart';
 import 'core/core.dart' show UserSessionStorage;
+import 'core/utils/assets/app_locale_binding.dart';
 import 'core/di/dependency_injection.dart' as di;
 import 'core/routing/app_router.dart';
 import 'features/analysis/text_analysis/presentation/bloc/text_analysis_bloc.dart';
@@ -129,6 +130,7 @@ class _MaterialAppShell extends StatelessWidget {
       onGenerateRoute: AppRouter.generateRoute,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
+        AppLocaleBinding.setLocaleOverride(Localizations.maybeLocaleOf(context));
         return MediaQuery(
           data: MediaQuery.of(
             context,

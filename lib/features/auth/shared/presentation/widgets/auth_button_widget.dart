@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/widgets/common/animated_loading_indicator.dart';
 
 class AuthButtonWidget extends StatelessWidget {
@@ -18,7 +20,7 @@ class AuthButtonWidget extends StatelessWidget {
     required this.text,
     this.isLoading = false,
     this.icon,
-    this.gradientColors = const [Color(0xFF667EEA), Color(0xFF764BA2)],
+    this.gradientColors = const [AppColors.primary, AppColors.accent],
     this.height = 80,
     this.borderRadius = 16,
   });
@@ -81,10 +83,9 @@ class AuthButtonWidget extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: Colors.white),
+              fontWeight: AppFonts.bold,
             ),
           ),
         ],
@@ -92,10 +93,9 @@ class AuthButtonWidget extends StatelessWidget {
     } else {
       return Text(
         text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+        style: AppFonts.copyWith(
+          AppFonts.bodyLarge(color: Colors.white),
+          fontWeight: AppFonts.bold,
         ),
       );
     }

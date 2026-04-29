@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A comprehensive profile screen with editable sections
 class ProfileScreen extends StatefulWidget {
@@ -221,10 +222,9 @@ class _ProfileScreenState extends State<ProfileScreen>
           // Name
           Text(
             widget.profileData.name,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.h5(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
 
@@ -234,10 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen>
           if (widget.profileData.email != null) ...[
             Text(
               widget.profileData.email!,
-              style: const TextStyle(
-                fontSize: 16,
-                color: AppColors.textSecondary,
-              ),
+              style: AppFonts.bodyMedium(color: AppColors.textSecondary),
             ),
           ],
 
@@ -253,9 +250,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               ),
               child: Text(
                 widget.profileData.role!,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.labelMedium(
                   color: AppColors.primary,
                 ),
               ),
@@ -295,10 +290,8 @@ class _ProfileScreenState extends State<ProfileScreen>
             padding: const EdgeInsets.only(left: 16, bottom: 8),
             child: Text(
               section.title!,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+              style: AppFonts.bodyLarge(color: AppColors.textPrimary).copyWith(
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -363,20 +356,16 @@ class _ProfileScreenState extends State<ProfileScreen>
                 : null,
         title: Text(
           item.title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.medium,
           ),
         ),
         subtitle:
             item.value != null
                 ? Text(
                   item.value!,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 )
                 : null,
         trailing:

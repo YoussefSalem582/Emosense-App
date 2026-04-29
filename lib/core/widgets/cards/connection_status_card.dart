@@ -36,17 +36,16 @@ class ConnectionStatusCard extends StatelessWidget {
             children: [
               Icon(
                 isConnected ? Icons.check_circle : Icons.error,
-                color: Colors.white,
+                color: AppColors.white,
                 size: 24,
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   isConnected ? AppStrings.connected : AppStrings.disconnected,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.white),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -63,21 +62,21 @@ class ConnectionStatusCard extends StatelessWidget {
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
-                            color: Colors.white,
+                            color: AppColors.white,
                             strokeWidth: 2,
                           ),
                         )
                         : const Icon(
                           Icons.refresh,
-                          color: Colors.white,
+                          color: AppColors.white,
                           size: 18,
                         ),
                 label: Text(
                   AppStrings.refresh,
-                  style: const TextStyle(color: Colors.white),
+                  style: AppFonts.bodySmall(color: AppColors.white),
                 ),
                 style: TextButton.styleFrom(
-                  backgroundColor: Colors.white.withValues(alpha: 0.2),
+                  backgroundColor: AppColors.white.withValues(alpha: 0.2),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

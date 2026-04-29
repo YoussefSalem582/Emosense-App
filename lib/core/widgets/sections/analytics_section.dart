@@ -134,7 +134,6 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
                   return Opacity(
                     opacity: _chartAnimation.value,
                     child: PerformanceTrendsChart(
-                      theme: widget.theme,
                       customSpacing: widget.customSpacing,
                       chartAnimation: _chartAnimation,
                       selectedMetricIndex: _selectedMetricIndex,
@@ -151,7 +150,6 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
 
               // Detailed analytics
               DetailedAnalytics(
-                theme: widget.theme,
                 customSpacing: widget.customSpacing,
                 cardAnimation: _cardAnimation,
               ),
@@ -159,7 +157,6 @@ class _AnalyticsSectionState extends State<AnalyticsSection>
 
               // Goals and targets
               GoalsAndTargets(
-                theme: widget.theme,
                 customSpacing: widget.customSpacing,
                 cardAnimation: _cardAnimation,
               ),

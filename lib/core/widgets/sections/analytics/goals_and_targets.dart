@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
 class GoalsAndTargets extends StatelessWidget {
-  final ThemeData theme;
   final CustomSpacing customSpacing;
   final Animation<double> cardAnimation;
 
   const GoalsAndTargets({
     super.key,
-    required this.theme,
     required this.customSpacing,
     required this.cardAnimation,
   });
@@ -18,11 +16,11 @@ class GoalsAndTargets extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(customSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -33,9 +31,9 @@ class GoalsAndTargets extends StatelessWidget {
         children: [
           Text(
             'Goals & Targets',
-            style: theme.textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: Colors.black,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
           SizedBox(height: customSpacing.lg),
@@ -76,15 +74,14 @@ class GoalsAndTargets extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
             Text(
               target,
-              style: const TextStyle(color: Colors.black54, fontSize: 12),
+              style: AppFonts.caption(color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -93,7 +90,7 @@ class GoalsAndTargets extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           child: LinearProgressIndicator(
             value: progress * cardAnimation.value,
-            backgroundColor: Colors.grey[200],
+            backgroundColor: AppColors.surfaceContainer,
             valueColor: AlwaysStoppedAnimation<Color>(
               progress >= 0.9
                   ? AppColors.success
@@ -107,15 +104,16 @@ class GoalsAndTargets extends StatelessWidget {
         SizedBox(height: customSpacing.xs),
         Text(
           current,
-          style: TextStyle(
-            color:
-                progress >= 0.9
-                    ? AppColors.success
-                    : progress >= 0.7
-                    ? AppColors.warning
-                    : AppColors.error,
-            fontSize: 11,
-            fontWeight: FontWeight.w500,
+          style: AppFonts.copyWith(
+            AppFonts.labelSmall(
+              color:
+                  progress >= 0.9
+                      ? AppColors.success
+                      : progress >= 0.7
+                      ? AppColors.warning
+                      : AppColors.error,
+            ),
+            fontWeight: AppFonts.medium,
           ),
         ),
       ],

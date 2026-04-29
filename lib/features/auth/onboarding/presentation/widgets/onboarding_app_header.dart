@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// App header widget for onboarding screen with app icon
 class OnboardingAppHeader extends StatelessWidget {
   const OnboardingAppHeader({super.key});
@@ -41,10 +43,9 @@ class OnboardingAppHeader extends StatelessWidget {
           // App Name
           Text(
             'EmoSense',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white.withValues(alpha: 0.9),
+            style: AppFonts.copyWith(
+              AppFonts.h5(color: Colors.white.withValues(alpha: 0.9)),
+              fontWeight: AppFonts.bold,
               letterSpacing: 1.2,
             ),
           ),
@@ -54,11 +55,9 @@ class OnboardingAppHeader extends StatelessWidget {
           // Tagline
           Text(
             'Emotional Intelligence Platform',
-            style: TextStyle(
-              fontSize: 14,
+            style: AppFonts.bodySmall(
               color: Colors.white.withValues(alpha: 0.7),
-              letterSpacing: 0.5,
-            ),
+            ).copyWith(letterSpacing: 0.5),
           ),
         ],
       ),

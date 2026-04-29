@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../../../../core/core.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Service class to handle all text analysis actions
 ///
@@ -262,10 +262,13 @@ class TextAnalysisActionsHandler {
                   children: [
                     Icon(Icons.info, color: AppColors.warning, size: 20),
                     const SizedBox(width: 8),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'This feature is coming soon in the next update!',
-                        style: TextStyle(fontSize: 13),
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(),
+                          fontSize: 13,
+                        ),
                       ),
                     ),
                   ],
@@ -276,7 +279,10 @@ class TextAnalysisActionsHandler {
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text('Got it', style: TextStyle(color: AppColors.primary)),
+              child: Text(
+                'Got it',
+                style: AppFonts.labelLarge(color: AppColors.primary),
+              ),
             ),
           ],
         );
@@ -325,7 +331,7 @@ class TextAnalysisActionsHandler {
               onPressed: () => Navigator.of(context).pop(),
               child: Text(
                 'Cancel',
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ],
@@ -508,14 +514,14 @@ class TextAnalysisActionsHandler {
                   },
                   child: Text(
                     'Save',
-                    style: TextStyle(color: AppColors.primary),
+                    style: AppFonts.labelLarge(color: AppColors.primary),
                   ),
                 ),
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
                   child: Text(
                     'Cancel',
-                    style: TextStyle(color: AppColors.textSecondary),
+                    style: AppFonts.bodySmall(color: AppColors.textSecondary),
                   ),
                 ),
               ],

@@ -651,9 +651,8 @@ class _VideoAnalysisResultWidgetState extends State<VideoAnalysisResultWidget>
         ),
         label: Text(
           widget.isExpanded ? 'Show Less' : 'Show More Details',
-          style: TextStyle(
-            color: AppColors.primary,
-            fontWeight: FontWeight.w600,
+          style: AppFonts.copyWith(
+            AppFonts.button(color: AppColors.primary),
           ),
         ),
       ),

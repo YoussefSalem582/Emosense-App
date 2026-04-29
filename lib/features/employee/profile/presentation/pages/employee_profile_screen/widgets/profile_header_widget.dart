@@ -26,14 +26,14 @@ class ProfileHeaderWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           gradient: LinearGradient(
             colors: [
-              Colors.white.withValues(alpha: 0.95),
-              Colors.white.withValues(alpha: 0.9),
+              AppColors.white.withValues(alpha: 0.95),
+              AppColors.white.withValues(alpha: 0.9),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.3),
+            color: AppColors.white.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -59,7 +59,7 @@ class ProfileHeaderWidget extends StatelessWidget {
                     child: const Icon(
                       Icons.person,
                       size: 50,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                 ),
@@ -74,12 +74,12 @@ class ProfileHeaderWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: AppColors.secondary,
                           shape: BoxShape.circle,
-                          border: Border.all(color: Colors.white, width: 2),
+                          border: Border.all(color: AppColors.white, width: 2),
                         ),
                         child: const Icon(
                           Icons.edit,
                           size: 16,
-                          color: Colors.white,
+                          color: AppColors.white,
                         ),
                       ),
                     ),
@@ -89,17 +89,15 @@ class ProfileHeaderWidget extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               name,
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.h5(color: AppColors.textPrimary),
+                fontWeight: AppFonts.bold,
               ),
             ),
             const SizedBox(height: 4),
             Text(
               position,
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondary),
+              style: AppFonts.bodyMedium(color: AppColors.textSecondary),
             ),
             const SizedBox(height: 8),
             Container(
@@ -119,9 +117,8 @@ class ProfileHeaderWidget extends StatelessWidget {
               ),
               child: Text(
                 status,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.success,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.caption(color: AppColors.success).copyWith(
+                  fontWeight: AppFonts.medium,
                 ),
               ),
             ),

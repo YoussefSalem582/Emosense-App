@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
+import '../../../../core/core.dart';
 
 /// Animation styles for EMO letters
 enum EmoAnimationStyle { bounce, wave, pulse, rotate, fade }
@@ -127,10 +127,10 @@ class _EmoLoadingIndicatorState extends State<EmoLoadingIndicator>
   Widget _buildLetterWidget(String letter, Color color) {
     return Text(
       letter,
-      style: TextStyle(
+      style: AppFonts.copyWith(
+        AppFonts.h2(color: color),
         fontSize: widget.size * 0.6,
-        fontWeight: FontWeight.bold,
-        color: color,
+        fontWeight: AppFonts.bold,
       ),
     );
   }
@@ -172,7 +172,7 @@ class EmoLoader {
   static Widget analysis({double size = 60.0, Color? color}) {
     return EmoLoadingIndicator(
       size: size,
-      color: color ?? Colors.white,
+      color: color ?? AppColors.white,
       animationStyle: EmoAnimationStyle.wave,
       duration: const Duration(milliseconds: 1000),
     );

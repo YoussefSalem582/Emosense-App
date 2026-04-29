@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/video_analysis/domain/entities/video_analysis_response.dart';
 
 class VideoResultsCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class VideoResultsCard extends StatelessWidget {
           children: [
             Text(
               'Video Analysis Results',
-              style: Theme.of(context).textTheme.titleLarge,
+              style: AppFonts.h6ForTheme(context),
             ),
             const SizedBox(height: 16),
             _buildSummarySection(context),
@@ -32,11 +33,18 @@ class VideoResultsCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Summary', style: Theme.of(context).textTheme.titleMedium),
+        Text(
+          'Summary',
+          style: AppFonts.copyWith(
+            AppFonts.bodyForTheme(context),
+            fontWeight: AppFonts.semiBold,
+          ),
+        ),
         const SizedBox(height: 8),
-        _buildInfoRow('Frames Analyzed:', result.framesAnalyzed.toString()),
-        _buildInfoRow('Dominant Emotion:', result.dominantEmotion),
+        _buildInfoRow(context, 'Frames Analyzed:', result.framesAnalyzed.toString()),
+        _buildInfoRow(context, 'Dominant Emotion:', result.dominantEmotion),
         _buildInfoRow(
+          context,
           'Average Confidence:',
           '${(result.averageConfidence * 100).toStringAsFixed(1)}%',
         ),
@@ -52,7 +60,10 @@ class VideoResultsCard extends StatelessWidget {
       children: [
         Text(
           'Analysis Details',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: AppFonts.copyWith(
+            AppFonts.bodyForTheme(context),
+            fontWeight: AppFonts.semiBold,
+          ),
         ),
         const SizedBox(height: 8),
 
@@ -83,14 +94,16 @@ class VideoResultsCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       snapshot.emotion,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: _getEmotionColor(snapshot.emotion),
+                      style: AppFonts.copyWith(
+                        AppFonts.bodyMedium(
+                          color: _getEmotionColor(snapshot.emotion),
+                        ),
+                        fontWeight: AppFonts.bold,
                       ),
                     ),
                     Text(
                       'Emotion',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: AppFonts.bodySmallForTheme(context),
                     ),
                   ],
                 ),
@@ -121,14 +134,16 @@ class VideoResultsCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       snapshot.sentiment.toUpperCase(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: _getSentimentColor(snapshot.sentiment),
+                      style: AppFonts.copyWith(
+                        AppFonts.bodyMedium(
+                          color: _getSentimentColor(snapshot.sentiment),
+                        ),
+                        fontWeight: AppFonts.bold,
                       ),
                     ),
                     Text(
                       'Sentiment',
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: AppFonts.bodySmallForTheme(context),
                     ),
                   ],
                 ),
@@ -146,7 +161,7 @@ class VideoResultsCard extends StatelessWidget {
             height: 200,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
+              border: Border.all(color: AppColors.border.withValues(alpha: 0.5)),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
@@ -156,22 +171,23 @@ class VideoResultsCard extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) {
                   return Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey.withValues(alpha: 0.1),
+                      color: AppColors.surfaceContainer.withValues(alpha: 0.5),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(
                             Icons.image_not_supported,
                             size: 48,
-                            color: Colors.grey,
+                            color: AppColors.textTertiary,
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             'Image not available',
-                            style: TextStyle(color: Colors.grey),
+                            style:
+                                AppFonts.bodyMedium(color: AppColors.textSecondary),
                           ),
                         ],
                       ),
@@ -188,7 +204,7 @@ class VideoResultsCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.grey.withValues(alpha: 0.1),
+            color: AppColors.surfaceContainer.withValues(alpha: 0.8),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
@@ -199,19 +215,22 @@ class VideoResultsCard extends StatelessWidget {
                   Icon(
                     Icons.description_rounded,
                     size: 16,
-                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    color: AppColors.textSecondary,
                   ),
                   const SizedBox(width: 8),
                   Text(
                     'Analysis Summary',
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmallForTheme(context),
+                      fontWeight: AppFonts.semiBold,
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
               Text(
                 snapshot.subtitle,
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: AppFonts.bodyForTheme(context),
               ),
             ],
           ),
@@ -223,7 +242,10 @@ class VideoResultsCard extends StatelessWidget {
         if (snapshot.emotionDistribution.isNotEmpty) ...[
           Text(
             'Emotion Distribution',
-            style: Theme.of(context).textTheme.titleSmall,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmallForTheme(context),
+              fontWeight: AppFonts.semiBold,
+            ),
           ),
           const SizedBox(height: 8),
           ...snapshot.emotionDistribution.entries.map((entry) {
@@ -240,9 +262,7 @@ class VideoResultsCard extends StatelessWidget {
                     width: 80,
                     child: Text(
                       emotion,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                      style: AppFonts.labelMedium(
                         color: _getEmotionColor(emotion),
                       ),
                     ),
@@ -253,7 +273,7 @@ class VideoResultsCard extends StatelessWidget {
                         Container(
                           height: 8,
                           decoration: BoxDecoration(
-                            color: Colors.grey.withValues(alpha: 0.3),
+                            color: AppColors.border.withValues(alpha: 0.6),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -275,9 +295,9 @@ class VideoResultsCard extends StatelessWidget {
                     child: Text(
                       '$percentage%',
                       textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.copyWith(
+                        AppFonts.caption(color: AppColors.textPrimary),
+                        fontWeight: AppFonts.semiBold,
                       ),
                     ),
                   ),
@@ -290,14 +310,20 @@ class VideoResultsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value) {
+  Widget _buildInfoRow(BuildContext context, String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
         children: [
-          Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(
+            label,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmallForTheme(context),
+              fontWeight: AppFonts.bold,
+            ),
+          ),
           const SizedBox(width: 8),
-          Text(value),
+          Text(value, style: AppFonts.bodySmallForTheme(context)),
         ],
       ),
     );

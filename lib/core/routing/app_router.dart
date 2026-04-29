@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../core.dart';
 import '../../features/shared/presentation/screens.dart';
 
 /// Centralized routing configuration
@@ -301,18 +303,25 @@ class _NotFoundScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Page Not Found')),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 64),
-            SizedBox(height: 16),
+            Icon(Icons.error_outline, size: 64, color: AppColors.textSecondary),
+            const SizedBox(height: 16),
             Text(
               '404 - Page Not Found',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: AppFonts.copyWith(
+                AppFonts.h5(color: AppColors.textPrimary),
+                fontWeight: AppFonts.bold,
+              ),
             ),
-            SizedBox(height: 8),
-            Text('The page you are looking for does not exist.'),
+            const SizedBox(height: 8),
+            Text(
+              'The page you are looking for does not exist.',
+              style: AppFonts.bodyMedium(color: AppColors.textSecondary),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),

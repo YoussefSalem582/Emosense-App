@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for file upload section
 class VoiceAnalysisFileUploadSection extends StatelessWidget {
@@ -10,7 +11,7 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -30,22 +31,21 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                    color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.upload_file,
-                    color: Color(0xFF10B981),
+                    color: AppColors.success,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Audio File Upload',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -57,10 +57,10 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(40),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: const Color(0xFF10B981).withValues(alpha: 0.3),
+                  color: AppColors.success.withValues(alpha: 0.3),
                   style: BorderStyle.solid,
                 ),
               ),
@@ -69,21 +69,17 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                   Icon(
                     Icons.cloud_upload_outlined,
                     size: 48,
-                    color: const Color(0xFF10B981).withValues(alpha: 0.7),
+                    color: AppColors.success.withValues(alpha: 0.7),
                   ),
                   const SizedBox(height: 16),
-                  const Text(
+                  Text(
                     'Drag & drop audio file here',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
-                    ),
+                    style: AppFonts.button(color: AppColors.darkSurface),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'Supports: MP3, WAV, M4A, AAC (Max 50MB)',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+                    style: AppFonts.bodySmall(color: AppColors.textTertiary),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -93,8 +89,8 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF10B981),
-                      foregroundColor: Colors.white,
+                      backgroundColor: AppColors.success,
+                      foregroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
                         vertical: 12,
@@ -103,7 +99,10 @@ class VoiceAnalysisFileUploadSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    child: const Text('Browse Files'),
+                    child: Text(
+                      'Browse Files',
+                      style: AppFonts.button(color: AppColors.white),
+                    ),
                   ),
                 ],
               ),

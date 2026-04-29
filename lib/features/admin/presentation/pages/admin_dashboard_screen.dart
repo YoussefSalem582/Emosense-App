@@ -215,16 +215,16 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               children: [
                 Text(
                   'Admin Dashboard',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.h5(color: AppColors.white),
+                    fontWeight: AppFonts.black,
                   ),
                 ),
                 SizedBox(height: customSpacing.xs),
                 Text(
                   'System overview and management',
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                  style:
+                      AppFonts.bodySmall(color: AppColors.white.withValues(alpha: 0.85)),
                 ),
               ],
             ),
@@ -243,10 +243,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       children: [
         Text(
           'System Overview',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -310,10 +309,9 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
       children: [
         Text(
           'System Status',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -392,23 +390,21 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
           const SizedBox(height: 12),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              color: color,
+            style: AppFonts.copyWith(
+              AppFonts.h6(color: color),
+              fontWeight: AppFonts.black,
             ),
           ),
           Text(
             title,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           Text(
             subtitle,
-            style: TextStyle(fontSize: 10, color: AppColors.textSecondary),
+            style: AppFonts.labelSmall(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -454,18 +450,14 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen>
               children: [
                 Text(
                   value,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: color,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: color),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),

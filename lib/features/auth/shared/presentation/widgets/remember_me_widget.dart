@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class RememberMeWidget extends StatelessWidget {
   final Animation<double> animation;
   final bool value;
@@ -37,7 +39,7 @@ class RememberMeWidget extends StatelessWidget {
                       onChanged: (newValue) => onChanged(newValue ?? false),
                       fillColor: WidgetStateProperty.resolveWith((states) {
                         if (states.contains(WidgetState.selected)) {
-                          return const Color(0xFF667EEA);
+                          return AppColors.primary;
                         }
                         return null;
                       }),
@@ -47,9 +49,8 @@ class RememberMeWidget extends StatelessWidget {
                     ),
                     Text(
                       rememberText,
-                      style: TextStyle(
+                      style: AppFonts.bodySmall(
                         color: Colors.white.withValues(alpha: 0.9),
-                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -59,10 +60,9 @@ class RememberMeWidget extends StatelessWidget {
                     onPressed: onForgotPassword,
                     child: Text(
                       forgotPasswordText,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(color: Colors.white),
+                        fontWeight: AppFonts.semiBold,
                         decoration: TextDecoration.underline,
                         decorationColor: Colors.white,
                       ),

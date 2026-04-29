@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class TermsAndConditionsWidget extends StatelessWidget {
   final bool agreeToTerms;
   final ValueChanged<bool> onChanged;
@@ -35,7 +37,7 @@ class TermsAndConditionsWidget extends StatelessWidget {
               }
               return Colors.transparent;
             }),
-            checkColor: const Color(0xFF667EEA),
+            checkColor: AppColors.primary,
             side: BorderSide(
               color: Colors.white.withValues(alpha: 0.8),
               width: 2,
@@ -47,16 +49,15 @@ class TermsAndConditionsWidget extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   text: 'I agree to the ',
-                  style: TextStyle(
+                  style: AppFonts.bodySmall(
                     color: Colors.white.withValues(alpha: 0.9),
-                    fontSize: 14,
                   ),
                   children: [
                     TextSpan(
                       text: 'Terms of Service',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(color: Colors.white),
+                        fontWeight: AppFonts.semiBold,
                         decoration: TextDecoration.underline,
                         decorationColor: Colors.white,
                       ),
@@ -64,9 +65,9 @@ class TermsAndConditionsWidget extends StatelessWidget {
                     const TextSpan(text: ' and '),
                     TextSpan(
                       text: 'Privacy Policy',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(color: Colors.white),
+                        fontWeight: AppFonts.semiBold,
                         decoration: TextDecoration.underline,
                         decorationColor: Colors.white,
                       ),

@@ -1,5 +1,105 @@
-# Documentation Update Summary
+## April 29, 2026 — Feature widgets: admin app bar, profile header, onboarding, tickets header, welcome header, tab bar, ticket card, text input
 
+**Status:** Complete.
+
+**What changed:** Replaced raw **`Colors.white` / `black` / `grey`** and ad hoc **`Theme.textTheme`** with **`AppColors`** / **`AppFonts`** in **`admin_app_bar`**, **`profile_header_widget`**, **`onboarding_content`**, **`admin_tickets_header`**, **`welcome_header_widget`**, **`divider_widget`**, **`employee_tab_bar`**, **`admin_ticket_card`** (priority/status mappers), **`text_input_widget`** (primary button chrome).
+
+**Files modified:** paths above; **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — Core widgets: analytics/demo/instructions/video/system/results cards, modern button, backend test
+
+**Status:** Complete.
+
+**What changed:** **`analytics_card`** (incl. **Popular Texts** — **`AppColors.warning`** tint), **`demo_examples_card`** (**`AppFonts`**, **`AppColors.primaryDark`/`info`** for demo chrome), **`instructions_card`**, **`video_results_card`** (**`core.dart`**, **`AppFonts.*ForTheme`**, **`AppColors`** borders/muted surfaces), **`system_metrics_card`**, **`results_card`** (gradient block uses **`AppFonts`** + **`AppColors.white`**), **`modern_button`** (**`GlassButton`**: **`AppFonts.button`**, no **`fontFamily: Inter`**), **`backend_connection_test`** (**`AppFonts`**, **`AppColors.successSurface`/`errorSurface`/etc.**).
+
+**Files modified:** paths above; **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+
+**Status:** Complete.
+
+**What changed:** **`goals_and_targets.dart`**, **`performance_trends_chart.dart`**, **`detailed_analytics.dart`** — typography and surfaces via **`AppFonts`** / **`AppColors`**; dropped **`theme:`** from **`GoalsAndTargets`**, **`PerformanceTrendsChart`**, **`DetailedAnalytics`** (call sites in **`analytics_section.dart`** updated). **`app_bar_stats_row.dart`** glass stat typography uses **`AppFonts`**. **`onboarding_developer_tools.dart`** aligns accent/semantic colors with **`AppColors`**.
+
+**Files modified:** paths above; **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — Core widgets: analyze button, connection card, ticket dialog, EMO loader
+
+**Status:** Complete.
+
+**What changed:** Migrated **`lib/core/widgets/buttons/analyze_button.dart`**, **`app_bars/components/app_bar_notification_button.dart`** (badge text), **`common/animated_loading_indicator.dart`** (imports **`core.dart`**, letter **`AppFonts`**, **`AppColors.white`** default for analysis loader), **`cards/connection_status_card.dart`**, **`dialogs/ticket_details_dialog.dart`** to **`AppFonts`** / **`AppColors`**; ticket dialog theme uses **`AppColors.textPrimary`** / **`surface`** instead of **`Colors.black`** / **`Colors.white`**.
+
+**Files modified:** paths above; **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — AppFonts / AppColors (`lib/core` routing & shared widgets)
+
+**Status:** Complete for listed files.
+
+**What changed:** **`app_router.dart`** `_NotFoundScreen` body text uses **`AppFonts`** + **`AppColors`**. **`screen_state_manager.dart`** snackbar message uses **`AppFonts.bodySmall`**; imports **`../core.dart`**. **`analysis_app_bar.dart`**: **`AppColors.primary`** / **`surface`**, **`AppFonts`** for title, subtitle, badge count, menu rows; image error fallback icon **`AppColors.primary`**. **`analytics_header.dart`**: **`AppColors.surface`**, token shadow, dropdown **`AppFonts`**. **`emotion_input_field.dart`**: field/label/hint **`AppFonts`**, **`AppColors.surface`** / **`textLight`**.
+
+**Files modified:** `lib/core/routing/app_router.dart`, `lib/core/utils/screen_state_manager.dart`, `lib/core/widgets/app_bars/analysis_app_bar.dart`, `lib/core/widgets/sections/analytics/analytics_header.dart`, `lib/core/widgets/forms/emotion_input_field.dart`, **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — AppColors polish (emotion analytics + employee dialogs)
+
+**Status:** Complete.
+
+**What changed:** **Emotion** analytics: **`statistics_screen`** — frosted chrome and **`TabBar`** labels use **`AppColors.white`** (unselected via **`alpha: 0.7`**). **`live_monitor_screen`** — header **`BoxShadow`** uses **`AppColors.textPrimary`** at low alpha; glass layers use **`AppColors.white.withValues`**; filter bar and pill backgrounds use **`AppColors.surface`**. **`team_performance_screen`** / **`customer_analytics_screen`** — tab strip **`Container`** uses **`AppColors.surface`**. **`employee_dialogs.dart`** — indigo **`0xFF667EEA`** → **`AppColors.primary`**; muted rows → **`surfaceContainer` / `border`**; star rating **`Colors.amber` / `grey[300]`** → **`AppColors.warning` / `AppColors.border`**.
+
+**Files modified:** `lib/features/emotion/presentation/pages/analytics/statistics_screen.dart`, `live_monitor_screen.dart`, `team_performance_screen.dart`, `customer_analytics_screen.dart`, `lib/features/employee/navigation/.../employee_dialogs.dart`, **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — AppFonts rollout (employee, admin, emotion analytics)
+
+**Status:** Complete for **`TextStyle(`** cleanup under **`lib/features/employee`**, **`lib/features/admin`**, and **`lib/features/emotion/presentation/pages/analytics/`** (`customer_analytics_screen`, **`team_performance_screen`**); **`statistics_screen`** and **`live_monitor_screen`** verified with no remaining `TextStyle(`). **`lib/features/tickets`** paths from the typography checklist had no `TextStyle(` matches at verification.
+
+**What changed:** Replaced inline typography with **`AppFonts`** / **`AppColors`** (`package:emosense_mobile/core/core.dart`) on employee profile widgets, employee bottom nav & performance screen; admin dashboard, navigation, dialogs, system config, user management, profile, app bar, bottom nav; emotion **`customer_analytics_screen`** (incl. sample dialog) and **`team_performance_screen`** (headers, tabs, cards, agent lists, department metrics).
+
+**Files modified:** See **`CHANGELOG.md`** [Unreleased] and git history for paths under `lib/features/employee`, `lib/features/admin`, `lib/features/emotion/presentation/pages/analytics/`; **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — AppFonts rollout (tickets + admin profile)
+
+**Status:** Complete for listed areas; emotion **`analytics/`** screens (`customer_analytics_screen`, `team_performance_screen`, `live_monitor_screen`) now follow the same **`AppFonts`** pattern.
+
+**What changed:** Migrated **tickets** UI to **`AppFonts`** / **`AppColors`**: `review_video_filter_chips_widget`, `review_video_card_widget`, `review_video_details_dialog_widget`, `admin_ticket_card`, `employee_tickets_page`. **`admin_profile_screen`**: removed unused `ThemeData` param, aligned elevated button colors with **`AppColors`**, typography already on **`AppFonts`**. Fixed **`AppFonts.copyWith`** misuse: italic customer line uses **`AppFonts.caption(...).copyWith(fontStyle: FontStyle.italic)`** ( **`fontStyle`** not on **`AppFonts.copyWith`** ).
+
+**Files modified:** `lib/features/tickets/**/*.dart` (presentation/widgets touched + `dart format` on tickets feature), `lib/features/admin/presentation/pages/admin_profile_screen.dart`, **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — AppFonts rollout (shared, auth, analysis/shared)
+
+**Status:** Complete for listed areas; other feature folders (`analysis` text/video/voice subfolders, `employee`, `admin`, `emotion`, `tickets`) can follow the same import + `AppFonts.*` pattern.
+
+**What changed:** Replaced ad hoc `TextStyle` usage with **`AppFonts`** (`package:emosense_mobile/core/core.dart`) on **shared** shell pages, **auth** presentation widgets, and **analysis/shared** widgets. **`AppFonts.copyWith`** now supports **`shadows`** and **`decorationColor`**; **`h6ForTheme`** added. Auth gradients/buttons favor **`AppColors.primary` / `accent`**.
+
+**Files modified (high level):** `lib/features/shared/presentation/pages/*.dart`, `lib/features/auth/**/*.dart` (presentation widgets), `lib/features/analysis/shared/presentation/widgets/*.dart`, `lib/core/utils/assets/app_fonts.dart`, **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+---
+
+## April 29, 2026 — `lib/core/utils/assets` (AppColors / AppFonts)
+
+**Status:** Complete
+
+**What changed:** Added portfolio-style centralized **`AppColors`**, **`AppFonts`**, and **`AppLocaleBinding`** under **`lib/core/utils/assets/`**. Legacy **`lib/core/constants/app_colors.dart`** is now a one-line re-export so all existing imports remain valid. **`EmosenseApp`** updates **`AppLocaleBinding`** from **`Localizations.maybeLocaleOf`** in **`MaterialApp.builder`** so static typography helpers follow app locale. **`core.dart`** exports **`utils/assets/assets.dart`**.
+
+**Files created:** `lib/core/utils/assets/app_colors.dart`, `app_fonts.dart`, `app_locale_binding.dart`, `assets.dart`
+
+**Files modified:** `lib/core/constants/app_colors.dart`, `lib/app.dart`, `lib/core/core.dart`, `tech_readme_files/01_folder_structure.md`, `tech_readme_files/07_how_to_create_reusable_component.md`, **`CHANGELOG.md`**, this summary, **`CURRENT_STATUS.md`**.
+
+**Key decisions:** Kept existing Emosense hex values and token names; avoided `google_fonts` (uses **`Inter`** / **`Tajawal`** strings to match theme docs). Added theme helpers and light/dark gradients analogous to the reference portfolio structure.
+
+---
 
 ## April 29, 2026 — Remove `lib/shared/` barrel
 

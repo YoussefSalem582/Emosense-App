@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
 class DetailedAnalytics extends StatelessWidget {
-  final ThemeData theme;
   final CustomSpacing customSpacing;
   final Animation<double> cardAnimation;
 
   const DetailedAnalytics({
     super.key,
-    required this.theme,
     required this.customSpacing,
     required this.cardAnimation,
   });
@@ -20,9 +18,9 @@ class DetailedAnalytics extends StatelessWidget {
       children: [
         Text(
           'Detailed Analytics',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -46,11 +44,11 @@ class DetailedAnalytics extends StatelessWidget {
       height: 220,
       padding: EdgeInsets.all(customSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -59,12 +57,11 @@ class DetailedAnalytics extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Ticket Types',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           SizedBox(height: customSpacing.md),
@@ -88,11 +85,11 @@ class DetailedAnalytics extends StatelessWidget {
       height: 220,
       padding: EdgeInsets.all(customSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -101,12 +98,11 @@ class DetailedAnalytics extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Priority Distribution',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           SizedBox(height: customSpacing.md),
@@ -121,24 +117,25 @@ class DetailedAnalytics extends StatelessWidget {
                     child: CircularProgressIndicator(
                       value: 0.32 * cardAnimation.value,
                       strokeWidth: 15,
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: AppColors.surfaceContainer,
                       color: AppColors.error,
                     ),
                   ),
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
+                      Text(
                         '32%',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
+                        style: AppFonts.copyWith(
+                          AppFonts.h6(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.black,
                         ),
                       ),
-                      const Text(
+                      Text(
                         'High Priority',
-                        style: TextStyle(color: Colors.black54, fontSize: 11),
+                        style: AppFonts.labelSmall(
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ],
                   ),
@@ -171,18 +168,16 @@ class DetailedAnalytics extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppFonts.labelSmall(
+            color: AppColors.textPrimary,
+          ).copyWith(fontWeight: AppFonts.medium),
         ),
         Text(
           percentage,
-          style: TextStyle(
-            color: color,
+          style: AppFonts.copyWith(
+            AppFonts.labelSmall(color: color),
+            fontWeight: AppFonts.semiBold,
             fontSize: 9,
-            fontWeight: FontWeight.w600,
           ),
         ),
       ],
@@ -193,11 +188,11 @@ class DetailedAnalytics extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(customSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -206,12 +201,11 @@ class DetailedAnalytics extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Ticket Resolution Speed',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
           SizedBox(height: customSpacing.lg),
@@ -226,7 +220,13 @@ class DetailedAnalytics extends StatelessWidget {
               Expanded(
                 child: _buildTimeMetric('3-5 Days', '15%', AppColors.error),
               ),
-              Expanded(child: _buildTimeMetric('> 5 Days', '5%', Colors.grey)),
+              Expanded(
+                child: _buildTimeMetric(
+                  '> 5 Days',
+                  '5%',
+                  AppColors.textTertiary,
+                ),
+              ),
             ],
           ),
         ],
@@ -245,18 +245,15 @@ class DetailedAnalytics extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppFonts.bodySmall(
+                  color: AppColors.textPrimary,
+                ).copyWith(fontWeight: AppFonts.medium),
               ),
               Text(
                 '${(percentage * 100).toInt()}%',
-                style: TextStyle(
-                  color: color,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: color),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -265,7 +262,7 @@ class DetailedAnalytics extends StatelessWidget {
           Container(
             height: 8,
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: AppColors.surfaceContainer,
               borderRadius: BorderRadius.circular(4),
             ),
             child: FractionallySizedBox(
@@ -289,15 +286,14 @@ class DetailedAnalytics extends StatelessWidget {
       children: [
         Text(
           percentage,
-          style: TextStyle(
-            color: color,
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: color),
+            fontWeight: AppFonts.black,
           ),
         ),
         Text(
           timeRange,
-          style: const TextStyle(color: Colors.black54, fontSize: 10),
+          style: AppFonts.labelSmall(color: AppColors.textSecondary),
         ),
       ],
     );

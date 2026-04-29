@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class ReviewVideoDetailsDialogWidget extends StatelessWidget {
   final Map<String, dynamic> video;
   final VoidCallback onClose;
@@ -20,7 +22,7 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
           margin: const EdgeInsets.all(20),
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
@@ -31,10 +33,9 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                 children: [
                   Text(
                     'Review ${video['id']}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                    style: AppFonts.copyWith(
+                      AppFonts.h6(color: AppColors.textPrimary),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                   const Spacer(),
@@ -43,13 +44,13 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.grey[100],
+                        color: AppColors.surfaceContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.close,
                         size: 20,
-                        color: Colors.grey,
+                        color: AppColors.textTertiary,
                       ),
                     ),
                   ),
@@ -61,10 +62,9 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
               // Video details
               Text(
                 video['title'],
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyLarge(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
 
@@ -73,14 +73,13 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
               // Channel info
               Row(
                 children: [
-                  Icon(Icons.youtube_searched_for, color: Colors.red, size: 16),
+                  Icon(Icons.youtube_searched_for, color: AppColors.error, size: 16),
                   const SizedBox(width: 8),
                   Text(
                     video['channel'],
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                      fontWeight: FontWeight.w500,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(color: AppColors.textTertiary),
+                      fontWeight: AppFonts.medium,
                     ),
                   ),
                 ],
@@ -90,9 +89,8 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
 
               Text(
                 video['description'],
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textTertiary),
                   height: 1.4,
                 ),
               ),
@@ -105,19 +103,18 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Reviewer',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey,
+                        style: AppFonts.copyWith(
+                          AppFonts.caption(color: AppColors.textSecondary),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                       Text(
                         video['reviewer'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.medium,
                         ),
                       ),
                     ],
@@ -126,21 +123,18 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Status',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey,
+                        style: AppFonts.copyWith(
+                          AppFonts.caption(color: AppColors.textSecondary),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                       Text(
                         video['status'],
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                        style: AppFonts.bodySmall(
                           color: _getStatusColor(video['status']),
-                        ),
+                        ).copyWith(fontWeight: AppFonts.medium),
                       ),
                     ],
                   ),
@@ -148,19 +142,18 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Views',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey,
+                        style: AppFonts.copyWith(
+                          AppFonts.caption(color: AppColors.textSecondary),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                       Text(
                         video['views'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.medium,
                         ),
                       ),
                     ],
@@ -183,7 +176,7 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                       icon: const Icon(Icons.play_arrow),
                       label: const Text('Watch Video'),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: const Color(0xFF6366F1),
+                        foregroundColor: AppColors.accent,
                       ),
                     ),
                   ),
@@ -194,8 +187,8 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
                       icon: const Icon(Icons.analytics),
                       label: const Text('Analyze Review'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6366F1),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.accent,
+                        foregroundColor: AppColors.white,
                       ),
                     ),
                   ),
@@ -211,15 +204,15 @@ class ReviewVideoDetailsDialogWidget extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'new':
-        return Colors.blue;
+        return AppColors.info;
       case 'under review':
-        return Colors.orange;
+        return AppColors.warning;
       case 'completed':
-        return Colors.green;
+        return AppColors.success;
       case 'archived':
-        return Colors.grey;
+        return AppColors.textTertiary;
       default:
-        return Colors.grey;
+        return AppColors.textTertiary;
     }
   }
 }

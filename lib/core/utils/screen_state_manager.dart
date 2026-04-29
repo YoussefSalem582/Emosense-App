@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../constants/app_colors.dart';
+
+import '../core.dart';
 import '../../features/shared/presentation/common_screens.dart';
 
 /// Enum for different screen states
@@ -169,13 +170,13 @@ class ScreenActions {
         content: Row(
           children: [
             if (icon != null) ...[
-              Icon(icon, color: textColor ?? Colors.white),
+              Icon(icon, color: textColor ?? AppColors.white),
               const SizedBox(width: 8),
             ],
             Expanded(
               child: Text(
                 message,
-                style: TextStyle(color: textColor ?? Colors.white),
+                style: AppFonts.bodySmall(color: textColor ?? AppColors.white),
               ),
             ),
           ],

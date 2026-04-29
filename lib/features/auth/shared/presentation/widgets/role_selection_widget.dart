@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class RoleSelectionWidget extends StatelessWidget {
   final String selectedRole;
   final ValueChanged<String> onRoleChanged;
@@ -40,10 +42,8 @@ class RoleSelectionWidget extends StatelessWidget {
         children: [
           Text(
             title,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade800,
+            style: AppFonts.bodyLarge(color: AppColors.gray800).copyWith(
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -143,21 +143,21 @@ class RoleSelectionWidget extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 role.name,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.white : Colors.grey.shade800,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(
+                    color: isSelected ? Colors.white : AppColors.gray800,
+                  ),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 role.description,
-                style: TextStyle(
-                  fontSize: 10,
+                style: AppFonts.labelSmall(
                   color:
                       isSelected
                           ? Colors.white.withValues(alpha: 0.9)
-                          : Colors.grey.shade600,
+                          : AppColors.gray600,
                 ),
                 textAlign: TextAlign.center,
                 maxLines: 2,

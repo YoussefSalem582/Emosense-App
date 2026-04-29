@@ -16,11 +16,11 @@ class WelcomeHeaderWidget extends StatelessWidget {
       margin: EdgeInsets.all(customSpacing.md),
       padding: EdgeInsets.all(customSpacing.lg),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: AppColors.textPrimary.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -50,17 +50,15 @@ class WelcomeHeaderWidget extends StatelessWidget {
                   children: [
                     Text(
                       'Welcome Back! 👋',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: AppColors.textPrimary,
-                        fontWeight: FontWeight.w800,
+                      style: AppFonts.copyWith(
+                        AppFonts.h4(color: AppColors.textPrimary),
+                        fontWeight: AppFonts.extraBold,
                       ),
                     ),
                     Text(
                       'Customer Experience Specialist',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: AppFonts.bodyMedium(color: AppColors.textSecondary)
+                          .copyWith(fontWeight: AppFonts.medium),
                     ),
                   ],
                 ),

@@ -29,7 +29,9 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
   @override
   void initState() {
     super.initState();
-    context.read<EmployeeTicketsBloc>().add(const EmployeeTicketsLoadRequested());
+    context.read<EmployeeTicketsBloc>().add(
+      const EmployeeTicketsLoadRequested(),
+    );
     _fadeController = AnimationController(
       duration: const Duration(milliseconds: 800),
       vsync: this,
@@ -81,14 +83,17 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
         setState(() => _expectingTicketCreate = false);
         if (state is EmployeeTicketsSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
+            SnackBar(
               content: Text('Ticket created successfully'),
-              backgroundColor: Colors.green,
+              backgroundColor: AppColors.success,
             ),
           );
         } else if (state is EmployeeTicketsError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: AppColors.error,
+            ),
           );
         }
       },
@@ -125,7 +130,10 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
     );
   }
 
-  Widget _buildTicketsBody(EmployeeTicketsState state, CustomSpacing customSpacing) {
+  Widget _buildTicketsBody(
+    EmployeeTicketsState state,
+    CustomSpacing customSpacing,
+  ) {
     if (state is EmployeeTicketsLoading || state is EmployeeTicketsInitial) {
       return const Center(
         child: CircularProgressIndicator(color: Colors.white),
@@ -141,7 +149,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               Text(
                 state.message,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
+                style: AppFonts.bodyMedium(color: AppColors.white),
               ),
               SizedBox(height: customSpacing.md),
               FilledButton(
@@ -195,18 +203,19 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'My Support Tickets',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
+                style: AppFonts.copyWith(
+                  AppFonts.h6(color: AppColors.white),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               SizedBox(height: spacing.xs),
               Text(
                 'Total Tickets: $totalTickets',
-                style: const TextStyle(fontSize: 14, color: Colors.white70),
+                style: AppFonts.bodySmall(
+                  color: AppColors.white.withValues(alpha: 0.85),
+                ),
               ),
             ],
           ),
@@ -214,10 +223,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           ElevatedButton.icon(
             onPressed: _openCreateTicketDialog,
             icon: const Icon(Icons.add, size: 16),
-            label: const Text('New Ticket'),
+            label: Text(
+              'New Ticket',
+              style: AppFonts.button(color: AppColors.white),
+            ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.success,
+              foregroundColor: AppColors.white,
               padding: EdgeInsets.symmetric(
                 horizontal: spacing.md,
                 vertical: spacing.sm,
@@ -263,15 +275,14 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                   vertical: spacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6366F1).withValues(alpha: 0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   ticket['id'],
-                  style: const TextStyle(
-                    color: Color(0xFF6366F1),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: AppColors.primary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -288,10 +299,9 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                 ),
                 child: Text(
                   ticket['priority'],
-                  style: TextStyle(
-                    color: priorityColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: priorityColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -303,10 +313,9 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           // Title
           Text(
             ticket['title'],
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
 
@@ -315,11 +324,7 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
           // Description
           Text(
             ticket['description'],
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-              height: 1.4,
-            ),
+            style: AppFonts.bodySmall(color: AppColors.textSecondary),
           ),
 
           SizedBox(height: spacing.md),
@@ -339,10 +344,9 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                 ),
                 child: Text(
                   ticket['status'],
-                  style: TextStyle(
-                    color: statusColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: statusColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -363,14 +367,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFF6366F1)),
+                    border: Border.all(color: AppColors.primary),
                   ),
-                  child: const Text(
+                  child: Text(
                     'View Details',
-                    style: TextStyle(
-                      color: Color(0xFF6366F1),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(color: AppColors.primary),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ),
@@ -456,12 +459,11 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
             children: [
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'Ticket Details',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                    style: AppFonts.copyWith(
+                      AppFonts.h6(color: AppColors.textPrimary),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                   const Spacer(),
@@ -499,22 +501,17 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
               if (ticket['referenceUrl'] != null)
                 _buildDetailRow('Reference URL:', ticket['referenceUrl']),
               const SizedBox(height: 16),
-              const Text(
+              Text(
                 'Description:',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 ticket['description'],
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                  height: 1.4,
-                ),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
               const SizedBox(height: 20),
               Row(
@@ -532,10 +529,13 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
                       onPressed:
                           () => setState(() => _showVideoDetailsDialog = false),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF6366F1),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.white,
                       ),
-                      child: const Text('Update Status'),
+                      child: Text(
+                        'Update Status',
+                        style: AppFonts.button(color: AppColors.white),
+                      ),
                     ),
                   ),
                 ],
@@ -557,17 +557,16 @@ class _EmployeeTicketsScreenState extends State<EmployeeTicketsScreen>
             width: 100,
             child: Text(
               label,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.black87,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+              style: AppFonts.bodySmall(color: AppColors.textSecondary),
             ),
           ),
         ],

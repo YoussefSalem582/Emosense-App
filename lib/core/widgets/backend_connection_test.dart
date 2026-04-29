@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../core/network/api_client.dart';
-import '../../core/config/app_config.dart';
+import 'package:emosense_mobile/core/core.dart';
+import 'package:emosense_mobile/core/network/api_client.dart';
 
 /// Widget to test and display backend connection status
 class BackendConnectionTest extends StatefulWidget {
@@ -100,11 +100,14 @@ class _BackendConnectionTestState extends State<BackendConnectionTest> {
           children: [
             Row(
               children: [
-                const Icon(Icons.network_check, size: 24),
+                Icon(Icons.network_check, size: 24, color: AppColors.primary),
                 const SizedBox(width: 8),
-                const Text(
+                Text(
                   'Backend Connection Test',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.bold,
+                  ),
                 ),
               ],
             ),
@@ -114,16 +117,23 @@ class _BackendConnectionTestState extends State<BackendConnectionTest> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.grey[100],
+                color: AppColors.surfaceContainer,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Backend URL: ${AppConfig.baseUrl}'),
-                  Text('Environment: ${AppConfig.environment}'),
+                  Text(
+                    'Backend URL: ${AppConfig.baseUrl}',
+                    style: AppFonts.bodySmall(color: AppColors.textPrimary),
+                  ),
+                  Text(
+                    'Environment: ${AppConfig.environment}',
+                    style: AppFonts.bodySmall(color: AppColors.textPrimary),
+                  ),
                   Text(
                     'Mock Data: ${AppConfig.enableMockData ? "Enabled" : "Disabled"}',
+                    style: AppFonts.bodySmall(color: AppColors.textPrimary),
                   ),
                 ],
               ),
@@ -175,18 +185,18 @@ class _BackendConnectionTestState extends State<BackendConnectionTest> {
               decoration: BoxDecoration(
                 color:
                     _status.contains('✅')
-                        ? Colors.green[50]
+                        ? AppColors.successSurface
                         : _status.contains('❌')
-                        ? Colors.red[50]
-                        : Colors.blue[50],
+                        ? AppColors.errorSurface
+                        : AppColors.infoSurface,
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
                   color:
                       _status.contains('✅')
-                          ? Colors.green
+                          ? AppColors.success
                           : _status.contains('❌')
-                          ? Colors.red
-                          : Colors.blue,
+                          ? AppColors.error
+                          : AppColors.info,
                 ),
               ),
               child: Column(
@@ -194,43 +204,45 @@ class _BackendConnectionTestState extends State<BackendConnectionTest> {
                 children: [
                   Text(
                     'Status: $_status',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color:
-                          _status.contains('✅')
-                              ? Colors.green[700]
-                              : _status.contains('❌')
-                              ? Colors.red[700]
-                              : Colors.blue[700],
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(
+                        color:
+                            _status.contains('✅')
+                                ? AppColors.successDark
+                                : _status.contains('❌')
+                                ? AppColors.error
+                                : AppColors.info,
+                      ),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 8),
                     Text(
                       'Error: $_error',
-                      style: TextStyle(color: Colors.red[700], fontSize: 12),
+                      style: AppFonts.caption(color: AppColors.error),
                     ),
                   ],
                   if (_healthData != null) ...[
                     const SizedBox(height: 8),
-                    const Text(
+                    Text(
                       'Response Data:',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(color: AppColors.textPrimary),
+                        fontWeight: AppFonts.bold,
+                      ),
                     ),
                     const SizedBox(height: 4),
                     Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.grey[200],
+                        color: AppColors.surfaceContainer,
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
                         _formatJsonData(_healthData!),
-                        style: const TextStyle(
-                          fontFamily: 'monospace',
-                          fontSize: 12,
-                        ),
+                        style: AppFonts.code(fontSize: AppFonts.sizeS),
                       ),
                     ),
                   ],
@@ -244,33 +256,37 @@ class _BackendConnectionTestState extends State<BackendConnectionTest> {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.amber[50],
+                color: AppColors.warningSurface,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: Colors.amber),
+                border: Border.all(color: AppColors.warning),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.info, color: Colors.amber[700], size: 20),
+                      Icon(
+                        Icons.info,
+                        color: AppColors.warning,
+                        size: 20,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         'Instructions',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.amber[700],
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.bold,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     '1. First, test the health endpoint to verify basic connectivity\n'
                     '2. Then test text analysis to verify AI functionality\n'
                     '3. If tests fail, check your internet connection and backend URL\n'
                     '4. For production, ensure the backend is deployed on Render',
-                    style: TextStyle(fontSize: 12),
+                    style: AppFonts.caption(color: AppColors.textPrimary),
                   ),
                 ],
               ),

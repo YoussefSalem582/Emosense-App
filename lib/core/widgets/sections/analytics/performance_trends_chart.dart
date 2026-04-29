@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
 class PerformanceTrendsChart extends StatelessWidget {
-  final ThemeData theme;
   final CustomSpacing customSpacing;
   final Animation<double> chartAnimation;
   final int selectedMetricIndex;
@@ -10,7 +9,6 @@ class PerformanceTrendsChart extends StatelessWidget {
 
   const PerformanceTrendsChart({
     super.key,
-    required this.theme,
     required this.customSpacing,
     required this.chartAnimation,
     required this.selectedMetricIndex,
@@ -26,11 +24,11 @@ class PerformanceTrendsChart extends StatelessWidget {
           height: 300,
           padding: EdgeInsets.all(customSpacing.lg),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: AppColors.textPrimary.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 4),
               ),
@@ -43,9 +41,9 @@ class PerformanceTrendsChart extends StatelessWidget {
                 children: [
                   Text(
                     'Performance Trends',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodyMedium(color: AppColors.textPrimary),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                   const Spacer(),
@@ -108,13 +106,13 @@ class PerformanceTrendsChart extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: customSpacing.sm),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: AppColors.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<int>(
           value: selectedMetricIndex,
-          style: const TextStyle(color: Colors.black, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textPrimary),
           items:
               metrics
                   .asMap()
@@ -122,7 +120,10 @@ class PerformanceTrendsChart extends StatelessWidget {
                   .map(
                     (entry) => DropdownMenuItem(
                       value: entry.key,
-                      child: Text(entry.value),
+                      child: Text(
+                        entry.value,
+                        style: AppFonts.caption(color: AppColors.textPrimary),
+                      ),
                     ),
                   )
                   .toList(),
@@ -188,10 +189,9 @@ class PerformanceTrendsChart extends StatelessWidget {
               bottom: 4,
               child: Text(
                 days[index],
-                style: const TextStyle(
-                  fontSize: 10,
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.copyWith(
+                  AppFonts.labelSmall(color: AppColors.textSecondary),
+                  fontWeight: AppFonts.medium,
                 ),
               ),
             );
@@ -217,11 +217,11 @@ class PerformanceTrendsChart extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(customSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -236,29 +236,25 @@ class PerformanceTrendsChart extends StatelessWidget {
               SizedBox(width: customSpacing.xs),
               Text(
                 title,
-                style: const TextStyle(
-                  color: Colors.black54,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppFonts.caption(
+                  color: AppColors.textSecondary,
+                ).copyWith(fontWeight: AppFonts.medium),
               ),
             ],
           ),
           SizedBox(height: customSpacing.xs),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
           Text(
             subtitle,
-            style: TextStyle(
-              color: color,
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.copyWith(
+              AppFonts.labelSmall(color: color),
+              fontWeight: AppFonts.medium,
             ),
           ),
         ],

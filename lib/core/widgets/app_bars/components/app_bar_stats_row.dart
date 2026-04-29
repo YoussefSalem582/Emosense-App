@@ -262,11 +262,11 @@ class AppBarStatCard extends StatelessWidget {
               alignment: Alignment.centerLeft,
               child: Text(
                 stat.value,
-                style: TextStyle(
-                  color: Colors.white,
+                style: AppFonts.copyWith(
+                  AppFonts.h3(color: AppColors.white),
                   fontSize: 26,
-                  fontWeight: FontWeight.w900, // Extra bold for emphasis
-                  letterSpacing: -0.8, // Tighter spacing for modern look
+                  fontWeight: AppFonts.black,
+                  letterSpacing: -0.8,
                   height: 1.1,
                   shadows: [
                     Shadow(
@@ -306,10 +306,12 @@ class AppBarStatCard extends StatelessWidget {
                 Flexible(
                   child: Text(
                     stat.label,
-                    style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.85),
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(
+                        color: AppColors.white.withValues(alpha: 0.85),
+                      ),
                       fontSize: 13,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: AppFonts.bold,
                       letterSpacing: 0.2,
                       shadows: [
                         Shadow(
@@ -344,10 +346,9 @@ class AppBarStatCard extends StatelessWidget {
                   ),
                   child: Text(
                     stat.subtitle,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w800,
+                    style: AppFonts.copyWith(
+                      AppFonts.labelSmall(color: AppColors.white),
+                      fontWeight: AppFonts.extraBold,
                       letterSpacing: 0.1,
                       shadows: [
                         Shadow(

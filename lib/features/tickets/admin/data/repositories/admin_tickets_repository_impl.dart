@@ -13,7 +13,8 @@ final class AdminTicketsRepositoryImpl implements AdminTicketsRepository {
       _ticketRepository.getTicketsByFilter(filter);
 
   @override
-  Future<Ticket?> getTicketById(String id) => _ticketRepository.getTicketById(id);
+  Future<Ticket?> getTicketById(String id) =>
+      _ticketRepository.getTicketById(id);
 
   @override
   Future<Ticket> createTicket(Ticket ticket) =>

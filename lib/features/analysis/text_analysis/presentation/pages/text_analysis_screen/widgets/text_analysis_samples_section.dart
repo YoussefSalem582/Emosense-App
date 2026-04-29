@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for displaying sample texts
 class TextAnalysisSamplesSection extends StatelessWidget {
@@ -11,6 +12,8 @@ class TextAnalysisSamplesSection extends StatelessWidget {
     required this.onSampleTapped,
   });
 
+  static const Color _sampleAccent = Color(0xFFEC4899);
+
   @override
   Widget build(BuildContext context) {
     final samples = _getSamplesForSourceType();
@@ -19,7 +22,7 @@ class TextAnalysisSamplesSection extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -39,22 +42,21 @@ class TextAnalysisSamplesSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEC4899).withValues(alpha: 0.1),
+                    color: _sampleAccent.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
                     Icons.lightbulb_outline,
-                    color: Color(0xFFEC4899),
+                    color: _sampleAccent,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Sample Texts',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -76,9 +78,9 @@ class TextAnalysisSamplesSection extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceVariant,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.border),
       ),
       child: InkWell(
         onTap: () => onSampleTapped(sample['text']!),
@@ -96,22 +98,18 @@ class TextAnalysisSamplesSection extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFEC4899).withValues(alpha: 0.1),
+                      color: _sampleAccent.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(
                       sample['type']!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFFEC4899),
-                      ),
+                      style: AppFonts.labelMedium(color: _sampleAccent),
                     ),
                   ),
                   const Spacer(),
-                  const Icon(
+                  Icon(
                     Icons.touch_app,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textTertiary,
                     size: 16,
                   ),
                 ],
@@ -119,10 +117,10 @@ class TextAnalysisSamplesSection extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 sample['text']!,
-                style: const TextStyle(
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textSecondary),
                   fontSize: 13,
-                  color: Color(0xFF475569),
-                  height: 1.4,
+                  height: AppFonts.lineHeightNormal,
                 ),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,

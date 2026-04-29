@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/auth/onboarding/presentation/pages/onboarding_screen.dart';
 import 'package:emosense_mobile/features/shared/presentation/common_screens.dart';
 
@@ -74,15 +74,14 @@ class _ExampleScreensDemoState extends State<ExampleScreensDemo> {
       child: ListTile(
         title: Text(
           title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
         subtitle: Text(
           description,
-          style: const TextStyle(fontSize: 14, color: AppColors.textSecondary),
+          style: AppFonts.bodySmall(color: AppColors.textSecondary),
         ),
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,

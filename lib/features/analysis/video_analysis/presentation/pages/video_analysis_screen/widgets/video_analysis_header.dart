@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Animated header widget for video analysis screen
 class VideoAnalysisHeader extends StatelessWidget {
@@ -44,9 +45,9 @@ class VideoAnalysisHeader extends StatelessWidget {
                       color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.video_library_rounded,
-                      color: Colors.white,
+                      color: AppColors.white,
                       size: 28,
                     ),
                   ),
@@ -55,21 +56,18 @@ class VideoAnalysisHeader extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           'Customer Video Analysis',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
+                          style: AppFonts.h6(color: AppColors.white),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Analyze customer emotions in videos',
-                          style: TextStyle(
+                          style: AppFonts.copyWith(
+                            AppFonts.bodySmall(color: AppColors.white),
                             fontSize: 13,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white.withValues(alpha: 0.9),
+                            fontWeight: AppFonts.medium,
+                            color: AppColors.white.withValues(alpha: 0.9),
                           ),
                         ),
                       ],

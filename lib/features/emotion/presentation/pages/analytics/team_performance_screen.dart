@@ -64,13 +64,12 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Team Performance Dashboard',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.h6(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -91,9 +90,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
                           value: department,
                           child: Text(
                             department,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                            style: AppFonts.copyWith(
+                              AppFonts.bodySmall(),
+                              fontWeight: AppFonts.medium,
                             ),
                           ),
                         );
@@ -103,9 +102,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
             ],
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Monitor agent performance, team efficiency, and departmental metrics',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+            style: AppFonts.bodySmall(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -114,13 +113,16 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
 
   Widget _buildTabBar() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       child: TabBar(
         controller: _tabController,
         indicatorColor: AppColors.accent,
         labelColor: AppColors.accent,
         unselectedLabelColor: AppColors.textSecondary,
-        labelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+        labelStyle: AppFonts.copyWith(
+          AppFonts.bodySmall(),
+          fontWeight: AppFonts.semiBold,
+        ),
         tabs: const [
           Tab(icon: Icon(Icons.groups), text: 'Team Overview'),
           Tab(icon: Icon(Icons.person), text: 'Agent Performance'),
@@ -163,12 +165,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Team Performance Overview',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyLarge(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
         const SizedBox(height: 16),
@@ -248,10 +249,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: AppColors.textSecondary),
+                    fontWeight: AppFonts.medium,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -262,19 +262,20 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.h6(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             change,
-            style: TextStyle(
+            style: AppFonts.copyWith(
+              AppFonts.caption(
+                color: isPositive ? AppColors.success : AppColors.error,
+              ),
               fontSize: 11,
-              fontWeight: FontWeight.w500,
-              color: isPositive ? AppColors.success : AppColors.error,
+              fontWeight: AppFonts.medium,
             ),
           ),
         ],
@@ -289,12 +290,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Team Performance Trend',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -304,11 +304,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               color: AppColors.background,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Team Performance Chart\n(Line chart implementation would go here)',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -324,12 +324,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Department Comparison',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -373,10 +372,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
           flex: 2,
           child: Text(
             department,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textPrimary),
+              fontWeight: AppFonts.medium,
             ),
           ),
         ),
@@ -403,10 +401,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
         const SizedBox(width: 8),
         Text(
           '$score%',
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodySmall(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
       ],
@@ -433,12 +430,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Top Performers This Week',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -475,9 +471,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
             backgroundColor: AppColors.accent,
             child: Text(
               name.substring(0, 1),
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(color: AppColors.white),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -488,18 +484,14 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 Text(
                   department,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -509,18 +501,14 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
             children: [
               Text(
                 '$score%',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.success,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.success),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
               Text(
                 rating,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: AppFonts.caption(color: AppColors.textSecondary),
               ),
             ],
           ),
@@ -538,13 +526,12 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'All Agents Performance',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -593,16 +580,15 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
   }
 
   Widget _buildAgentListHeader() {
-    return const Row(
+    return Row(
       children: [
         Expanded(
           flex: 2,
           child: Text(
             'Agent',
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -610,10 +596,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
           child: Text(
             'Score',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -621,10 +606,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
           child: Text(
             'Cases',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -632,10 +616,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
           child: Text(
             'Avg. Time',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -661,18 +644,14 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               children: [
                 Text(
                   name,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.medium,
                   ),
                 ),
                 Text(
                   department,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -681,15 +660,16 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
             child: Text(
               '$score%',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color:
-                    score >= 90
-                        ? AppColors.success
-                        : score >= 80
-                        ? AppColors.warning
-                        : AppColors.error,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(
+                  color:
+                      score >= 90
+                          ? AppColors.success
+                          : score >= 80
+                          ? AppColors.warning
+                          : AppColors.error,
+                ),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -697,20 +677,14 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
             child: Text(
               '$cases',
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textPrimary,
-              ),
+              style: AppFonts.bodySmall(color: AppColors.textPrimary),
             ),
           ),
           Expanded(
             child: Text(
               avgTime,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textPrimary,
-              ),
+              style: AppFonts.bodySmall(color: AppColors.textPrimary),
             ),
           ),
         ],
@@ -738,12 +712,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Department Performance Overview',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -753,11 +726,11 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               color: AppColors.background,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Department Performance Chart\n(Bar chart implementation would go here)',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -823,10 +796,9 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
               Expanded(
                 child: Text(
                   department,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -860,15 +832,14 @@ class _TeamPerformanceScreenState extends State<TeamPerformanceScreen>
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
       ],

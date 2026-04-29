@@ -25,7 +25,7 @@ class EmployeeTabBar extends StatelessWidget {
         border: Border.all(color: AppColors.border, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -57,17 +57,20 @@ class EmployeeTabBar extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected ? Colors.white : AppColors.textSecondary,
+                color: isSelected ? AppColors.white : AppColors.textSecondary,
                 size: 18,
               ),
               const SizedBox(width: 6),
               Flexible(
                 child: Text(
                   title,
-                  style: TextStyle(
-                    color: isSelected ? Colors.white : AppColors.textSecondary,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    fontSize: 14,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(
+                      color:
+                          isSelected ? AppColors.white : AppColors.textSecondary,
+                    ),
+                    fontWeight:
+                        isSelected ? AppFonts.bold : AppFonts.medium,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),

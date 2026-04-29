@@ -80,7 +80,7 @@ class AnalysisToolCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Icon(icon, color: Colors.white, size: 24),
+                      child: Icon(icon, color: AppColors.white, size: 24),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -90,18 +90,15 @@ class AnalysisToolCard extends StatelessWidget {
                         children: [
                           Text(
                             title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.textPrimary,
+                            style: AppFonts.copyWith(
+                              AppFonts.button(color: AppColors.textPrimary),
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             description,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.textSecondary,
+                            style: AppFonts.copyWith(
+                              AppFonts.caption(color: AppColors.textSecondary),
                               height: 1.3,
                             ),
                             maxLines: 2,

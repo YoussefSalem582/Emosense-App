@@ -162,10 +162,9 @@ class AppBarNotificationButton extends StatelessWidget {
             ),
             child: Text(
               displayCount,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 11,
-                fontWeight: FontWeight.w900,
+              style: AppFonts.copyWith(
+                AppFonts.labelSmall(color: AppColors.white),
+                fontWeight: AppFonts.black,
                 letterSpacing: -0.2,
               ),
               textAlign: TextAlign.center,

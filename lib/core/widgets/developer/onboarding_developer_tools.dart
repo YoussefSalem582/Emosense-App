@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
 import 'package:emosense_mobile/features/auth/onboarding/domain/repositories/onboarding_repository.dart';
 
@@ -85,7 +86,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
           children: [
             Row(
               children: [
-                const Icon(Icons.developer_mode, color: Colors.orange),
+                const Icon(Icons.developer_mode, color: AppColors.warning),
                 const SizedBox(width: 8),
                 Text(
                   'Onboarding Developer Tools',
@@ -105,7 +106,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
+                  color: AppColors.surfaceContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Column(
@@ -124,10 +125,9 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
                           _isOnboardingCompleted
                               ? Icons.check_circle
                               : Icons.cancel,
-                          color:
-                              _isOnboardingCompleted
-                                  ? Colors.green
-                                  : Colors.red,
+                          color: _isOnboardingCompleted
+                              ? AppColors.success
+                              : AppColors.error,
                           size: 20,
                         ),
                         const SizedBox(width: 8),
@@ -135,12 +135,13 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
                           _isOnboardingCompleted
                               ? 'Completed'
                               : 'Not Completed',
-                          style: TextStyle(
-                            color:
-                                _isOnboardingCompleted
-                                    ? Colors.green
-                                    : Colors.red,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.copyWith(
+                            AppFonts.bodySmall(
+                              color: _isOnboardingCompleted
+                                  ? AppColors.success
+                                  : AppColors.error,
+                            ),
+                            fontWeight: AppFonts.semiBold,
                           ),
                         ),
                       ],
@@ -165,7 +166,7 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
                       icon: const Icon(Icons.refresh),
                       label: const Text('Reset'),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Colors.orange,
+                        foregroundColor: AppColors.warning,
                       ),
                     ),
                   ),
@@ -176,8 +177,8 @@ class _OnboardingDeveloperToolsState extends State<OnboardingDeveloperTools> {
                       icon: const Icon(Icons.check),
                       label: const Text('Mark Complete'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.success,
+                        foregroundColor: AppColors.white,
                       ),
                     ),
                   ),

@@ -95,9 +95,9 @@ class ProfileQuickActionsWidget extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.medium,
                 ),
               ),
             ),

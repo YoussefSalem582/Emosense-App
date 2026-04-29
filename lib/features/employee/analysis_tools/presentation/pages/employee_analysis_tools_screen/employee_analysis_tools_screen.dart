@@ -93,7 +93,7 @@ class _EmployeeAnalysisToolsScreenState
                       _loadingOverview
                           ? const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.white,
+                              color: AppColors.white,
                             ),
                           )
                           : _overview == null
@@ -109,9 +109,11 @@ class _EmployeeAnalysisToolsScreenState
                                     size: 48,
                                   ),
                                   SizedBox(height: customSpacing.md),
-                                  const Text(
+                                  Text(
                                     'Could not load analysis tools',
-                                    style: TextStyle(color: Colors.white),
+                                    style: AppFonts.bodyMedium(
+                                      color: AppColors.white,
+                                    ),
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: customSpacing.md),
@@ -136,12 +138,11 @@ class _EmployeeAnalysisToolsScreenState
                                 SizedBox(height: customSpacing.xl),
 
                                 // Section Title
-                                const Text(
+                                Text(
                                   'Analysis Tools',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
+                                  style: AppFonts.copyWith(
+                                    AppFonts.h5(color: AppColors.white),
+                                    fontWeight: AppFonts.bold,
                                   ),
                                 ),
 
@@ -219,7 +220,7 @@ class _EmployeeAnalysisToolsScreenState
                 ),
               ],
             ),
-            child: const Icon(Icons.analytics, color: Colors.white, size: 32),
+            child: Icon(Icons.analytics, color: AppColors.white, size: 32),
           ),
 
           SizedBox(width: spacing.md),
@@ -229,21 +230,21 @@ class _EmployeeAnalysisToolsScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Analysis Tools',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.h6(color: AppColors.white),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 SizedBox(height: spacing.xs),
                 Text(
                   overview.subtitle,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                    height: 1.4,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(
+                      color: AppColors.white.withValues(alpha: 0.7),
+                    ),
+                    height: AppFonts.lineHeightNormal,
                   ),
                 ),
                 SizedBox(height: spacing.sm),
@@ -253,18 +254,17 @@ class _EmployeeAnalysisToolsScreenState
                     Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
+                      decoration: BoxDecoration(
+                        color: AppColors.success,
                         shape: BoxShape.circle,
                       ),
                     ),
                     SizedBox(width: spacing.xs),
                     Text(
                       '${overview.toolCount} tools available',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.green,
-                        fontWeight: FontWeight.w500,
+                      style: AppFonts.copyWith(
+                        AppFonts.caption(color: AppColors.success),
+                        fontWeight: AppFonts.medium,
                       ),
                     ),
                   ],
@@ -309,7 +309,7 @@ class _EmployeeAnalysisToolsScreenState
                 color: color,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: Colors.white, size: 24),
+              child: Icon(icon, color: AppColors.white, size: 24),
             ),
 
             SizedBox(width: spacing.md),
@@ -321,19 +321,16 @@ class _EmployeeAnalysisToolsScreenState
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black87,
+                    style: AppFonts.copyWith(
+                      AppFonts.button(color: AppColors.textPrimary),
                     ),
                   ),
                   SizedBox(height: spacing.xs),
                   Text(
                     description,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                      height: 1.4,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(color: AppColors.textSecondary),
+                      height: AppFonts.lineHeightNormal,
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for sample files section
 class VoiceAnalysisSamplesSection extends StatefulWidget {
@@ -67,7 +68,7 @@ class _VoiceAnalysisSamplesSectionState
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -97,19 +98,18 @@ class _VoiceAnalysisSamplesSectionState
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Expanded(
+                Expanded(
                   child: Text(
                     'Sample Audio Files',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
+                    style: AppFonts.copyWith(
+                      AppFonts.bodyLarge(color: AppColors.darkSurface),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   'Try these samples',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                  style: AppFonts.caption(color: AppColors.textTertiary),
                 ),
               ],
             ),
@@ -139,13 +139,13 @@ class _VoiceAnalysisSamplesSectionState
                               ? (sample['color'] as Color).withValues(
                                 alpha: 0.1,
                               )
-                              : const Color(0xFFF8FAFC),
+                              : AppColors.surfaceVariant,
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
                         color:
                             _selectedSample == sample['title']
                                 ? sample['color'] as Color
-                                : const Color(0xFFE2E8F0),
+                                : AppColors.border,
                         width: _selectedSample == sample['title'] ? 2 : 1,
                       ),
                     ),
@@ -172,19 +172,15 @@ class _VoiceAnalysisSamplesSectionState
                             children: [
                               Text(
                                 sample['title'] as String,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xFF1E293B),
+                                style: AppFonts.copyWith(
+                                  AppFonts.bodySmall(color: AppColors.darkSurface),
+                                  fontWeight: AppFonts.semiBold,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Text(
                                 sample['description'] as String,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xFF64748B),
-                                ),
+                                style: AppFonts.caption(color: AppColors.textTertiary),
                               ),
                               const SizedBox(height: 8),
                               Row(
@@ -201,9 +197,7 @@ class _VoiceAnalysisSamplesSectionState
                                     ),
                                     child: Text(
                                       sample['type'] as String,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500,
+                                      style: AppFonts.labelSmall(
                                         color: sample['color'] as Color,
                                       ),
                                     ),
@@ -211,17 +205,15 @@ class _VoiceAnalysisSamplesSectionState
                                   const SizedBox(width: 8),
                                   Text(
                                     '• ${sample['duration']}',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Color(0xFF64748B),
+                                    style: AppFonts.labelSmall(
+                                      color: AppColors.textTertiary,
                                     ),
                                   ),
                                   const SizedBox(width: 8),
                                   Text(
                                     '• ${sample['emotion']}',
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                      color: Color(0xFF64748B),
+                                    style: AppFonts.labelSmall(
+                                      color: AppColors.textTertiary,
                                     ),
                                   ),
                                 ],
@@ -230,14 +222,14 @@ class _VoiceAnalysisSamplesSectionState
                           ),
                         ),
                         _selectedSample == sample['title']
-                            ? const Icon(
+                            ? Icon(
                               Icons.check_circle,
-                              color: Color(0xFF10B981),
+                              color: AppColors.success,
                               size: 20,
                             )
-                            : const Icon(
+                            : Icon(
                               Icons.play_circle_outline,
-                              color: Color(0xFF64748B),
+                              color: AppColors.textTertiary,
                               size: 20,
                             ),
                       ],

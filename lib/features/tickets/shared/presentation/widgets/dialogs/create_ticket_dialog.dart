@@ -36,17 +36,18 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
     return Theme(
       data: Theme.of(context).copyWith(
         dialogTheme: DialogThemeData(
-          backgroundColor: Colors.white,
+          backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
         ),
-        textTheme: Theme.of(
-          context,
-        ).textTheme.apply(bodyColor: Colors.black, displayColor: Colors.black),
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: AppColors.textPrimary,
+          displayColor: AppColors.textPrimary,
+        ),
       ),
       child: AlertDialog(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
@@ -54,17 +55,14 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
             SizedBox(width: 8),
             Text(
               'New Support Ticket',
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppFonts.h6(color: AppColors.textPrimary),
             ),
           ],
         ),
         content: Container(
           width: double.maxFinite,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Form(
@@ -74,10 +72,12 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
               children: [
                 TextFormField(
                   controller: _customerNameController,
-                  style: TextStyle(color: Colors.black),
+                  style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                   decoration: InputDecoration(
                     labelText: 'Customer Name',
-                    labelStyle: TextStyle(color: Colors.black54),
+                    labelStyle: AppFonts.bodySmall(
+                      color: AppColors.textSecondary,
+                    ),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -93,10 +93,12 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _issueTitleController,
-                  style: TextStyle(color: Colors.black),
+                  style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                   decoration: InputDecoration(
                     labelText: 'Issue Title',
-                    labelStyle: TextStyle(color: Colors.black54),
+                    labelStyle: AppFonts.bodySmall(
+                      color: AppColors.textSecondary,
+                    ),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -113,10 +115,12 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                 TextFormField(
                   controller: _descriptionController,
                   maxLines: 3,
-                  style: TextStyle(color: Colors.black),
+                  style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                   decoration: InputDecoration(
                     labelText: 'Description',
-                    labelStyle: TextStyle(color: Colors.black54),
+                    labelStyle: AppFonts.bodySmall(
+                      color: AppColors.textSecondary,
+                    ),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -132,12 +136,14 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                 SizedBox(height: 16),
                 TextFormField(
                   controller: _urlController,
-                  style: TextStyle(color: Colors.black),
+                  style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                   decoration: InputDecoration(
                     labelText: 'Reference URL (Optional)',
-                    labelStyle: TextStyle(color: Colors.black54),
+                    labelStyle: AppFonts.bodySmall(
+                      color: AppColors.textSecondary,
+                    ),
                     hintText: 'https://example.com',
-                    hintStyle: TextStyle(color: Colors.black38),
+                    hintStyle: AppFonts.bodySmall(color: AppColors.textLight),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -150,10 +156,12 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                 DropdownButtonFormField<String>(
                   key: ValueKey(_selectedPriority),
                   initialValue: _selectedPriority,
-                  style: TextStyle(color: Colors.black),
+                  style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                   decoration: InputDecoration(
                     labelText: 'Priority',
-                    labelStyle: TextStyle(color: Colors.black54),
+                    labelStyle: AppFonts.bodySmall(
+                      color: AppColors.textSecondary,
+                    ),
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -165,7 +173,9 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
                           value: priority,
                           child: Text(
                             priority,
-                            style: TextStyle(color: Colors.black),
+                            style: AppFonts.bodyMedium(
+                              color: AppColors.textPrimary,
+                            ),
                           ),
                         );
                       }).toList(),
@@ -188,15 +198,21 @@ class _CreateTicketDialogState extends State<CreateTicketDialog> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel', style: TextStyle(color: Colors.black54)),
+            child: Text(
+              'Cancel',
+              style: AppFonts.bodySmall(color: AppColors.textSecondary),
+            ),
           ),
           ElevatedButton(
             onPressed: _createTicket,
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.white,
             ),
-            child: Text('Create Ticket'),
+            child: Text(
+              'Create Ticket',
+              style: AppFonts.button(color: AppColors.white),
+            ),
           ),
         ],
       ),

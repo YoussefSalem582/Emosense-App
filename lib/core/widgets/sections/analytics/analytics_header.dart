@@ -28,11 +28,11 @@ class AnalyticsHeader extends StatelessWidget {
                 vertical: customSpacing.sm,
               ),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: AppColors.surface,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: AppColors.textPrimary.withValues(alpha: 0.05),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -41,10 +41,9 @@ class AnalyticsHeader extends StatelessWidget {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton<String>(
                   value: selectedTimeRange,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 14,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                   items:
                       ['Today', 'This Week', 'This Month', 'Last 3 Months']

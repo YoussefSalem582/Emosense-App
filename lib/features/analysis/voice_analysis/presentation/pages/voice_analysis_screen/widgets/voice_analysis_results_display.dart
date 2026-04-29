@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/widgets/common/animated_loading_indicator.dart';
 
 /// Widget for displaying analysis results
@@ -24,7 +25,7 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -44,22 +45,21 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                    color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.analytics,
-                    color: Color(0xFF10B981),
+                    color: AppColors.success,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Analysis Results',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -87,7 +87,7 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
   Widget _buildLoadingState() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -103,18 +103,14 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
           children: [
             EmoLoader.analysis(),
             const SizedBox(height: 16),
-            const Text(
+            Text(
               'Analyzing voice patterns...',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF1E293B),
-              ),
+              style: AppFonts.button(color: AppColors.darkSurface),
             ),
             const SizedBox(height: 8),
-            const Text(
+            Text(
               'Processing emotional cues and speech patterns',
-              style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+              style: AppFonts.bodySmall(color: AppColors.textTertiary),
               textAlign: TextAlign.center,
             ),
           ],
@@ -132,8 +128,8 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            const Color(0xFF3B82F6).withValues(alpha: 0.1),
-            const Color(0xFF10B981).withValues(alpha: 0.1),
+            AppColors.primaryLight.withValues(alpha: 0.1),
+            AppColors.success.withValues(alpha: 0.1),
           ],
         ),
         borderRadius: BorderRadius.circular(12),
@@ -144,21 +140,14 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Overall Analysis',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
-                  ),
+                  style: AppFonts.button(color: AppColors.darkSurface),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Dominant Emotion: $emotion',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF64748B),
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.textTertiary),
                 ),
               ],
             ),
@@ -167,15 +156,11 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
             children: [
               Text(
                 '${(score * 100).toInt()}%',
-                style: const TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF10B981),
-                ),
+                style: AppFonts.h3(color: AppColors.success),
               ),
-              const Text(
+              Text(
                 'Confidence',
-                style: TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+                style: AppFonts.caption(color: AppColors.textTertiary),
               ),
             ],
           ),
@@ -193,13 +178,9 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Emotion Breakdown',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF1E293B),
-          ),
+          style: AppFonts.button(color: AppColors.darkSurface),
         ),
         const SizedBox(height: 12),
         ...emotions.entries.map((entry) {
@@ -215,18 +196,13 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
                   children: [
                     Text(
                       emotion.toUpperCase(),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF64748B),
-                      ),
+                      style: AppFonts.labelMedium(color: AppColors.textTertiary),
                     ),
                     Text(
                       '${(value * 100).toInt()}%',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF1E293B),
+                      style: AppFonts.copyWith(
+                        AppFonts.caption(color: AppColors.darkSurface),
+                        fontWeight: AppFonts.semiBold,
                       ),
                     ),
                   ],
@@ -234,7 +210,7 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
                 const SizedBox(height: 4),
                 LinearProgressIndicator(
                   value: value,
-                  backgroundColor: const Color(0xFFE2E8F0),
+                  backgroundColor: AppColors.border,
                   valueColor: AlwaysStoppedAnimation<Color>(
                     _getEmotionColor(emotion),
                   ),
@@ -255,13 +231,9 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Detailed Metrics',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF1E293B),
-          ),
+          style: AppFonts.button(color: AppColors.darkSurface),
         ),
         const SizedBox(height: 12),
         GridView.builder(
@@ -279,29 +251,21 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
             return Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFE2E8F0)),
+                border: Border.all(color: AppColors.border),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     entry.key.replaceAll('_', ' ').toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF64748B),
-                    ),
+                    style: AppFonts.labelSmall(color: AppColors.textTertiary),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     entry.value.toString(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Color(0xFF1E293B),
-                    ),
+                    style: AppFonts.button(color: AppColors.darkSurface),
                   ),
                 ],
               ),
@@ -322,29 +286,24 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Transcription',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF1E293B),
-          ),
+          style: AppFonts.button(color: AppColors.darkSurface),
         ),
         const SizedBox(height: 12),
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFFF8FAFC),
+            color: AppColors.surfaceVariant,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE2E8F0)),
+            border: Border.all(color: AppColors.border),
           ),
           child: Text(
             transcription,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF374151),
-              height: 1.5,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textSecondary),
+              height: AppFonts.lineHeightRelaxed,
             ),
           ),
         ),
@@ -356,21 +315,21 @@ class VoiceAnalysisResultsDisplay extends StatelessWidget {
     switch (emotion.toLowerCase()) {
       case 'happy':
       case 'joy':
-        return const Color(0xFF10B981);
+        return AppColors.success;
       case 'sad':
       case 'sadness':
-        return const Color(0xFF3B82F6);
+        return AppColors.primaryLight;
       case 'angry':
       case 'anger':
-        return const Color(0xFFEF4444);
+        return AppColors.error;
       case 'fear':
-        return const Color(0xFF8B5CF6);
+        return AppColors.accent;
       case 'surprise':
-        return const Color(0xFFF59E0B);
+        return AppColors.warning;
       case 'disgust':
-        return const Color(0xFF6B7280);
+        return AppColors.textSecondary;
       default:
-        return const Color(0xFF64748B);
+        return AppColors.textTertiary;
     }
   }
 }

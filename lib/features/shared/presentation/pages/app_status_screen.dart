@@ -18,7 +18,7 @@ class AppStatusScreen extends StatelessWidget {
         children: [
           const ConnectionStatusCard(),
           const SizedBox(height: 24),
-          Text('Details', style: Theme.of(context).textTheme.titleMedium),
+          Text('Details', style: AppFonts.h6ForTheme(context)),
           const SizedBox(height: 8),
           BlocBuilder<ConnectionBloc, BackendConnectionState>(
             builder: (context, state) {
@@ -38,7 +38,9 @@ class AppStatusScreen extends StatelessWidget {
               if (state is ConnectionError) {
                 return Text(
                   state.message,
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                  style: AppFonts.bodyMedium(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
                 );
               }
               if (state is ConnectionDisconnected) {
@@ -68,7 +70,13 @@ class AppStatusScreen extends StatelessWidget {
         children: [
           SizedBox(
             width: 120,
-            child: Text(k, style: const TextStyle(fontWeight: FontWeight.w600)),
+            child: Text(
+              k,
+              style: AppFonts.copyWith(
+                AppFonts.labelLarge(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
+              ),
+            ),
           ),
           Expanded(child: Text(v)),
         ],

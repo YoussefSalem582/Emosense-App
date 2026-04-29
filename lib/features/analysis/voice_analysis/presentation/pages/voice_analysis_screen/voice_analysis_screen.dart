@@ -2,6 +2,7 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/analysis/voice_analysis/presentation/bloc/voice_analysis_bloc.dart';
 import 'package:emosense_mobile/core/widgets/common/animated_background_widget.dart';
 import 'package:emosense_mobile/core/widgets/app_bars/analysis_app_bar.dart';
@@ -169,8 +170,8 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
                         child: OutlinedButton(
                           onPressed: isAnalyzing ? null : _loadQuickDemo,
                           style: OutlinedButton.styleFrom(
-                            foregroundColor: const Color(0xFF8B5CF6),
-                            side: const BorderSide(color: Color(0xFF8B5CF6)),
+                            foregroundColor: AppColors.accent,
+                            side: const BorderSide(color: AppColors.accent),
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
@@ -185,7 +186,7 @@ class _UnifiedVoiceAnalysisScreenState extends State<UnifiedVoiceAnalysisScreen>
                                 isAnalyzing
                                     ? 'Loading...'
                                     : 'Quick Demo Analysis',
-                                style: const TextStyle(fontSize: 14),
+                                style: AppFonts.bodySmall(color: AppColors.accent),
                               ),
                             ],
                           ),

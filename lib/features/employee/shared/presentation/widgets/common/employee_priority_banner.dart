@@ -49,7 +49,7 @@ class EmployeePriorityBanner extends StatelessWidget {
               color: primaryColor,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.white, size: 16),
+            child: Icon(icon, color: AppColors.white, size: 16),
           ),
           SizedBox(width: customSpacing.sm),
           Expanded(
@@ -58,15 +58,14 @@ class EmployeePriorityBanner extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.white),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  style: AppFonts.caption(color: AppColors.white),
                 ),
               ],
             ),

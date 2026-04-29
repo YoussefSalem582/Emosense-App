@@ -24,19 +24,19 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white.withValues(alpha: 0.95),
+      backgroundColor: AppColors.surface.withValues(alpha: 0.95),
       elevation: 0,
       scrolledUnderElevation: 0,
       leading: IconButton(
         icon: Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.arrow_back_ios_new,
-            color: Color(0xFF667EEA),
+            color: AppColors.primary,
             size: 18,
           ),
         ),
@@ -58,9 +58,9 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
                 fit: BoxFit.contain,
                 errorBuilder: (context, error, stackTrace) {
                   // Fallback to analysis icon if asset fails to load
-                  return const Icon(
+                  return Icon(
                     Icons.analytics_rounded,
-                    color: Colors.white,
+                    color: AppColors.primary,
                     size: 24,
                   );
                 },
@@ -75,19 +75,16 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF333333),
+                  style: AppFonts.copyWith(
+                    AppFonts.h6(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                  style: AppFonts.caption(
                     color: AppColors.textSecondary,
-                  ),
+                  ).copyWith(fontWeight: AppFonts.medium),
                 ),
               ],
             ),
@@ -117,7 +114,7 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
                             ? const EdgeInsets.all(4)
                             : null,
                     decoration: const BoxDecoration(
-                      color: Color(0xFF667EEA),
+                      color: AppColors.primary,
                       shape: BoxShape.circle,
                     ),
                     constraints: const BoxConstraints(
@@ -130,10 +127,9 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
                               notificationCount! > 99
                                   ? '99+'
                                   : '$notificationCount',
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 10,
-                                fontWeight: FontWeight.bold,
+                              style: AppFonts.copyWith(
+                                AppFonts.labelSmall(color: AppColors.white),
+                                fontWeight: AppFonts.bold,
                               ),
                               textAlign: TextAlign.center,
                             )
@@ -181,7 +177,7 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -200,7 +196,13 @@ class AnalysisAppBar extends StatelessWidget implements PreferredSizeWidget {
       children: [
         Icon(icon, size: 20),
         const SizedBox(width: 12),
-        Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
+        Text(
+          title,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.medium,
+          ),
+        ),
       ],
     );
   }

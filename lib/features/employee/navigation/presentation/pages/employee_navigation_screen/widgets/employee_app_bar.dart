@@ -68,18 +68,17 @@ class EmployeeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       shaderCallback:
                           (bounds) => LinearGradient(
                             colors: const [
-                              Color(0xFF333333),
-                              Color(0xFF667EEA),
-                              Color(0xFF333333),
+                              AppColors.textPrimary,
+                              AppColors.primary,
+                              AppColors.textPrimary,
                             ],
                             stops: [0.0, shimmerAnimation.value, 1.0],
                           ).createShader(bounds),
                       child: Text(
                         _getScreenTitle(selectedIndex),
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.white),
+                          fontWeight: AppFonts.bold,
                         ),
                       ),
                     );
@@ -87,11 +86,7 @@ class EmployeeAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 Text(
                   'Employee Portal',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.labelMedium(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -122,7 +117,7 @@ class EmployeeAppBar extends StatelessWidget implements PreferredSizeWidget {
                       width: 8,
                       height: 8,
                       decoration: const BoxDecoration(
-                        color: Color(0xFF667EEA),
+                        color: AppColors.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -172,7 +167,7 @@ class EmployeeAppBar extends StatelessWidget implements PreferredSizeWidget {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+              color: AppColors.primary.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
             child: Icon(Icons.person, color: AppColors.textPrimary, size: 20),
@@ -189,14 +184,13 @@ class EmployeeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: isDestructive ? Colors.red : null),
+        Icon(icon, size: 20, color: isDestructive ? AppColors.error : null),
         const SizedBox(width: 12),
         Text(
           title,
-          style: TextStyle(
-            color: isDestructive ? Colors.red : null,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppFonts.bodySmall(
+            color: isDestructive ? AppColors.error : AppColors.textPrimary,
+          ).copyWith(fontWeight: AppFonts.medium),
         ),
       ],
     );

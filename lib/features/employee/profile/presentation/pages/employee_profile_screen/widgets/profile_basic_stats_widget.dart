@@ -84,19 +84,17 @@ class ProfileBasicStatsWidget extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: color,
+            style: AppFonts.copyWith(
+              AppFonts.h5(color: color),
+              fontWeight: AppFonts.bold,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.medium,
             ),
             textAlign: TextAlign.center,
             maxLines: 2,

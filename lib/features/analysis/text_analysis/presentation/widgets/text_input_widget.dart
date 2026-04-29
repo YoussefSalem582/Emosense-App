@@ -150,10 +150,9 @@ class TextInputWidget extends StatelessWidget {
               value: selectedAnalysisType,
               isExpanded: true,
               icon: Icon(Icons.keyboard_arrow_down, color: AppColors.primary),
-              style: TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(color: AppColors.textPrimary),
+                fontWeight: AppFonts.medium,
               ),
               onChanged: (value) => onAnalysisTypeChanged(value!),
               items:
@@ -252,17 +251,16 @@ class TextInputWidget extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText:
                       'Type or paste your text here for analysis...\n\nExample:\n"Thank you for your excellent service! I\'m very satisfied with the quality of work and professionalism shown by your team."',
-                  hintStyle: TextStyle(
-                    color: AppColors.textSecondary,
-                    height: 1.5,
+                  hintStyle: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textSecondary),
+                    height: AppFonts.lineHeightRelaxed,
                   ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(spacing.lg),
                 ),
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  height: 1.6,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  height: AppFonts.lineHeightLoose,
                 ),
                 maxLines: 8,
                 minLines: 6,
@@ -404,20 +402,16 @@ class TextInputWidget extends StatelessWidget {
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
-                  color: Colors.white,
+                  color: AppColors.white,
                   strokeWidth: 2.5,
                 ),
               )
             else
-              Icon(icon, color: Colors.white, size: 22),
+              Icon(icon, color: AppColors.white, size: 22),
             SizedBox(width: spacing.sm),
             Text(
               label,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-                fontSize: 16,
-              ),
+              style: AppFonts.button(color: AppColors.white),
             ),
           ],
         ),

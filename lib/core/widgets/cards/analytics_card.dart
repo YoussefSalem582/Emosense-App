@@ -33,13 +33,9 @@ class AnalyticsCard extends StatelessWidget {
               children: [
                 const Icon(Icons.analytics, color: AppColors.accent, size: 28),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Analytics Summary',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.h6(color: AppColors.textPrimary),
                 ),
                 const Spacer(),
                 if (onRefresh != null)
@@ -52,14 +48,15 @@ class AnalyticsCard extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             if (analytics == null)
-              const Center(
+              Center(
                 child: Column(
                   children: [
-                    CircularProgressIndicator(color: AppColors.accent),
-                    SizedBox(height: 16),
+                    const CircularProgressIndicator(color: AppColors.accent),
+                    const SizedBox(height: 16),
                     Text(
                       'Loading analytics...',
-                      style: TextStyle(color: AppColors.textSecondary),
+                      style:
+                          AppFonts.bodyMedium(color: AppColors.textSecondary),
                     ),
                   ],
                 ),
@@ -139,10 +136,9 @@ class AnalyticsCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Emotion Breakdown',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -186,10 +182,9 @@ class AnalyticsCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Sentiment Breakdown',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -230,10 +225,9 @@ class AnalyticsCard extends StatelessWidget {
               const SizedBox(width: 8),
               Text(
                 'Performance Statistics',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -271,23 +265,22 @@ class AnalyticsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.amber.withValues(alpha: 0.05),
+        color: AppColors.warning.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.amber.withValues(alpha: 0.3)),
+        border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.trending_up, color: Colors.amber[700], size: 20),
+              Icon(Icons.trending_up, color: AppColors.warning, size: 20),
               const SizedBox(width: 8),
               Text(
                 'Popular Texts',
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodyMedium(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -306,11 +299,8 @@ class AnalyticsCard extends StatelessWidget {
                 children: [
                   Text(
                     '"${popularText.text}"',
-                    style: TextStyle(
-                      color: AppColors.textPrimary,
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
-                    ),
+                    style: AppFonts.bodySmall(color: AppColors.textPrimary)
+                        .copyWith(fontStyle: FontStyle.italic),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -330,22 +320,18 @@ class AnalyticsCard extends StatelessWidget {
                         ),
                         child: Text(
                           popularText.emotion,
-                          style: TextStyle(
+                          style: AppFonts.labelMedium(
                             color: EmotionUtils.getEmotionColor(
                               popularText.emotion,
                             ),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
                       const SizedBox(width: 8),
                       Text(
                         '${popularText.confidenceFormatted} • ${popularText.count}x',
-                        style: TextStyle(
-                          color: AppColors.textSecondary,
-                          fontSize: 12,
-                        ),
+                        style:
+                            AppFonts.caption(color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -373,18 +359,13 @@ class AnalyticsCard extends StatelessWidget {
             children: [
               Text(
                 label.toUpperCase(),
-                style: TextStyle(
-                  color: AppColors.textPrimary,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: AppFonts.labelLarge(color: AppColors.textPrimary),
               ),
               Text(
                 '$count (${percentage.toStringAsFixed(1)}%)',
-                style: TextStyle(
-                  color: color,
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: color),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ],
@@ -412,15 +393,14 @@ class AnalyticsCard extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: TextStyle(
-            color: color,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: color),
+            fontWeight: AppFonts.bold,
           ),
         ),
         Text(
           label,
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textSecondary),
           textAlign: TextAlign.center,
         ),
       ],
@@ -434,12 +414,12 @@ class AnalyticsCard extends StatelessWidget {
         const SizedBox(width: 4),
         Text(
           'Time Range: ${analytics!.timeRange.duration}',
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
         const Spacer(),
         Text(
           'Updated: ${_formatTimestamp()}',
-          style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
       ],
     );

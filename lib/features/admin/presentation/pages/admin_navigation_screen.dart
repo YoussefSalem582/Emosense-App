@@ -102,10 +102,10 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
         screen = const AdminProfileScreen();
         break;
       default:
-        screen = const Center(
+        screen = Center(
           child: Text(
             'Screen not found',
-            style: TextStyle(fontSize: 18, color: Colors.grey),
+            style: AppFonts.bodyLarge(color: AppColors.textTertiary),
           ),
         );
     }
@@ -249,13 +249,11 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
                     ),
                   ),
                   const SizedBox(width: 6),
-                  const Text(
+                  Text(
                     'ONLINE',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 0.5,
+                    style: AppFonts.copyWith(
+                      AppFonts.overline(color: AppColors.white),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                 ],
@@ -311,18 +309,21 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
                 const Text('Admin Logout'),
               ],
             ),
-            content: const Column(
+            content: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Are you sure you want to logout from the admin panel?',
-                  style: TextStyle(fontWeight: FontWeight.w500),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(),
+                    fontWeight: AppFonts.medium,
+                  ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'This will end your administrative session and require re-authentication.',
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),

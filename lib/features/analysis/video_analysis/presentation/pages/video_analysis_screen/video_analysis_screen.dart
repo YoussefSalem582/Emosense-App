@@ -367,24 +367,19 @@ class _EmployeeVideoAnalysisScreenState
                   builder: (context, child) {
                     return Opacity(
                       opacity: 0.7 + (0.3 * _backgroundController.value),
-                      child: const Column(
+                      child: Column(
                         children: [
                           Text(
                             'Analyzing Video Content',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
+                            style: AppFonts.copyWith(
+                              AppFonts.h6(color: AppColors.white),
+                              fontWeight: AppFonts.bold,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             'Processing frames and detecting emotions...',
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: AppFonts.bodyMedium(color: AppColors.white),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -417,12 +412,11 @@ class _EmployeeVideoAnalysisScreenState
                         size: 18,
                       ),
                       const SizedBox(width: 8),
-                      const Text(
+                      Text(
                         'Processing: 10-15 seconds',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.white),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ],
@@ -456,21 +450,19 @@ class _EmployeeVideoAnalysisScreenState
             child: const Icon(Icons.error_outline, color: Colors.red, size: 48),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Analysis Failed',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: Colors.red,
+            style: AppFonts.copyWith(
+              AppFonts.h6(color: AppColors.error),
+              fontWeight: AppFonts.bold,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             message,
-            style: const TextStyle(
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.error),
               fontSize: 15,
-              color: Colors.red,
-              fontWeight: FontWeight.w400,
             ),
             textAlign: TextAlign.center,
           ),

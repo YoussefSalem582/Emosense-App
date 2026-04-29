@@ -15,11 +15,11 @@ class EmotionInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: AppColors.textPrimary.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -28,19 +28,19 @@ class EmotionInputField extends StatelessWidget {
       child: TextField(
         controller: controller,
         maxLines: 4,
-        style: const TextStyle(fontSize: 16),
+        style: AppFonts.bodyMedium(color: AppColors.textPrimary),
         onSubmitted: (_) => onSubmitted?.call(),
         decoration: InputDecoration(
           labelText: AppStrings.inputLabel,
-          labelStyle: const TextStyle(color: AppColors.primary),
+          labelStyle: AppFonts.labelMedium(color: AppColors.primary),
           hintText: AppStrings.inputHint,
-          hintStyle: TextStyle(color: Colors.grey[400]),
+          hintStyle: AppFonts.bodySmall(color: AppColors.textLight),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: Colors.white,
+          fillColor: AppColors.surface,
           contentPadding: const EdgeInsets.all(20),
           prefixIcon: Container(
             margin: const EdgeInsets.all(12),

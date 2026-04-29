@@ -48,7 +48,7 @@ class AnalysisToolsHeader extends StatelessWidget {
                 ),
               ],
             ),
-            child: const Icon(Icons.analytics, color: Colors.white, size: 32),
+            child: Icon(Icons.analytics, color: AppColors.white, size: 32),
           ),
           SizedBox(width: customSpacing.md),
           SizedBox(height: customSpacing.sm),
@@ -70,10 +70,9 @@ class AnalysisToolsHeader extends StatelessWidget {
                 SizedBox(width: customSpacing.xs),
                 Text(
                   '3 tools available',
-                  style: TextStyle(
-                    color: AppColors.success,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: AppColors.success),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],

@@ -109,10 +109,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
       children: [
         Text(
           'Backend connection',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.sm),
@@ -120,10 +119,15 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
         SizedBox(height: customSpacing.sm),
         TextButton.icon(
           onPressed: () => AppRouter.toAppStatus(context),
-          icon: const Icon(Icons.info_outline, color: Colors.white70),
-          label: const Text(
+          icon: Icon(
+            Icons.info_outline,
+            color: AppColors.white.withValues(alpha: 0.7),
+          ),
+          label: Text(
             'Full connection details',
-            style: TextStyle(color: Colors.white70),
+            style: AppFonts.bodySmall(
+              color: AppColors.white.withValues(alpha: 0.7),
+            ),
           ),
         ),
       ],
@@ -174,17 +178,15 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
               children: [
                 Text(
                   'System Configuration',
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.h5(color: AppColors.white),
+                    fontWeight: AppFonts.black,
                   ),
                 ),
                 SizedBox(height: customSpacing.xs),
                 Text(
                   'Manage system settings and configurations',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey,
-                  ),
+                  style: AppFonts.bodyMedium(color: AppColors.textSecondary),
                 ),
                 SizedBox(height: customSpacing.sm),
                 Container(
@@ -207,10 +209,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                       SizedBox(width: customSpacing.xs),
                       Text(
                         'System healthy',
-                        style: TextStyle(
-                          color: AppColors.success,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
+                        style: AppFonts.copyWith(
+                          AppFonts.caption(color: AppColors.success),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ],
@@ -230,10 +231,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
       children: [
         Text(
           'System Information',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -295,15 +295,17 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: color,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: color),
+              fontWeight: AppFonts.bold,
             ),
           ),
           Text(
             _formatTitle(title),
-            style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontSize: 11,
+            ),
           ),
         ],
       ),
@@ -316,10 +318,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
       children: [
         Text(
           'System Settings',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -378,18 +379,14 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
               children: [
                 Text(
                   _formatTitle(key),
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 Text(
                   _getSettingDescription(key),
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -414,10 +411,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
       children: [
         Text(
           'Quick Actions',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),
@@ -487,16 +483,15 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                 color: color,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: Colors.white, size: 20),
+              child: Icon(icon, color: AppColors.white, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.white),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ),
@@ -672,11 +667,7 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                     '[2024-01-15 10:45:33] INFO: Analysis completed: TEXT_001\n'
                     '[2024-01-15 11:15:44] WARN: High memory usage detected\n'
                     '[2024-01-15 11:16:00] INFO: Memory cleanup completed\n',
-                    style: TextStyle(
-                      fontFamily: 'monospace',
-                      fontSize: 12,
-                      color: Colors.green,
-                    ),
+                    style: AppFonts.code(color: AppColors.success, fontSize: 12),
                   ),
                 ),
               ),
@@ -743,9 +734,9 @@ class _AdminSystemConfigScreenState extends State<AdminSystemConfigScreen>
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
                 ),
-                child: const Text(
+                child: Text(
                   'Restart',
-                  style: TextStyle(color: Colors.white),
+                  style: AppFonts.button(color: AppColors.white),
                 ),
               ),
             ],

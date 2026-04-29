@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 /// Widget that provides sample video URLs for testing
@@ -74,20 +74,19 @@ class VideoSampleLinksWidget extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      const Text(
+                      Text(
                         'Sample Videos',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1E293B),
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.darkSurface),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
-                  const Text(
+                  Text(
                     'Try these sample videos to test the analysis',
-                    style: TextStyle(fontSize: 14, color: Color(0xFF64748B)),
+                    style: AppFonts.bodySmall(color: AppColors.textTertiary),
                   ),
                   const SizedBox(height: 16),
                   ...sampleLinks.map(
@@ -130,7 +129,7 @@ class VideoSampleLinksWidget extends StatelessWidget {
                   child: Center(
                     child: Text(
                       sample['icon']!,
-                      style: const TextStyle(fontSize: 20),
+                      style: AppFonts.h6(),
                     ),
                   ),
                 ),
@@ -141,18 +140,14 @@ class VideoSampleLinksWidget extends StatelessWidget {
                     children: [
                       Text(
                         sample['title']!,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: Color(0xFF1E293B),
-                        ),
+                        style: AppFonts.button(color: AppColors.darkSurface),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         sample['description']!,
-                        style: const TextStyle(
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textTertiary),
                           fontSize: 13,
-                          color: Color(0xFF64748B),
                         ),
                       ),
                     ],

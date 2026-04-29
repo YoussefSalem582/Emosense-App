@@ -60,17 +60,15 @@ class AnalysisHeaderWidget extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: Colors.white,
+                      style: AppFonts.h4(color: Colors.white).copyWith(
                         fontWeight: FontWeight.w800,
                       ),
                     ),
                     Text(
                       description,
-                      style: theme.textTheme.bodyMedium?.copyWith(
+                      style: AppFonts.bodyMedium(
                         color: Colors.white.withValues(alpha: 0.9),
-                        fontWeight: FontWeight.w500,
-                      ),
+                      ).copyWith(fontWeight: FontWeight.w500),
                     ),
                   ],
                 ),
@@ -130,17 +128,14 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+            style: AppFonts.bodySmall(color: Colors.white).copyWith(
+              fontWeight: AppFonts.bold,
             ),
           ),
           Text(
             label,
-            style: TextStyle(
+            style: AppFonts.labelSmall(
               color: Colors.white.withValues(alpha: 0.8),
-              fontSize: 10,
             ),
             textAlign: TextAlign.center,
           ),

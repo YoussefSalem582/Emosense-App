@@ -35,8 +35,7 @@ class AnalysisInputWidget extends StatelessWidget {
         children: [
           Text(
             inputType,
-            style: theme.textTheme.titleLarge?.copyWith(
-              color: AppColors.textPrimary,
+            style: AppFonts.h6(color: AppColors.textPrimary).copyWith(
               fontWeight: FontWeight.w700,
             ),
           ),
@@ -81,10 +80,7 @@ class AnalysisInputWidget extends StatelessWidget {
                       )
                       : Text(
                         analyzeButtonText ?? 'Start Analysis',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: AppFonts.button(color: Colors.white),
                       ),
             ),
           ),
@@ -99,8 +95,7 @@ class AnalysisInputWidget extends StatelessWidget {
       children: [
         Text(
           'Quick Actions',
-          style: theme.textTheme.titleSmall?.copyWith(
-            color: AppColors.textSecondary,
+          style: AppFonts.h6(color: AppColors.textSecondary).copyWith(
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -113,7 +108,7 @@ class AnalysisInputWidget extends StatelessWidget {
                 return ActionChip(
                   label: Text(
                     action,
-                    style: TextStyle(color: AppColors.primary, fontSize: 12),
+                    style: AppFonts.labelMedium(color: AppColors.primary),
                   ),
                   backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                   onPressed: () => onQuickAction?.call(action),

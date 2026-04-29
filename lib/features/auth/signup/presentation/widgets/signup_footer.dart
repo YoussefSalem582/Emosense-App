@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/widgets/auth.dart';
 
 /// Signup footer widget with terms and navigation
@@ -43,8 +45,8 @@ class SignupFooter extends StatelessWidget {
                   : Icons.person_add,
           gradientColors:
               selectedRole == 'Admin'
-                  ? [const Color(0xFF764BA2), const Color(0xFF667EEA)]
-                  : [const Color(0xFF667EEA), const Color(0xFF764BA2)],
+                  ? [AppColors.accentDark, AppColors.primary]
+                  : [AppColors.primary, AppColors.accentDark],
         ),
         SizedBox(height: isSmallScreen ? 20 : 25),
         DividerWidget(animation: formAnimation),
@@ -68,7 +70,7 @@ class SignupFooter extends StatelessWidget {
           onChanged: (value) => onAgreeToTermsChanged(value ?? false),
           fillColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.selected)) {
-              return const Color(0xFF667EEA);
+              return AppColors.primary;
             }
             return null;
           }),
@@ -76,22 +78,24 @@ class SignupFooter extends StatelessWidget {
         Expanded(
           child: RichText(
             text: TextSpan(
-              style: const TextStyle(fontSize: 14, color: Colors.white70),
+              style: AppFonts.bodySmall(
+                color: Colors.white.withValues(alpha: 0.7),
+              ),
               children: [
                 const TextSpan(text: 'I agree to the '),
                 TextSpan(
                   text: 'Terms of Service',
-                  style: const TextStyle(
-                    color: Color(0xFF667EEA),
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.primary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 const TextSpan(text: ' and '),
                 TextSpan(
                   text: 'Privacy Policy',
-                  style: const TextStyle(
-                    color: Color(0xFF667EEA),
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.primary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],

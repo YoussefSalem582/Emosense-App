@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// Auth choice buttons widget
 class AuthChoiceButtons extends StatelessWidget {
   final Animation<double> cardScaleAnimation;
@@ -42,7 +44,7 @@ class AuthChoiceButtons extends StatelessWidget {
                   title: 'Sign In',
                   subtitle: 'Access your existing account',
                   icon: Icons.login,
-                  color: Colors.blue.shade600,
+                  color: AppColors.primary,
                   onPressed: onLoginPressed,
                 ),
 
@@ -56,10 +58,9 @@ class AuthChoiceButtons extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
                         'OR',
-                        style: TextStyle(
-                          color: Colors.grey.shade600,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: AppFonts.labelMedium(
+                          color: AppColors.gray600,
+                        ).copyWith(fontWeight: AppFonts.medium),
                       ),
                     ),
                     Expanded(child: Divider(color: Colors.grey.shade300)),
@@ -73,7 +74,7 @@ class AuthChoiceButtons extends StatelessWidget {
                   title: 'Sign Up',
                   subtitle: 'Create a new account',
                   icon: Icons.person_add,
-                  color: Colors.purple.shade600,
+                  color: AppColors.accentDark,
                   onPressed: onSignUpPressed,
                 ),
               ],
@@ -122,15 +123,14 @@ class AuthChoiceButtons extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodyLarge(color: Colors.white),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
+                    style: AppFonts.bodySmall(
                       color: Colors.white.withValues(alpha: 0.8),
                     ),
                   ),

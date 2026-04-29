@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'onboarding.dart';
 import 'package:emosense_mobile/features/auth/onboarding/domain/entities/onboarding_page_data.dart';
 
@@ -62,8 +63,8 @@ class OnboardingContent extends StatelessWidget {
           child: OnboardingPageIndicator(
             currentPage: currentPage,
             totalPages: totalPages,
-            activeColor: Colors.white,
-            inactiveColor: Colors.white.withValues(alpha: 0.4),
+            activeColor: AppColors.white,
+            inactiveColor: AppColors.white.withValues(alpha: 0.4),
           ),
         ),
 

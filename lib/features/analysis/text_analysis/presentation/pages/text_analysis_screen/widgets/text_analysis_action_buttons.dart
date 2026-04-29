@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for action buttons (analyze, clear, etc.)
 class TextAnalysisActionButtons extends StatelessWidget {
@@ -23,7 +24,7 @@ class TextAnalysisActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -39,14 +40,13 @@ class TextAnalysisActionButtons extends StatelessWidget {
           children: [
             Row(
               children: [
-                // Primary Analyze Button
                 Expanded(
                   flex: 2,
                   child: ElevatedButton(
                     onPressed: hasText && !isAnalyzing ? onAnalyze : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF3B82F6),
-                      foregroundColor: Colors.white,
+                      backgroundColor: AppColors.primaryLight,
+                      foregroundColor: AppColors.white,
                       elevation: 0,
                       shadowColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
@@ -65,47 +65,40 @@ class TextAnalysisActionButtons extends StatelessWidget {
                                   child: CircularProgressIndicator(
                                     strokeWidth: 2,
                                     valueColor: AlwaysStoppedAnimation<Color>(
-                                      Colors.white,
+                                      AppColors.white,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                const Text(
+                                Text(
                                   'Analyzing...',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: AppFonts.button(color: AppColors.white),
                                 ),
                               ],
                             )
                             : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(Icons.analytics, size: 20),
+                                Icon(Icons.analytics, size: 20, color: AppColors.white),
                                 const SizedBox(width: 8),
-                                const Text(
+                                Text(
                                   'Analyze Text',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: AppFonts.button(color: AppColors.white),
                                 ),
                               ],
                             ),
                   ),
                 ),
                 const SizedBox(width: 12),
-                // Clear Button
                 Expanded(
                   child: OutlinedButton(
                     onPressed: hasText && !isAnalyzing ? onClear : null,
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(
-                        color: Color(0xFFEF4444),
+                        color: AppColors.error,
                         width: 1.5,
                       ),
-                      foregroundColor: const Color(0xFFEF4444),
+                      foregroundColor: AppColors.error,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -116,11 +109,11 @@ class TextAnalysisActionButtons extends StatelessWidget {
                       children: [
                         const Icon(Icons.clear, size: 18),
                         const SizedBox(width: 6),
-                        const Text(
+                        Text(
                           'Clear',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.copyWith(
+                            AppFonts.button(color: AppColors.error),
+                            fontSize: AppFonts.sizeM,
                           ),
                         ),
                       ],
@@ -129,7 +122,6 @@ class TextAnalysisActionButtons extends StatelessWidget {
                 ),
               ],
             ),
-            // Import from URL button (conditional)
             if (onImportFromUrl != null) ...[
               const SizedBox(height: 12),
               SizedBox(
@@ -138,10 +130,10 @@ class TextAnalysisActionButtons extends StatelessWidget {
                   onPressed: !isAnalyzing ? onImportFromUrl : null,
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(
-                      color: Color(0xFF10B981),
+                      color: AppColors.success,
                       width: 1.5,
                     ),
-                    foregroundColor: const Color(0xFF10B981),
+                    foregroundColor: AppColors.success,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -154,9 +146,9 @@ class TextAnalysisActionButtons extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         _getImportButtonText(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                        style: AppFonts.copyWith(
+                          AppFonts.button(color: AppColors.success),
+                          fontSize: AppFonts.sizeM,
                         ),
                       ),
                     ],
@@ -164,19 +156,18 @@ class TextAnalysisActionButtons extends StatelessWidget {
                 ),
               ),
             ],
-            // Action Description
             const SizedBox(height: 12),
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: const Color(0xFF3B82F6).withValues(alpha: 0.05),
+                color: AppColors.primaryLight.withValues(alpha: 0.05),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.info_outline,
-                    color: Color(0xFF3B82F6),
+                    color: AppColors.primaryLight,
                     size: 16,
                   ),
                   const SizedBox(width: 8),
@@ -185,10 +176,7 @@ class TextAnalysisActionButtons extends StatelessWidget {
                       hasText
                           ? 'Ready to analyze your ${selectedSourceType.toLowerCase()}'
                           : 'Enter text or import from URL to begin analysis',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Color(0xFF3B82F6),
-                      ),
+                      style: AppFonts.caption(color: AppColors.primaryLight),
                     ),
                   ),
                 ],

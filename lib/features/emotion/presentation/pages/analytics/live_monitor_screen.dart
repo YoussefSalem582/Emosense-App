@@ -86,7 +86,7 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
         gradient: AppColors.primaryGradient,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
+            color: AppColors.textPrimary.withValues(alpha: 0.08),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -100,7 +100,7 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: AppColors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
@@ -115,12 +115,11 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    const Text(
+                    Text(
                       'LIVE',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600,
+                      style: AppFonts.copyWith(
+                        AppFonts.labelMedium(color: AppColors.white),
+                        fontWeight: AppFonts.semiBold,
                       ),
                     ),
                   ],
@@ -129,28 +128,25 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
               const Spacer(),
               Text(
                 'Last updated: ${DateTime.now().toString().substring(11, 19)}',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.8),
-                  fontSize: 12,
+                style: AppFonts.caption(
+                  color: AppColors.white.withValues(alpha: 0.8),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Real-time Customer Monitoring',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
+            style: AppFonts.copyWith(
+              AppFonts.h5(color: AppColors.white),
+              fontWeight: AppFonts.bold,
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'Monitor customer interactions and sentiment in real-time',
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.8),
-              fontSize: 14,
+            style: AppFonts.bodySmall(
+              color: AppColors.white.withValues(alpha: 0.8),
             ),
           ),
           const SizedBox(height: 16),
@@ -185,24 +181,25 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.symmetric(horizontal: 4),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: AppColors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Column(
         children: [
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.white),
+              fontWeight: AppFonts.bold,
             ),
           ),
           const SizedBox(height: 4),
           Text(
             label,
-            style: TextStyle(
-              color: Colors.white.withValues(alpha: 0.8),
+            style: AppFonts.copyWith(
+              AppFonts.caption(
+                color: AppColors.white.withValues(alpha: 0.8),
+              ),
               fontSize: 11,
             ),
             textAlign: TextAlign.center,
@@ -215,15 +212,14 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
   Widget _buildFilterBar() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-      color: Colors.white,
+      color: AppColors.surface,
       child: Row(
         children: [
-          const Text(
+          Text(
             'Filter:',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textSecondary),
+              fontWeight: AppFonts.medium,
             ),
           ),
           const SizedBox(width: 12),
@@ -248,14 +244,17 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                           selectedColor: AppColors.accent.withValues(
                             alpha: 0.1,
                           ),
-                          labelStyle: TextStyle(
-                            color:
-                                isSelected
-                                    ? AppColors.accent
-                                    : AppColors.textSecondary,
+                          labelStyle: AppFonts.copyWith(
+                            AppFonts.labelMedium(
+                              color:
+                                  isSelected
+                                      ? AppColors.accent
+                                      : AppColors.textSecondary,
+                            ),
                             fontWeight:
-                                isSelected ? FontWeight.w600 : FontWeight.w500,
-                            fontSize: 12,
+                                isSelected
+                                    ? AppFonts.semiBold
+                                    : AppFonts.medium,
                           ),
                           side: BorderSide(
                             color:
@@ -313,30 +312,28 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.warning_rounded, color: Colors.white, size: 24),
+              const Icon(Icons.warning_rounded, color: AppColors.white, size: 24),
               const SizedBox(width: 12),
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Urgent Alerts',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.white),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
+                  color: AppColors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
+                child: Text(
                   '3',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.white),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
               ),
@@ -377,19 +374,18 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.1),
+        color: AppColors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+        border: Border.all(color: AppColors.white.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             message,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.white),
+              fontWeight: AppFonts.medium,
             ),
           ),
           const SizedBox(height: 8),
@@ -397,33 +393,30 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
             children: [
               Text(
                 'Agent: $agent',
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.8),
-                  fontSize: 12,
+                style: AppFonts.caption(
+                  color: AppColors.white.withValues(alpha: 0.8),
                 ),
               ),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: AppColors.surface,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
                   priority,
-                  style: const TextStyle(
-                    color: AppColors.error,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: AppColors.error),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 time,
-                style: TextStyle(
-                  color: Colors.white.withValues(alpha: 0.8),
-                  fontSize: 12,
+                style: AppFonts.caption(
+                  color: AppColors.white.withValues(alpha: 0.8),
                 ),
               ),
             ],
@@ -442,13 +435,12 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Real-time Customer Feedback',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -460,7 +452,7 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                 ),
                 child: const Icon(
                   Icons.fiber_manual_record,
-                  color: Colors.white,
+                  color: AppColors.white,
                   size: 8,
                 ),
               ),
@@ -532,29 +524,22 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
               children: [
                 Text(
                   feedback,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 4),
                 Row(
                   children: [
                     Text(
                       channel,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textSecondary,
+                      style: AppFonts.copyWith(
+                        AppFonts.labelMedium(color: AppColors.textSecondary),
+                        fontWeight: AppFonts.medium,
                       ),
                     ),
                     const Spacer(),
                     Text(
                       time,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textLight,
-                      ),
+                      style: AppFonts.caption(color: AppColors.textLight),
                     ),
                   ],
                 ),
@@ -573,12 +558,11 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Active Customer Sessions',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -638,10 +622,9 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
             backgroundColor: AppColors.accent,
             child: Text(
               agent.substring(0, 1),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.white),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),
@@ -652,18 +635,14 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
               children: [
                 Text(
                   agent,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.medium,
                   ),
                 ),
                 Text(
                   issue,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -679,20 +658,16 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                 ),
                 child: Text(
                   status,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: statusColor,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: statusColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
               const SizedBox(height: 4),
               Text(
                 duration,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textLight,
-                ),
+                style: AppFonts.caption(color: AppColors.textLight),
               ),
             ],
           ),
@@ -710,13 +685,12 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Escalation Queue',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -726,12 +700,11 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                   color: AppColors.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Text(
+                child: Text(
                   '2 pending',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.error,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelMedium(color: AppColors.error),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -773,10 +746,9 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textPrimary),
+              fontWeight: AppFonts.medium,
             ),
           ),
           const SizedBox(height: 8),
@@ -784,10 +756,7 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
             children: [
               Text(
                 caseId,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: AppFonts.caption(color: AppColors.textSecondary),
               ),
               const Spacer(),
               Container(
@@ -798,20 +767,16 @@ class _LiveMonitorScreenState extends State<LiveMonitorScreen> {
                 ),
                 child: Text(
                   requirement,
-                  style: const TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.warning,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: AppColors.warning),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 time,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textLight,
-                ),
+                style: AppFonts.caption(color: AppColors.textLight),
               ),
             ],
           ),

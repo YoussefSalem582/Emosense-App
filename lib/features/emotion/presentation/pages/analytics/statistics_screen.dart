@@ -60,21 +60,22 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Statistics',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  style: AppFonts.copyWith(
+                    AppFonts.h5(color: AppColors.white),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 Text(
                   'Detailed insights and trends',
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
+                  style: AppFonts.bodySmall(
+                    color: AppColors.white.withValues(alpha: 0.7),
+                  ),
                 ),
               ],
             ),
@@ -84,7 +85,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                 () => context.read<EmotionBloc>().add(
                   const EmotionLoadSystemMetricsRequested(),
                 ),
-            icon: const Icon(Icons.refresh, color: Colors.white, size: 24),
+            icon: Icon(Icons.refresh, color: AppColors.white, size: 24),
             tooltip: 'Refresh data',
           ),
         ],
@@ -97,7 +98,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       margin: const EdgeInsets.symmetric(horizontal: 24),
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.2),
+        color: AppColors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(25),
       ),
       child: Row(
@@ -112,17 +113,21 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     decoration: BoxDecoration(
                       color:
                           isSelected
-                              ? Colors.white.withValues(alpha: 0.3)
+                              ? AppColors.white.withValues(alpha: 0.3)
                               : Colors.transparent,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       period,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : Colors.white70,
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(
+                          color: isSelected
+                              ? AppColors.white
+                              : AppColors.white.withValues(alpha: 0.7),
+                        ),
                         fontWeight:
-                            isSelected ? FontWeight.bold : FontWeight.normal,
+                            isSelected ? AppFonts.bold : AppFonts.regular,
                       ),
                     ),
                   ),
@@ -137,17 +142,17 @@ class _StatisticsScreenState extends State<StatisticsScreen>
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.2),
+        color: AppColors.white.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(25),
       ),
       child: TabBar(
         controller: _tabController,
         indicator: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.3),
+          color: AppColors.white.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(25),
         ),
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white70,
+        labelColor: AppColors.white,
+        unselectedLabelColor: AppColors.white.withValues(alpha: 0.7),
         tabs: const [
           Tab(icon: Icon(Icons.show_chart), text: 'Trends'),
           Tab(icon: Icon(Icons.pie_chart), text: 'Distribution'),
@@ -248,11 +253,11 @@ class _StatisticsScreenState extends State<StatisticsScreen>
           color: AppColors.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
             'Trend Chart\n(Interactive chart coming soon)',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+            style: AppFonts.bodyMedium(color: AppColors.textSecondary),
           ),
         ),
       ),
@@ -282,10 +287,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               color: AppColors.success.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Confidence Chart',
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -317,10 +322,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               color: AppColors.accent.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Usage Heatmap',
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -353,10 +358,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       );
                     }).toList(),
               )
-              : const Center(
+              : Center(
                 child: Text(
                   'No emotion data available',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ),
     );
@@ -386,10 +391,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                       );
                     }).toList(),
               )
-              : const Center(
+              : Center(
                 child: Text(
                   'No sentiment data available',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ),
     );
@@ -452,10 +457,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   ),
                 ],
               )
-              : const Center(
+              : Center(
                 child: Text(
                   'Loading system metrics...',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ),
     );
@@ -504,10 +509,10 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                   ),
                 ],
               )
-              : const Center(
+              : Center(
                 child: Text(
                   'Loading API metrics...',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ),
     );
@@ -540,11 +545,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
               children: [
                 Text(
                   'Model Training Data',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.button(color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -603,18 +604,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.textPrimary,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(color: AppColors.textPrimary),
+                          fontWeight: AppFonts.bold,
                         ),
                       ),
                       Text(
                         subtitle,
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textSecondary,
-                        ),
+                        style: AppFonts.bodySmall(color: AppColors.textSecondary),
                       ),
                     ],
                   ),
@@ -634,16 +631,15 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       children: [
         Text(
           value,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: color,
+          style: AppFonts.copyWith(
+            AppFonts.bodyLarge(color: color),
+            fontWeight: AppFonts.bold,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
       ],
     );
@@ -664,18 +660,16 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             children: [
               Text(
                 label.toUpperCase(),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimary,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
               Text(
                 '$count (${percentage.toStringAsFixed(1)}%)',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: color,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: color),
+                  fontWeight: AppFonts.bold,
                 ),
               ),
             ],
@@ -702,7 +696,7 @@ class _StatisticsScreenState extends State<StatisticsScreen>
             width: 120,
             child: Text(
               timeSlot,
-              style: TextStyle(fontSize: 14, color: AppColors.textPrimary),
+              style: AppFonts.bodySmall(color: AppColors.textPrimary),
             ),
           ),
           Expanded(
@@ -715,10 +709,9 @@ class _StatisticsScreenState extends State<StatisticsScreen>
           const SizedBox(width: 8),
           Text(
             count.toString(),
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: color,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: color),
+              fontWeight: AppFonts.bold,
             ),
           ),
         ],
@@ -731,15 +724,14 @@ class _StatisticsScreenState extends State<StatisticsScreen>
       children: [
         Text(
           value,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: AppColors.warning,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.warning),
+            fontWeight: AppFonts.bold,
           ),
         ),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
       ],
     );

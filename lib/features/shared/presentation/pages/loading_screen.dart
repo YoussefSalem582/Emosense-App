@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A reusable loading screen with animated indicators
 class LoadingScreen extends StatefulWidget {
@@ -116,10 +117,9 @@ class _LoadingScreenState extends State<LoadingScreen>
         // Loading message
         Text(
           widget.message,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.medium,
           ),
           textAlign: TextAlign.center,
         ),
@@ -144,10 +144,7 @@ class _LoadingScreenState extends State<LoadingScreen>
             const SizedBox(height: 8),
             Text(
               '${(widget.progress! * 100).toInt()}%',
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
+              style: AppFonts.bodyXS(color: AppColors.textSecondary),
             ),
           ],
         ],
@@ -158,9 +155,9 @@ class _LoadingScreenState extends State<LoadingScreen>
         if (widget.onCancel != null) ...[
           TextButton(
             onPressed: widget.onCancel,
-            child: const Text(
+            child: Text(
               'Cancel',
-              style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+              style: AppFonts.bodySmall(color: AppColors.textSecondary),
             ),
           ),
         ],

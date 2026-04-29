@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class WelcomeTextWidget extends StatelessWidget {
   final Animation<double> animation;
   final String title;
@@ -27,10 +29,10 @@ class WelcomeTextWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: TextStyle(
+                  style: AppFonts.copyWith(
+                    AppFonts.h4(color: Colors.white),
                     fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontWeight: AppFonts.bold,
                     shadows: [
                       Shadow(
                         color: Colors.black.withValues(alpha: 0.3),
@@ -44,10 +46,11 @@ class WelcomeTextWidget extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   subtitle,
-                  style: TextStyle(
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(
+                      color: Colors.white.withValues(alpha: 0.9),
+                    ),
                     fontSize: 15,
-                    color: Colors.white.withValues(alpha: 0.9),
-                    fontWeight: FontWeight.w400,
                   ),
                   textAlign: textAlign,
                 ),

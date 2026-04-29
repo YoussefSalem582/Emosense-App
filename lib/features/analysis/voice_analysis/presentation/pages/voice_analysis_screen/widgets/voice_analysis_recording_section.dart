@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for live recording section
 class VoiceAnalysisRecordingSection extends StatelessWidget {
@@ -16,7 +17,7 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -36,22 +37,21 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEF4444).withValues(alpha: 0.1),
+                    color: AppColors.error.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.mic,
-                    color: Color(0xFFEF4444),
+                    color: AppColors.error,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Live Recording',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -63,10 +63,10 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.all(40),
               decoration: BoxDecoration(
-                color: const Color(0xFFF8FAFC),
+                color: AppColors.surfaceVariant,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: const Color(0xFFEF4444).withValues(alpha: 0.3),
+                  color: AppColors.error.withValues(alpha: 0.3),
                 ),
               ),
               child: Column(
@@ -83,10 +83,8 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                       decoration: BoxDecoration(
                         color:
                             isRecording
-                                ? const Color(0xFFEF4444)
-                                : const Color(
-                                  0xFFEF4444,
-                                ).withValues(alpha: 0.1),
+                                ? AppColors.error
+                                : AppColors.error.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -94,21 +92,19 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                         size: 40,
                         color:
                             isRecording
-                                ? Colors.white
-                                : const Color(0xFFEF4444),
+                                ? AppColors.white
+                                : AppColors.error,
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   Text(
                     isRecording ? 'Recording... 00:42' : 'Ready to Record',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.button(
                       color:
                           isRecording
-                              ? const Color(0xFFEF4444)
-                              : const Color(0xFF1E293B),
+                              ? AppColors.error
+                              : AppColors.darkSurface,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -116,10 +112,7 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                     isRecording
                         ? 'Tap to stop recording'
                         : 'Tap the microphone to start recording',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF64748B),
-                    ),
+                    style: AppFonts.bodySmall(color: AppColors.textTertiary),
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
@@ -130,9 +123,9 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
                           isRecording
-                              ? const Color(0xFF64748B)
-                              : const Color(0xFFEF4444),
-                      foregroundColor: Colors.white,
+                              ? AppColors.textTertiary
+                              : AppColors.error,
+                      foregroundColor: AppColors.white,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 32,
                         vertical: 12,
@@ -143,6 +136,7 @@ class VoiceAnalysisRecordingSection extends StatelessWidget {
                     ),
                     child: Text(
                       isRecording ? 'Stop Recording' : 'Start Recording',
+                      style: AppFonts.button(color: AppColors.white),
                     ),
                   ),
                 ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for displaying analysis results
 class TextAnalysisResultsDisplay extends StatelessWidget {
@@ -21,7 +22,7 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -41,22 +42,21 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                    color: AppColors.success.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.analytics,
-                    color: Color(0xFF10B981),
+                    color: AppColors.success,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Analysis Results',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 const Spacer(),
@@ -66,16 +66,12 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                    color: AppColors.primaryLight.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Text(
                     selectedAnalysisType,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF3B82F6),
-                    ),
+                    style: AppFonts.labelMedium(color: AppColors.primaryLight),
                   ),
                 ),
               ],
@@ -107,15 +103,15 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
 
     switch (sentiment.toLowerCase()) {
       case 'positive':
-        sentimentColor = const Color(0xFF10B981);
+        sentimentColor = AppColors.success;
         sentimentIcon = Icons.sentiment_very_satisfied;
         break;
       case 'negative':
-        sentimentColor = const Color(0xFFEF4444);
+        sentimentColor = AppColors.error;
         sentimentIcon = Icons.sentiment_very_dissatisfied;
         break;
       default:
-        sentimentColor = const Color(0xFFF59E0B);
+        sentimentColor = AppColors.warning;
         sentimentIcon = Icons.sentiment_neutral;
     }
 
@@ -148,25 +144,20 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
               children: [
                 Text(
                   'Overall Sentiment',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: sentimentColor,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: AppFonts.labelLarge(color: sentimentColor),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   sentiment.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: sentimentColor,
+                  style: AppFonts.copyWith(
+                    AppFonts.h5(color: sentimentColor),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   'Confidence: ${(confidence * 100).toStringAsFixed(1)}%',
-                  style: TextStyle(fontSize: 12, color: sentimentColor),
+                  style: AppFonts.caption(color: sentimentColor),
                 ),
               ],
             ),
@@ -185,13 +176,9 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (emotions.isNotEmpty) ...[
-          const Text(
+          Text(
             'Emotion Breakdown',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1E293B),
-            ),
+            style: AppFonts.button(color: AppColors.darkSurface),
           ),
           const SizedBox(height: 12),
           ...emotions.entries.map(
@@ -201,13 +188,9 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
           const SizedBox(height: 20),
         ],
         if (topics.isNotEmpty) ...[
-          const Text(
+          Text(
             'Key Topics',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1E293B),
-            ),
+            style: AppFonts.button(color: AppColors.darkSurface),
           ),
           const SizedBox(height: 12),
           Wrap(
@@ -225,15 +208,15 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
 
   Widget _buildEmotionBar(String emotion, double value) {
     final colors = {
-      'joy': const Color(0xFF10B981),
-      'anger': const Color(0xFFEF4444),
-      'sadness': const Color(0xFF3B82F6),
-      'fear': const Color(0xFF8B5CF6),
-      'surprise': const Color(0xFFF59E0B),
-      'disgust': const Color(0xFF6B7280),
+      'joy': AppColors.success,
+      'anger': AppColors.error,
+      'sadness': AppColors.primaryLight,
+      'fear': AppColors.accent,
+      'surprise': AppColors.warning,
+      'disgust': AppColors.textSecondary,
     };
 
-    final color = colors[emotion.toLowerCase()] ?? const Color(0xFF64748B);
+    final color = colors[emotion.toLowerCase()] ?? AppColors.textTertiary;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -245,18 +228,13 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
             children: [
               Text(
                 emotion.capitalize(),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Color(0xFF1E293B),
-                ),
+                style: AppFonts.labelLarge(color: AppColors.darkSurface),
               ),
               Text(
                 '${(value * 100).toStringAsFixed(1)}%',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: color,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: color),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -277,19 +255,15 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+        color: AppColors.primaryLight.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: const Color(0xFF3B82F6).withValues(alpha: 0.3),
+          color: AppColors.primaryLight.withValues(alpha: 0.3),
         ),
       ),
       child: Text(
         topic,
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF3B82F6),
-        ),
+        style: AppFonts.labelMedium(color: AppColors.primaryLight),
       ),
     );
   }
@@ -306,13 +280,9 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Key Insights',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF1E293B),
-          ),
+          style: AppFonts.button(color: AppColors.darkSurface),
         ),
         const SizedBox(height: 12),
         ...insights.map(
@@ -320,25 +290,25 @@ class TextAnalysisResultsDisplay extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFFF8FAFC),
+              color: AppColors.surfaceVariant,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.border),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
+                Icon(
                   Icons.lightbulb_outline,
-                  color: Color(0xFF3B82F6),
+                  color: AppColors.primaryLight,
                   size: 16,
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     insight.toString(),
-                    style: const TextStyle(
+                    style: AppFonts.copyWith(
+                      AppFonts.bodySmall(color: AppColors.textSecondary),
                       fontSize: 13,
-                      color: Color(0xFF475569),
                     ),
                   ),
                 ),

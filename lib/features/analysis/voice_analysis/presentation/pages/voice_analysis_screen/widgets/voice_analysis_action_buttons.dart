@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 /// Widget for action buttons
@@ -27,10 +28,10 @@ class VoiceAnalysisActionButtons extends StatelessWidget {
             child: ElevatedButton(
               onPressed: hasContent && !isAnalyzing ? onAnalyze : null,
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF3B82F6),
-                foregroundColor: Colors.white,
-                disabledBackgroundColor: const Color(0xFFE2E8F0),
-                disabledForegroundColor: const Color(0xFF64748B),
+                backgroundColor: AppColors.primaryLight,
+                foregroundColor: AppColors.white,
+                disabledBackgroundColor: AppColors.border,
+                disabledForegroundColor: AppColors.textTertiary,
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -50,22 +51,16 @@ class VoiceAnalysisActionButtons extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    const Text(
+                    Text(
                       'Analyzing Audio...',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: AppFonts.button(color: AppColors.white),
                     ),
                   ] else ...[
                     const Icon(Icons.analytics, size: 20),
                     const SizedBox(width: 12),
-                    const Text(
+                    Text(
                       'Analyze Voice',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: AppFonts.button(color: AppColors.white),
                     ),
                   ],
                 ],
@@ -76,22 +71,22 @@ class VoiceAnalysisActionButtons extends StatelessWidget {
           OutlinedButton(
             onPressed: hasContent && !isAnalyzing ? onClear : null,
             style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF64748B),
-              side: const BorderSide(color: Color(0xFFE2E8F0)),
-              disabledForegroundColor: const Color(0xFFE2E8F0),
+              foregroundColor: AppColors.textTertiary,
+              side: const BorderSide(color: AppColors.border),
+              disabledForegroundColor: AppColors.border,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.clear, size: 18),
-                SizedBox(width: 8),
+                const Icon(Icons.clear, size: 18),
+                const SizedBox(width: 8),
                 Text(
                   'Clear',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  style: AppFonts.labelLarge(color: AppColors.textTertiary),
                 ),
               ],
             ),

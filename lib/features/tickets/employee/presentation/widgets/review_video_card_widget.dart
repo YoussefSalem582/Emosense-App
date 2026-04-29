@@ -42,15 +42,14 @@ class ReviewVideoCardWidget extends StatelessWidget {
                   vertical: spacing.xs,
                 ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6366F1).withValues(alpha: 0.1),
+                  color: AppColors.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
                   video['id'],
-                  style: const TextStyle(
-                    color: Color(0xFF6366F1),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: AppColors.primary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -78,10 +77,9 @@ class ReviewVideoCardWidget extends StatelessWidget {
                     SizedBox(width: spacing.xs),
                     Text(
                       video['priority'],
-                      style: TextStyle(
-                        color: priorityColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 12,
+                      style: AppFonts.copyWith(
+                        AppFonts.caption(color: priorityColor),
+                        fontWeight: AppFonts.semiBold,
                       ),
                     ),
                   ],
@@ -102,10 +100,9 @@ class ReviewVideoCardWidget extends StatelessWidget {
                 ),
                 child: Text(
                   video['status'],
-                  style: TextStyle(
-                    color: statusColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: statusColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -117,10 +114,9 @@ class ReviewVideoCardWidget extends StatelessWidget {
           // Video Title and Channel
           Text(
             video['title'],
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w700,
-              color: Colors.black87,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.textPrimary),
+              fontWeight: AppFonts.bold,
             ),
           ),
 
@@ -129,14 +125,18 @@ class ReviewVideoCardWidget extends StatelessWidget {
           // Channel Info
           Row(
             children: [
-              Icon(Icons.youtube_searched_for, size: 16, color: Colors.red),
+              Icon(
+                Icons.youtube_searched_for,
+                size: 16,
+                color: AppColors.error,
+              ),
               SizedBox(width: spacing.xs),
               Text(
                 video['channel'],
-                style: TextStyle(
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textSecondary),
+                  fontWeight: AppFonts.medium,
                   fontSize: 13,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
                 ),
               ),
             ],
@@ -147,11 +147,7 @@ class ReviewVideoCardWidget extends StatelessWidget {
           // Description
           Text(
             video['description'],
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-              height: 1.4,
-            ),
+            style: AppFonts.bodySmall(color: AppColors.textSecondary),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -162,35 +158,45 @@ class ReviewVideoCardWidget extends StatelessWidget {
           Row(
             children: [
               // Reviewer Name
-              Icon(Icons.person_outline, size: 16, color: Colors.grey[500]),
+              Icon(
+                Icons.person_outline,
+                size: 16,
+                color: AppColors.textTertiary,
+              ),
               SizedBox(width: spacing.xs),
               Text(
                 video['reviewer'],
-                style: TextStyle(
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textSecondary),
+                  fontWeight: AppFonts.medium,
                   fontSize: 13,
-                  color: Colors.grey[600],
-                  fontWeight: FontWeight.w500,
                 ),
               ),
 
               SizedBox(width: spacing.md),
 
               // Time
-              Icon(Icons.schedule, size: 16, color: Colors.grey[500]),
+              Icon(Icons.schedule, size: 16, color: AppColors.textTertiary),
               SizedBox(width: spacing.xs),
               Text(
                 video['created'],
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textSecondary),
+                  fontSize: 13,
+                ),
               ),
 
               SizedBox(width: spacing.md),
 
               // Views
-              Icon(Icons.visibility, size: 16, color: Colors.grey[500]),
+              Icon(Icons.visibility, size: 16, color: AppColors.textTertiary),
               SizedBox(width: spacing.xs),
               Text(
                 video['views'],
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textSecondary),
+                  fontSize: 13,
+                ),
               ),
 
               const Spacer(),
@@ -201,12 +207,12 @@ class ReviewVideoCardWidget extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(spacing.sm),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF6366F1).withValues(alpha: 0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: const Icon(
                     Icons.play_arrow,
-                    color: Color(0xFF6366F1),
+                    color: AppColors.primary,
                     size: 14,
                   ),
                 ),

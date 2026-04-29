@@ -24,12 +24,11 @@ class AdminDialogs {
                     color: AppColors.error,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: const Text(
+                  child: Text(
                     '2',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                    style: AppFonts.copyWith(
+                      AppFonts.caption(color: AppColors.white),
+                      fontWeight: AppFonts.bold,
                     ),
                   ),
                 ),
@@ -99,7 +98,7 @@ class AdminDialogs {
                 label: const Text('Close'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppColors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -148,17 +147,17 @@ class AdminDialogs {
                   'Manage security settings and access controls',
                 ),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   'Emergency Support',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.error),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Critical Issues: emergency@graphsmile.com\nPhone: +1 (555) 911-ADMIN\nOn-call: 24/7 availability',
-                  style: TextStyle(color: AppColors.textSecondary),
+                  style: AppFonts.bodySmall(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -228,11 +227,11 @@ class AdminDialogs {
                   Icons.check_circle,
                 ),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   'Overall Status: OPERATIONAL',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyMedium(color: AppColors.success),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
               ],
@@ -291,10 +290,10 @@ class AdminDialogs {
                     Expanded(
                       child: Text(
                         title,
-                        style: TextStyle(
+                        style: AppFonts.copyWith(
+                          AppFonts.bodySmall(color: AppColors.textPrimary),
                           fontWeight:
-                              isUnread ? FontWeight.w600 : FontWeight.w500,
-                          fontSize: 14,
+                              isUnread ? AppFonts.semiBold : AppFonts.medium,
                         ),
                       ),
                     ),
@@ -308,12 +307,11 @@ class AdminDialogs {
                           color: AppColors.error,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Text(
+                        child: Text(
                           'URGENT',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
+                          style: AppFonts.copyWith(
+                            AppFonts.overline(color: AppColors.white),
+                            fontWeight: AppFonts.bold,
                           ),
                         ),
                       ),
@@ -331,19 +329,20 @@ class AdminDialogs {
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 12,
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(color: AppColors.textSecondary),
                     height: 1.3,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   time,
-                  style: TextStyle(
-                    color: AppColors.textSecondary.withValues(alpha: 0.7),
+                  style: AppFonts.copyWith(
+                    AppFonts.caption(
+                      color:
+                          AppColors.textSecondary.withValues(alpha: 0.7),
+                    ),
                     fontSize: 11,
-                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -360,9 +359,9 @@ class AdminDialogs {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+          Text(title, style: AppFonts.copyWith(AppFonts.bodySmall(), fontWeight: AppFonts.semiBold)),
           const SizedBox(height: 4),
-          Text(description, style: TextStyle(color: AppColors.textSecondary)),
+          Text(description, style: AppFonts.bodySmall(color: AppColors.textSecondary)),
         ],
       ),
     );
@@ -390,10 +389,9 @@ class AdminDialogs {
             ),
             child: Text(
               status,
-              style: TextStyle(
-                color: color,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
+              style: AppFonts.copyWith(
+                AppFonts.caption(color: color),
+                fontWeight: AppFonts.medium,
               ),
             ),
           ),

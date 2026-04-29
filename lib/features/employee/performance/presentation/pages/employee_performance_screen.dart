@@ -62,7 +62,8 @@ class _EmployeePerformanceScreenState extends State<EmployeePerformanceScreen> {
                     Text(
                       state.message,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: AppColors.textSecondary),
+                      style:
+                          AppFonts.bodyMedium(color: AppColors.textSecondary),
                     ),
                     const SizedBox(height: 16),
                     FilledButton(
@@ -143,9 +144,9 @@ class _SummaryCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               'Rank #${data.ranking} of ${data.totalEmployees}',
-              style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(color: AppColors.textPrimary),
+                fontWeight: AppFonts.medium,
               ),
             ),
             const SizedBox(height: 12),
@@ -156,10 +157,7 @@ class _SummaryCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               'Monthly progress ${(data.monthlyProgress * 100).round()}%',
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.textSecondary,
-              ),
+              style: AppFonts.caption(color: AppColors.textSecondary),
             ),
           ],
         ),
@@ -200,15 +198,16 @@ class _GoalsSection extends StatelessWidget {
                         Expanded(
                           child: Text(
                             g['title'] as String? ?? '',
-                            style: const TextStyle(fontWeight: FontWeight.w500),
+                            style: AppFonts.copyWith(
+                              AppFonts.bodyMedium(),
+                              fontWeight: AppFonts.medium,
+                            ),
                           ),
                         ),
                         Text(
                           '${g['current']}/${g['target']} ${g['unit']}',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: AppColors.textSecondary,
-                          ),
+                          style:
+                              AppFonts.caption(color: AppColors.textSecondary),
                         ),
                       ],
                     ),
@@ -260,7 +259,10 @@ class _MetricsSection extends StatelessWidget {
                     subtitle: Text(m['trend'] as String? ?? ''),
                     trailing: Text(
                       '${m['value']} ${m['unit']}',
-                      style: const TextStyle(fontWeight: FontWeight.w600),
+                      style: AppFonts.copyWith(
+                        AppFonts.bodyMedium(),
+                        fontWeight: AppFonts.semiBold,
+                      ),
                     ),
                   ),
                 ),

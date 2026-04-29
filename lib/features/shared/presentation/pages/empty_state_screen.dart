@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A screen that shows when there's no data to display
 class EmptyStateScreen extends StatelessWidget {
@@ -160,10 +161,9 @@ class EmptyStateScreen extends StatelessWidget {
                 // Title
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.h5(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.bold,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -173,11 +173,7 @@ class EmptyStateScreen extends StatelessWidget {
                 // Message
                 Text(
                   message,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: AppColors.textSecondary,
-                    height: 1.5,
-                  ),
+                  style: AppFonts.bodyMedium(color: AppColors.textSecondary),
                   textAlign: TextAlign.center,
                 ),
 

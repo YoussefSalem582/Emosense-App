@@ -54,9 +54,9 @@ class ProfilePersonalInfoWidget extends StatelessWidget {
             flex: 2,
             child: Text(
               label,
-              style: TextStyle(
-                color: AppColors.textSecondary,
-                fontWeight: FontWeight.w500,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textSecondary),
+                fontWeight: AppFonts.medium,
               ),
             ),
           ),
@@ -64,9 +64,9 @@ class ProfilePersonalInfoWidget extends StatelessWidget {
             flex: 3,
             child: Text(
               value,
-              style: TextStyle(
-                color: AppColors.textPrimary,
-                fontWeight: FontWeight.w600,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ),

@@ -26,16 +26,16 @@ class AdminTicketsHeader extends StatelessWidget {
               children: [
                 Text(
                   'All Tickets',
-                  style: theme.textTheme.displaySmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.h3(color: AppColors.white),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 SizedBox(height: customSpacing.xs),
                 Text(
                   'Employee & Admin Tickets Management',
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.8),
+                  style: AppFonts.bodyLarge(
+                    color: AppColors.white.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -47,23 +47,23 @@ class AdminTicketsHeader extends StatelessWidget {
               vertical: customSpacing.sm,
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: AppColors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
+              border: Border.all(color: AppColors.white.withValues(alpha: 0.2)),
             ),
             child: Column(
               children: [
                 Text(
                   '$totalCount',
-                  style: theme.textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  style: AppFonts.copyWith(
+                    AppFonts.h4(color: AppColors.white),
+                    fontWeight: AppFonts.bold,
                   ),
                 ),
                 Text(
                   'Total Tickets',
-                  style: theme.textTheme.bodySmall?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.8),
+                  style: AppFonts.bodySmall(
+                    color: AppColors.white.withValues(alpha: 0.8),
                   ),
                 ),
               ],

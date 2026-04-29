@@ -52,13 +52,9 @@ class VideoUrlInput extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Video URL',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.button(color: AppColors.textPrimary),
                 ),
               ],
             ),
@@ -85,9 +81,8 @@ class VideoUrlInput extends StatelessWidget {
                 focusNode: focusNode,
                 decoration: InputDecoration(
                   hintText: 'Enter video URL (YouTube, Vimeo, etc.)',
-                  hintStyle: TextStyle(
+                  hintStyle: AppFonts.bodySmall(
                     color: AppColors.textSecondary.withValues(alpha: 0.7),
-                    fontSize: 14,
                   ),
                   border: InputBorder.none,
                   prefixIcon: Icon(
@@ -126,10 +121,7 @@ class VideoUrlInput extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   'Customer interview videos and feedback sessions',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),

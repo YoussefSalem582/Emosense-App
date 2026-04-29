@@ -51,7 +51,7 @@ lib/
 │   ├── routing/
 │   │   ├── app_router.dart                # Named route constants + `generateRoute`
 │   │   └── screen_transitions.dart
-│   ├── constants/                         # app_colors, typography, themes, strings, durations, limits, storage keys …
+│   ├── constants/                         # app_colors (re-export → utils/assets), typography, themes, strings, durations, limits, storage keys …
 │   │
 │   ├── api/
 │   │   ├── api_client.dart                # Dio HTTP client with interceptors (auth, language, logging)
@@ -71,6 +71,7 @@ lib/
 │   │   └── usecase.dart                   # Abstract UseCase<Type, Params> + NoParams
 │   │
 │   └── utils/
+│       ├── assets/                        # Design tokens: `app_colors.dart`, `app_fonts.dart`, `app_locale_binding.dart` (barrel: `assets.dart`)
 │       ├── logger.dart                    # Talker wrapper (auto-disabled in prod), BLoC transition logs
 │       └── validators.dart                # Reusable form validators (email, password, phone, name…)
 │   │

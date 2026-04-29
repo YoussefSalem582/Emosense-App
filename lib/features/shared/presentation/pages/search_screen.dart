@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:emosense_mobile/core/constants/app_colors.dart';
+import 'package:emosense_mobile/core/utils/assets/app_fonts.dart';
 
 /// A comprehensive search screen with filters and results
 class SearchScreen extends StatefulWidget {
@@ -243,15 +244,15 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   Widget _buildInitialState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search, size: 64, color: AppColors.textTertiary),
-          SizedBox(height: 16),
+          const Icon(Icons.search, size: 64, color: AppColors.textTertiary),
+          const SizedBox(height: 16),
           Text(
             'Start typing to search',
-            style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+            style: AppFonts.bodyMedium(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -259,24 +260,23 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   Widget _buildEmptyState() {
-    return const Center(
+    return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search_off, size: 64, color: AppColors.textTertiary),
-          SizedBox(height: 16),
+          const Icon(Icons.search_off, size: 64, color: AppColors.textTertiary),
+          const SizedBox(height: 16),
           Text(
             'No results found',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyLarge(color: AppColors.textPrimary),
+              fontWeight: AppFonts.medium,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Try adjusting your search terms',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+            style: AppFonts.bodySmall(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -335,13 +335,9 @@ class _SearchScreenState extends State<SearchScreen>
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                const Text(
+                Text(
                   'Filters',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
-                  ),
+                  style: AppFonts.h6(color: AppColors.textPrimary),
                 ),
                 const Spacer(),
                 TextButton(
@@ -402,10 +398,9 @@ class _SearchScreenState extends State<SearchScreen>
         children: [
           Text(
             filter.title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.medium,
             ),
           ),
           const SizedBox(height: 8),

@@ -43,9 +43,9 @@ class EmployeeBottomNavBar extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF667EEA).withValues(alpha: 0.25),
-            const Color(0xFF764BA2).withValues(alpha: 0.2),
-            const Color(0xFF48CAE4).withValues(alpha: 0.15),
+            AppColors.primary.withValues(alpha: 0.25),
+            AppColors.accent.withValues(alpha: 0.2),
+            AppColors.secondary.withValues(alpha: 0.15),
           ],
         ),
         border: Border(
@@ -61,7 +61,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
             offset: const Offset(0, -10),
           ),
           BoxShadow(
-            color: const Color(0xFF667EEA).withValues(alpha: 0.2),
+            color: AppColors.primary.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, -2),
           ),
@@ -164,7 +164,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
                   ? LinearGradient(
                     colors: [
                       Colors.white.withValues(alpha: 0.4),
-                      const Color(0xFF667EEA).withValues(alpha: 0.2),
+                      AppColors.primary.withValues(alpha: 0.2),
                       Colors.white.withValues(alpha: 0.3),
                     ],
                   )
@@ -181,7 +181,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
               isSelected
                   ? [
                     BoxShadow(
-                      color: const Color(0xFF667EEA).withValues(alpha: 0.3),
+                      color: AppColors.primary.withValues(alpha: 0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 2),
                     ),
@@ -206,7 +206,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
               child: Icon(
                 isSelected ? filledIcon : outlinedIcon,
                 key: ValueKey('$index-$isSelected'),
-                color: Colors.white,
+                color: AppColors.white,
                 size: isSelected ? 22 : 20,
               ),
             ),
@@ -217,10 +217,11 @@ class EmployeeBottomNavBar extends StatelessWidget {
                 constraints: const BoxConstraints(minHeight: 12),
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 200),
-                  style: TextStyle(
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: AppColors.white),
                     fontSize: 9,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                    color: Colors.white,
+                    fontWeight:
+                        isSelected ? AppFonts.bold : AppFonts.semiBold,
                     letterSpacing: isSelected ? 0.2 : 0.0,
                     height: 1.0,
                   ),

@@ -34,17 +34,16 @@ class AnalysisHistoryWidget extends StatelessWidget {
           AppSectionTitleRow(
             icon: Icons.history,
             title: 'Recent Analysis',
-            titleStyle: theme.textTheme.titleLarge?.copyWith(
-              color: AppColors.textPrimary,
+            titleStyle: AppFonts.h6(color: AppColors.textPrimary).copyWith(
               fontWeight: FontWeight.w700,
             ),
             trailing:
                 onViewAll != null
                     ? TextButton(
                       onPressed: onViewAll,
-                      child: const Text(
+                      child: Text(
                         'View All',
-                        style: TextStyle(color: AppColors.primary),
+                        style: AppFonts.bodySmall(color: AppColors.primary),
                       ),
                     )
                     : null,
@@ -147,7 +146,7 @@ class AnalysisHistoryWidget extends StatelessWidget {
                         ),
                         Text(
                           ' • ',
-                          style: TextStyle(color: AppColors.textSecondary),
+                          style: AppFonts.bodySmall(color: AppColors.textSecondary),
                         ),
                         Text(
                           _formatDateTime(item.timestamp),
@@ -173,11 +172,9 @@ class AnalysisHistoryWidget extends StatelessWidget {
                 ),
                 child: Text(
                   item.confidencePercentage,
-                  style: TextStyle(
+                  style: AppFonts.labelMedium(
                     color: _getConfidenceColor(item.confidence),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
               SizedBox(width: spacing.sm),

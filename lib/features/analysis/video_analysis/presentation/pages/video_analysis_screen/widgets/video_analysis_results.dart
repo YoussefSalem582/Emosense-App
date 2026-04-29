@@ -117,13 +117,9 @@ class VideoAnalysisResults extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           'Customer Video Analysis',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
-          ),
+          style: AppFonts.button(color: AppColors.textPrimary),
         ),
       ],
     );
@@ -179,18 +175,17 @@ class VideoAnalysisResults extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           value,
-          style: TextStyle(
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: color),
             fontSize: 15,
-            fontWeight: FontWeight.w700,
-            color: color,
+            fontWeight: AppFonts.bold,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(
+          style: AppFonts.copyWith(
+            AppFonts.labelSmall(color: AppColors.textSecondary),
             fontSize: 11,
-            fontWeight: FontWeight.w500,
-            color: AppColors.textSecondary,
           ),
         ),
       ],
@@ -215,12 +210,11 @@ class VideoAnalysisResults extends StatelessWidget {
               child: Icon(Icons.person_rounded, color: emotionColor, size: 16),
             ),
             const SizedBox(width: 10),
-            const Text(
+            Text(
               'Customer Emotional State',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
           ],
@@ -253,19 +247,15 @@ class VideoAnalysisResults extends StatelessWidget {
                         children: [
                           Text(
                             'Primary Emotion',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
+                            style: AppFonts.labelMedium(
                               color: AppColors.textSecondary,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             snapshot.emotion,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: emotionColor,
+                            style: AppFonts.copyWith(
+                              AppFonts.button(color: emotionColor),
                             ),
                           ),
                         ],
@@ -284,19 +274,15 @@ class VideoAnalysisResults extends StatelessWidget {
                           children: [
                             Text(
                               'Sentiment',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                              style: AppFonts.labelMedium(
                                 color: AppColors.textSecondary,
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               snapshot.sentiment,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: sentimentColor,
+                              style: AppFonts.copyWith(
+                                AppFonts.button(color: sentimentColor),
                               ),
                             ),
                           ],
@@ -374,10 +360,9 @@ class VideoAnalysisResults extends StatelessWidget {
                                 const SizedBox(width: 4),
                                 Text(
                                   'Snapshot',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                  style: AppFonts.copyWith(
+                                    AppFonts.caption(color: AppColors.white),
+                                    fontWeight: AppFonts.semiBold,
                                   ),
                                 ),
                               ],
@@ -410,10 +395,10 @@ class VideoAnalysisResults extends StatelessWidget {
                                 const SizedBox(width: 6),
                                 Text(
                                   snapshot.emotion,
-                                  style: const TextStyle(
-                                    color: Colors.white,
+                                  style: AppFonts.copyWith(
+                                    AppFonts.bodySmall(color: AppColors.white),
                                     fontSize: 13,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: AppFonts.bold,
                                   ),
                                 ),
                               ],
@@ -445,10 +430,9 @@ class VideoAnalysisResults extends StatelessWidget {
                                 const SizedBox(width: 4),
                                 Text(
                                   '${(snapshot.confidence * 100).toInt()}%',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
+                                  style: AppFonts.copyWith(
+                                    AppFonts.caption(color: AppColors.white),
+                                    fontWeight: AppFonts.semiBold,
                                   ),
                                 ),
                               ],
@@ -498,18 +482,19 @@ class VideoAnalysisResults extends StatelessWidget {
                         const SizedBox(height: 12),
                         Text(
                           'No Video Frame Captured',
-                          style: TextStyle(
-                            color: Colors.grey.withValues(alpha: 0.8),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                          style: AppFonts.button(
+                            color: AppColors.textTertiary.withValues(
+                              alpha: 0.8,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           'Snapshot processing may be unavailable',
-                          style: TextStyle(
-                            color: Colors.grey.withValues(alpha: 0.6),
-                            fontSize: 14,
+                          style: AppFonts.bodySmall(
+                            color: AppColors.textTertiary.withValues(
+                              alpha: 0.6,
+                            ),
                           ),
                         ),
                       ],
@@ -551,10 +536,10 @@ class VideoAnalysisResults extends StatelessWidget {
                         const SizedBox(width: 8),
                         Text(
                           'Customer Insights',
-                          style: TextStyle(
+                          style: AppFonts.copyWith(
+                            AppFonts.bodySmall(color: AppColors.textPrimary),
                             fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimary,
+                            fontWeight: AppFonts.semiBold,
                           ),
                         ),
                       ],
@@ -562,11 +547,11 @@ class VideoAnalysisResults extends StatelessWidget {
                     const SizedBox(height: 10),
                     Text(
                       snapshot.subtitle,
-                      style: const TextStyle(
+                      style: AppFonts.copyWith(
+                        AppFonts.bodySmall(color: AppColors.textPrimary),
                         fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textPrimary,
-                        height: 1.4,
+                        fontWeight: AppFonts.medium,
+                        height: AppFonts.lineHeightNormal,
                         letterSpacing: 0.2,
                       ),
                     ),
@@ -654,19 +639,19 @@ class VideoAnalysisResults extends StatelessWidget {
         color: Colors.grey.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.video_camera_back_outlined,
               size: 48,
-              color: Colors.grey,
+              color: AppColors.textTertiary,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               'Video frame not available',
-              style: TextStyle(color: Colors.grey),
+              style: AppFonts.bodySmall(color: AppColors.textTertiary),
             ),
           ],
         ),

@@ -71,14 +71,13 @@ class AnalyzeButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        EmoLoader.mini(size: 24, color: Colors.white),
+        EmoLoader.mini(size: 24, color: AppColors.white),
         const SizedBox(width: 12),
-        const Text(
+        Text(
           'Analyzing Customer Video...',
-          style: TextStyle(
+          style: AppFonts.copyWith(
+            AppFonts.button(color: AppColors.white),
             fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
           ),
         ),
       ],
@@ -91,16 +90,17 @@ class AnalyzeButton extends StatelessWidget {
       children: [
         Icon(
           Icons.analytics_rounded,
-          color: enabled ? Colors.white : AppColors.textSecondary,
+          color: enabled ? AppColors.white : AppColors.textSecondary,
           size: 18,
         ),
         const SizedBox(width: 8),
         Text(
           'Analyze Customer Video',
-          style: TextStyle(
+          style: AppFonts.copyWith(
+            AppFonts.button(
+              color: enabled ? AppColors.white : AppColors.textSecondary,
+            ),
             fontSize: 15,
-            fontWeight: FontWeight.w600,
-            color: enabled ? Colors.white : AppColors.textSecondary,
           ),
         ),
       ],

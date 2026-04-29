@@ -65,20 +65,19 @@ class EmployeeAnalyticsCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               value,
-              style: TextStyle(
+              style: AppFonts.copyWith(
+                AppFonts.h3(color: color),
                 fontSize: 28,
-                fontWeight: FontWeight.w900,
-                color: color,
+                fontWeight: AppFonts.black,
               ),
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
             Text(
               title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodySmall(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -86,10 +85,11 @@ class EmployeeAnalyticsCard extends StatelessWidget {
             const SizedBox(height: 8),
             Text(
               trend,
-              style: TextStyle(
-                fontSize: 12,
-                color: isPositiveTrend ? AppColors.success : AppColors.error,
-                fontWeight: FontWeight.w500,
+              style: AppFonts.copyWith(
+                AppFonts.caption(
+                  color: isPositiveTrend ? AppColors.success : AppColors.error,
+                ),
+                fontWeight: AppFonts.medium,
               ),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,

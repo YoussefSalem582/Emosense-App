@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// Splash screen text widget with animations
 class SplashText extends StatelessWidget {
   final Animation<double> fadeAnimation;
@@ -29,19 +31,19 @@ class SplashText extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFF667EEA),
-                          Color(0xFF764BA2),
-                          Color(0xFF667EEA),
+                          AppColors.primary,
+                          AppColors.accent,
+                          AppColors.primary,
                         ],
                       ).createShader(bounds),
-                  child: const Text(
+                  child: Text(
                     'EmoSense',
-                    style: TextStyle(
+                    style: AppFonts.copyWith(
+                      AppFonts.h2(color: Colors.white),
                       fontSize: 36,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      fontWeight: AppFonts.bold,
                       letterSpacing: 1.5,
-                      shadows: [
+                      shadows: const [
                         Shadow(
                           color: Colors.black26,
                           offset: Offset(0, 2),
@@ -71,12 +73,11 @@ class SplashText extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Text(
+                  child: Text(
                     'AI-Powered Emotional Intelligence',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xFF475569),
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.copyWith(
+                      AppFonts.bodyMedium(color: AppColors.textSecondary),
+                      fontWeight: AppFonts.semiBold,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -87,11 +88,7 @@ class SplashText extends StatelessWidget {
                 // Version or additional info
                 Text(
                   'Version 1.0.0',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade500,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textLight),
                 ),
               ],
             ),

@@ -124,7 +124,7 @@ class ProfileSettingsWidget extends StatelessWidget {
                     value: option,
                     child: Text(
                       option,
-                      style: TextStyle(color: AppColors.textPrimary),
+                      style: AppFonts.bodyMedium(color: AppColors.textPrimary),
                     ),
                   );
                 }).toList(),

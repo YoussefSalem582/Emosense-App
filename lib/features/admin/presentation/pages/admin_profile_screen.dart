@@ -119,8 +119,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final customSpacing = theme.extension<CustomSpacing>()!;
+    final customSpacing = Theme.of(context).extension<CustomSpacing>()!;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -134,7 +133,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                   SizedBox(
                     height: customSpacing.xl * 2,
                   ), // Space for admin badge
-                  _buildProfileHeader(theme, customSpacing),
+                  _buildProfileHeader(customSpacing),
                   SizedBox(height: customSpacing.lg),
                   _buildProfileStats(customSpacing),
                   SizedBox(height: customSpacing.lg),
@@ -153,7 +152,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
     );
   }
 
-  Widget _buildProfileHeader(ThemeData theme, CustomSpacing customSpacing) {
+  Widget _buildProfileHeader(CustomSpacing customSpacing) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: customSpacing.lg),
       child: Container(
@@ -182,10 +181,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                   backgroundColor: const Color(0xFFFF6B6B),
                   child: Text(
                     _adminProfile['avatar'],
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
+                    style: AppFonts.copyWith(
+                      AppFonts.h3(color: AppColors.white),
+                      fontWeight: AppFonts.black,
                     ),
                   ),
                 ),
@@ -196,24 +194,26 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                     children: [
                       Text(
                         _adminProfile['name'],
-                        style: theme.textTheme.headlineSmall?.copyWith(
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
+                        style: AppFonts.copyWith(
+                          AppFonts.h5(color: AppColors.white),
+                          fontWeight: AppFonts.black,
                         ),
                       ),
                       SizedBox(height: customSpacing.xs),
                       Text(
                         _adminProfile['role'],
-                        style: theme.textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[300],
-                          fontWeight: FontWeight.w600,
+                        style: AppFonts.copyWith(
+                          AppFonts.bodyLarge(
+                            color: AppColors.white.withValues(alpha: 0.75),
+                          ),
+                          fontWeight: AppFonts.semiBold,
                         ),
                       ),
                       SizedBox(height: customSpacing.xs),
                       Text(
                         _adminProfile['department'],
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: Colors.grey,
+                        style: AppFonts.bodyMedium(
+                          color: AppColors.white.withValues(alpha: 0.85),
                         ),
                       ),
                     ],
@@ -221,7 +221,7 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                 ),
                 IconButton(
                   onPressed: _showEditProfileDialog,
-                  icon: const Icon(Icons.edit, color: Colors.white),
+                  icon: const Icon(Icons.edit, color: AppColors.white),
                 ),
               ],
             ),
@@ -242,10 +242,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                   SizedBox(width: customSpacing.xs),
                   Text(
                     'Admin Access • Last login ${_adminProfile['lastLogin']}',
-                    style: TextStyle(
-                      color: AppColors.success,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
+                    style: AppFonts.copyWith(
+                      AppFonts.caption(color: AppColors.success),
+                      fontWeight: AppFonts.semiBold,
                     ),
                   ),
                 ],
@@ -265,10 +264,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
         children: [
           Text(
             'Admin Statistics',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
+            style: AppFonts.copyWith(
+              AppFonts.h6(color: AppColors.white),
+              fontWeight: AppFonts.bold,
             ),
           ),
           SizedBox(height: customSpacing.md),
@@ -322,18 +320,16 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
           const SizedBox(height: 12),
           Text(
             stat['value'],
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
-              color: stat['color'],
+            style: AppFonts.copyWith(
+              AppFonts.h6(color: stat['color'] as Color),
+              fontWeight: AppFonts.black,
             ),
           ),
           Text(
             stat['label'],
-            style: TextStyle(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-              fontWeight: FontWeight.w500,
+            style: AppFonts.copyWith(
+              AppFonts.caption(color: AppColors.textSecondary),
+              fontWeight: AppFonts.medium,
             ),
           ),
         ],
@@ -362,10 +358,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
           children: [
             Text(
               'Profile Information',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodyLarge(color: AppColors.textPrimary),
+                fontWeight: AppFonts.bold,
               ),
             ),
             SizedBox(height: customSpacing.md),
@@ -387,10 +382,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
             SizedBox(height: customSpacing.md),
             Text(
               'Permissions',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(color: AppColors.textPrimary),
+                fontWeight: AppFonts.semiBold,
               ),
             ),
             SizedBox(height: customSpacing.sm),
@@ -419,18 +413,16 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
             children: [
               Text(
                 label,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                  fontWeight: FontWeight.w500,
+                style: AppFonts.copyWith(
+                  AppFonts.caption(color: AppColors.textSecondary),
+                  fontWeight: AppFonts.medium,
                 ),
               ),
               Text(
                 value,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.textPrimary,
-                  fontWeight: FontWeight.w600,
+                style: AppFonts.copyWith(
+                  AppFonts.bodySmall(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.semiBold,
                 ),
               ),
             ],
@@ -453,10 +445,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
       ),
       child: Text(
         permission,
-        style: TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AppColors.primary,
+        style: AppFonts.copyWith(
+          AppFonts.caption(color: AppColors.primary),
+          fontWeight: AppFonts.semiBold,
         ),
       ),
     );
@@ -483,10 +474,9 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
           children: [
             Text(
               'Recent Activity',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimary,
+              style: AppFonts.copyWith(
+                AppFonts.bodyLarge(color: AppColors.textPrimary),
+                fontWeight: AppFonts.bold,
               ),
             ),
             SizedBox(height: customSpacing.md),
@@ -522,18 +512,14 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
               children: [
                 Text(
                   activity['action'],
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.bodySmall(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
                 Text(
                   activity['time'],
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.textSecondary,
-                  ),
+                  style: AppFonts.caption(color: AppColors.textSecondary),
                 ),
               ],
             ),
@@ -553,16 +539,13 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: _showSecuritySettingsDialog,
-                  icon: const Icon(Icons.security, color: Colors.white),
-                  label: const Text(
+                  icon: const Icon(Icons.security, color: AppColors.white),
+                  label: Text(
                     'Security Settings',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppFonts.button(color: AppColors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2196F3),
+                    backgroundColor: AppColors.info,
                     padding: EdgeInsets.symmetric(vertical: customSpacing.md),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -574,16 +557,13 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: _showNotificationSettingsDialog,
-                  icon: const Icon(Icons.notifications, color: Colors.white),
-                  label: const Text(
+                  icon: const Icon(Icons.notifications, color: AppColors.white),
+                  label: Text(
                     'Notifications',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: AppFonts.button(color: AppColors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF9C27B0),
+                    backgroundColor: AppColors.accent,
                     padding: EdgeInsets.symmetric(vertical: customSpacing.md),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -598,16 +578,13 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
             width: double.infinity,
             child: ElevatedButton.icon(
               onPressed: _showLogoutDialog,
-              icon: const Icon(Icons.logout, color: Colors.white),
-              label: const Text(
+              icon: const Icon(Icons.logout, color: AppColors.white),
+              label: Text(
                 'Sign Out',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: AppFonts.button(color: AppColors.white),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFFF6B6B),
+                backgroundColor: AppColors.error,
                 padding: EdgeInsets.symmetric(vertical: customSpacing.md),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -742,11 +719,11 @@ class _AdminProfileScreenState extends State<AdminProfileScreen>
                   AuthSessionNavigator.signOutAndGoToSplash(context);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFFF6B6B),
+                  backgroundColor: AppColors.error,
                 ),
-                child: const Text(
+                child: Text(
                   'Sign Out',
-                  style: TextStyle(color: Colors.white),
+                  style: AppFonts.button(color: AppColors.white),
                 ),
               ),
             ],

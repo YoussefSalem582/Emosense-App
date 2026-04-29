@@ -26,10 +26,9 @@ class AnalysisToolsGrid extends StatelessWidget {
       children: [
         Text(
           'Analysis Tools',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
+          style: AppFonts.copyWith(
+            AppFonts.h6(color: AppColors.white),
+            fontWeight: AppFonts.bold,
           ),
         ),
         SizedBox(height: customSpacing.md),

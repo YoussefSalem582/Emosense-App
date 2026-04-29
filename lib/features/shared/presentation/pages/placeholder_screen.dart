@@ -36,13 +36,13 @@ class PlaceholderScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      const Color(0xFF667EEA).withValues(alpha: 0.2),
-                      const Color(0xFF764BA2).withValues(alpha: 0.2),
+                      AppColors.primary.withValues(alpha: 0.2),
+                      AppColors.accent.withValues(alpha: 0.2),
                     ],
                   ),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, size: 64, color: const Color(0xFF667EEA)),
+                child: Icon(icon, size: 64, color: AppColors.primary),
               ),
 
               const SizedBox(height: 32),
@@ -50,10 +50,9 @@ class PlaceholderScreen extends StatelessWidget {
               // Title
               Text(
                 title,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xFF333333),
+                style: AppFonts.copyWith(
+                  AppFonts.h5(color: AppColors.textPrimary),
+                  fontWeight: AppFonts.bold,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -63,12 +62,7 @@ class PlaceholderScreen extends StatelessWidget {
               // Description
               Text(
                 description,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textSecondary,
-                  height: 1.5,
-                ),
+                style: AppFonts.bodyMedium(color: AppColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
 
@@ -82,19 +76,15 @@ class PlaceholderScreen extends StatelessWidget {
                     vertical: 8,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF667EEA).withValues(alpha: 0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: const Color(0xFF667EEA).withValues(alpha: 0.3),
+                      color: AppColors.primary.withValues(alpha: 0.3),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Coming Soon',
-                    style: TextStyle(
-                      color: Color(0xFF667EEA),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14,
-                    ),
+                    style: AppFonts.labelLarge(color: AppColors.primary),
                   ),
                 ),
 
@@ -104,7 +94,7 @@ class PlaceholderScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: onAction,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF667EEA),
+                    backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 32,
@@ -116,10 +106,7 @@ class PlaceholderScreen extends StatelessWidget {
                   ),
                   child: Text(
                     actionText!,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                    ),
+                    style: AppFonts.button(color: Colors.white),
                   ),
                 ),
               ],

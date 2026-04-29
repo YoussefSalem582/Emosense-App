@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/widgets/common/surface_section_card.dart';
 
 /// Widget for URL input section
@@ -39,12 +40,11 @@ class TextAnalysisUrlSection extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'URL Import',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -60,10 +60,7 @@ class TextAnalysisUrlSection extends StatelessWidget {
                   focusNode: urlFocusNode,
                   decoration: InputDecoration(
                     hintText: _getUrlHintText(),
-                    hintStyle: const TextStyle(
-                      color: Color(0xFF94A3B8),
-                      fontSize: 14,
-                    ),
+                    hintStyle: AppFonts.bodySmall(color: AppColors.textLight),
                     prefixIcon: const Icon(
                       Icons.link,
                       color: Color(0xFF10B981),
@@ -83,10 +80,7 @@ class TextAnalysisUrlSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF1E293B),
-                  ),
+                  style: AppFonts.bodySmall(color: AppColors.darkSurface),
                 ),
                 const SizedBox(height: 12),
                 Container(
@@ -109,10 +103,7 @@ class TextAnalysisUrlSection extends StatelessWidget {
                       Expanded(
                         child: Text(
                           _getUrlInfo(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF3B82F6),
-                          ),
+                          style: AppFonts.caption(color: AppColors.primaryLight),
                         ),
                       ),
                     ],

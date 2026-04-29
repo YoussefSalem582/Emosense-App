@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// Bottom navigation widget for onboarding with skip, next, and previous buttons
 class OnboardingBottomNavigation extends StatefulWidget {
   final int currentPage;
@@ -169,13 +171,14 @@ class _OnboardingBottomNavigationState extends State<OnboardingBottomNavigation>
             ],
             Text(
               text,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color:
-                    isSecondary
-                        ? Colors.white.withValues(alpha: 0.9)
-                        : Colors.white,
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(
+                  color:
+                      isSecondary
+                          ? Colors.white.withValues(alpha: 0.9)
+                          : Colors.white,
+                ),
+                fontWeight: AppFonts.semiBold,
                 shadows: [
                   Shadow(
                     color: Colors.black.withValues(alpha: 0.3),
@@ -202,7 +205,7 @@ class _OnboardingBottomNavigationState extends State<OnboardingBottomNavigation>
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white.withValues(alpha: 0.9),
-          foregroundColor: Colors.blue.shade700,
+          foregroundColor: AppColors.primaryDark,
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -215,7 +218,10 @@ class _OnboardingBottomNavigationState extends State<OnboardingBottomNavigation>
           children: [
             Text(
               text,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              style: AppFonts.copyWith(
+                AppFonts.bodyMedium(color: AppColors.primaryDark),
+                fontWeight: AppFonts.semiBold,
+              ),
             ),
             if (icon != null) ...[
               const SizedBox(width: 8),

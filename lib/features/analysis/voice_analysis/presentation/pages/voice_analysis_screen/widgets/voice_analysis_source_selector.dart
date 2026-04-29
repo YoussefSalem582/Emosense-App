@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for selecting audio source type
 class VoiceAnalysisSourceSelector extends StatelessWidget {
@@ -37,7 +38,7 @@ class VoiceAnalysisSourceSelector extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1F5F9),
+        color: AppColors.surfaceContainer,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -52,7 +53,7 @@ class VoiceAnalysisSourceSelector extends StatelessWidget {
                     margin: const EdgeInsets.all(4),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     decoration: BoxDecoration(
-                      color: isSelected ? Colors.white : Colors.transparent,
+                      color: isSelected ? AppColors.surface : Colors.transparent,
                       borderRadius: BorderRadius.circular(8),
                       boxShadow:
                           isSelected
@@ -71,20 +72,17 @@ class VoiceAnalysisSourceSelector extends StatelessWidget {
                           source['icon'] as IconData,
                           color:
                               isSelected
-                                  ? const Color(0xFF3B82F6)
-                                  : const Color(0xFF64748B),
+                                  ? AppColors.primaryLight
+                                  : AppColors.textTertiary,
                           size: 24,
                         ),
                         const SizedBox(height: 8),
                         Text(
                           source['label'] as String,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color:
-                                isSelected
-                                    ? const Color(0xFF3B82F6)
-                                    : const Color(0xFF64748B),
+                          style: AppFonts.labelMedium(
+                            color: isSelected
+                                ? AppColors.primaryLight
+                                : AppColors.textTertiary,
                           ),
                           textAlign: TextAlign.center,
                         ),

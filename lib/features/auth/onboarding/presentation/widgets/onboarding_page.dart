@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 /// Individual page widget for the onboarding flow
 class OnboardingPage extends StatefulWidget {
   final String title;
@@ -165,12 +167,12 @@ class _OnboardingPageState extends State<OnboardingPage>
                   child: Text(
                     widget.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: AppFonts.copyWith(
+                      AppFonts.h4(color: Colors.white),
                       fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      height: 1.2,
-                      shadows: [
+                      fontWeight: AppFonts.bold,
+                      height: AppFonts.lineHeightTight,
+                      shadows: const [
                         Shadow(
                           color: Colors.black26,
                           offset: Offset(0, 2),
@@ -197,12 +199,12 @@ class _OnboardingPageState extends State<OnboardingPage>
                   child: Text(
                     widget.description,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white.withValues(alpha: 0.9),
-                      height: 1.5,
-                      fontWeight: FontWeight.w400,
-                      shadows: [
+                    style: AppFonts.copyWith(
+                      AppFonts.bodyMedium(
+                        color: Colors.white.withValues(alpha: 0.9),
+                      ),
+                      height: AppFonts.lineHeightLoose,
+                      shadows: const [
                         Shadow(
                           color: Colors.black26,
                           offset: Offset(0, 1),

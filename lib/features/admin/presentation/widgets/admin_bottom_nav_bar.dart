@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 class AdminBottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -173,7 +174,7 @@ class AdminBottomNavBar extends StatelessWidget {
               child: Icon(
                 isSelected ? filledIcon : outlinedIcon,
                 key: ValueKey('$index-$isSelected'),
-                color: Colors.white,
+                color: AppColors.white,
                 size: isSelected ? 22 : 20,
               ),
             ),
@@ -184,10 +185,11 @@ class AdminBottomNavBar extends StatelessWidget {
                 constraints: const BoxConstraints(minHeight: 12),
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 200),
-                  style: TextStyle(
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: AppColors.white),
                     fontSize: 9,
-                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                    color: Colors.white,
+                    fontWeight:
+                        isSelected ? AppFonts.bold : AppFonts.semiBold,
                     letterSpacing: isSelected ? 0.2 : 0.0,
                     height: 1.0,
                   ),

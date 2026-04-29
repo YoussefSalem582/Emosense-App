@@ -72,13 +72,12 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         children: [
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Text(
                   'Customer Sentiment Analysis',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimary,
+                  style: AppFonts.copyWith(
+                    AppFonts.h6(color: AppColors.textPrimary),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
@@ -99,9 +98,9 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
                           value: timeframe,
                           child: Text(
                             timeframe,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
+                            style: AppFonts.copyWith(
+                              AppFonts.bodySmall(),
+                              fontWeight: AppFonts.medium,
                             ),
                           ),
                         );
@@ -113,7 +112,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
           const SizedBox(height: 8),
           Text(
             'Analyze customer feedback and sentiment trends across all touchpoints',
-            style: TextStyle(fontSize: 14, color: AppColors.textSecondary),
+            style: AppFonts.bodySmall(color: AppColors.textSecondary),
           ),
         ],
       ),
@@ -122,13 +121,14 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
 
   Widget _buildTabBar() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       child: TabBar(
         controller: _tabController,
         indicatorColor: AppColors.accent,
         labelColor: AppColors.accent,
         unselectedLabelColor: AppColors.textSecondary,
-        labelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+        labelStyle:
+            AppFonts.copyWith(AppFonts.bodySmall(), fontWeight: AppFonts.semiBold),
         tabs: const [
           Tab(icon: Icon(Icons.analytics), text: 'Real-time Analysis'),
           Tab(icon: Icon(Icons.trending_up), text: 'Trends & Insights'),
@@ -180,12 +180,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Analyze Customer Feedback',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -234,12 +233,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Recent Customer Feedback Analysis',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -292,7 +290,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         children: [
           Text(
             feedback,
-            style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+            style: AppFonts.bodySmall(color: AppColors.textPrimary),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
@@ -307,28 +305,21 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
                 ),
                 child: Text(
                   sentiment.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                    color: sentimentColor,
+                  style: AppFonts.copyWith(
+                    AppFonts.labelSmall(color: sentimentColor),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ),
               const SizedBox(width: 8),
               Text(
                 '${(confidence * 100).toInt()}% confident',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondary,
-                ),
+                style: AppFonts.caption(color: AppColors.textSecondary),
               ),
               const Spacer(),
               Text(
                 time,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textLight,
-                ),
+                style: AppFonts.caption(color: AppColors.textLight),
               ),
             ],
           ),
@@ -359,12 +350,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Sentiment Trend Analysis',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -374,11 +364,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
               color: AppColors.background,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Sentiment Trend Chart\n(Chart implementation would go here)',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -394,12 +384,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Top Customer Issues',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -427,15 +416,14 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         Expanded(
           child: Text(
             issue,
-            style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+            style: AppFonts.bodySmall(color: AppColors.textPrimary),
           ),
         ),
         Text(
           '$count',
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
       ],
@@ -449,12 +437,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Customer Satisfaction Trend',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -501,15 +488,14 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          style: AppFonts.caption(color: AppColors.textSecondary),
         ),
         const SizedBox(height: 8),
         Text(
           value,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodyLarge(color: AppColors.textPrimary),
+            fontWeight: AppFonts.bold,
           ),
         ),
         const SizedBox(height: 4),
@@ -524,10 +510,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
           ),
           child: Text(
             change,
-            style: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: isPositive ? AppColors.success : AppColors.error,
+            style: AppFonts.copyWith(
+              AppFonts.labelSmall(
+                color: isPositive ? AppColors.success : AppColors.error,
+              ),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
         ),
@@ -557,12 +544,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Emotion Distribution',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -572,11 +558,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
               color: AppColors.background,
               borderRadius: BorderRadius.circular(8),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
                 'Emotion Distribution Chart\n(Pie chart implementation would go here)',
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textSecondary),
+                style: AppFonts.bodySmall(color: AppColors.textSecondary),
               ),
             ),
           ),
@@ -592,12 +578,11 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             'Sentiment by Channel',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
           const SizedBox(height: 16),
@@ -620,7 +605,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
           flex: 2,
           child: Text(
             channel,
-            style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+            style: AppFonts.bodySmall(color: AppColors.textPrimary),
           ),
         ),
         Expanded(
@@ -646,10 +631,9 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
         const SizedBox(width: 8),
         Text(
           '${(score * 100).toInt()}%',
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: AppColors.textPrimary,
+          style: AppFonts.copyWith(
+            AppFonts.bodySmall(color: AppColors.textPrimary),
+            fontWeight: AppFonts.semiBold,
           ),
         ),
       ],
@@ -660,23 +644,21 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: AppTheme.enterpriseCardDecoration(),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Customer Segment Analysis',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textPrimary,
+            style: AppFonts.copyWith(
+              AppFonts.bodyMedium(color: AppColors.textPrimary),
+              fontWeight: AppFonts.semiBold,
             ),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'Premium customers show 12% higher satisfaction rates compared to standard customers. New customers require 18% more support interactions on average.',
-            style: TextStyle(
-              fontSize: 14,
-              color: AppColors.textSecondary,
+            style: AppFonts.copyWith(
+              AppFonts.bodySmall(color: AppColors.textSecondary),
               height: 1.5,
             ),
           ),
@@ -726,7 +708,7 @@ class _CustomerAnalyticsScreenState extends State<CustomerAnalyticsScreen>
                           ),
                           child: Text(
                             example,
-                            style: const TextStyle(fontSize: 14),
+                            style: AppFonts.bodySmall(color: AppColors.textPrimary),
                           ),
                         ),
                       ),

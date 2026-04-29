@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:emosense_mobile/core/core.dart';
 
 /// Widget for call input section
 class VoiceAnalysisCallInputSection extends StatelessWidget {
@@ -15,7 +16,7 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -35,22 +36,21 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                    color: AppColors.primaryLight.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.phone,
-                    color: Color(0xFF3B82F6),
+                    color: AppColors.primaryLight,
                     size: 20,
                   ),
                 ),
                 const SizedBox(width: 12),
-                const Text(
+                Text(
                   'Recorded Call ID',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xFF1E293B),
+                  style: AppFonts.copyWith(
+                    AppFonts.bodyLarge(color: AppColors.darkSurface),
+                    fontWeight: AppFonts.semiBold,
                   ),
                 ),
               ],
@@ -61,13 +61,9 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Call ID',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF374151),
-                  ),
+                  style: AppFonts.labelLarge(color: AppColors.textSecondary),
                 ),
                 const SizedBox(height: 8),
                 TextFormField(
@@ -75,19 +71,19 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'Enter call ID (e.g., CALL_20231201_001)',
                     filled: true,
-                    fillColor: const Color(0xFFF8FAFC),
+                    fillColor: AppColors.surfaceVariant,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      borderSide: const BorderSide(color: AppColors.border),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      borderSide: const BorderSide(color: AppColors.border),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(
-                        color: Color(0xFF3B82F6),
+                        color: AppColors.primaryLight,
                         width: 2,
                       ),
                     ),
@@ -104,8 +100,8 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: onFetchCall,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF3B82F6),
-                          foregroundColor: Colors.white,
+                          backgroundColor: AppColors.primaryLight,
+                          foregroundColor: AppColors.white,
                           padding: const EdgeInsets.symmetric(
                             horizontal: 24,
                             vertical: 12,
@@ -114,12 +110,19 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.download_rounded, size: 18),
-                            SizedBox(width: 8),
-                            Text('Fetch Call Recording'),
+                            Icon(
+                              Icons.download_rounded,
+                              size: 18,
+                              color: AppColors.white,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              'Fetch Call Recording',
+                              style: AppFonts.button(color: AppColors.white),
+                            ),
                           ],
                         ),
                       ),
@@ -130,26 +133,25 @@ class VoiceAnalysisCallInputSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withValues(alpha: 0.05),
+                    color: AppColors.primaryLight.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+                      color: AppColors.primaryLight.withValues(alpha: 0.1),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     children: [
                       Icon(
                         Icons.info_outline,
-                        color: Color(0xFF3B82F6),
+                        color: AppColors.primaryLight,
                         size: 16,
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: Text(
                           'Call recordings are automatically stored and can be accessed using their unique call ID.',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF3B82F6),
+                          style: AppFonts.caption(
+                            color: AppColors.primaryLight,
                           ),
                         ),
                       ),

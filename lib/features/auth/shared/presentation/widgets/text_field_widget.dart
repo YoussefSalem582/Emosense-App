@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class AuthTextFieldWidget extends StatelessWidget {
   final TextEditingController controller;
   final String label;
@@ -38,9 +40,8 @@ class AuthTextFieldWidget extends StatelessWidget {
       enabled: enabled,
       keyboardType: keyboardType,
       validator: validator,
-      style: TextStyle(
-        color: useWhiteBackground ? Colors.black87 : Colors.white,
-        fontSize: 16,
+      style: AppFonts.bodyMedium(
+        color: useWhiteBackground ? AppColors.textPrimary : Colors.white,
       ),
       decoration: InputDecoration(
         labelText: label,
@@ -65,19 +66,17 @@ class AuthTextFieldWidget extends StatelessWidget {
                   onPressed: onPasswordToggle,
                 )
                 : null,
-        labelStyle: TextStyle(
+        labelStyle: AppFonts.bodySmall(
           color:
               useWhiteBackground
-                  ? Colors.grey.shade700
+                  ? AppColors.gray700
                   : Colors.white.withValues(alpha: 0.8),
-          fontSize: 14,
         ),
-        hintStyle: TextStyle(
+        hintStyle: AppFonts.bodySmall(
           color:
               useWhiteBackground
-                  ? Colors.grey.shade500
+                  ? AppColors.gray500
                   : Colors.white.withValues(alpha: 0.6),
-          fontSize: 14,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
@@ -92,7 +91,7 @@ class AuthTextFieldWidget extends StatelessWidget {
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide(
-            color: useWhiteBackground ? const Color(0xFF667EEA) : Colors.white,
+            color: useWhiteBackground ? AppColors.primary : Colors.white,
             width: 2,
           ),
         ),
@@ -125,12 +124,11 @@ class AuthTextFieldWidget extends StatelessWidget {
             useWhiteBackground
                 ? Colors.grey.shade50
                 : Colors.white.withValues(alpha: 0.1),
-        errorStyle: TextStyle(
+        errorStyle: AppFonts.bodyXS(
           color:
               useWhiteBackground
-                  ? Colors.red.shade600
+                  ? AppColors.error
                   : Colors.red.withValues(alpha: 0.9),
-          fontSize: 12,
         ),
       ),
     );

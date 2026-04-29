@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:emosense_mobile/core/core.dart';
+
 class SocialLoginWidget extends StatelessWidget {
   final Animation<double> animation;
   final List<SocialLoginButton> buttons;
@@ -71,7 +73,10 @@ class SocialButton extends StatelessWidget {
         icon: Icon(icon, color: textColor, size: 20),
         label: Text(
           text,
-          style: TextStyle(color: textColor, fontWeight: FontWeight.w600),
+          style: AppFonts.copyWith(
+            AppFonts.bodyMedium(color: textColor),
+            fontWeight: AppFonts.semiBold,
+          ),
         ),
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,

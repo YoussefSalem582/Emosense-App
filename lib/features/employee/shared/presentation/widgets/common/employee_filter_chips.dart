@@ -39,10 +39,11 @@ class EmployeeFilterChips extends StatelessWidget {
                 color: isSelected ? AppColors.primary : AppColors.border,
                 width: 1,
               ),
-              labelStyle: TextStyle(
-                color: isSelected ? AppColors.primary : AppColors.textSecondary,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-                fontSize: 14,
+              labelStyle: AppFonts.copyWith(
+                AppFonts.bodySmall(
+                  color: isSelected ? AppColors.primary : AppColors.textSecondary,
+                ),
+                fontWeight: isSelected ? AppFonts.semiBold : AppFonts.medium,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),

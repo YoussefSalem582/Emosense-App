@@ -32,20 +32,20 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              const Color(0xFF667EEA).withValues(alpha: 0.15),
-              const Color(0xFF764BA2).withValues(alpha: 0.12),
-              const Color(0xFFFF6B6B).withValues(alpha: 0.08),
+              AppColors.primary.withValues(alpha: 0.15),
+              AppColors.accent.withValues(alpha: 0.12),
+              AppColors.error.withValues(alpha: 0.08),
             ],
           ),
           border: Border(
             bottom: BorderSide(
-              color: Colors.white.withValues(alpha: 0.2),
+              color: AppColors.white.withValues(alpha: 0.2),
               width: 0.5,
             ),
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
+              color: AppColors.textPrimary.withValues(alpha: 0.08),
               blurRadius: 15,
               offset: const Offset(0, 5),
             ),
@@ -131,21 +131,17 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: Text(
             _getScreenTitle(),
             key: ValueKey(selectedIndex),
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
+            style: AppFonts.h6(color: AppColors.white).copyWith(
+              fontWeight: AppFonts.bold,
             ),
           ),
         ),
         const SizedBox(height: 2),
         Text(
           _getScreenSubtitle(),
-          style: TextStyle(
-            color: Colors.white.withValues(alpha: 0.8),
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-          ),
+          style: AppFonts.labelMedium(
+            color: AppColors.white.withValues(alpha: 0.8),
+          ).copyWith(fontWeight: AppFonts.medium),
         ),
       ],
     );
@@ -166,7 +162,7 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildNotificationButton() {
-    const int unreadCount = 2; // This would come from state management
+    final int unreadCount = 2; // This would come from state management
 
     return Material(
       color: Colors.transparent,
@@ -177,10 +173,10 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.2),
+            color: AppColors.white.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withValues(alpha: 0.3),
+              color: AppColors.white.withValues(alpha: 0.3),
               width: 1,
             ),
           ),
@@ -192,7 +188,7 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ? Icons.notifications_active
                       : Icons.notifications_outlined,
                   size: 20,
-                  color: Colors.white,
+                  color: AppColors.white,
                 ),
               ),
               if (unreadCount > 0)
@@ -211,14 +207,12 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
                     decoration: BoxDecoration(
                       color: AppColors.error,
                       borderRadius: BorderRadius.circular(8),
-                      border: Border.all(color: Colors.white, width: 1),
+                      border: Border.all(color: AppColors.white, width: 1),
                     ),
                     child: Text(
                       unreadCount.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
+                      style: AppFonts.labelSmall(color: AppColors.white).copyWith(
+                        fontWeight: AppFonts.bold,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -238,10 +232,10 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.15),
+          color: AppColors.white.withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.25),
+            color: AppColors.white.withValues(alpha: 0.25),
             width: 1,
           ),
         ),
@@ -252,13 +246,13 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFFF6B6B), Color(0xFFFF8E53)],
+                  gradient: LinearGradient(
+                    colors: [AppColors.error, AppColors.warning],
                   ),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 1),
+                  border: Border.all(color: AppColors.white, width: 1),
                 ),
-                child: const Icon(Icons.person, color: Colors.white, size: 14),
+                child: const Icon(Icons.person, color: AppColors.white, size: 14),
               ),
             ),
             Positioned(
@@ -270,7 +264,7 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
                 decoration: BoxDecoration(
                   color: AppColors.success,
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 1),
+                  border: Border.all(color: AppColors.white, width: 1),
                 ),
               ),
             ),
@@ -310,13 +304,13 @@ class AdminAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             const PopupMenuDivider(),
-            const PopupMenuItem(
+            PopupMenuItem(
               value: 'logout',
               child: Row(
                 children: [
-                  Icon(Icons.logout, color: Colors.red),
+                  Icon(Icons.logout, color: AppColors.error),
                   SizedBox(width: 8),
-                  Text('Logout', style: TextStyle(color: Colors.red)),
+                  Text('Logout', style: AppFonts.bodySmall(color: AppColors.error)),
                 ],
               ),
             ),
