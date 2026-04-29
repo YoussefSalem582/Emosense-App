@@ -2,6 +2,14 @@
 
 ---
 
+## April 29, 2026 — Merge `refactor/tickets-subfeatures` into `master`
+
+**Status:** Complete
+
+**What changed:** Completed integration on `master` (commit after merge: conflict resolution in `dependency_injection.dart`, removed legacy `lib/features/auth/presentation/pages/auth/login_screens/login_screen.dart`, fixed `lib/features/auth/login/presentation/pages/login_screen.dart` import for `EmployeeNavigationScreen`, fixed `lib/features/tickets/shared/domain/usecases/ticket_no_params.dart` package re-export, `git rm --cached` for `.claude/settings.local.json`). `dart analyze lib` clean.
+
+---
+
 ## April 29, 2026 — Merge employee + analysis sub-features into tickets branch
 
 **Status:** Complete

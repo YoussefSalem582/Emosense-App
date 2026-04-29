@@ -1,7 +1,7 @@
 # 📊 Technology 92 — Current Project Status
 
 > **Last Updated:** April 29, 2026
-> **Version:** 0.5.2 (profile bug fixes + integration branch: tickets + employee + analysis sub-features merged locally on `refactor/tickets-subfeatures`)
+> **Version:** 0.5.2 (integrated `refactor/tickets-subfeatures` → `master`; auth-stack + tickets + employee + analysis sub-features)
 > **Flutter:** 3.38.4 / Dart 3.10.3
 > **Status:** ✅ MVP Complete | 📚 Documentation Complete | ✅ Essential Data Wizard | ✅ Offline-First Architecture | 📋 Google Play Ready | 🍎 iOS App Store Setup Done | ✅ Bug Audit Pass (8+3 fixes) | 🚧 Dashboard Scaffolded | 🚧 Production Publish Pending
 
