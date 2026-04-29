@@ -2,6 +2,18 @@
 
 ---
 
+## April 29, 2026 — Merge employee + analysis sub-features into tickets branch
+
+**Status:** Complete
+
+**What changed:** On `refactor/tickets-subfeatures`, merged `refactor/employee-sub-features` then `feature/analysis-sub-features`. Conflicts resolved in `lib/core/di/dependency_injection.dart` (combined analysis sub-feature imports with tickets admin/employee/social stack), `employee_screen_factory.dart` (package imports + `video_analysis` screen path + `tickets/employee` bloc/page), `lib/shared/presentation/screens.dart` (employee barrel + `analysis/shared` `analysis_screens.dart`), removed obsolete `lib/features/employee/presentation/pages/employee_screens.dart`, updated `lib/features/employee/employee_screens.dart` video export path.
+
+**Verification:** `dart analyze lib` — no issues.
+
+**Files touched (high level):** merge commits on `refactor/tickets-subfeatures`; see `CHANGELOG.md` [0.5.2] Changed.
+
+---
+
 ## April 29, 2026 — Claude settings security + gitignore
 
 **Status:** Complete
