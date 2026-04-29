@@ -5,13 +5,13 @@ alwaysApply: true
 
 # Project Scope
 
-**Only work on `technology_ninety_two_app/` (the Flutter mobile app).**
+**Only work on this Flutter app at the repository root** (`lib/`, assets, platform projects, `pubspec.yaml`, etc.).
 
-Do NOT modify, create, or delete files in:
+Do NOT modify, create, or delete files in (when those sibling folders exist beside this repo):
 - `technology_ninety_two_backend-main/` — Laravel backend (another team)
 - `technology_ninety_two_front_end-main/` — Next.js frontend (another team)
 
-These repos are included for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
+Those directories are for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
 
 ## Agent tooling (repository root)
 
@@ -19,34 +19,33 @@ These repos are included for reference only (API contracts, route definitions, m
 
 ## Project Overview
 
-- **App**: Flutter job marketplace mobile application
+- **App**: Emosense — emotion recognition and analytics (`emosense_mobile`)
 - **Architecture**: Clean Architecture + BLoC (presentation → domain ← data)
 - **State Management**: flutter_bloc
-- **Routing**: GoRouter with `RouteNames` constants
-- **DI**: GetIt + injectable (`injection_container.dart`)
+- **Routing**: `MaterialApp` + `AppRouter.generateRoute` (`lib/core/routing/app_router.dart`)
+- **DI**: GetIt (`lib/core/di/dependency_injection.dart` — `initDependencies()`)
 - **Networking**: Dio (`ApiClient` wrapper with interceptors)
 - **Local Storage**: SharedPreferences, FlutterSecureStorage
-- **Secrets**: `--dart-define` at build time + `EnvConfig` — never hardcode secrets
+- **Secrets**: `.env` + **`AppConfig`** (`flutter_dotenv`; `AppConfig.loadConfig()` in `lib/main.dart`) — never hardcode secrets
 - **Auth**: Email/password + Google Sign-In (`google_sign_in` → backend OAuth exchange)
 - **Localization**: ARB-based l10n (English + Arabic) via `context.l10n`
-- **Firebase**: Firebase Core for analytics/crashlytics foundation
-- **Monitoring**: Sentry (`sentry_flutter`) for error tracking and performance monitoring
-- **Offline-First**: `ConnectivityCubit` + `CachePolicy` (TTL tiers) + `OfflineQueue` (mutation queue)
 
 ## Entry Points
 
 | File | Purpose |
 |------|---------|
-| `lib/main.dart` | App entry point (inits Firebase, DI, Sentry) |
-| `lib/app.dart` | MaterialApp / GoRouter setup |
-| `lib/injection_container.dart` | GetIt DI registration |
+| `lib/main.dart` | `AppConfig.loadConfig()` + `initDependencies()` |
+| `lib/app.dart` | `EmosenseApp` — `MaterialApp` + `AppRouter.generateRoute` |
+| `lib/core/di/dependency_injection.dart` | GetIt DI registration |
+| `lib/core/routing/app_router.dart` | Route constants + `generateRoute` |
 
 ## Key Directories
 
 | Directory | Purpose |
 |-----------|---------|
-| `lib/config/` | env, routes, theme |
-| `lib/core/` | api, constants, error, extensions, usecase, utils |
+| `lib/core/config/` | `app_config` / environment bootstrap |
+| `lib/core/routing/` | `AppRouter` |
+| `lib/core/` | DI, API, networking, utilities |
 | `lib/shared/` | assets, spacing, reusable widgets |
 | `lib/features/` | Feature modules (Clean Architecture) |
 | `lib/l10n/` | ARB files + generated localizations |

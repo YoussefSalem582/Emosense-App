@@ -1,10 +1,18 @@
 # Changelog
 
-All notable changes to the Technology 92 app will be documented in this file.
+All notable changes to the Emosense app will be documented in this file. Older releases may refer to Technology 92 in section titles where preserved for history.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+---
+
+## [Unreleased]
+
+### Changed
+
+- **Documentation & agent tooling** — (1) Emosense/repo-root alignment: removed **`technology_ninety_two_app/`** path prefixes, Cursor globs use **`lib/...`**, DI references **`lib/core/di/dependency_injection.dart`**, staging IDs in **`08_security`/Play**, **`.claude/settings.json`** allowlist roots, ignore-file headers — see prior summary. (2) **Routing accuracy (`AppRouter`):** synced **`AGENTS` / `CLAUDE` / `.agents/AGENTS`**, **`project-scope`**, **`dart-conventions`**, **`add-*` / `new-screen` / `review`**, **`01_folder_structure`** (removed legacy **`jobs/`** subtree), **`02_architecture` §6**, **`03_how_to_add_new_feature`**, **`CURRENT_STATUS`** to **`MaterialApp` + `AppRouter.generateRoute`** (Navigator 1) vs outdated GoRouter/`RouteNames` guidance.
+- **`AppConfig` / `.env`** — Removed incorrect **`EnvConfig`** / **`--dart-define`** documentation; **`AGENTS`** / **`CLAUDE`** / **`.agents`** / **`08_security`** / **`09_api`** / **`CURRENT_STATUS`** / **`GOOGLE_PLAY`** now describe **`flutter_dotenv`** + **`AppConfig`** (`lib/main.dart`, `lib/core/config/app_config.dart`).
 ---
 
 ## [0.5.2] - 2026-04-08

@@ -18,7 +18,7 @@ Adding a new API call touches these files (in order):
 | 6 | `data/repositories/*_repository_impl.dart` | Implement the method |
 | 7 | `domain/usecases/` | Create a new use case |
 | 8 | `presentation/bloc/` | Add event + state + handler |
-| 9 | `injection_container.dart` | Register the new use case |
+| 9 | `lib/core/di/dependency_injection.dart` | Register the new use case |
 
 ---
 
@@ -210,7 +210,7 @@ Add an event, handle it in the BLoC, and optionally add a new state.
 
 ## Step 8 — Register in DI
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 
 ```dart
 sl.registerLazySingleton(() => MarkAsReadUseCase(sl()));

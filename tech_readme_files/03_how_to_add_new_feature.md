@@ -18,8 +18,8 @@
 | 8 | Presentation layer — Events & States | `presentation/bloc/` |
 | 9 | Presentation layer — BLoC | `presentation/bloc/` |
 | 10 | Presentation layer — Pages & Widgets | `presentation/pages/`, `presentation/widgets/` |
-| 11 | Register in DI | `injection_container.dart` |
-| 12 | Add route | `config/routes/` |
+| 11 | Register in DI | `lib/core/di/dependency_injection.dart` |
+| 12 | Add route | `lib/core/routing/app_router.dart` (`AppRouter` + `generateRoute`) |
 | 13 | Add translations | `l10n/arb/` |
 
 ---
@@ -432,7 +432,8 @@ Use shared widgets from `lib/shared/widgets/` for common UI (buttons, inputs, lo
 
 ## Step 11 — Register in DI
 
-Open `lib/injection_container.dart` and add a new init function:
+Open `lib/core/di/dependency_injection.dart` and add registrations (typically grouped in a `_initFeatureName()` called from `initDependencies()`):
+
 
 ```dart
 // At the end of initDependencies():
@@ -474,21 +475,20 @@ BlocProvider<NotificationsBloc>(create: (_) => sl<NotificationsBloc>()),
 
 ## Step 12 — Add Route
 
-**`lib/config/routes/route_names.dart`** — add the constant:
+**`lib/core/routing/app_router.dart`** — this project centralizes paths on `AppRouter` and uses `generateRoute(...)`. Add a `static const String` for your path plus a matching `switch`/`case` that returns a `MaterialPageRoute` (or your existing routing helper).
+
+Example pattern (adapt imports and widget names):
 
 ```dart
-static const String notifications = 'notifications';
-```
+// With other route constants:
+static const String notifications = '/notifications';
 
-**`lib/config/routes/app_router.dart`** — add the route:
-
-```dart
-GoRoute(
-  path: '/notifications',
-  name: RouteNames.notifications,
-  pageBuilder: (context, state) =>
-      _buildPage(state: state, child: const NotificationsPage()),
-),
+// Inside generateRoute:
+case notifications:
+  return MaterialPageRoute(
+    builder: (_) => const NotificationsPage(),
+    settings: settings,
+  );
 ```
 
 ---
@@ -523,10 +523,9 @@ flutter gen-l10n
 - [ ] Presentation: States created (extends Equatable)
 - [ ] Presentation: BLoC created (calls use cases, logs transitions)
 - [ ] Presentation: Pages created
-- [ ] DI: All classes registered in `injection_container.dart`
-- [ ] DI: BlocProvider added to `app.dart`
-- [ ] Route: Name added to `route_names.dart`
-- [ ] Route: GoRoute added to `app_router.dart`
+- [ ] DI: All classes registered in `lib/core/di/dependency_injection.dart`
+- [ ] DI: BlocProvider added when required (often in `EmosenseApp` / shell)
+- [ ] Route: Path constant added to `AppRouter` (`lib/core/routing/app_router.dart`) and wired in `generateRoute`
 - [ ] Endpoints: Added to `api_endpoints.dart`
 - [ ] Translations: Keys added to both ARB files
 - [ ] `flutter gen-l10n` run successfully

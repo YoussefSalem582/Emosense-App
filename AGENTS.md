@@ -1,36 +1,32 @@
-# Technology 92 App — Agent Instructions
+# Emosense — Agent Instructions
 
-> **Scope**: Only modify files inside `technology_ninety_two_app/`.
-> The sibling directories `technology_ninety_two_backend-main/` and `technology_ninety_two_front_end-main/` are read-only reference repos — never edit them.
+> **Scope**: Only modify files inside **this Flutter repository** (repository root: `lib/`, `assets/`, platform folders, `pubspec.yaml`, `tech_readme_files/`, etc.).
+> If present beside this repo as sibling folders, `technology_ninety_two_backend-main/` and `technology_ninety_two_front_end-main/` are read-only reference repos — never edit them.
 
 ## Project Overview
 
-Flutter job marketplace app (Android + iOS).
+Emosense — advanced emotion recognition and analytics (Android + iOS). The app includes workforce-style surfaces (`employee/`, ticketing), multimodal emotion analysis modules, authentication, bilingual UI, networking, and resilient feature modules as implemented in `lib/features/`.
 
 - **Architecture**: Clean Architecture + BLoC
 - **State**: `flutter_bloc` (BLoC for features, Cubit for simple state)
-- **Routing**: GoRouter — use `RouteNames` constants, never hardcode paths
-- **DI**: GetIt + injectable — register in `injection_container.dart`
+- **Routing**: `MaterialApp` + `AppRouter.generateRoute`; path constants live on `AppRouter` (`lib/core/routing/app_router.dart`).
+- **DI**: GetIt — register in `lib/core/di/dependency_injection.dart` (`initDependencies()`); optional barrel `lib/core/di/injection_container.dart`
 - **Networking**: Dio via `ApiClient` wrapper with auth/language/logging/retry interceptors
 - **Storage**: `FlutterSecureStorage` for tokens, `SharedPreferences` for preferences
-- **Secrets**: `--dart-define` at build time + `EnvConfig` — never hardcode secrets
+- **Secrets**: `.env` files loaded at startup via `AppConfig.loadConfig()` (`flutter_dotenv`); read values through **`AppConfig`** (`lib/core/config/app_config.dart`) — never hardcode secrets
 - **Auth**: Email/password + Google Sign-In (`google_sign_in` → backend OAuth exchange)
 - **Localization**: ARB-based (English + Arabic) via `context.l10n`
-- **Firebase**: Firebase Core for analytics/crashlytics foundation
-- **Monitoring**: Sentry (`sentry_flutter`) for error tracking and performance monitoring
-- **Offline-First**: `ConnectivityCubit` + `CachePolicy` (TTL tiers) + `OfflineQueue` (mutation queue)
-- **Background Tasks**: `flutter_foreground_task` for attendance timer lock-screen notification
 - **Platform**: Windows 11 development environment
 
 ## Key Entry Points
 
 | File | Purpose |
 |------|---------|
-| `lib/main.dart` | App start: inits Firebase, DI, Sentry |
-| `lib/app.dart` | MaterialApp + GoRouter setup |
-| `lib/injection_container.dart` | GetIt registration |
-| `lib/core/api/api_endpoints.dart` | All API path constants |
-| `lib/config/routes/route_names.dart` | All route name constants |
+| `lib/main.dart` | App start: loads env (`AppConfig.loadConfig`), `initDependencies()` |
+| `lib/app.dart` | Root `EmosenseApp` — `MaterialApp` → `AppRouter.generateRoute` |
+| `lib/core/di/dependency_injection.dart` | GetIt registration (`initDependencies()`) |
+| `lib/core/routing/app_router.dart` | Route name constants (`AppRouter.*`) + `generateRoute` |
+| `lib/core/api/api_endpoints.dart` | API path constants where used by features |
 
 ## Feature Architecture
 
@@ -63,7 +59,7 @@ features/<name>/
 | Spacing | `AppSpacing.base`, `AppSpacing.pagePadding` | raw `16.0` |
 | Radius | `AppRadius.md`, `AppRadius.lg` | raw `BorderRadius.circular(8)` |
 | Assets | `AppImages.logo`, `AppIcons.settings` | `'assets/images/logo.png'` |
-| Routes | `RouteNames.home`, `RouteNames.login` | `'/home'` |
+| Routes | `AppRouter.login`, etc. (`lib/core/routing/app_router.dart`) | `'/login'` string literals duplicated in widgets |
 
 **Spacing scale**: xxs=2, xs=4, sm=8, md=12, base=16, lg=20, xl=24, xxl=32, xxxl=40, huge=48, massive=64
 
@@ -148,12 +144,12 @@ Mutation operations (POST/PUT/PATCH/DELETE) must use `OfflineQueue` when offline
 6. Implement in repository with exception → failure mapping:
    - `AuthException` → `AuthFailure`, `NetworkException` → `NetworkFailure`, `ServerException` → `ServerFailure`
 7. Create use case extending `UseCase<ReturnType, Params>`
-8. Wire into BLoC; register all in `injection_container.dart`
+8. Wire into BLoC; register all in `lib/core/di/dependency_injection.dart`
 
 ## DI Registration
 
 ```dart
-// injection_container.dart
+// lib/core/di/dependency_injection.dart
 sl.registerLazySingleton(() => FeatureRemoteDataSource(apiClient: sl()));
 sl.registerLazySingleton<FeatureRepository>(() => FeatureRepositoryImpl(dataSource: sl()));
 sl.registerLazySingleton(() => GetFeatureUseCase(repository: sl()));
@@ -170,7 +166,7 @@ sl.registerFactory(() => FeatureBloc(useCase: sl()));  // Factory — new instan
 ## Security
 
 - **Never hardcode** API URLs, tokens, client IDs, keys in Dart source
-- Secrets live in `.env` (git-ignored); access only via `EnvConfig.baseUrl`, `EnvConfig.googleClientId`, etc.
+- Secrets live in `.env` / `.env.development` / `.env.production` (git-ignored); access via getters on **`AppConfig`** (`lib/core/config/app_config.dart`), e.g. `AppConfig.baseUrl`, `AppConfig.apiKey`.
 - Add placeholders to `.env.example` (committed)
 - Auth tokens → `FlutterSecureStorage` with `encryptedSharedPreferences: true`; never `SharedPreferences`
 - Storage key strings centralized in `core/constants/storage_keys.dart`

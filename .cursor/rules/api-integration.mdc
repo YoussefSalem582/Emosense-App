@@ -20,7 +20,7 @@ alwaysApply: false
 6. Implement in repository impl with exception-to-failure mapping
 7. Create use case
 8. Wire into BLoC
-9. Register in `injection_container.dart`
+9. Register in `lib/core/di/dependency_injection.dart`
 
 ## ApiClient Methods
 

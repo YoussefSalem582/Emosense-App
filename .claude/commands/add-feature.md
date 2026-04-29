@@ -10,7 +10,7 @@ Scaffold a complete Clean Architecture feature module with all required layers.
 
 ## Instructions
 
-Follow these 13 steps in order. Reference `technology_ninety_two_app/tech_readme_files/03_how_to_add_new_feature.md` for detailed examples.
+Follow these 13 steps in order. Reference `tech_readme_files/03_how_to_add_new_feature.md` for detailed examples.
 
 ### Step 1 — Create Folder Structure
 
@@ -99,7 +99,7 @@ lib/features/<feature_name>/
 
 ### Step 12 — Register in DI
 
-In `lib/injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 
 - Data sources, repos, use cases → `registerLazySingleton`
 - BLoC → `registerFactory`
@@ -115,9 +115,9 @@ In `lib/injection_container.dart`:
 ## Post-Completion Checklist
 
 - [ ] All 3 layers created (domain, data, presentation)
-- [ ] DI registered in `injection_container.dart`
+- [ ] DI registered in `lib/core/di/dependency_injection.dart`
 - [ ] BlocProvider added to `app.dart`
-- [ ] Route added to `app_router.dart` with `RouteNames` constant
+- [ ] Route added to `lib/core/routing/app_router.dart` with an `AppRouter` constant
 - [ ] Endpoints added to `api_endpoints.dart`
 - [ ] Translations added to both ARB files
 - [ ] `flutter gen-l10n` executed

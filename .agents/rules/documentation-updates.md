@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Documentation Updates (Mandatory)
 
-Documentation lives in `technology_ninety_two_app/tech_readme_files/`. The changelog is at `technology_ninety_two_app/CHANGELOG.md`.
+Documentation lives in `tech_readme_files/` (repository root). The changelog is at `CHANGELOG.md` (repository root).
 
 For `.agents/`, `.claude/`, `.cursor/`, and related `*ignore` files, see **`AGENTS.md`** — **Agent tooling layout (repository root)**.
 

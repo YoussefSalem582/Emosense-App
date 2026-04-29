@@ -2,51 +2,46 @@
 
 ## Project Scope
 
-**Only work on `technology_ninety_two_app/` (the Flutter mobile app).**
+**Only work on this Flutter app at the repository root** (`lib/`, assets, platform projects, `pubspec.yaml`, etc.).
 
-Do NOT modify, create, or delete files in:
+Do NOT modify, create, or delete files in (when those sibling folders exist beside this repo):
 - `technology_ninety_two_backend-main/` — Laravel backend (another team)
 - `technology_ninety_two_front_end-main/` — Next.js frontend (another team)
 
-These repos are included for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
+Those directories are for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
 
 ## Project Overview
 
-- **App**: Flutter job marketplace mobile application
-- **Architecture**: Clean Architecture + BLoC (presentation → domain ← data)
-- **State Management**: flutter_bloc
-- **Routing**: GoRouter with `RouteNames` constants
-- **DI**: GetIt + injectable (`injection_container.dart`)
+- **App**: Emosense (`emosense_mobile`) — advanced emotion recognition and analytics. Includes workforce-oriented surfaces (`employee/`, ticketing), multimodal analysis modules, bilingual UI, networking, and resilient feature layouts under `lib/features/`.
+- **Architecture**: Clean Architecture + BLoC
+- **State Management**: `flutter_bloc` (BLoC / Cubit)
+- **Routing**: `MaterialApp` + `AppRouter.generateRoute`; path constants on `AppRouter` (`lib/core/routing/app_router.dart`).
+- **DI**: GetIt — register in `lib/core/di/dependency_injection.dart` (`initDependencies()`); optional barrel `lib/core/di/injection_container.dart`
 - **Networking**: Dio (`ApiClient` wrapper with interceptors)
 - **Local Storage**: SharedPreferences, FlutterSecureStorage
-- **Secrets**: `--dart-define` at build time + `EnvConfig` — never hardcode secrets
+- **Secrets**: `.env` loaded via `AppConfig.loadConfig()` (`flutter_dotenv`); values via **`AppConfig`** (`lib/core/config/app_config.dart`) — never hardcode secrets
 - **Auth**: Email/password + Google Sign-In (`google_sign_in` → backend OAuth exchange)
 - **Localization**: ARB-based l10n (English + Arabic) via `context.l10n`
-- **Firebase**: Firebase Core for analytics/crashlytics foundation
-- **Monitoring**: Sentry (`sentry_flutter`) for error tracking and performance monitoring
-- **Offline-First**: `ConnectivityCubit` + `CachePolicy` (TTL tiers) + `OfflineQueue` (mutation queue)
-- **Background Tasks**: `flutter_foreground_task` for attendance timer lock-screen notification
 
 ## Entry Points
 
 | File | Purpose |
 |------|---------|
-| `lib/main.dart` | App entry point (inits Firebase, DI, Sentry) |
-| `lib/app.dart` | MaterialApp / GoRouter setup |
-| `lib/injection_container.dart` | GetIt DI registration |
+| `lib/main.dart` | `AppConfig.loadConfig()` then `initDependencies()` |
+| `lib/app.dart` | `EmosenseApp` → `MaterialApp` + `AppRouter.generateRoute` |
+| `lib/core/di/dependency_injection.dart` | GetIt DI (`initDependencies()`) |
+| `lib/core/routing/app_router.dart` | `AppRouter` constants + `generateRoute` |
 
 ## Key Directories
 
 | Directory | Purpose |
 |-----------|---------|
-| `lib/config/` | env, routes, theme |
-| `lib/core/` | api, constants, error, extensions, usecase, utils |
-| `lib/core/network/` | Offline-first: `ConnectivityService`, `ConnectivityCubit`, `ConnectivityState`, `CachePolicy`, `OfflineQueue`, `OfflineQueueProcessor` |
-| `lib/shared/` | assets, spacing, reusable widgets |
-| `lib/features/` | Feature modules (Clean Architecture) |
-| `lib/l10n/` | ARB files + generated localizations |
-
----
+| `lib/core/config/` | `app_config.dart` (+ dotenv bootstrapping) |
+| `lib/core/routing/` | Navigator wiring via `AppRouter` |
+| `lib/core/` | DI, constants, APIs, routing, helpers |
+| `lib/core/network/` | HTTP client + connectivity stack (`network_info`, connection blocs/events) |
+| `lib/shared/` | assets/spacing/widgets shared across modules |
+| `lib/l10n/` | ARB files + codegen output |
 
 ## Dart & Flutter Conventions
 
@@ -57,7 +52,7 @@ These repos are included for reference only (API contracts, route definitions, m
 - **Spacing**: Use `AppSpacing.verticalBase`, `AppSpacing.paddingAll16`, `AppSpacing.pagePadding`
 - **Radius**: Use `AppRadius.md`, `AppRadius.lg`, etc.
 - **Assets**: Use `AppImages.logo`, `AppIcons.settings` — never hardcode asset paths
-- **Routes**: Use `RouteNames.home`, `RouteNames.login` — never hardcode path strings
+- **Routes**: Use `AppRouter` constants (`lib/core/routing/app_router.dart`) — avoid hardcoding literals outside centralized routing.
 
 ### Localization
 
@@ -216,7 +211,7 @@ Dependencies only point inward: `Presentation → Domain ← Data`
 
 ### DI Registration
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 - Data sources, repos, use cases → `registerLazySingleton`
 - BLoCs → `registerFactory` (new instance per provider)
 - Add `BlocProvider` in `app.dart`
@@ -330,7 +325,7 @@ class FeatureBloc extends Bloc<FeatureEvent, FeatureState> {
 6. Implement in repository impl with exception-to-failure mapping
 7. Create use case
 8. Wire into BLoC
-9. Register in `injection_container.dart`
+9. Register in `lib/core/di/dependency_injection.dart`
 
 ### ApiClient Methods
 
@@ -406,8 +401,8 @@ Mutation operations (POST/PUT/PATCH/DELETE) must use `OfflineQueue` when offline
 ## Security Conventions
 
 - **Never hardcode** API URLs, tokens, client IDs, or any secret in Dart source
-- All secrets are passed via `--dart-define` at build time and accessed via `EnvConfig` getters
-- Add placeholders for new secrets to `.env.example` (committed to git) and to build scripts
+- Runtime configuration loads from `.env` via **`AppConfig.loadConfig()`**; expose keys through getters on **`AppConfig`**
+- Add placeholders for new keys to `.env.example` (committed to git)
 - Auth tokens MUST use `FlutterSecureStorage` (`encryptedSharedPreferences: true`), NOT `SharedPreferences`
 - Storage key strings are centralized in `core/constants/storage_keys.dart`
 - Release builds use `scripts/build_release.ps1` (`--obfuscate --split-debug-info`)
@@ -415,12 +410,11 @@ Mutation operations (POST/PUT/PATCH/DELETE) must use `OfflineQueue` when offline
 
 ### Environment Config
 
-Access secrets only through `EnvConfig`:
-- `EnvConfig.baseUrl`
-- `EnvConfig.apiVersion`
-- `EnvConfig.googleClientId`
-- `EnvConfig.sentryDsn`
-- `EnvConfig.current.isProduction` / `EnvConfig.current.enableLogging`
+Access configuration through **`AppConfig`**:
+
+- `AppConfig.baseUrl`, `AppConfig.apiKey`, timeouts, `AppConfig.environment`
+- `AppConfig.isProduction` / `AppConfig.enableLogging` / `AppConfig.debugMode`
+- Extend `lib/core/config/app_config.dart` for new keys instead of importing `flutter_dotenv` elsewhere
 
 ### Token Storage
 
@@ -557,28 +551,26 @@ lib/features/<feature_name>/
 
 ### Step 12 — Register in DI
 
-In `lib/injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 - Data sources, repos, use cases → `registerLazySingleton`
 - BLoC → `registerFactory`
 - Add `BlocProvider` in `app.dart`
 
 ### Step 13 — Add Route & Translations
 
-- Add route name to `lib/config/routes/route_names.dart`
-- Add GoRoute to `lib/config/routes/app_router.dart`
+- Add `AppRouter.<route>` constant + `case` in `lib/core/routing/app_router.dart`'s `generateRoute`
 - Add l10n keys to both `lib/l10n/arb/app_en.arb` and `app_ar.arb`
 - Run `flutter gen-l10n`
 
 ### Post-Completion Checklist
 
 - [ ] All 3 layers created (domain, data, presentation)
-- [ ] DI registered in `injection_container.dart`
-- [ ] BlocProvider added to `app.dart`
-- [ ] Route added to `app_router.dart` with `RouteNames` constant
-- [ ] Endpoints added to `api_endpoints.dart`
+- [ ] DI registered in `lib/core/di/dependency_injection.dart`
+- [ ] BlocProvider added when required (typically in `EmosenseApp`)
+- [ ] Route added to `lib/core/routing/app_router.dart` with `AppRouter` constant
+- [ ] Endpoints added to `api_endpoints.dart` (if applicable)
 - [ ] Translations added to both ARB files
 - [ ] `flutter gen-l10n` executed
-- [ ] Offline-first: reads use `CachePolicy`, writes check `ConnectivityCubit` + `OfflineQueue`
 - [ ] CHANGELOG.md updated
 - [ ] DOCUMENTATION_UPDATE_SUMMARY.md updated
 - [ ] CURRENT_STATUS.md updated
@@ -642,7 +634,7 @@ New file: `domain/usecases/<action>_usecase.dart`
 
 ### Step 8 — Register in DI
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 - Register new use case as `registerLazySingleton`
 - Update BLoC factory to inject new use case
 
@@ -721,7 +713,7 @@ Same inventory as root **`AGENTS.md`** — keeps Copilot/agents that read only t
 
 ## Documentation Updates (Mandatory)
 
-Documentation lives in `technology_ninety_two_app/tech_readme_files/`. The changelog is at `technology_ninety_two_app/CHANGELOG.md`.
+Documentation lives in `tech_readme_files/` (repository root). The changelog is at `CHANGELOG.md` (repository root).
 
 ### After EVERY feature, fix, refactor, or meaningful change, you MUST update:
 

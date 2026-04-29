@@ -10,7 +10,7 @@ Connect a new backend endpoint end-to-end through all Clean Architecture layers.
 
 ## Instructions
 
-Reference `technology_ninety_two_app/tech_readme_files/04_how_to_add_new_api.md` for detailed examples.
+Reference `tech_readme_files/04_how_to_add_new_api.md` for detailed examples.
 
 ### Step 1 — Define Endpoint
 
@@ -71,7 +71,7 @@ New file: `domain/usecases/<action>_usecase.dart`
 
 ### Step 8 — Register in DI
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 
 - Register new use case as `registerLazySingleton`
 - Update BLoC factory to inject new use case

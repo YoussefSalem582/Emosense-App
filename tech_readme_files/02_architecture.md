@@ -207,7 +207,7 @@ Every widget under `shared/widgets/` is designed to be **generic** — no featur
 
 ## 5. Dependency Injection
 
-The app uses **GetIt** as its service locator. All registrations happen in `injection_container.dart`.
+The app uses **GetIt** as its service locator. All registrations happen in `lib/core/di/dependency_injection.dart`.
 
 ### Registration Strategy
 
@@ -242,50 +242,22 @@ GetIt
 
 ## 6. Routing
 
-The app uses **GoRouter** with two main levels:
+The shell uses **`MaterialApp`** (`lib/app.dart`) with **`initialRoute: AppRouter.splash`** and **`onGenerateRoute: AppRouter.generateRoute`**. Canonical paths live on **`AppRouter`** in `lib/core/routing/app_router.dart` as `static const String` fields (`AppRouter.login`, `AppRouter.adminDashboard`, `/text-analysis`, etc.).
 
-1. **Root-level routes** — Splash, Language Select, Onboarding, Login, Register, Forgot Password, Job Details, Edit Profile
-2. **ShellRoute** — Wraps the bottom navigation (`MainShell`), containing: Home, Jobs, Profile, Settings
+Navigation is Navigator 1-friendly; **`GoRouter` is not used** in production wiring.
 
-### Navigation Flow
+Prefer `Navigator.pushNamed(context, AppRouter.<constant>)` (or builders that wrap the same constants) instead of scattering raw literals outside `generateRoute`'s switch.
 
-```
-Splash (animated logo)
-  │
-  └── Always ──→ /language-select ──→ /onboarding ──→ /login
-```
-
-Every app launch follows the same path: splash animation → language
-selection → onboarding carousel → login. There is no `isFirstLaunch`
-gate; users see the language and onboarding screens on every launch.
-
-All auth screens (language select, onboarding, login, register, forgot
-password) share the same subtle `pattern.png` background via the reusable
-`AuthScaffoldWithPattern` widget.
-
-### Route Table
+Typical scaffold:
 
 ```dart
-GoRouter(
-  routes: [
-    GoRoute(path: '/', ...),                  // SplashPage
-    GoRoute(path: '/language-select', ...),    // LanguageSelectPage (every launch)
-    GoRoute(path: '/onboarding', ...),         // OnboardingPage (every launch)
-    GoRoute(path: '/login', ...),              // LoginPage
-    ShellRoute(                                // MainShell (bottom nav)
-      routes: [
-        GoRoute(path: '/home', ...),
-        GoRoute(path: '/jobs', ...),
-        GoRoute(path: '/profile', ...),
-        GoRoute(path: '/settings', ...),
-      ],
-    ),
-    GoRoute(path: '/jobs/:id', ...),           // JobDetailsPage (full screen, no bottom nav)
-  ],
-)
+MaterialApp(
+  initialRoute: AppRouter.splash,
+  onGenerateRoute: AppRouter.generateRoute,
+);
 ```
 
-All route names live in `RouteNames` — no hardcoded path strings in UI code.
+Flows (splash → auth → employee/admin/analysis) evolve inside `generateRoute`; read that file alongside the splash/onboarding/authentication modules for authoritative behavior.
 
 ---
 

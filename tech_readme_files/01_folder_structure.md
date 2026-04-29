@@ -7,7 +7,7 @@
 ## Top-Level
 
 ```
-technology_ninety_two_app/
+emosense_mobile (Flutter app repository root)/
 ├── lib/                        ← All Dart source code
 ├── assets/                     ← Static resources (fonts, icons, images)
 ├── scripts/                    ← Build scripts (debug & release)
@@ -40,44 +40,28 @@ lib/
 │                                          # - Initialises DI (GetIt)
 │                                          # - Runs the root widget
 │
-├── app.dart                               # Root MaterialApp.router widget
-│                                          # - Wraps app in MultiBlocProvider
-│                                          # - Applies theme (light / dark)
-│                                          # - Registers localisation delegates
-│                                          # - Connects GoRouter
+├── app.dart                               # Root `EmosenseApp` — MaterialApp + `AppRouter.generateRoute`; theme & l10n
 │
-├── injection_container.dart               # GetIt service locator setup
-│                                          # - Registers external deps (prefs, storage, Talker)
-│                                          # - Registers ApiClient
-│                                          # - Bootstraps each feature (auth, jobs, profile, kpi)
-│
-├── config/                                # ── Application-wide configuration
-│   ├── environment/
-│   │   └── env_config.dart                # Reads secrets from .env — base URL, API version, Google client ID
+├── core/
+│   ├── di/
+│   │   ├── dependency_injection.dart      # GetIt — `initDependencies()`
+│   │   └── injection_container.dart       # Barrel re-export (optional)
+│   ├── config/
+│   │   └── app_config.dart                # Loads environment / bootstrap
+│   ├── routing/
+│   │   ├── app_router.dart                # Named route constants + `generateRoute`
+│   │   └── screen_transitions.dart
+│   ├── constants/                         # app_colors, typography, themes, strings, durations, limits, storage keys …
 │   │
-│   ├── routes/
-│   │   ├── app_router.dart                # GoRouter route definitions (shell routes, transitions)
-│   │   └── route_names.dart               # String constants for every route name
-│   │
-│   └── theme/
-│       ├── app_colors.dart                # Every colour used in the app (brand, neutral, semantic, social, status)
-│       ├── app_text_styles.dart           # Material 3 type scale (display → label), PublicSans/Tajawal (locale-aware)
-│       ├── light_theme.dart               # Full ThemeData for light mode
-│       └── dark_theme.dart                # Full ThemeData for dark mode
-│
-├── core/                                  # ── Framework-level utilities (shared across ALL features)
 │   ├── api/
-│   │   ├── api_client.dart                # Dio HTTP client with interceptors (auth, lang, logger)
-│   │   ├── api_endpoints.dart             # Every API path as a static const / method
-│   │   └── api_response.dart              # Generic ApiResponse<T> envelope + PaginationMeta
+│   │   ├── api_client.dart                # Dio HTTP client with interceptors (auth, language, logging)
+│   │   ├── api_endpoints.dart             # API path constants / methods (see codebase for exact names)
+│   │   └── …                              # Response envelopes / helpers as implemented in repo
 │   │
-│   ├── constants/
-│   │   ├── app_constants.dart             # Page sizes, timeouts, file limits, animation durations
-│   │   └── storage_keys.dart              # Key strings for SharedPreferences / SecureStorage
-│   │
-│   ├── error/
-│   │   ├── exceptions.dart                # Data-layer exceptions (Server, Network, Auth, Validation…)
-│   │   └── failures.dart                  # Domain-layer failures (mirrors exceptions, used with Either)
+│   ├── errors/
+│   │   ├── api_exception.dart
+│   │   ├── app_error.dart
+│   │   └── failures.dart
 │   │
 │   ├── extensions/
 │   │   ├── context_extensions.dart        # BuildContext helpers (theme, l10n, snackbars, screen size)
@@ -235,74 +219,11 @@ lib/
 │   │           ├── home_recent_kpis.dart           # Last 3 KPI entries with See All
 │   │           └── home_recent_attendance.dart     # Last 3 attendance records with See All
 │   │
-│   ├── jobs/                              # ── Jobs feature (split into sub-features)
-│   │   ├── jobs_list/                     # Job listing sub-feature
-│   │   │   ├── domain/usecases/
-│   │   │   │   ├── get_jobs_usecase.dart
-│   │   │   │   └── get_lookups_usecase.dart
-│   │   │   └── presentation/
-│   │   │       ├── bloc/
-│   │   │       │   ├── jobs_list_bloc.dart
-│   │   │       │   ├── jobs_list_event.dart
-│   │   │       │   └── jobs_list_state.dart
-│   │   │       ├── pages/
-│   │   │       │   └── jobs_page.dart            # Infinite-scroll list + pull-to-refresh + filters
-│   │   │       └── widgets/
-│   │   │           └── job_filter_sheet.dart     # Filter bottom sheet (salary, type, location)
-│   │   │
-│   │   ├── job_details/                   # Job detail sub-feature
-│   │   │   ├── domain/usecases/
-│   │   │   │   └── apply_for_job_usecase.dart
-│   │   │   └── presentation/
-│   │   │       ├── bloc/
-│   │   │       │   ├── job_details_bloc.dart
-│   │   │       │   ├── job_details_event.dart
-│   │   │       │   └── job_details_state.dart
-│   │   │       ├── pages/
-│   │   │       │   └── job_details_page.dart     # Full job detail view with apply button
-│   │   │       └── widgets/
-│   │   │           ├── job_apply_bar.dart         # Bottom apply bar
-│   │   │           ├── job_company_info.dart      # Company info section
-│   │   │           ├── job_details_skeleton.dart  # Skeleton loading placeholder
-│   │   │           ├── job_header.dart            # Job title / salary header
-│   │   │           ├── job_info_chips.dart        # Info chips (type, location, etc.)
-│   │   │           └── job_section_title.dart     # Section title widget
-│   │   │
-│   │   ├── job_search/                    # Job search sub-feature
-│   │   │   ├── domain/usecases/
-│   │   │   │   └── search_jobs_usecase.dart
-│   │   │   └── presentation/
-│   │   │       ├── bloc/
-│   │   │       │   ├── job_search_bloc.dart
-│   │   │       │   ├── job_search_event.dart
-│   │   │       │   └── job_search_state.dart
-│   │   │       └── pages/
-│   │   │           └── job_search_page.dart      # Search input + results
-│   │   │
-│   │   ├── saved_jobs/                    # Saved jobs sub-feature
-│   │   │   └── presentation/
-│   │   │       ├── bloc/
-│   │   │       │   ├── saved_jobs_bloc.dart
-│   │   │       │   ├── saved_jobs_event.dart
-│   │   │       │   └── saved_jobs_state.dart
-│   │   │       └── pages/
-│   │   │           └── saved_jobs_page.dart      # Saved jobs list
-│   │   │
-│   │   └── shared/                        # Shared across all job sub-features
-│   │       ├── data/
-│   │       │   ├── datasources/
-│   │       │   │   ├── jobs_remote_datasource.dart    # API calls: jobs list, details, search, apply
-│   │       │   │   └── saved_jobs_local_datasource.dart # Local saved jobs cache
-│   │       │   └── models/
-│   │       │       └── job_model.dart                 # JobModel (fromJson)
-│   │       ├── domain/
-│   │       │   ├── entities/
-│   │       │   │   └── job_entity.dart                # JobEntity, JobFilterEntity, LookupEntity
-│   │       │   └── repositories/
-│   │       │       └── jobs_repository.dart            # Abstract contract
-│   │       └── presentation/widgets/
-│   │           ├── job_card.dart                       # Compact job listing card
-│   │           └── job_card_skeleton.dart              # Skeleton loading for job card
+│   ├── analysis/                          # ── Text / video / voice analysis + shared analysis widgets (`analysis/` tree)
+│   ├── emotion/                           # ── Analytics & emotion dashboards
+│   ├── employee/                          # ── Dashboard, shell navigation, profile, ticketing (employee path), analytics, tools
+│   ├── tickets/                           # ── Admin + employee ticket flows
+│   ├── admin/                             # ── Admin dashboard & management shells
 │   │
 │   ├── profile/                           # ── Profile feature (split into sub-features)
 │   │   ├── profile_view/                  # Profile viewing sub-feature
@@ -545,12 +466,12 @@ test/
 
 | Item | Convention | Example |
 |------|-----------|---------|
-| Feature folder | `snake_case`, singular | `auth/`, `jobs/`, `profile/` |
+| Feature folder | `snake_case`, singular | `auth/`, `emotion/`, `profile/` |
 | Dart file | `snake_case` | `auth_bloc.dart`, `job_entity.dart` |
 | Class | `PascalCase` | `AuthBloc`, `JobEntity` |
-| Constant | `camelCase` static | `AppColors.primary`, `RouteNames.login` |
+| Constant | `camelCase` static | `AppColors.primary`, `AppRouter.login` |
 | Private field | `_camelCase` | `_fontFamily`, `_router` |
-| ARB key | `camelCase` | `loginTitle`, `jobsPageTitle` |
+| ARB key | `camelCase` | `loginTitle`, `splashTitle` |
 | Route path | `kebab-case` | `/forgot-password`, `/edit-profile` |
 
 ---
@@ -559,27 +480,16 @@ test/
 
 ```
 main.dart
-  └── loadEnv() + initDependencies()  ← injection_container.dart
-  └── Technology92App                 ← app.dart
-        ├── MultiBlocProvider         ← AuthBloc, SettingsCubit, feature BLoCs
-        ├── MaterialApp.router
-        │     ├── theme               ← LightTheme / DarkTheme (via SettingsCubit)
-        │     ├── locale              ← SettingsCubit.state.locale
-        │     ├── l10n                ← AppLocalizations (EN / AR)
-        │     └── routerConfig        ← AppRouter.router (GoRouter)
-        │           ├── /                   → SplashPage
-        │           ├── /language-select    → LanguageSelectPage
-        │           ├── /onboarding         → OnboardingPage
-        │           ├── /login              → LoginPage
-        │           ├── ShellRoute (MainShell — bottom nav)
-        │           │     ├── /home     → HomePage
-        │           │     ├── /jobs     → JobsPage
-        │           │     ├── /profile  → ProfilePage
-        │           │     └── /settings → SettingsPage
-        │           ├── /jobs/:id       → JobDetailsPage
-        │           ├── /job-search     → JobSearchPage
-        │           ├── /saved-jobs     → SavedJobsPage
-        │           ├── /edit-profile   → EditProfilePage
-        │           ├── /kpi            → KpiPage
-        │           └── /about-us       → AboutUsPage
+  └── AppConfig.loadConfig() + initDependencies()  ← `core/di/dependency_injection.dart`
+  └── EmosenseApp                     ← app.dart
+        ├── MultiBlocProvider       ← Shared BLoCs (analysis, auth, emotion, employee, …)
+        ├── BackendConnectionWidget  ← Connectivity / API warm-up UX
+        ├── MaterialApp
+        │     ├── theme / localization
+        │     ├── initialRoute: AppRouter.splash
+        │     └── onGenerateRoute: AppRouter.generateRoute
+        │           ├── /splash, /login, … (see lib/core/routing/app_router.dart)
+        │           ├── /employee, /admin — role shells
+        │           └── /text-analysis, /voice-analysis, /video-analysis
 ```
+

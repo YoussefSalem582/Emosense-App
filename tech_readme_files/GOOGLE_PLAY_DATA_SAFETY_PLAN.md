@@ -10,7 +10,7 @@
 
 ### Current State ✅
 
-The Technology 92 mobile app **ALREADY HAS**:
+The Emosense mobile app **ALREADY HAS**:
 - ✅ **Account deletion** fully implemented (`DELETE /delete/account`)
 - ✅ **Granular data deletion** (profile images, resumes, videos, skills, experience, education, KPIs)
 - ✅ **Encrypted storage** for authentication tokens (FlutterSecureStorage with AES-256)
@@ -75,7 +75,7 @@ This document provides **exact answers** for all 5 steps of the Google Play Cons
 
 **ANSWER**: **YES ✓**
 
-**Rationale**: The app collects personal and professional data for job marketplace functionality.
+**Rationale**: The app collects personal and professional data where required for workforce, analytics, and emotion‑oriented experiences (profiles, KPIs, HR flows, ticketing, analytics).
 
 ---
 
@@ -85,20 +85,19 @@ This document provides **exact answers** for all 5 steps of the Google Play Cons
 
 **Rationale**: 
 - All API calls use HTTPS (`https://admin.technology92.com/api/v1`)
-- Base URL configured in `lib/core/api/api_client.dart` (line 28)
+- Base URL configured in `lib/core/network/api_client.dart` (`AppConfig.baseUrl`)
 - TLS/SSL enforced for all network communication
 
 **File References**:
 ```dart
-// lib/core/api/api_client.dart (lines 28-39)
-_dio = Dio(
-  BaseOptions(
-    baseUrl: EnvConfig.current.apiBaseUrl, // https://admin.technology92.com/api/v1
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  ),
+// lib/core/network/api_client.dart (_setupDio)
+_dio.options = BaseOptions(
+  baseUrl: AppConfig.baseUrl,
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ${AppConfig.apiKey}',
+  },
 );
 ```
 
@@ -328,21 +327,19 @@ SettingsTile(
 - **Performance Data**: Trace sampling for performance monitoring
 
 **Third-Party: Sentry** (`sentry_flutter: ^9.14.0`)
-- DSN: Configured via `.env` file (`EnvConfig.sentryDsn`)
-- Trace sample rate: 20% (production), 100% (development)
-- Environment tags: development, staging, production
+- DSN: When integrated, typically load from `.env` and expose via a **`AppConfig`** getter (verify `pubspec.yaml` / `main.dart` before claiming Sentry is active)
+- Trace sample rate: configurable per environment (align with **`AppConfig.isProduction`** pattern if you add Sentry)
+- Environment tags: use **`AppConfig.environment`**
 
-**File References**:
+**File References** (`lib/main.dart` currently does **not** initialize Sentry):
 ```dart
-// lib/main.dart (lines 37-44)
-final dsn = EnvConfig.sentryDsn;
-if (dsn.isNotEmpty) {
-  await SentryFlutter.init((options) {
-    options.dsn = dsn;
-    options.tracesSampleRate = EnvConfig.current.isProduction ? 0.2 : 1.0;
-    options.environment = EnvConfig.current.environment.name;
-  }, appRunner: () => runApp(const Technology92App()));
-}
+// Example initialization pattern once SENTRY_DSN (or similar) exists on AppConfig:
+// final dsn = AppConfig.sentryDsn; // add getter backed by dotenv
+// await SentryFlutter.init((options) {
+//   options.dsn = dsn;
+//   options.tracesSampleRate = AppConfig.isProduction ? 0.2 : 1.0;
+//   options.environment = AppConfig.environment;
+// }, appRunner: () => runApp(const EmosenseApp()));
 ```
 
 ---
@@ -401,13 +398,13 @@ if (dsn.isNotEmpty) {
 
 **User Control**: ⚠️ **No opt-out currently implemented** (automatic for all users)
 
-**File References**:
+**File References** (see `pubspec.yaml` / `main.dart` for whether Sentry is wired):
 ```dart
-// lib/main.dart (lines 37-44)
+// Pseudocode aligned with AppConfig:
 await SentryFlutter.init((options) {
-  options.dsn = dsn;
-  options.tracesSampleRate = EnvConfig.current.isProduction ? 0.2 : 1.0;
-  options.environment = EnvConfig.current.environment.name;
+  options.dsn = dsnFromEnv; // e.g. via AppConfig when added
+  options.tracesSampleRate = AppConfig.isProduction ? 0.2 : 1.0;
+  options.environment = AppConfig.environment;
 });
 ```
 
@@ -469,16 +466,9 @@ await Firebase.initializeApp();
 5. Token sent to backend `/oauth/exchange` endpoint
 6. Backend validates and creates session
 
-**File References**:
-```dart
-// lib/features/auth/shared/presentation/bloc/auth_bloc.dart (lines 33-51)
-final _googleSignIn = GoogleSignIn(
-  scopes: ['email'],
-  serverClientId: EnvConfig.googleServerClientId.isNotEmpty
-      ? EnvConfig.googleServerClientId
-      : null,
-);
-```
+**File References:**
+- **`lib/features/auth/shared/presentation/bloc/auth_bloc.dart`** — dispatches **`AuthGoogleSignInRequested`** with an ID token; backend **`/oauth/exchange`** receives the token.
+- **`.env`** may define **`GOOGLE_SERVER_CLIENT_ID`** for native Google Sign-In wiring (documented in `08_security_and_environment.md`; add getters on **`AppConfig`** when configuring `google_sign_in` on-device).
 
 **Google Play Disclosure**:
 - **Category**: Personal Information (Email Address, Name)
@@ -517,8 +507,10 @@ final _googleSignIn = GoogleSignIn(
 
 **File References**:
 ```dart
-// lib/core/api/api_client.dart (line 30)
-baseUrl: EnvConfig.current.apiBaseUrl, // https://admin.technology92.com/api/v1
+// lib/core/network/api_client.dart (_setupDio)
+_dio.options = BaseOptions(
+  baseUrl: AppConfig.baseUrl, // HTTPS URL from API_BASE_URL in .env
+);
 ```
 
 **Google Play Declaration**:
@@ -903,7 +895,7 @@ throw Exception('Test crash for Sentry verification');
 - [ ] **4. Test on production build**:
   - [ ] Build production APK/AAB
   - [ ] Verify Sentry DSN is production (not staging/development)
-  - [ ] Confirm logging disabled (`EnvConfig.current.enableLogging == false`)
+  - [ ] Confirm logging disabled (production **`AppConfig.enableLogging`** / **`DEBUG_MODE`** in `.env`)
   - [ ] Test all data collection flows
   - [ ] Test all data deletion flows
 
@@ -1012,7 +1004,7 @@ These are **not required** for Google Play approval but improve user trust and c
 ```
 Dear [User],
 
-Thank you for contacting Technology 92 regarding your data privacy.
+Thank you for contacting Emosense regarding your data privacy.
 
 [Account Deletion]
 You can delete your account directly in the app:
@@ -1032,7 +1024,7 @@ For additional privacy questions, please review our Privacy Policy:
 https://technology92.com/privacy-policy/
 
 Best regards,
-Technology 92 Privacy Team
+Emosense Privacy Team
 info@technology92.com
 ```
 

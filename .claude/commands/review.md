@@ -26,7 +26,7 @@ Flag any hardcoded value that should use a token:
 - `BorderRadius.circular(N)` → should be `AppRadius.*`
 - `TextStyle(...)` inline → should be `AppTextStyles.*`
 - Hardcoded asset paths → should be `AppImages.*` / `AppIcons.*`
-- Hardcoded route strings → should be `RouteNames.*`
+- Hardcoded route strings → should be `AppRouter.*` (or routed through `generateRoute`)
 
 ### 3 — Localization violations
 

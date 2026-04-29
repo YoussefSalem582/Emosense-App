@@ -1,6 +1,6 @@
 # Add / Update Localization
 
-Manage ARB-based internationalization for the Technology 92 app.
+Manage ARB-based internationalization for the Emosense app.
 
 ## When to Use
 
@@ -13,7 +13,7 @@ Manage ARB-based internationalization for the Technology 92 app.
 
 ### Step 1 — Add keys to English ARB
 
-Edit `technology_ninety_two_app/lib/l10n/arb/app_en.arb`:
+Edit `lib/l10n/arb/app_en.arb`:
 
 ```json
 "featureTitle": "Feature Title",
@@ -22,7 +22,7 @@ Edit `technology_ninety_two_app/lib/l10n/arb/app_en.arb`:
 
 ### Step 2 — Add keys to Arabic ARB
 
-Edit `technology_ninety_two_app/lib/l10n/arb/app_ar.arb`:
+Edit `lib/l10n/arb/app_ar.arb`:
 
 ```json
 "featureTitle": "عنوان الميزة",
@@ -43,7 +43,7 @@ Text(context.l10n.featureTitle)
 
 ## Adding a New Language
 
-Reference `technology_ninety_two_app/tech_readme_files/05_how_to_add_new_language.md`.
+Reference `tech_readme_files/05_how_to_add_new_language.md`.
 
 1. Create new ARB file: `lib/l10n/arb/app_<locale>.arb`
 2. Copy all keys from `app_en.arb` and translate values

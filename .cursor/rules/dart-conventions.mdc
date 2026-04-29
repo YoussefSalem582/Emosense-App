@@ -1,6 +1,6 @@
 ---
-description: "Dart/Flutter code conventions for the Technology 92 app"
-globs: "technology_ninety_two_app/**/*.dart"
+description: "Dart/Flutter code conventions for the Emosense app"
+globs: "lib/**/*.dart"
 alwaysApply: false
 ---
 
@@ -13,7 +13,7 @@ alwaysApply: false
 - **Spacing**: Use `AppSpacing.verticalBase`, `AppSpacing.paddingAll16`, `AppSpacing.pagePadding`
 - **Radius**: Use `AppRadius.md`, `AppRadius.lg`, etc.
 - **Assets**: Use `AppImages.logo`, `AppIcons.settings` — never hardcode asset paths
-- **Routes**: Use `RouteNames.home`, `RouteNames.login` — never hardcode path strings
+- **Routes**: Use `AppRouter` constants (`lib/core/routing/app_router.dart`) instead of scattering raw `'/'`-style literals.
 
 ## Localization
 

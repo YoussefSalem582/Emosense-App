@@ -74,7 +74,7 @@ class <ScreenName>View extends StatelessWidget {
 
 ### Step 3 — Register in DI
 
-In `lib/injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 ```dart
 sl.registerFactory(() => <ScreenName>Bloc(useCase: sl()));
 ```
@@ -83,18 +83,21 @@ Add `BlocProvider` in `app.dart` if needed at top level.
 
 ### Step 4 — Add Route
 
-In `lib/config/routes/route_names.dart`:
+Extend **`AppRouter`** (`lib/core/routing/app_router.dart`):
+
+1. Add `static const String <screenPath> = '/<screen-path>'` next to sibling routes.
+
+2. Add a `case` inside `generateRoute` that builds your page:
+
 ```dart
-static const String <screenName> = '/<screen-path>';
+case AppRouter.someScreenPath:
+  return MaterialPageRoute(
+    builder: (_) => const SomeScreen(),
+    settings: settings,
+  );
 ```
 
-In `lib/config/routes/app_router.dart`:
-```dart
-GoRoute(
-  path: RouteNames.<screenName>,
-  builder: (_, __) => const <ScreenName>Page(),
-),
-```
+Remove references to obsolete `GoRoute`, `route_names.dart`, etc.
 
 ### Step 5 — Add Translations
 
@@ -109,7 +112,7 @@ Run: `flutter gen-l10n`
 
 - [ ] Page + View split correctly
 - [ ] BLoC registered as `registerFactory`
-- [ ] Route added with `RouteNames` constant
+- [ ] Route added with `AppRouter` constant in `generateRoute`
 - [ ] Translations in both ARB files
 - [ ] `flutter gen-l10n` executed
 - [ ] Read BLoC: `CachePolicy` applied to load handler

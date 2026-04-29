@@ -1,6 +1,6 @@
 ---
 description: "Clean Architecture patterns for feature modules — domain, data, presentation layers"
-globs: "technology_ninety_two_app/lib/features/**/*.dart"
+globs: "lib/features/**/*.dart"
 alwaysApply: false
 ---
 
@@ -61,7 +61,7 @@ Dependencies only point inward: `Presentation → Domain ← Data`
 
 ## DI Registration
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 - Data sources, repos, use cases → `registerLazySingleton`
 - BLoCs → `registerFactory` (new instance per provider)
 - Add `BlocProvider` in `app.dart`

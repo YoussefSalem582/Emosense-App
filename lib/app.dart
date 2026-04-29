@@ -18,8 +18,8 @@ import 'features/employee/performance/presentation/bloc/employee_performance_blo
 import 'core/network/connection_bloc.dart';
 import 'package:emosense_mobile/shared/widgets/backend_connection_widget.dart';
 
-/// Root widget: global [BlocProvider]s and [MaterialApp], mirroring
-/// `technology_ninety_two_app`'s split (`main.dart` only bootstraps; app tree lives here).
+/// Root widget: global [BlocProvider]s and [MaterialApp].
+/// `main.dart` bootstraps config/DI only; app tree lives here.
 class EmosenseApp extends StatelessWidget {
   const EmosenseApp({super.key});
 

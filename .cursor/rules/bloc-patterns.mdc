@@ -1,6 +1,6 @@
 ---
 description: "BLoC/Cubit state management patterns and conventions"
-globs: "technology_ninety_two_app/lib/features/**/bloc/**/*.dart,technology_ninety_two_app/lib/features/**/cubit/**/*.dart"
+globs: "lib/features/**/bloc/**/*.dart,lib/features/**/cubit/**/*.dart"
 alwaysApply: false
 ---
 

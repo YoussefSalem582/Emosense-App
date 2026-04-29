@@ -1,7 +1,7 @@
 # 🔌 API Endpoints
 
 > Complete reference of all API endpoints used by the mobile app.
-> All paths are defined in `lib/core/api/api_endpoints.dart` — never hardcode URLs.
+> Paths are defined next to each feature / data source (`lib/features/...`). **Never** concatenate full URLs in widgets — derive from **`AppConfig.baseUrl`** and shared path fragments.
 
 ---
 
@@ -9,9 +9,14 @@
 
 | Setting | Source |
 |---------|--------|
-| Base URL | `.env` → `EnvConfig.baseUrl` |
-| API Version | `.env` → `EnvConfig.apiVersion` |
-| Full base | `${baseUrl}/api/${apiVersion}` |
+| Base URL | `.env` → `API_BASE_URL` → `AppConfig.baseUrl` (`lib/core/config/app_config.dart`) |
+| Dio base | `ApiClient` uses `AppConfig.baseUrl` (`lib/core/network/api_client.dart`); paths are relative to that host — see codebase for API path composition. |
+
+> **Note:** The sample table below referencing `api/` + version may describe a deployed backend shaped like Technology 92; confirm against `lib/` (path constants evolve per feature).
+
+## Base URL composition (conceptual)
+
+Combine **`AppConfig.baseUrl`** with the path fragments your **`ApiClient`** calls use — do **not** assume `EnvConfig.apiVersion`; add a getter on **`AppConfig`** if you expose an API prefix in `.env`.
 
 ---
 
@@ -29,10 +34,10 @@
 
 ---
 
-## Jobs
+## Jobs (legacy marketplace reference)
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
+> Legacy **job marketplace** paths; verify in **`lib/`** whether still used by Emosense.
+
 | GET | `/applicant/job/index` | Paginated job list (supports filters) |
 | GET | `/applicant/job/show/{id}` | Job detail by ID |
 | POST | `/applicant/job/store/{id}` | Apply for a job |

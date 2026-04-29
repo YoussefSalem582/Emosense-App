@@ -22,47 +22,44 @@ AI/tooling directories, ignore files, and top-level docs are listed in **`AGENTS
 
 ## Project Scope
 
-**Only work on `technology_ninety_two_app/` (the Flutter mobile app).**
+**Only work on this Flutter app at the repository root** (`lib/`, assets, platform projects, `pubspec.yaml`, etc.).
 
-Do NOT modify, create, or delete files in:
+Do NOT modify, create, or delete files in (when those sibling folders exist beside this repo):
 
 - `technology_ninety_two_backend-main/` — Laravel backend (another team)
 - `technology_ninety_two_front_end-main/` — Next.js frontend (another team)
 
-These repos are included for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
+Those directories are for reference only (API contracts, route definitions, model schemas). You may read them for context but must never edit them.
 
 ## Project Overview
 
-- **App**: Flutter job marketplace mobile application
+- **App**: Emosense — emotion recognition and analytics (`emosense_mobile`)
 - **Architecture**: Clean Architecture + BLoC (presentation → domain ← data)
 - **State Management**: flutter_bloc
-- **Routing**: GoRouter with `RouteNames` constants
-- **DI**: GetIt + injectable (`injection_container.dart`)
+- **Routing**: Navigator (`MaterialApp` + `AppRouter.generateRoute`); constants on `AppRouter` (`lib/core/routing/app_router.dart`)
+- **DI**: GetIt (`lib/core/di/dependency_injection.dart` — `initDependencies()`); optional barrel `lib/core/di/injection_container.dart`
 - **Networking**: Dio (`ApiClient` wrapper with interceptors)
 - **Local Storage**: SharedPreferences, FlutterSecureStorage
-- **Secrets**: `--dart-define` at build time + `EnvConfig` — never hardcode secrets
+- **Secrets**: `.env` files loaded via `AppConfig.loadConfig()`; read values through **`AppConfig`** (`lib/core/config/app_config.dart`) — never hardcode secrets
 - **Auth**: Email/password + Google Sign-In (`google_sign_in` → backend OAuth exchange)
 - **Localization**: ARB-based l10n (English + Arabic) via `context.l10n`
-- **Firebase**: Firebase Core for analytics/crashlytics foundation
-- **Monitoring**: Sentry (`sentry_flutter`) for error tracking and performance monitoring
-- **Offline-First**: `ConnectivityCubit` + `CachePolicy` (TTL tiers) + `OfflineQueue` (mutation queue)
-- **Background Tasks**: `flutter_foreground_task` for attendance timer lock-screen notification
-
 ## Entry Points
 
 | File | Purpose |
 |------|---------|
-| `lib/main.dart` | App entry point (inits Firebase, DI, Sentry) |
-| `lib/app.dart` | MaterialApp / GoRouter setup |
-| `lib/injection_container.dart` | GetIt DI registration |
+| `lib/main.dart` | Loads env/config (`AppConfig.loadConfig`), then `initDependencies()` |
+| `lib/app.dart` | Root `MaterialApp`: `initialRoute` + `onGenerateRoute: AppRouter.generateRoute` |
+| `lib/core/di/dependency_injection.dart` | GetIt DI (`initDependencies()`) |
+| `lib/core/routing/app_router.dart` | `AppRouter.*` constants + route builder |
 
 ## Key Directories
 
 | Directory | Purpose |
 |-----------|---------|
-| `lib/config/` | env, routes, theme |
-| `lib/core/` | api, constants, error, extensions, usecase, utils |
-| `lib/core/network/` | Offline-first: `ConnectivityService`, `ConnectivityCubit`, `ConnectivityState`, `CachePolicy`, `OfflineQueue`, `OfflineQueueProcessor` |
+| `lib/core/config/` | `app_config.dart` — dotenv / API settings |
+| `lib/core/routing/` | `AppRouter` — named routes + `generateRoute` |
+| `lib/core/` | api, constants, DI, errors, utilities, routing |
+| `lib/core/network/` | `ApiClient`, connection stack (`network_info`, `connection_*`, etc.) |
 | `lib/shared/` | assets, spacing, reusable widgets |
 | `lib/features/` | Feature modules (Clean Architecture) |
 | `lib/l10n/` | ARB files + generated localizations |
@@ -78,7 +75,7 @@ These repos are included for reference only (API contracts, route definitions, m
 - **Spacing**: Use `AppSpacing.verticalBase`, `AppSpacing.paddingAll16`, `AppSpacing.pagePadding`
 - **Radius**: Use `AppRadius.md`, `AppRadius.lg`, etc.
 - **Assets**: Use `AppImages.logo`, `AppIcons.settings` — never hardcode asset paths
-- **Routes**: Use `RouteNames.home`, `RouteNames.login` — never hardcode path strings
+- **Routes**: Use `AppRouter` constants from `lib/core/routing/app_router.dart` — avoid scattering raw path strings unrelated to registered routes.
 
 ### Localization
 
@@ -239,7 +236,7 @@ Dependencies only point inward: `Presentation → Domain ← Data`
 
 ### DI Registration
 
-In `injection_container.dart`:
+In `lib/core/di/dependency_injection.dart`:
 
 - Data sources, repos, use cases → `registerLazySingleton`
 - BLoCs → `registerFactory` (new instance per provider)
@@ -355,7 +352,7 @@ class FeatureBloc extends Bloc<FeatureEvent, FeatureState> {
 6. Implement in repository impl with exception-to-failure mapping
 7. Create use case
 8. Wire into BLoC
-9. Register in `injection_container.dart`
+9. Register in `lib/core/di/dependency_injection.dart`
 
 ### ApiClient Methods
 
@@ -452,8 +449,8 @@ if (!isOnline) {
 ## Security Conventions
 
 - **Never hardcode** API URLs, tokens, client IDs, or any secret in Dart source
-- All secrets are passed via `--dart-define` at build time and accessed via `EnvConfig` getters
-- Add placeholders for new secrets to `.env.example` (committed to git) and to build scripts
+- Runtime configuration loads from `.env` via **`AppConfig.loadConfig()`** (`lib/main.dart`); expose new keys through getters on **`AppConfig`** — do not scatter `dotenv.env[...]` across the codebase
+- Add placeholders for new keys to `.env.example` (committed to git)
 - Auth tokens MUST use `FlutterSecureStorage` (`encryptedSharedPreferences: true`), NOT `SharedPreferences`
 - Storage key strings are centralized in `core/constants/storage_keys.dart`
 - Release builds use `scripts/build_release.ps1` (`--obfuscate --split-debug-info`)
@@ -461,13 +458,12 @@ if (!isOnline) {
 
 ### Environment Config
 
-Access secrets only through `EnvConfig`:
+Access configuration through **`AppConfig`** (after dotenv load):
 
-- `EnvConfig.baseUrl`
-- `EnvConfig.apiVersion`
-- `EnvConfig.googleClientId`
-- `EnvConfig.sentryDsn`
-- `EnvConfig.current.isProduction` / `EnvConfig.current.enableLogging`
+- `AppConfig.baseUrl`, `AppConfig.apiKey`, `AppConfig.connectTimeout`, `AppConfig.receiveTimeout`
+- `AppConfig.environment`, `AppConfig.isProduction`, `AppConfig.isDevelopment`
+- `AppConfig.enableLogging`, `AppConfig.debugMode`, `AppConfig.enableAnalytics`
+- Add getters for additional `.env` keys on `AppConfig` as needed
 
 ### Token Storage
 
@@ -517,7 +513,7 @@ Each feature follows Clean Architecture: `data/ → domain/ ← presentation/`
 
 ## Documentation Updates (Mandatory)
 
-Documentation lives in `technology_ninety_two_app/tech_readme_files/`. The changelog is at `technology_ninety_two_app/CHANGELOG.md`.
+Documentation lives in `tech_readme_files/` (repository root). The changelog is at `CHANGELOG.md` (repository root).
 
 ### After EVERY feature, fix, refactor, or meaningful change, you MUST update
 

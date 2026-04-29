@@ -28,7 +28,7 @@ Update the `@@locale` at the top:
 ```json
 {
   "@@locale": "fr",
-  "appName": "Technology 92",
+  "appName": "Emosense",
   "loginTitle": "Connexion",
   "loginSubtitle": "Bienvenue ! Veuillez vous connecter",
   "email": "E-mail",

@@ -1,7 +1,7 @@
-# 📊 Technology 92 — Current Project Status
+# 📊 Emosense — Current Project Status
 
 > **Last Updated:** April 29, 2026
-> **Version:** 0.5.2 (integrated `refactor/tickets-subfeatures` → `master`; auth-stack + tickets + employee + analysis sub-features)
+> **Version:** Aligns with `pubspec.yaml` / active release branches (prior Technology 92 timeline entries remain in changelog history).
 > **Flutter:** 3.38.4 / Dart 3.10.3
 > **Status:** ✅ MVP Complete | 📚 Documentation Complete | ✅ Essential Data Wizard | ✅ Offline-First Architecture | 📋 Google Play Ready | 🍎 iOS App Store Setup Done | ✅ Bug Audit Pass (8+3 fixes) | 🚧 Dashboard Scaffolded | 🚧 Production Publish Pending
 
@@ -9,7 +9,7 @@
 
 ## 🎯 Executive Summary
 
-Technology 92 is a workforce management mobile application built with Flutter. The app provides profile management, KPI tracking, attendance tracking, and comprehensive settings. Built with **Clean Architecture + BLoC** state management, the app is structured for maintainability and scalability.
+Emosense is a Flutter mobile application centred on emotion recognition and analytics, with complementary workforce surfaces (profiles, KPIs, attendance, tickets, HR-style flows). The codebase uses **Clean Architecture + BLoC**, bilingual ARB localization, offline-first resilience, and scalable feature modules (`auth`, `analysis`, `employee`, `emotion`, `tickets`, etc.).
 
 ### Key Highlights
 
@@ -26,7 +26,7 @@ Technology 92 is a workforce management mobile application built with Flutter. T
 - ✅ **Bilingual support** (English/Arabic with full RTL) — default locale: Arabic; Arabic uses Tajawal font
 - ✅ **Secure token storage** via FlutterSecureStorage (encrypted)
 - ✅ **Claude Code hygiene** — signing secrets do not belong in `.claude/settings.json`; `.claude/settings.local.json` is gitignored (`08_security_and_environment.md`)
-- ✅ **Environment-driven config** — all secrets in `.env`, accessed via `EnvConfig`
+- ✅ **Environment-driven config** — secrets in `.env` loaded via **`AppConfig`** (`flutter_dotenv`; `AppConfig.loadConfig()` in `lib/main.dart`)
 - ✅ **Offline-first architecture** — connectivity monitoring (Google/Apple/Cloudflare captive-portal checks), cache TTL (5 min fresh / 24h expired), offline mutation queue (attendance, KPI, profile resume/video deletes), auto-sync on reconnect, retry interceptor, PDF file caching
 - 🚧 **Production publish** pending
 
@@ -136,7 +136,7 @@ Data (Remote Data Sources → Models → Repository Impl)
 - **Components:** Main shell with bottom nav (Home, KPIs, Attendance, Settings), Home dashboard with 6 extracted widget sections
 - **Location:** `lib/features/home/`
 - **Highlights:**
-  - GoRouter shell route with bottom navigation bar
+  - Employee/admin shells use IndexedStack/tab navigation patterns routed via `AppRouter`
   - Time-based greeting header (Good Morning/Afternoon/Evening) with avatar
   - Live attendance status card with real-time clock timer and quick check-in/out button
   - 4-item quick actions grid (Profile, KPIs, Attendance, Settings)
@@ -359,7 +359,7 @@ Data (Remote Data Sources → Models → Repository Impl)
 | **Auth** | `google_sign_in` |
 | **Utils** | `url_launcher`, `package_info_plus`, `device_info_plus`, `permission_handler`, `dartz`, `path_provider` |
 | **Serialization** | `json_annotation`, `freezed_annotation` |
-| **Env** | `EnvConfig` (via `--dart-define`) |
+| **Env** | `AppConfig` (`flutter_dotenv`, loaded in `main.dart`) |
 | **Monitoring** | `firebase_core`, `sentry_flutter` |
 
 ### Dev Dependencies (10)
@@ -392,7 +392,7 @@ Data (Remote Data Sources → Models → Repository Impl)
 ## 🔒 Security
 
 - **Tokens:** Stored in `FlutterSecureStorage` with `encryptedSharedPreferences: true`
-- **Secrets:** All in `.env` (git-ignored), accessed via `EnvConfig` getters
+- **Secrets:** All in `.env` (git-ignored); accessed via getters on **`AppConfig`** (see `08_security_and_environment.md`)
 - **Session Expiry:** 401 responses trigger `AuthSessionExpired` → auto-logout
 - **Release Builds:** Obfuscated with `--obfuscate --split-debug-info`
 - **Reference:** See [08_security_and_environment.md](08_security_and_environment.md)

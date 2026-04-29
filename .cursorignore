@@ -1,7 +1,7 @@
 # ============================================================
 # .cursorignore — Exclude from Cursor AI context
-# Paths are relative to this file's location (technology_ninety_two_app/)
-# Sibling-repo paths below work when the workspace is opened from the parent.
+# Paths are relative to this file's location (this Flutter repository root).
+# Sibling-repo paths below apply when those folders exist beside this repo (multi-root or parent workspace).
 # Full inventory: AGENTS.md — "Agent tooling layout (repository root)"
 # ============================================================
 

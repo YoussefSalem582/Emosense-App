@@ -1,5 +1,29 @@
 # Documentation Update Summary
 
+
+
+## April 29, 2026 — **`AppConfig` / `.env`** doc accuracy
+
+**Status:** Complete
+
+**What changed:** Removed stale **`EnvConfig`** / compile-time **`--dart-define`** instructions and aligned agent docs with runtime **`flutter_dotenv`**: **`AppConfig.loadConfig()`** in **`lib/main.dart`**, accessors in **`lib/core/config/app_config.dart`**. Updated **`AGENTS.md`**, **`CLAUDE.md`**, **`.agents/AGENTS`**, **`project-scope`**, **`security`** (`.agents` / `.cursor`), **`08_security_and_environment.md`**, **`09_api_endpoints.md`**, **`CURRENT_STATUS`**, **`GOOGLE_PLAY_DATA_SAFETY_PLAN`** (HTTPS / Sentry / OAuth snippets and checklist).
+
+
+## April 29, 2026 — `AppRouter` / Navigator doc alignment
+
+**Status:** Complete
+
+**What changed:** Normalized leftover **GoRouter** / **`RouteNames`** guidance to **`MaterialApp.initialRoute` + `onGenerateRoute: AppRouter.generateRoute`**. Touches **`AGENTS`**, **`CLAUDE`**, **`.agents/AGENTS`** (overview + mega task guide), **`project-scope`** (`.agents` & `.cursor`), **`dart-conventions`**, **`add-feature` / `new-screen` / `review` commands**, **`01_folder_structure`** (removed **`jobs/`** sketch + refreshed connection diagram cores), **`02_architecture` §6**, **`03`** step table row, **`CURRENT_STATUS`** home bullets. Consolidated **`CHANGELOG [Unreleased]`** bullet describing both doc waves.
+
+---
+
+
+## April 29, 2026 — Emosense documentation & agent toolchain sync
+
+**Status:** Complete
+
+**What changed:** Renamed editorial scope from legacy **Technology 92 / `technology_ninety_two_app/`** paths to repository-root **Emosense** (`emosense_mobile`). Updated **`AGENTS.md`**, **`CLAUDE.md`**, **`.agents/`** mirror, **`.cursor/`** rules (globs → `lib/...`), **`.agents/rules`**, skills, **`.claude/commands/`**, all **`*ignore`** headers, **`tech_readme_files/`** (folder structure sketch, guides 02–08, **`CURRENT_STATUS`**, **`GOOGLE_PLAY_DATA_SAFETY_PLAN`**), **`lib/app.dart`** doc comment; **`CHANGELOG`** `[Unreleased]`; DI wording across guides now references **`lib/core/di/dependency_injection.dart`**; **`08_security`** Android/iOS placeholder bundle IDs and OAuth package line; historical entries here that cited `lib/injection_container.dart` now point at **`lib/core/di/dependency_injection.dart`**; **`.claude/settings.json`** Bash allowlist roots → `d:\projects\flutter_projects\emosense\emosense_app` (backend sibling paths under same parent where referenced).
+
 ---
 
 ## April 29, 2026 — Merge `refactor/tickets-subfeatures` into `master`
@@ -570,7 +594,7 @@
 - `lib/features/profile/profile_view/presentation/bloc/profile_bloc.dart` — Resume/video upload handlers guard on connectivity; delete handlers queue via OfflineQueue when offline with optimistic UI
 - `lib/features/profile/edit_profile/presentation/widgets/edit_profile/edit_video_section.dart` — Replaced url_launcher with in-app VideoPlayerPage via GoRouter
 - `lib/core/network/offline_queue.dart` — Added `profileDeleteResume` and `profileDeleteVideo` action types
-- `lib/injection_container.dart` — Registered OfflineQueueProcessor handlers for resume/video deletes
+- `lib/core/di/dependency_injection.dart` — Registered OfflineQueueProcessor handlers for resume/video deletes
 - `lib/l10n/arb/app_en.arb` + `app_ar.arb` — Added 4 l10n keys: uploadRequiresInternet, deleteQueuedOffline, fileNotAvailableOffline, videoRequiresInternet
 
 **Key decisions:**
@@ -591,7 +615,7 @@
 **Files modified:**
 
 - `lib/core/network/connectivity_service.dart` — Replaced default `InternetConnectionChecker.instance` with `createInstance()` using Google generate_204, Apple captive portal, and Cloudflare endpoints. Changed `init()` from `void` to `Future<void>` and awaited the initial `isOnline` check.
-- `lib/injection_container.dart` — Added `await` to `connectivityService.init()` call.
+- `lib/core/di/dependency_injection.dart` — Added `await` to `connectivityService.init()` call.
 
 **Key decisions:**
 
@@ -680,7 +704,7 @@ Complete offline-first infrastructure enabling the app to work fully offline. Im
 
 **Files modified:**
 
-- `lib/injection_container.dart` — Registered ConnectivityService, ConnectivityCubit, OfflineQueue, OfflineQueueProcessor with handlers
+- `lib/core/di/dependency_injection.dart` — Registered ConnectivityService, ConnectivityCubit, OfflineQueue, OfflineQueueProcessor with handlers
 - `lib/app.dart` — Added ConnectivityCubit BlocProvider
 - `lib/core/api/api_client.dart` — Added RetryInterceptor to Dio chain
 - `lib/core/constants/app_constants.dart` — Added cache TTL constants (5 min fresh, 24h expired)
@@ -1195,7 +1219,7 @@ Built the `auth/essential_info/` sub-feature — a post-registration review scre
 - `lib/features/auth/shared/presentation/bloc/auth_bloc.dart` — Set `isFirstTimeEssentialData: true` on registration; clear on `AuthEssentialDataCompleted`
 - `lib/config/routes/app_router.dart` — Updated redirect: first-time → `/essential-info`; added `/essential-info` route
 - `lib/config/routes/route_names.dart` — Added `essentialInfo` constant
-- `lib/injection_container.dart` — Registered `EssentialInfoCubit` factory
+- `lib/core/di/dependency_injection.dart` — Registered `EssentialInfoCubit` factory
 - `lib/l10n/arb/app_en.arb` + `app_ar.arb` — Added 4 new keys: `essentialInfoTitle`, `essentialInfoSubtitle`, `essentialInfoContinue`, `essentialInfoTranslationNote`
 
 **Key decisions:**
@@ -1269,7 +1293,7 @@ Integrated the backend `DELETE /delete/account` endpoint end-to-end. The feature
 - `lib/features/auth/shared/presentation/bloc/auth_event.dart` — Added `AuthDeleteAccountRequested`
 - `lib/features/auth/shared/presentation/bloc/auth_state.dart` — Added `AuthAccountDeleted`
 - `lib/features/auth/shared/presentation/bloc/auth_bloc.dart` — Added `deleteAccountUseCase` field + `_onDeleteAccountRequested` handler
-- `lib/injection_container.dart` — Registered `DeleteAccountUseCase`, wired into `AuthBloc`
+- `lib/core/di/dependency_injection.dart` — Registered `DeleteAccountUseCase`, wired into `AuthBloc`
 - `lib/features/settings/presentation/widgets/sections/settings_account_section.dart` — Added delete account tile + confirmation dialog
 - `lib/features/settings/presentation/pages/settings_page.dart` — BlocListener now handles `AuthAccountDeleted` → navigate to `/`
 
@@ -1458,7 +1482,7 @@ features/auth/
 - `lib/config/routes/app_router.dart` — new `/essential-data` route, redirect logic
 - `lib/config/routes/route_names.dart` — added `essentialData` constant
 - `lib/core/constants/storage_keys.dart` — added `essentialDataComplete` key
-- `lib/injection_container.dart` — added `_initEssentialData()`, updated AuthBloc with SharedPreferences
+- `lib/core/di/dependency_injection.dart` — added `_initEssentialData()`, updated AuthBloc with SharedPreferences
 - `lib/features/auth/shared/presentation/bloc/auth_bloc.dart` — essential data flag logic
 - `lib/features/auth/shared/presentation/bloc/auth_state.dart` — `needsEssentialData` field
 - `lib/features/auth/shared/presentation/bloc/auth_event.dart` — `AuthEssentialDataCompleted` event
@@ -1940,7 +1964,7 @@ Implemented a foreground service that keeps the attendance timer running in the 
 4. `ios/Runner/AppDelegate.swift` — Plugin registrant callback for background isolate
 5. `ios/Runner/Runner-Bridging-Header.h` — FlutterForegroundTaskPlugin import
 6. `lib/main.dart` — `FlutterForegroundTask.initCommunicationPort()` before `runApp`
-7. `lib/injection_container.dart` — Register `AttendanceTimerService`, inject into `AttendanceBloc`
+7. `lib/core/di/dependency_injection.dart` — Register `AttendanceTimerService`, inject into `AttendanceBloc`
 8. `lib/features/attendance/presentation/bloc/attendance_bloc.dart` — `timerService` field, `_syncTimerService()` called on load/check-in/check-out/status-update
 9. `lib/features/attendance/presentation/pages/attendance_page.dart` — Replaced `Timer.periodic` with `FlutterForegroundTask.addTaskDataCallback`
 
@@ -2003,7 +2027,7 @@ Completely removed the jobs feature from the app. This includes the entire `lib/
 
 **Files modified (12):**
 
-1. `lib/injection_container.dart` — Removed jobs imports, `_initJobs()` call and function body
+1. `lib/core/di/dependency_injection.dart` — Removed jobs imports, `_initJobs()` call and function body
 2. `lib/app.dart` — Removed `JobsListBloc`, `JobDetailsBloc`, `JobSearchBloc`, `SavedJobsBloc` providers and imports
 3. `lib/config/routes/app_router.dart` — Removed `/jobs`, `/jobs/:id`, `/job-search`, `/saved-jobs` routes and imports
 4. `lib/config/routes/route_names.dart` — Removed `jobs`, `jobDetails`, `jobSearch`, `savedJobs` constants
@@ -2071,7 +2095,7 @@ Extended the offline-first cache pattern (previously attendance-only) to KPI, Pr
 12. `lib/features/jobs/jobs_list/presentation/bloc/jobs_list_state.dart` — Added `offlineMessage` to `JobsListLoaded`
 13. `lib/features/jobs/jobs_list/presentation/bloc/jobs_list_event.dart` — Added `Completer` to `JobsListLoadRequested`
 14. `lib/features/jobs/jobs_list/presentation/pages/jobs_page.dart` — Added `OfflineBanner`, fixed refresh with `Completer`, migrated to `CustomScrollView`
-15. `lib/injection_container.dart` — Registered `KpiLocalDataSource`, `ProfileLocalDataSource`, `JobsListLocalDataSource`; wired into their respective BLoCs
+15. `lib/core/di/dependency_injection.dart` — Registered `KpiLocalDataSource`, `ProfileLocalDataSource`, `JobsListLocalDataSource`; wired into their respective BLoCs
 16. `lib/core/api/api_response.dart` — Added `PaginationMeta.toJson()`
 
 **Key decisions:**
@@ -2117,7 +2141,7 @@ The attendance in-memory cache (`_cachedState`) is now persisted to SharedPrefer
 
 1. `lib/features/attendance/data/models/attendance_model.dart` — Added `toJson()` methods to `AttendanceStatusModel`, `AttendanceCurrentModel`, `AttendanceScheduleModel`
 2. `lib/features/attendance/presentation/bloc/attendance_bloc.dart` — Accepts `AttendanceLocalDataSource`, calls `_restoreCache()` in constructor, persists in `onChange` (only on settled, non-offline states)
-3. `lib/injection_container.dart` — Registered `AttendanceLocalDataSource` as lazy singleton, injected into `AttendanceBloc`
+3. `lib/core/di/dependency_injection.dart` — Registered `AttendanceLocalDataSource` as lazy singleton, injected into `AttendanceBloc`
 
 **Key decisions:**
 
@@ -2562,7 +2586,7 @@ Full implementation of the KPI (Key Performance Indicators) feature — browse d
 - `lib/features/kpi/presentation/bloc/` — `KpiBloc`, `KpiEvent`, `KpiState`
 - `lib/features/kpi/presentation/pages/kpi_page.dart` — Main KPI page with cached `_lastLoaded` state for instant UI on re-navigation
 - `lib/features/kpi/presentation/widgets/` — 5 widgets: `AddEntrySheet`, `DateFilter`, `DeleteDialog`, `EntryCard`, `PageSkeleton`
-- `lib/injection_container.dart` — KPI DI registration (data source, repo, 4 use cases, bloc)
+- `lib/core/di/dependency_injection.dart` — KPI DI registration (data source, repo, 4 use cases, bloc)
 - `lib/config/routes/app_router.dart` — Added KPI route
 - `lib/config/routes/route_names.dart` — Added KPI route name constant
 

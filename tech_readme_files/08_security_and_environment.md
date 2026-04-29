@@ -45,33 +45,35 @@ reverse engineering.
 
 ### How It Works
 
-| Layer           | Detail                                                     |
-|-----------------|------------------------------------------------------------|
-| **Mechanism**   | `--dart-define` flags at build time                        |
-| **Build Scripts**| `scripts/build_release.ps1` / `scripts/build_debug.ps1` read `.env` and pass defines |
-| **Loading**     | `String.fromEnvironment()` in `EnvConfig` (compile-time)   |
-| **Access**      | `EnvConfig.baseUrl`, `EnvConfig.googleClientId`, `EnvConfig.sentryDsn` |
+| Layer           | Detail |
+|-----------------|--------|
+| **Mechanism**   | `flutter_dotenv` loads `.env` at **runtime** (`AppConfig.loadConfig()` in `lib/main.dart`). |
+| **Build scripts** | `scripts/build_release.ps1` / `scripts/build_debug.ps1` can still pass extra flags; runtime API base URL and keys come from the loaded `.env` file. |
+| **Access**      | Getters on **`AppConfig`** in `lib/core/config/app_config.dart` |
 
 ### Where Values Are Read
 
-| Key                      | Consumer                              | Fallback             |
-|--------------------------|---------------------------------------|----------------------|
-| `API_BASE_URL`           | `EnvConfig.baseUrl`                   | `http://localhost:8000` |
-| `API_VERSION`            | `EnvConfig` constructor (compile-time)| `v1`                 |
-| `GOOGLE_SERVER_CLIENT_ID`| `EnvConfig.googleServerClientId`      | `''` (empty string)  |
+| Key | Consumer | Fallback |
+|-----|----------|----------|
+| `API_BASE_URL` | `AppConfig.baseUrl` | `http://localhost:8000` |
+| `API_KEY` | `AppConfig.apiKey` | `default-api-key` |
+| `ENVIRONMENT` | `AppConfig.environment` | `development` |
+| `ENABLE_LOGGING` | `AppConfig.enableLogging` | `false` |
+| `CONNECT_TIMEOUT` / `RECEIVE_TIMEOUT` | `AppConfig.connectTimeout` / `AppConfig.receiveTimeout` | `30000` (ms) |
+
+Add more rows here as you introduce keys; **Google OAuth** client IDs may be read from `.env` once a getter exists on `AppConfig` (documented in section 3).
 
 ### Adding a New Secret
 
 1. Add the key + placeholder to `.env.example`.
-2. Add the real value to your local `.env`.
-3. Add a getter in `lib/config/environment/env_config.dart`:
+2. Add the real value to your local `.env` (or `.env.development` / `.env.production`).
+3. Add a getter on **`AppConfig`** in `lib/core/config/app_config.dart`:
 
    ```dart
    static String get myNewKey => dotenv.env['MY_NEW_KEY'] ?? '';
    ```
 
-4. Use `EnvConfig.myNewKey` wherever needed — never import `dotenv` directly
-   outside `env_config.dart`.
+4. Use **`AppConfig.myNewKey`** wherever needed — avoid importing `dotenv` directly outside `app_config.dart`.
 
 ---
 
@@ -82,6 +84,7 @@ reverse engineering.
 | Auth token       | `FlutterSecureStorage`         | ✅ Yes      | `encryptedSharedPreferences: true` on Android |
 | User profile     | `SharedPreferences`            | ⚠️ Android: encrypted via option | Non-sensitive display fields only |
 | Theme / Locale   | `SharedPreferences`            | ⚠️ Same    | User preferences                             |
+
 
 ### FlutterSecureStorage Options
 
@@ -99,7 +102,10 @@ the auth token is encrypted at rest.
 All storage keys are centralised in `lib/core/constants/storage_keys.dart`
 — never hardcode key strings elsewhere.
 
----
+### Platform identifiers (staging)
+
+Until store-ready storefront branding is finalized, **Android `applicationId`** and **iOS `PRODUCT_BUNDLE_IDENTIFIER`** should match placeholders in Gradle / Xcode (**`com.example.graphsmile_mobile`** and **`com.example.graphsmileMobile`** respectively — verify in `android/app/build.gradle.kts` and `ios/Runner.xcodeproj/project.pbxproj` before release).
+
 
 ## 3. Google OAuth Configuration
 
@@ -125,8 +131,8 @@ All storage keys are centralised in `lib/core/constants/storage_keys.dart`
 2. Go to **Google Cloud Console → APIs & Credentials → Create Credentials →
    OAuth Client ID → Android**.
 
-3. Enter:
-   - **Package name**: `com.example.technology_ninety_two`
+3. Enter package name and signing certificate data that match your **Gradle** registration only:
+   - **Package name**: must equal `applicationId` in `android/app/build.gradle.kts` (currently **`com.example.graphsmile_mobile`** — placeholder-style naming; replace with your store-ready ID before publishing).
    - **SHA-1 fingerprint**: from step 1
 
 4. Create a **Web** client ID as well (this is the `GOOGLE_SERVER_CLIENT_ID`
@@ -206,7 +212,7 @@ When reviewing PRs or onboarding new developers, verify:
 - [ ] No API URLs, tokens, or client IDs hardcoded in Dart source
 - [ ] `.env` is **not** committed (check `git status`)
 - [ ] New secrets have a placeholder in `.env.example`
-- [ ] New secrets are accessed via `EnvConfig` getters only
+- [ ] New secrets are accessed via **`AppConfig`** getters only
 - [ ] Auth tokens use `FlutterSecureStorage`, not `SharedPreferences`
 - [ ] Release builds use `scripts/build_release.sh` (obfuscation enabled)
 - [ ] Debug symbols (`build/symbols/`) are archived for crash reporting
@@ -217,10 +223,10 @@ When reviewing PRs or onboarding new developers, verify:
 ## Quick Reference
 
 ```
-.env.example                            ← Template (committed)
-.env                                    ← Real secrets (git-ignored)
-lib/config/environment/env_config.dart  ← Single access point for all env vars
+.env.example                       ← Template (committed)
+.env / .env.development / .env.production  ← Real secrets (git-ignored paths per `.gitignore`)
+lib/core/config/app_config.dart   ← Single access point (`AppConfig` + `flutter_dotenv`)
 lib/core/constants/storage_keys.dart    ← All SharedPreferences / SecureStorage keys
-scripts/build_release.sh                ← Obfuscated release build
-scripts/build_debug.sh                  ← Development build & run
+scripts/build_release.ps1 / .sh   ← Obfuscated release build (Windows / Unix)
+scripts/build_debug.ps1 / .sh     ← Development build & run
 ```

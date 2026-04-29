@@ -6,8 +6,8 @@ alwaysApply: false
 # Security Conventions
 
 - **Never hardcode** API URLs, tokens, client IDs, or any secret in Dart source
-- All secrets are passed via `--dart-define` at build time and accessed via `EnvConfig` getters
-- Add placeholders for new secrets to `.env.example` (committed to git) and to build scripts
+- Configuration loads from `.env` at runtime via **`AppConfig.loadConfig()`** (`lib/main.dart`); access values through **`AppConfig`** getters in `lib/core/config/app_config.dart`
+- Add placeholders for new keys to `.env.example` (committed to git)
 - Auth tokens MUST use `FlutterSecureStorage` (`encryptedSharedPreferences: true`), NOT `SharedPreferences`
 - Storage key strings are centralized in `core/constants/storage_keys.dart`
 - Release builds use `scripts/build_release.ps1` (`--obfuscate --split-debug-info`)
@@ -16,12 +16,11 @@ alwaysApply: false
 
 ## Environment Config
 
-Access secrets only through `EnvConfig`:
-- `EnvConfig.baseUrl`
-- `EnvConfig.apiVersion`
-- `EnvConfig.googleClientId`
-- `EnvConfig.sentryDsn`
-- `EnvConfig.current.isProduction` / `EnvConfig.current.enableLogging`
+Access configuration through **`AppConfig`** (see `lib/core/config/app_config.dart`), for example:
+
+- `AppConfig.baseUrl` ← `API_BASE_URL`
+- `AppConfig.apiKey` ← `API_KEY`
+- `AppConfig.environment`, `AppConfig.isProduction`, `AppConfig.enableLogging`, `AppConfig.debugMode`
 
 ## Token Storage
 
