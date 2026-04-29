@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:emosense_mobile/features/employee/presentation/bloc/employee_analytics_bloc.dart';
+import 'package:emosense_mobile/features/employee/shared/presentation/bloc/employee_analytics_bloc.dart';
 
 import '../../../core/core.dart';
 import 'analytics/analytics_header.dart';
