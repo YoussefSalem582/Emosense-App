@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:emosense_mobile/core/core.dart';
 import 'package:emosense_mobile/core/di/dependency_injection.dart' as di;
-import 'package:emosense_mobile/features/tickets/presentation/bloc/tickets_bloc.dart';
+import 'package:emosense_mobile/features/tickets/admin/presentation/bloc/admin_tickets_bloc.dart';
 import 'package:emosense_mobile/features/admin/presentation/widgets/admin_bottom_nav_bar.dart';
 import 'widgets/admin_app_bar.dart';
 import 'widgets/admin_dialogs.dart';
 import 'admin_dashboard_screen.dart';
 import 'admin_user_management_screen.dart';
 import 'admin_system_config_screen.dart';
-import 'package:emosense_mobile/features/tickets/presentation/pages/admin/admin_tickets_page.dart';
+import 'package:emosense_mobile/features/tickets/admin/presentation/pages/admin_tickets_page.dart';
 import 'admin_profile_screen.dart';
 
 /// Enhanced Admin Navigation Screen with modular components
@@ -91,7 +91,7 @@ class _AdminNavigationScreenState extends State<AdminNavigationScreen>
         break;
       case 2:
         screen = BlocProvider(
-          create: (context) => di.sl<TicketsBloc>(),
+          create: (context) => di.sl<AdminTicketsBloc>(),
           child: const AdminTicketsScreen(),
         );
         break;

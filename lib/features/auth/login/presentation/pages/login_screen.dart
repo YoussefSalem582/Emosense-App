@@ -12,7 +12,7 @@ import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_bloc
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_event.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/bloc/auth_state.dart';
 import 'package:emosense_mobile/features/auth/shared/presentation/widgets/auth.dart';
-import 'package:emosense_mobile/features/employee/presentation/pages/employee_navigation_screen/employee_navigation_screen.dart';
+import 'package:emosense_mobile/features/employee/navigation/presentation/pages/employee_navigation_screen/employee_navigation_screen.dart';
 
 import 'package:emosense_mobile/features/auth/login/presentation/widgets/login.dart';
 

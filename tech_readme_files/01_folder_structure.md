@@ -1,0 +1,585 @@
+# 📁 Folder Structure
+
+> Complete directory map of the `lib/` folder and what every file does.
+
+---
+
+## Top-Level
+
+```
+technology_ninety_two_app/
+├── lib/                        ← All Dart source code
+├── assets/                     ← Static resources (fonts, icons, images)
+├── scripts/                    ← Build scripts (debug & release)
+├── test/                       ← Unit & widget tests (29 files, ~365 test cases)
+├── tech_readme_files/          ← Project documentation
+├── AGENTS.md / CLAUDE.md / CHANGELOG.md  ← Agent instructions & project history (tooling map: AGENTS.md)
+├── .agents/, .claude/, .cursor/          ← AI rules, commands, Cursor rules (.cursor/skills/)
+├── l10n.yaml                   ← Localisation generator config
+├── pubspec.yaml                ← Dependencies & asset registration
+└── analysis_options.yaml       ← Lint rules
+```
+
+---
+
+## Agent & AI tooling (repository root)
+
+`.agents/`, `.claude/`, `.cursor/`, and assistant-specific `*ignore` files are summarized in **`AGENTS.md`** under **Agent tooling layout (repository root)**. Root **`AGENTS.md`**, **`CLAUDE.md`**, and **`CHANGELOG.md`** are the primary human/agent instruction and history files.
+
+---
+
+## `lib/` — Full Tree
+
+```
+lib/
+│
+├── main.dart                              # App entry point
+│                                          # - Inits Firebase, DI, Sentry
+│                                          # - Locks orientation to portrait
+│                                          # - Configures system UI overlay
+│                                          # - Initialises DI (GetIt)
+│                                          # - Runs the root widget
+│
+├── app.dart                               # Root MaterialApp.router widget
+│                                          # - Wraps app in MultiBlocProvider
+│                                          # - Applies theme (light / dark)
+│                                          # - Registers localisation delegates
+│                                          # - Connects GoRouter
+│
+├── injection_container.dart               # GetIt service locator setup
+│                                          # - Registers external deps (prefs, storage, Talker)
+│                                          # - Registers ApiClient
+│                                          # - Bootstraps each feature (auth, jobs, profile, kpi)
+│
+├── config/                                # ── Application-wide configuration
+│   ├── environment/
+│   │   └── env_config.dart                # Reads secrets from .env — base URL, API version, Google client ID
+│   │
+│   ├── routes/
+│   │   ├── app_router.dart                # GoRouter route definitions (shell routes, transitions)
+│   │   └── route_names.dart               # String constants for every route name
+│   │
+│   └── theme/
+│       ├── app_colors.dart                # Every colour used in the app (brand, neutral, semantic, social, status)
+│       ├── app_text_styles.dart           # Material 3 type scale (display → label), PublicSans/Tajawal (locale-aware)
+│       ├── light_theme.dart               # Full ThemeData for light mode
+│       └── dark_theme.dart                # Full ThemeData for dark mode
+│
+├── core/                                  # ── Framework-level utilities (shared across ALL features)
+│   ├── api/
+│   │   ├── api_client.dart                # Dio HTTP client with interceptors (auth, lang, logger)
+│   │   ├── api_endpoints.dart             # Every API path as a static const / method
+│   │   └── api_response.dart              # Generic ApiResponse<T> envelope + PaginationMeta
+│   │
+│   ├── constants/
+│   │   ├── app_constants.dart             # Page sizes, timeouts, file limits, animation durations
+│   │   └── storage_keys.dart              # Key strings for SharedPreferences / SecureStorage
+│   │
+│   ├── error/
+│   │   ├── exceptions.dart                # Data-layer exceptions (Server, Network, Auth, Validation…)
+│   │   └── failures.dart                  # Domain-layer failures (mirrors exceptions, used with Either)
+│   │
+│   ├── extensions/
+│   │   ├── context_extensions.dart        # BuildContext helpers (theme, l10n, snackbars, screen size)
+│   │   └── string_extensions.dart         # capitalize, titleCase, isValidEmail, truncate, initials
+│   │
+│   ├── usecase/
+│   │   └── usecase.dart                   # Abstract UseCase<Type, Params> + NoParams
+│   │
+│   └── utils/
+│       ├── logger.dart                    # Talker wrapper (auto-disabled in prod), BLoC transition logs
+│       └── validators.dart                # Reusable form validators (email, password, phone, name…)
+│
+├── shared/                                # ── Reusable UI building blocks (feature-agnostic)
+│   ├── assets/
+│   │   └── app_assets.dart                # AppImages, AppIcons, AppIllustrations — static asset paths
+│   │
+│   ├── spacing/
+│   │   └── app_spacing.dart               # SizedBox & EdgeInsets presets (XS → XXL), AppRadius
+│   │
+│   └── widgets/
+│       ├── app_bar/
+│       │   └── custom_app_bar.dart        # Themed AppBar with optional back button, actions
+│       ├── background/
+│       │   └── auth_pattern_background.dart # AuthPatternBackground + AuthScaffoldWithPattern
+│       ├── buttons/
+│       │   └── app_button.dart            # Elevated / outlined / text / icon / loading button
+│       ├── cards/
+│       │   └── app_card.dart              # Themed Card wrapper
+│       ├── dialogs/
+│       │   ├── app_bottom_sheet.dart      # Themed bottom sheet helper
+│       │   └── unsaved_changes_dialog.dart# Discard / save confirmation dialog
+│       ├── empty/
+│       │   └── empty_state_widget.dart    # Illustration + title + subtitle + optional action
+│       ├── error/
+│       │   └── error_widget.dart          # Error display with retry button
+│       ├── inputs/
+│       │   ├── app_text_field.dart                  # AppTextField, AppPasswordField
+│       │   ├── app_date_field.dart                  # AppDateField (tappable date picker display field)
+│       │   ├── app_dropdown_field.dart              # AppDropdownField (generic typed dropdown)
+│       │   ├── app_searchable_dropdown_field.dart   # AppSearchableDropdownField (dropdown with search sheet)
+│       │   └── app_phone_field.dart       # Phone input with country code picker (flag + dial code)
+│       ├── loading/
+│       │   └── app_loading.dart           # Spinner, overlay loading, shimmer placeholder
+│       ├── pdf_viewer/
+│       │   └── pdf_viewer_page.dart       # Full-screen PDF viewer with download
+│       ├── video_player/
+│       │   └── video_player_page.dart     # Full-screen in-app video player (video_player + chewie)
+│       ├── photo_picker/
+│       │   └── photo_picker_bottom_sheet.dart # Camera / gallery picker bottom sheet
+│       └── responsive/
+│           └── responsive_layout.dart     # Mobile / tablet / desktop breakpoint builder
+│
+├── features/                              # ── Feature modules (Clean Architecture)
+│   │
+│   ├── auth/                              # ── Authentication feature (sub-feature pattern)
+│   │   ├── shared/                        # Shared data, domain, bloc, widgets for all auth sub-features
+│   │   │   ├── data/
+│   │   │   │   ├── datasources/
+│   │   │   │   │   ├── auth_remote_datasource.dart   # API calls: login, register, logout, forgot/reset password
+│   │   │   │   │   └── auth_local_datasource.dart    # Token + user cache (SecureStorage / SharedPrefs)
+│   │   │   │   ├── models/
+│   │   │   │   │   └── user_model.dart               # UserModel (fromJson / toJson)
+│   │   │   │   └── repositories/
+│   │   │   │       └── auth_repository_impl.dart     # Orchestrates remote + local, maps exceptions → failures
+│   │   │   ├── domain/
+│   │   │   │   ├── entities/
+│   │   │   │   │   └── user_entity.dart              # UserEntity (Equatable)
+│   │   │   │   ├── repositories/
+│   │   │   │   │   └── auth_repository.dart          # Abstract contract (no Flutter imports)
+│   │   │   │   └── usecases/
+│   │   │   │       ├── login_usecase.dart
+│   │   │   │       ├── register_usecase.dart
+│   │   │   │       ├── logout_usecase.dart
+│   │   │   │       ├── forgot_password_usecase.dart
+│   │   │   │       ├── google_sign_in_usecase.dart
+│   │   │   │       └── get_cached_user_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── auth_event.dart               # Login, Register, Logout, ForgotPassword, CheckAuth, EssentialDataCompleted events
+│   │   │       │   ├── auth_state.dart               # Initial, Loading, Authenticated (needsEssentialData), Unauthenticated, Error…
+│   │   │       │   └── auth_bloc.dart                # Maps events → use cases → states (checks essential data flag)
+│   │   │       └── widgets/
+│   │   │           ├── auth_header.dart              # Logo + title + subtitle (contextual per page)
+│   │   │           └── social_login_button.dart      # Google / Apple / LinkedIn button (SocialProvider enum)
+│   │   ├── splash/presentation/pages/
+│   │   │   └── splash_page.dart                      # Animated logo, auto-navigates based on auth state
+│   │   ├── language_select/presentation/pages/
+│   │   │   └── language_select_page.dart             # Language picker (EN / AR), shown every launch
+│   │   ├── onboarding/presentation/
+│   │   │   ├── pages/
+│   │   │   │   └── onboarding_page.dart              # 3-page carousel with skip / back / next
+│   │   │   └── widgets/
+│   │   │       ├── onboarding_widgets.dart            # Barrel export
+│   │   │       ├── onboarding_data.dart               # OnboardingData model
+│   │   │       ├── onboarding_header.dart             # Logo + skip
+│   │   │       ├── onboarding_page_content.dart       # Slide content
+│   │   │       ├── onboarding_dot_indicator.dart      # Static dots
+│   │   │       ├── onboarding_progress.dart           # Dots + page count + swipe hint
+│   │   │       └── onboarding_nav_buttons.dart        # Previous / Next
+│   │   ├── login/presentation/pages/
+│   │   │   └── login_page.dart                       # Email / password form, social login buttons
+│   │   ├── register/presentation/pages/
+│   │   │   └── register_page.dart                    # 6-field registration form
+│   │   ├── forgot_password/presentation/pages/
+│   │   │   └── forgot_password_page.dart             # Email submission for password reset
+│   │   └── essential_data/                           # ── Essential Data Wizard (full Clean Architecture)
+│   │       ├── data/
+│   │       │   ├── datasources/
+│   │       │   │   └── essential_data_remote_datasource.dart  # GET/POST essential info with multipart upload
+│   │       │   ├── models/
+│   │       │   │   └── essential_data_model.dart              # EssentialDataModel (fromJson)
+│   │       │   └── repositories/
+│   │       │       └── essential_data_repository_impl.dart    # Exception → failure mapping
+│   │       ├── domain/
+│   │       │   ├── entities/
+│   │       │   │   └── essential_data_entity.dart            # EssentialDataEntity (Equatable)
+│   │       │   ├── repositories/
+│   │       │   │   └── essential_data_repository.dart        # Abstract contract
+│   │       │   └── usecases/
+│   │       │       ├── get_essential_data_usecase.dart       # Check if essential data exists
+│   │       │       └── submit_essential_data_usecase.dart    # Submit with resume upload
+│   │       └── presentation/
+│   │           ├── cubit/
+│   │           │   ├── essential_data_cubit.dart             # Check + submit logic, local flag management
+│   │           │   └── essential_data_state.dart             # Initial, Checking, Exists, Needed, Submitting, Submitted, Error
+│   │           ├── pages/
+│   │           │   └── essential_data_wizard_page.dart       # 4-step wizard with PageView-like navigation
+│   │           └── widgets/
+│   │               ├── wizard_step_indicator.dart            # Progress bar + step label
+│   │               ├── name_step.dart                        # Step 1: First Name + Last Name
+│   │               ├── age_nationality_step.dart             # Step 2: Age + Nationality dropdown
+│   │               ├── specialty_phone_step.dart             # Step 3: Specialty + Phone
+│   │               └── resume_step.dart                      # Step 4: Resume upload + language toggle
+│   │
+│   │   └── essential_info/                    # ── Essential Info review (presentation-only, reuses essential_data domain)
+│   │       └── presentation/
+│   │           ├── cubit/
+│   │           │   ├── essential_info_cubit.dart             # Loads data via GetEssentialDataUseCase
+│   │           │   └── essential_info_state.dart             # Loading, Loaded, Error
+│   │           ├── pages/
+│   │           │   └── essential_info_page.dart              # Post-registration review + AI translation banner
+│   │           └── widgets/
+│   │               └── essential_info_field_row.dart         # Icon + label + value display row
+│   │
+│   ├── home/                              # ── Home / navigation shell
+│   │   └── presentation/
+│   │       ├── pages/
+│   │       │   ├── main_shell.dart               # Bottom NavigationBar (Home, KPIs, Attendance, Settings)
+│   │       │   └── home_page.dart                # Live dashboard composing widget sections below
+│   │       └── widgets/
+│   │           ├── home_greeting_header.dart      # Time-based greeting + avatar + name
+│   │           ├── home_attendance_card.dart       # Live clock status + timer + check in/out
+│   │           ├── home_quick_actions.dart         # 4-item quick action grid (Profile, KPIs, Attendance, Settings)
+│   │           ├── home_stats_row.dart             # 3-stat summary (profile %, KPI count, worked today)
+│   │           ├── home_recent_kpis.dart           # Last 3 KPI entries with See All
+│   │           └── home_recent_attendance.dart     # Last 3 attendance records with See All
+│   │
+│   ├── jobs/                              # ── Jobs feature (split into sub-features)
+│   │   ├── jobs_list/                     # Job listing sub-feature
+│   │   │   ├── domain/usecases/
+│   │   │   │   ├── get_jobs_usecase.dart
+│   │   │   │   └── get_lookups_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── jobs_list_bloc.dart
+│   │   │       │   ├── jobs_list_event.dart
+│   │   │       │   └── jobs_list_state.dart
+│   │   │       ├── pages/
+│   │   │       │   └── jobs_page.dart            # Infinite-scroll list + pull-to-refresh + filters
+│   │   │       └── widgets/
+│   │   │           └── job_filter_sheet.dart     # Filter bottom sheet (salary, type, location)
+│   │   │
+│   │   ├── job_details/                   # Job detail sub-feature
+│   │   │   ├── domain/usecases/
+│   │   │   │   └── apply_for_job_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── job_details_bloc.dart
+│   │   │       │   ├── job_details_event.dart
+│   │   │       │   └── job_details_state.dart
+│   │   │       ├── pages/
+│   │   │       │   └── job_details_page.dart     # Full job detail view with apply button
+│   │   │       └── widgets/
+│   │   │           ├── job_apply_bar.dart         # Bottom apply bar
+│   │   │           ├── job_company_info.dart      # Company info section
+│   │   │           ├── job_details_skeleton.dart  # Skeleton loading placeholder
+│   │   │           ├── job_header.dart            # Job title / salary header
+│   │   │           ├── job_info_chips.dart        # Info chips (type, location, etc.)
+│   │   │           └── job_section_title.dart     # Section title widget
+│   │   │
+│   │   ├── job_search/                    # Job search sub-feature
+│   │   │   ├── domain/usecases/
+│   │   │   │   └── search_jobs_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── job_search_bloc.dart
+│   │   │       │   ├── job_search_event.dart
+│   │   │       │   └── job_search_state.dart
+│   │   │       └── pages/
+│   │   │           └── job_search_page.dart      # Search input + results
+│   │   │
+│   │   ├── saved_jobs/                    # Saved jobs sub-feature
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── saved_jobs_bloc.dart
+│   │   │       │   ├── saved_jobs_event.dart
+│   │   │       │   └── saved_jobs_state.dart
+│   │   │       └── pages/
+│   │   │           └── saved_jobs_page.dart      # Saved jobs list
+│   │   │
+│   │   └── shared/                        # Shared across all job sub-features
+│   │       ├── data/
+│   │       │   ├── datasources/
+│   │       │   │   ├── jobs_remote_datasource.dart    # API calls: jobs list, details, search, apply
+│   │       │   │   └── saved_jobs_local_datasource.dart # Local saved jobs cache
+│   │       │   └── models/
+│   │       │       └── job_model.dart                 # JobModel (fromJson)
+│   │       ├── domain/
+│   │       │   ├── entities/
+│   │       │   │   └── job_entity.dart                # JobEntity, JobFilterEntity, LookupEntity
+│   │       │   └── repositories/
+│   │       │       └── jobs_repository.dart            # Abstract contract
+│   │       └── presentation/widgets/
+│   │           ├── job_card.dart                       # Compact job listing card
+│   │           └── job_card_skeleton.dart              # Skeleton loading for job card
+│   │
+│   ├── profile/                           # ── Profile feature (split into sub-features)
+│   │   ├── profile_view/                  # Profile viewing sub-feature
+│   │   │   ├── domain/usecases/
+│   │   │   │   └── get_profile_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── bloc/
+│   │   │       │   ├── profile_bloc.dart
+│   │   │       │   ├── profile_event.dart
+│   │   │       │   └── profile_state.dart
+│   │   │       ├── pages/
+│   │   │       │   └── profile_page.dart           # Avatar, completeness bar, sections, skills
+│   │   │       └── widgets/profile/
+│   │   │           ├── profile_completeness_card.dart
+│   │   │           ├── profile_education_card.dart
+│   │   │           ├── profile_experience_card.dart
+│   │   │           ├── profile_personal_card.dart
+│   │   │           ├── profile_professional_card.dart
+│   │   │           ├── profile_resume_card.dart
+│   │   │           ├── profile_skills_card.dart
+│   │   │           ├── profile_summary_card.dart
+│   │   │           └── profile_video_card.dart
+│   │   │
+│   │   ├── edit_profile/                  # Profile editing sub-feature
+│   │   │   ├── domain/usecases/
+│   │   │   │   ├── update_personal_details_usecase.dart
+│   │   │   │   └── update_professional_details_usecase.dart
+│   │   │   └── presentation/
+│   │   │       ├── helpers/
+│   │   │       │   ├── edit_profile_form_data.dart   # Form data objects
+│   │   │       │   └── edit_profile_lookups.dart     # Lookup data objects
+│   │   │       ├── pages/
+│   │   │       │   └── edit_profile_page.dart        # Tabbed edit form (personal, professional, more)
+│   │   │       └── widgets/
+│   │   │           ├── dialogs/
+│   │   │           │   ├── add_skill_dialog.dart
+│   │   │           │   ├── delete_confirm_dialog.dart
+│   │   │           │   ├── education_form_dialog.dart
+│   │   │           │   └── experience_form_dialog.dart
+│   │   │           └── edit_profile/
+│   │   │               ├── edit_education_section.dart
+│   │   │               ├── edit_experience_section.dart
+│   │   │               ├── edit_more_tab.dart
+│   │   │               ├── edit_personal_form.dart
+│   │   │               ├── edit_personal_tab.dart
+│   │   │               ├── edit_professional_form.dart
+│   │   │               ├── edit_professional_tab.dart
+│   │   │               ├── edit_resume_section.dart
+│   │   │               ├── edit_skills_section.dart
+│   │   │               ├── edit_summary_section.dart
+│   │   │               └── edit_video_section.dart
+│   │   │
+│   │   └── shared/                        # Shared across profile sub-features
+│   │       ├── data/
+│   │       │   ├── datasources/
+│   │       │   │   └── profile_remote_datasource.dart  # GET/PUT applicant profile
+│   │       │   ├── models/
+│   │       │   │   └── profile_model.dart              # ProfileModel, ProfessionalDetailsModel, etc.
+│   │       │   └── repositories/
+│   │       │       └── profile_repository_impl.dart
+│   │       ├── domain/
+│   │       │   ├── entities/
+│   │       │   │   └── profile_entity.dart             # ProfileEntity, Experience/Education/Skill entities
+│   │       │   └── repositories/
+│   │       │       └── profile_repository.dart         # Abstract contract
+│   │       └── presentation/widgets/
+│   │           ├── common/
+│   │           │   ├── profile_date_helpers.dart       # Date formatting utilities
+│   │           │   ├── profile_header.dart             # Section header widget
+│   │           │   ├── profile_info_row.dart           # Label-value info row
+│   │           │   └── profile_section_card.dart       # Card wrapper for sections
+│   │           └── skeletons/
+│   │               ├── edit_profile_skeleton.dart      # Skeleton for edit profile
+│   │               └── profile_page_skeleton.dart      # Skeleton for profile page
+│   │
+│   ├── kpi/                               # ── KPI feature
+│   │   ├── data/
+│   │   │   ├── datasources/
+│   │   │   │   └── kpi_remote_datasource.dart     # GET definitions, GET/POST/PUT/DELETE entries
+│   │   │   ├── models/
+│   │   │   │   └── kpi_model.dart                 # KpiDefinitionModel, KpiEntryModel (fromJson/toJson)
+│   │   │   └── repositories/
+│   │   │       └── kpi_repository_impl.dart
+│   │   ├── domain/
+│   │   │   ├── entities/
+│   │   │   │   └── kpi_entity.dart                # KpiDefinitionEntity, KpiEntryEntity (Equatable)
+│   │   │   ├── repositories/
+│   │   │   │   └── kpi_repository.dart            # Abstract contract
+│   │   │   └── usecases/
+│   │   │       ├── get_kpi_definitions_usecase.dart
+│   │   │       ├── get_kpi_entries_usecase.dart
+│   │   │       ├── upsert_kpi_entry_usecase.dart
+│   │   │       └── delete_kpi_entry_usecase.dart
+│   │   └── presentation/
+│   │       ├── bloc/
+│   │       │   ├── kpi_bloc.dart                  # Handles load, submit, delete, filter events
+│   │       │   ├── kpi_event.dart
+│   │       │   └── kpi_state.dart
+│   │       ├── pages/
+│   │       │   └── kpi_page.dart                  # KPI entries list with date filter, cached state
+│   │       └── widgets/
+│   │           ├── add_kpi_entry_sheet.dart        # Bottom sheet for add/edit KPI entry
+│   │           ├── kpi_date_filter.dart            # Date filter chip row
+│   │           ├── kpi_delete_dialog.dart          # Delete confirmation dialog
+│   │           ├── kpi_entry_card.dart             # Entry card with value, date, notes
+│   │           └── kpi_page_skeleton.dart          # Skeleton loading placeholder
+│   │
+│   ├── attendance/                        # ── Attendance feature (implemented)
+│   │   ├── data/                          # Remote source, models, repository impl
+│   │   ├── domain/                        # Entities, repository contract, 5 use cases
+│   │   └── presentation/
+│   │       ├── bloc/
+│   │       │   ├── attendance_bloc.dart            # Manages load, check-in/out, status update, schedule
+│   │       │   ├── attendance_event.dart           # Load, RefreshCurrent, CheckIn, StatusUpdate, CheckOut, Schedule
+│   │       │   └── attendance_state.dart           # Initial, Loading, Loaded (with copyWith), Error
+│   │       ├── pages/
+│   │       │   └── attendance_page.dart            # Timer logic + BlocConsumer orchestrator
+│   │       └── widgets/
+│   │           ├── attendance_timer_card.dart      # Timer display with circular ring + status pill
+│   │           ├── attendance_status_selector.dart # Animated status chip selector with icons
+│   │           ├── attendance_action_button.dart   # Check in/out button
+│   │           ├── attendance_schedule_section.dart # Schedule history list with entry cards
+│   │           └── attendance_page_skeleton.dart   # Skeletonizer loading placeholder
+│   │
+│   │
+│   └── settings/                          # ── Settings feature (presentation-only)
+│       └── presentation/
+│           ├── cubit/
+│           │   ├── settings_cubit.dart            # Manages theme mode + locale
+│           │   └── settings_state.dart            # ThemeMode, Locale state
+│           ├── pages/
+│           │   ├── settings_page.dart             # Settings sections (user card, theme, language, general, about, contact, logout)
+│           │   └── about_us_page.dart             # Company info, mission, core values
+│           └── widgets/
+│               ├── common/
+│               │   ├── settings_section_header.dart   # Section title label widget
+│               │   └── settings_tile.dart             # Reusable settings list tile
+│               ├── dialogs/
+│               │   ├── app_changelog_data.dart        # VersionEntry / ChangeGroup models + appChangelog data
+│               │   └── app_info_dialog.dart           # Branded sheet: logo, company info, version, changelog
+│               └── sections/
+│                   ├── settings_about_section.dart    # About Us, privacy policy, terms, app version
+│                   ├── settings_account_section.dart  # Logout (danger zone)
+│                   ├── settings_contact_section.dart  # Website, email, phone numbers
+│                   ├── settings_dev_options_section.dart # Admin-only: Talker logs + Sentry test
+│                   ├── settings_language_section.dart # EN / AR language toggle
+│                   ├── settings_theme_section.dart    # Light / dark / system theme toggle
+│                   └── settings_user_card.dart        # User avatar + name + email card
+│
+└── l10n/                                  # ── Localisation
+    ├── arb/
+    │   ├── app_en.arb                     # English translations (~330 keys)
+    │   └── app_ar.arb                     # Arabic translations (~330 keys)
+    └── generated/                         # Auto-generated (flutter gen-l10n)
+        ├── app_localizations.dart
+        ├── app_localizations_en.dart
+        └── app_localizations_ar.dart
+```
+
+---
+
+## `test/` — Full Tree
+
+```
+test/
+├── helpers/
+│   └── mocks.dart                              # 37 mock classes (repos, use cases, data sources, services)
+│
+├── fixtures/
+│   ├── auth_fixtures.dart                      # UserEntity, UserModel, login/register JSON samples
+│   ├── attendance_fixtures.dart                # Status, current, schedule entities + JSON
+│   ├── kpi_fixtures.dart                       # Definition, entry, note entities + JSON
+│   └── profile_fixtures.dart                   # Profile, experience, education, skill entities + JSON
+│
+├── features/
+│   ├── auth/
+│   │   ├── data/
+│   │   │   ├── models/user_model_test.dart           # fromJson/toJson, flat/nested/minimal JSON
+│   │   │   └── repositories/auth_repository_impl_test.dart  # Exception→Failure mapping (6 methods)
+│   │   ├── domain/
+│   │   │   ├── entities/user_entity_test.dart         # fullName, initials, Equatable
+│   │   │   └── usecases/auth_usecases_test.dart       # 6 use cases + Params equality
+│   │   └── presentation/
+│   │       └── bloc/auth_bloc_test.dart               # Login, register, logout, Google, session expiry
+│   │
+│   ├── attendance/
+│   │   ├── data/
+│   │   │   ├── models/attendance_model_test.dart      # Status, current, schedule — fromJson/toJson
+│   │   │   └── repositories/attendance_repository_impl_test.dart
+│   │   ├── domain/
+│   │   │   ├── entities/attendance_entity_test.dart   # Equatable, filter hasActiveFilters/copyWith
+│   │   │   └── usecases/attendance_usecases_test.dart # 6 use cases + Params equality
+│   │   └── presentation/
+│   │       └── bloc/attendance_bloc_test.dart          # Load, check-in/out, status, cache, timer
+│   │
+│   ├── kpi/
+│   │   ├── data/
+│   │   │   ├── models/kpi_model_test.dart             # Definition, entry, note — fromJson/toJson
+│   │   │   └── repositories/kpi_repository_impl_test.dart
+│   │   ├── domain/
+│   │   │   ├── entities/kpi_entity_test.dart           # displayValue, filter hasActiveFilters/copyWith
+│   │   │   └── usecases/kpi_usecases_test.dart         # 4 use cases + Params equality
+│   │   └── presentation/
+│   │       └── bloc/kpi_bloc_test.dart                 # Load, upsert, delete, filter, pagination
+│   │
+│   ├── profile/
+│   │   ├── data/
+│   │   │   ├── models/profile_model_test.dart         # 9 model types — fromJson/toJson/round-trip
+│   │   │   └── repositories/profile_repository_impl_test.dart  # 15+ methods
+│   │   ├── domain/
+│   │   │   ├── entities/profile_entity_test.dart      # fullName combos, 8 sub-entities Equatable
+│   │   │   └── usecases/profile_usecases_test.dart    # 5 use cases + Params equality
+│   │   └── presentation/
+│   │       └── bloc/profile_bloc_test.dart             # Load, update, CRUD, bulk add, upload, reset
+│   │
+│   └── settings/
+│       └── presentation/
+│           └── cubit/settings_cubit_test.dart          # Theme/locale toggle + persistence
+│
+├── core/
+│   ├── api/
+│   │   ├── api_endpoints_test.dart                    # Static + dynamic endpoint paths
+│   │   └── api_response_test.dart                     # fromJson, pagination, Equatable
+│   ├── constants/
+│   │   └── storage_keys_test.dart                     # Prefix consistency, uniqueness
+│   ├── error/
+│   │   ├── exceptions_test.dart                       # 6 exception types — toString, defaults
+│   │   └── failures_test.dart                         # 8 failure types — Equatable, getFieldError
+│   ├── extensions/
+│   │   └── string_extensions_test.dart                # capitalize, titleCase, truncate, initials
+│   └── utils/
+│       └── validators_test.dart                       # Email, password, phone, name, boundary cases
+│
+└── widget_test.dart                                   # Default Flutter placeholder test
+```
+
+---
+
+## Naming Conventions
+
+| Item | Convention | Example |
+|------|-----------|---------|
+| Feature folder | `snake_case`, singular | `auth/`, `jobs/`, `profile/` |
+| Dart file | `snake_case` | `auth_bloc.dart`, `job_entity.dart` |
+| Class | `PascalCase` | `AuthBloc`, `JobEntity` |
+| Constant | `camelCase` static | `AppColors.primary`, `RouteNames.login` |
+| Private field | `_camelCase` | `_fontFamily`, `_router` |
+| ARB key | `camelCase` | `loginTitle`, `jobsPageTitle` |
+| Route path | `kebab-case` | `/forgot-password`, `/edit-profile` |
+
+---
+
+## How the Pieces Connect
+
+```
+main.dart
+  └── loadEnv() + initDependencies()  ← injection_container.dart
+  └── Technology92App                 ← app.dart
+        ├── MultiBlocProvider         ← AuthBloc, SettingsCubit, feature BLoCs
+        ├── MaterialApp.router
+        │     ├── theme               ← LightTheme / DarkTheme (via SettingsCubit)
+        │     ├── locale              ← SettingsCubit.state.locale
+        │     ├── l10n                ← AppLocalizations (EN / AR)
+        │     └── routerConfig        ← AppRouter.router (GoRouter)
+        │           ├── /                   → SplashPage
+        │           ├── /language-select    → LanguageSelectPage
+        │           ├── /onboarding         → OnboardingPage
+        │           ├── /login              → LoginPage
+        │           ├── ShellRoute (MainShell — bottom nav)
+        │           │     ├── /home     → HomePage
+        │           │     ├── /jobs     → JobsPage
+        │           │     ├── /profile  → ProfilePage
+        │           │     └── /settings → SettingsPage
+        │           ├── /jobs/:id       → JobDetailsPage
+        │           ├── /job-search     → JobSearchPage
+        │           ├── /saved-jobs     → SavedJobsPage
+        │           ├── /edit-profile   → EditProfilePage
+        │           ├── /kpi            → KpiPage
+        │           └── /about-us       → AboutUsPage
+```
