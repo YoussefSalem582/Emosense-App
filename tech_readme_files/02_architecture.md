@@ -201,7 +201,7 @@ shared/
 └── widgets/        ← Buttons, inputs, cards, loading, error, empty state, app bar, responsive layout
 ```
 
-Every widget under `shared/widgets/` is designed to be **generic** — no feature-specific imports, no hardcoded strings (uses `AppLocalizations`).
+Every widget under `core/widgets/` is designed to be **generic** — no feature-specific imports, no hardcoded strings (uses `AppLocalizations`).
 
 ---
 

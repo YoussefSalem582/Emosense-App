@@ -1,13 +1,13 @@
 # 🧩 How to Create a New Reusable Component
 
-> Guide for adding widgets to `lib/shared/widgets/` so they can be used by any feature.
+> Guide for adding widgets to `lib/core/widgets/` so they can be used by any feature.
 
 ---
 
 ## Where Reusable Components Live
 
 ```
-lib/shared/widgets/
+lib/core/widgets/
 ├── app_bar/           ← CustomAppBar
 ├── background/        ← AuthPatternBackground, AuthScaffoldWithPattern
 ├── buttons/           ← AppButton (elevated, outlined, text, icon, loading)
@@ -45,7 +45,7 @@ We'll build a circular avatar widget with image, initials fallback, and online i
 ### 1. Create the folder and file
 
 ```
-lib/shared/widgets/avatar/
+lib/core/widgets/avatar/
 └── app_avatar.dart
 ```
 
@@ -344,7 +344,7 @@ ResponsiveLayout(
 
 ## Checklist for New Shared Widgets
 
-- [ ] Placed in `lib/shared/widgets/<category>/`
+- [ ] Placed in `lib/core/widgets/<category>/`
 - [ ] Zero feature-specific imports
 - [ ] Zero hardcoded strings (labels come from caller or l10n)
 - [ ] Uses `AppColors` for all colours

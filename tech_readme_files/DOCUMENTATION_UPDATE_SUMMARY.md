@@ -1,6 +1,41 @@
 # Documentation Update Summary
 
 
+## April 29, 2026 — Remove `lib/shared/` barrel
+
+**Status:** Complete
+
+**What changed:** Deleted **`lib/shared/`** (previously only **`shared.dart`** re-exporting `core/widgets` + `features/shared/presentation/screens.dart`). Consumers use those package paths directly.
+
+**Files removed:** `lib/shared/shared.dart`
+
+**Files modified:** **`01_folder_structure`**, **`project-scope`** (`.cursor` / `.agents`), **`CLAUDE`**, **`.agents/AGENTS`**, **`CURRENT_STATUS`**, **`CHANGELOG`**, this summary.
+
+---
+
+## April 29, 2026 — `lib/core/widgets` (moved from `lib/shared/widgets`)
+
+**Status:** Complete
+
+**What changed:** Relocated **`lib/shared/widgets/`** → **`lib/core/widgets/`**. Imports use **`package:emosense_mobile/core/widgets/...`** (plus **`features/shared/presentation/screens.dart`** for the routing barrel where needed).
+
+**Files modified:** `lib/**/*.dart` (import paths); agent rules/skills; **`tech_readme_files/`** (01–03, 07); **`CHANGELOG.md`**, **`CURRENT_STATUS.md`**, this file.
+
+---
+
+## April 29, 2026 — `features/shared/presentation` (shell screens barrel)
+
+**Status:** Complete
+
+**What changed:** Relocated `lib/shared/presentation/` → **`lib/features/shared/presentation/`** so cross-cutting shell routes align with the feature layout. Page imports now use `package:emosense_mobile/core/...` and `package:emosense_mobile/core/widgets/...` where needed.
+
+**Files created:** `lib/features/shared/presentation/` (full tree moved from `lib/shared/presentation/`)
+
+**Files modified:** `lib/core/routing/app_router.dart`, `lib/core/utils/screen_state_manager.dart`, `lib/features/employee/dashboard/.../employee_dashboard_screen.dart`, `lib/features/employee/navigation/.../employee_screen_factory.dart`, `tech_readme_files/01_folder_structure.md`, `CHANGELOG.md`, `CURRENT_STATUS.md`, this summary.
+
+**Removed:** `lib/shared/presentation/` (directory)
+
+---
 
 ## April 29, 2026 — **`AppConfig` / `.env`** doc accuracy
 

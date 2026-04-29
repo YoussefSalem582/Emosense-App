@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Reusable widgets location** — Moved `lib/shared/widgets/` to `lib/core/widgets/` (`package:emosense_mobile/core/widgets/...`).
+- **Shell / routing presentation** — Moved `lib/shared/presentation/` to `lib/features/shared/presentation/` (central `screens.dart` barrel, common shell pages, dev screens). Updated imports in `app_router`, `screen_state_manager`, employee dashboard/screen factory.
+- **Removed `lib/shared/`** — Deleted the `shared.dart` barrel folder; import **`package:emosense_mobile/core/widgets/widgets.dart`** and **`package:emosense_mobile/features/shared/presentation/screens.dart`** (or specific paths) directly.
 - **Documentation & agent tooling** — (1) Emosense/repo-root alignment: removed **`technology_ninety_two_app/`** path prefixes, Cursor globs use **`lib/...`**, DI references **`lib/core/di/dependency_injection.dart`**, staging IDs in **`08_security`/Play**, **`.claude/settings.json`** allowlist roots, ignore-file headers — see prior summary. (2) **Routing accuracy (`AppRouter`):** synced **`AGENTS` / `CLAUDE` / `.agents/AGENTS`**, **`project-scope`**, **`dart-conventions`**, **`add-*` / `new-screen` / `review`**, **`01_folder_structure`** (removed legacy **`jobs/`** subtree), **`02_architecture` §6**, **`03_how_to_add_new_feature`**, **`CURRENT_STATUS`** to **`MaterialApp` + `AppRouter.generateRoute`** (Navigator 1) vs outdated GoRouter/`RouteNames` guidance.
 - **`AppConfig` / `.env`** — Removed incorrect **`EnvConfig`** / **`--dart-define`** documentation; **`AGENTS`** / **`CLAUDE`** / **`.agents`** / **`08_security`** / **`09_api`** / **`CURRENT_STATUS`** / **`GOOGLE_PLAY`** now describe **`flutter_dotenv`** + **`AppConfig`** (`lib/main.dart`, `lib/core/config/app_config.dart`).
 ---

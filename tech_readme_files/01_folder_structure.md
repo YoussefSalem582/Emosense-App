@@ -73,48 +73,14 @@ lib/
 │   └── utils/
 │       ├── logger.dart                    # Talker wrapper (auto-disabled in prod), BLoC transition logs
 │       └── validators.dart                # Reusable form validators (email, password, phone, name…)
-│
-├── shared/                                # ── Reusable UI building blocks (feature-agnostic)
-│   ├── assets/
-│   │   └── app_assets.dart                # AppImages, AppIcons, AppIllustrations — static asset paths
 │   │
-│   ├── spacing/
-│   │   └── app_spacing.dart               # SizedBox & EdgeInsets presets (XS → XXL), AppRadius
-│   │
-│   └── widgets/
-│       ├── app_bar/
-│       │   └── custom_app_bar.dart        # Themed AppBar with optional back button, actions
-│       ├── background/
-│       │   └── auth_pattern_background.dart # AuthPatternBackground + AuthScaffoldWithPattern
-│       ├── buttons/
-│       │   └── app_button.dart            # Elevated / outlined / text / icon / loading button
-│       ├── cards/
-│       │   └── app_card.dart              # Themed Card wrapper
-│       ├── dialogs/
-│       │   ├── app_bottom_sheet.dart      # Themed bottom sheet helper
-│       │   └── unsaved_changes_dialog.dart# Discard / save confirmation dialog
-│       ├── empty/
-│       │   └── empty_state_widget.dart    # Illustration + title + subtitle + optional action
-│       ├── error/
-│       │   └── error_widget.dart          # Error display with retry button
-│       ├── inputs/
-│       │   ├── app_text_field.dart                  # AppTextField, AppPasswordField
-│       │   ├── app_date_field.dart                  # AppDateField (tappable date picker display field)
-│       │   ├── app_dropdown_field.dart              # AppDropdownField (generic typed dropdown)
-│       │   ├── app_searchable_dropdown_field.dart   # AppSearchableDropdownField (dropdown with search sheet)
-│       │   └── app_phone_field.dart       # Phone input with country code picker (flag + dial code)
-│       ├── loading/
-│       │   └── app_loading.dart           # Spinner, overlay loading, shimmer placeholder
-│       ├── pdf_viewer/
-│       │   └── pdf_viewer_page.dart       # Full-screen PDF viewer with download
-│       ├── video_player/
-│       │   └── video_player_page.dart     # Full-screen in-app video player (video_player + chewie)
-│       ├── photo_picker/
-│       │   └── photo_picker_bottom_sheet.dart # Camera / gallery picker bottom sheet
-│       └── responsive/
-│           └── responsive_layout.dart     # Mobile / tablet / desktop breakpoint builder
+│   ├── widgets/                           # ── App-wide reusable UI (barrel: `widgets/widgets.dart`; package `package:emosense_mobile/core/widgets/...`)
+│   │   └── …                              # e.g. `app_bars/`, `buttons/`, `cards/`, `common/`, `dialogs/`, `forms/`, `sections/`, backend connection helpers
 │
 ├── features/                              # ── Feature modules (Clean Architecture)
+│   │
+│   ├── shared/                            # ── App-wide shell screens + central routing barrel (`screens.dart`, `common_screens.dart`, `pages/…`)
+│   │   └── presentation/
 │   │
 │   ├── auth/                              # ── Authentication feature (sub-feature pattern)
 │   │   ├── shared/                        # Shared data, domain, bloc, widgets for all auth sub-features

@@ -9,7 +9,7 @@
 
 ## 🎯 Executive Summary
 
-Emosense is a Flutter mobile application centred on emotion recognition and analytics, with complementary workforce surfaces (profiles, KPIs, attendance, tickets, HR-style flows). The codebase uses **Clean Architecture + BLoC**, bilingual ARB localization, offline-first resilience, and scalable feature modules (`auth`, `analysis`, `employee`, `emotion`, `tickets`, etc.).
+Emosense is a Flutter mobile application centred on emotion recognition and analytics, with complementary workforce surfaces (profiles, KPIs, attendance, tickets, HR-style flows). The codebase uses **Clean Architecture + BLoC**, bilingual ARB localization, offline-first resilience, and scalable feature modules (`auth`, `analysis`, `employee`, `emotion`, `tickets`, etc.). App-wide shell screens and the central **`screens.dart`** routing barrel live under **`lib/features/shared/presentation/`**; cross-cutting reusable widgets (barrel **`widgets/widgets.dart`**) live under **`lib/core/widgets/`**.
 
 ### Key Highlights
 

@@ -426,7 +426,7 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
 
 Create your page widgets under `presentation/pages/` and any feature-specific widgets under `presentation/widgets/`.
 
-Use shared widgets from `lib/shared/widgets/` for common UI (buttons, inputs, loading, error, etc.).
+Use shared widgets from `lib/core/widgets/` for common UI (buttons, inputs, loading, error, etc.).
 
 ---
 
